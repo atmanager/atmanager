@@ -1,0 +1,24 @@
+patrimonio_inicial:
+    path:   /
+    defaults: { _controller: PatrimonioBundle:Default:index}
+
+#patrimonio_listado:
+#    path:   /
+#    defaults: { _controller: PatrimonioBundle:Default:index}
+
+patrimonio_nuevo:
+    path:   /nuevo
+    defaults: { _controller: PatrimonioBundle:Default:nuevo}
+
+patrimonio_edit:
+    path:   /edit/{id}
+    defaults: { _controller: PatrimonioBundle:Default:edit}
+
+patrimonio_borrar:
+    path:   /borrar/{id}
+    defaults: { _controller: PatrimonioBundle:Default:borrar}
+
+PatrimonioBundle_patrimonio:
+    resource: "@PatrimonioBundle/Resources/config/routing/patrimonio.yml"
+    prefix:   /patrimonio
+

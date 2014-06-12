@@ -1,0 +1,22 @@
+{% extends 'BackendBundle::base.html.twig' %} 
+{% block title %} Marcas {% endblock %}       
+{% block content %}
+<h1> Marcas </h1>
+
+<table class="table table-bordered table-striped" >
+<tr>
+<td> Nombre </td>
+<td> Id </td>
+</tr>
+{% for marca in marcas %}
+
+<tr>
+<td> {{ marca }} </td>
+<td> {{ marca.id }} </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+para instalar paginador:
+
+/composer.json
+
+"require": {
+        ...
+        "knplabs/knp-paginator-bundle": "~2.4"
+    },
+
+desde consola
+
+composer update
+
+app/appKernel.php
+
+$bundles = array(
+            ...
+            new ATManager\PatrimonioBundle\PatrimonioBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+        );
+
+app/config.yml
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: pagina                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template    
+
+
+...Luego en controlador (MarcaController...)
+
+public function indexAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$marcas = $em->getRepository('BackendBundle:Marca')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $marcas = $paginator->paginate($marcas, $this->getRequest()->query->get('pagina',1), 10);
+
+        return $this->render('BackendBundle:Marca:index.html.twig', array(
+        	'marcas'=> $marcas	
+        ));
+
+
+    }

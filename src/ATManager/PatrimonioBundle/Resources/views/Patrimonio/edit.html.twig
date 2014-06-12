@@ -1,0 +1,16 @@
+{% extends 'PatrimonioBundle::base_patrimonio.html.twig' %}
+
+{% block content %}
+    <h1>Editando Patrimonio</h1>
+
+    {{ form(edit_form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('patrimonio') }}">
+            Volver a la lista.
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

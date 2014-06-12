@@ -1,0 +1,73 @@
+{% extends 'PatrimonioBundle::base_patrimonio.html.twig' %}
+
+{% block content %}
+    <h1>Patrimonio</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ entity.numero }}</td>
+            </tr>
+            <tr>
+                <th>Alasector</th>
+                <td>{{ entity.alasector }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Responsable</th>
+                <td>{{ entity.responsable }}</td>
+            </tr>
+            <tr>
+                <th>Modelo</th>
+                <td>{{ entity.modelo }}</td>
+            </tr>
+            <tr>
+                <th>Serial</th>
+                <td>{{ entity.serial }}</td>
+            </tr>
+            <tr>
+                <th>Observacion</th>
+                <td>{{ entity.observacion }}</td>
+            </tr>
+            <tr>
+                <th>Fechaalta</th>
+                <td>{{ entity.fechaAlta|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechabaja</th>
+
+                <td>{% if entity.fechaBaja is not null %}{{ entity.fechaBaja|date('Y-m-d H:i:s') }} {% endif %}</td>
+            </tr>
+            <tr>
+                <th>Habilita</th>
+                <td>{{ entity.habilita }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ entity.precio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('patrimonio') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('patrimonio_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

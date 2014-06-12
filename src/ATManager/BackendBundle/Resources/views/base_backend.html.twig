@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+ 
+{% block menuwrap %}
+        <div class="col-xs-3" id="sidebar" role="navigation">
+          <div class="list-group">
+            <a href="{{ path('marca_listado')}}" class="list-group-item">Marcas</a>
+            <a href="{{ path('local_listado')}}" class="list-group-item">Locales</a>
+            <a href="{{ path('patrimonioclasif_listado')}}" class="list-group-item">Clasificación de Patrimonio</a>
+            <a href="#" class="list-group-item">Fallas típicas</a>
+            <a href="#" class="list-group-item">Estadios</a>
+            <a href="#" class="list-group-item">Técnicos</a>
+            <a href="#" class="list-group-item">Repuestos e Insumos</a>
+            <a href="#" class="list-group-item">Servicios de Terceros</a>
+            <a href="#" class="list-group-item">Proveedores</a>
+
+            <a href="{{ path('sectortipo_listado')}}" class="list-group-item">Tipo de Sectores</a>
+            <a href="#" class="list-group-item">Sectores</a>
+          </div>
+        </div><!--/span-->
+ {% endblock %}

@@ -1,0 +1,19 @@
+backend_inicial:
+    path:   /
+    defaults: { _controller: BackendBundle:Default:index}
+
+marca:
+    resource: "@BackendBundle/Resources/config/routing/marca.yml"
+    prefix:   /marca
+
+local:
+    resource: "@BackendBundle/Resources/config/routing/local.yml"
+    prefix:   /local
+
+patrimonioclasif:
+    resource: "@BackendBundle/Resources/config/routing/patrimonioclasif.yml"
+    prefix:   /patrimonioclasif
+
+sectortipo:
+    resource: "@BackendBundle/Resources/config/routing/sectortipo.yml"
+    prefix:   /sectortipo

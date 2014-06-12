@@ -1,0 +1,30 @@
+patrimonio:
+    pattern:  /
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:index" }
+
+patrimonio_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:show" }
+
+patrimonio_new:
+    pattern:  /new
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:new" }
+
+patrimonio_create:
+    pattern:  /create
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:create" }
+    requirements: { _method: post }
+
+patrimonio_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:edit" }
+
+patrimonio_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:update" }
+    requirements: { _method: post|put }
+
+patrimonio_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:delete" }
+    requirements: { _method: post|delete }

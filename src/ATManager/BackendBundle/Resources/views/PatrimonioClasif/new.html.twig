@@ -1,0 +1,14 @@
+{% extends 'BackendBundle::base_backend.html.twig' %} 
+{% block title %} Clasificaciones de Patrimonios {% endblock %}       
+{% block content %}
+<h3> Nuevas Clasificaciones </h3>
+<table>
+<tr>
+<td>
+
+ {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
+
+</td>
+</tr>
+</table>
+{% endblock %}

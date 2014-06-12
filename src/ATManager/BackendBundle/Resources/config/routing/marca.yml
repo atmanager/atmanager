@@ -1,0 +1,16 @@
+marca_listado:
+    pattern:  /
+    defaults: { _controller: BackendBundle:Marca:index }
+
+marca_nuevo:
+    pattern:  /new
+    defaults: { _controller: BackendBundle:Marca:new }
+
+marca_editar:
+    pattern:  /edit/{id}
+    defaults: { _controller: BackendBundle:Marca:edit }    
+
+marca_eliminar:
+    pattern:  /delete/{id}
+    defaults: { _controller: BackendBundle:Marca:delete }
+

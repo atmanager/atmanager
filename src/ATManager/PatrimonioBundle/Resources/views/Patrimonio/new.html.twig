@@ -1,0 +1,15 @@
+{% extends 'PatrimonioBundle::base_patrimonio.html.twig' %} 
+
+{% block content %}
+    <h1>Nuevo Patrimonio</h1>
+
+    {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
+
+ <ul class="record_actions">
+    <li>
+        <a href="{{ path('patrimonio') }}">
+            <h5> Regresar a la lista </h5>
+        </a>
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'BackendBundle::base_backend.html.twig' %} 
+
+{% block content %}
+    <h3>Listado SectorTipo</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripcion</th>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+               
+                <td><a href="{{ path('sectortipo_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td> 
+                <td>{{ entity.descripcion }}</td>
+                <td>{{ entity.origen }}</td>
+                <td>{{ entity.destino }}</td>
+                <td>
+                <ul>
+                    <li>
+                       <a href="{{ path('sectortipo_show', { 'id': entity.id }) }}">Ver</a> 
+                    </li>
+                    <li>
+                       <a href="{{ path('sectortipo_edit', { 'id': entity.id }) }}">Editar</a> 
+                    </li>
+                </ul>
+                </td> 
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+      <ul>
+        <li>
+            <a href="{{ path('sectortipo_new') }}">
+                Nuevo Tipo
+            </a>
+        </li>
+        </ul>
+
+    {% endblock %}

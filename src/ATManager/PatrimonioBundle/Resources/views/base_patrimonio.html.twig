@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block menuwrap %}
+
+        <div class="col-xs-3" id="sidebar" role="navigation">
+          <div class="list-group">
+            <a href="{{ path('patrimonio')}}" class="list-group-item">Patrimonios</a>
+            <a href="{{ path('marca_listado')}}" class="list-group-item">Marcas</a>
+            <a href="{{ path('local_listado')}}" class="list-group-item">Locales</a>
+            <a href="#" class="list-group-item">Clasificación de Patrimonio</a>
+          </div>
+        </div><!--/span-->
+
+ {% endblock %}

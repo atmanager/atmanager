@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+{% block buscar %}
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Ingrese número de AT">
+            </div>
+            <button type="submit" class="btn btn-default">Buscar...</button>
+          </form>
+{% endblock %}
+{% block content %} 
+
+         <h1 class="title">Bienvenidos!</h1>
+              <p>AT Manager es un proyecto de gestión de <strong>Asistencias Técnicas</strong></p>
+                <p>
+                  Este sistema pretende normalizar procesos informales de pedidos de asistencias a los
+                  diferentes sectores técnicos.
+                </p>
+                <p>
+                  Con AT Manager podrás solicitar soporte desde tu PC y realizar un seguimiento posterior de la misma. Los siguientes sectores esperan tu pedido:
+                </p>
+                <ul>
+                    <li>Bioingeniria</li>
+                    <li>Electricidad</li>
+                    <li>Informática </li>
+                    <li>Obra Civil  </li>
+                    <li>Patrimonio  </li>
+                    <li>Telefonía   </li>
+                </ul>
+                <p>
+                  Colaborá utilizando esta interface y simplificá el trabajo tuyo y de los técnicos.
+                </p>
+
+{% endblock %}
+          
+       

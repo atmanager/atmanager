@@ -1,0 +1,7 @@
+backend_homepage:
+    pattern:  /inicio/{name}
+    defaults: { _controller: BackendBundle:Default:index }
+
+#backend_homepage:
+#    pattern:  /hello/{name}
+#    defaults: { _controller: BackendBundle:Default:index }

@@ -1,0 +1,7 @@
+parameters:
+#    patrimonio.example.class: ATManager\PatrimonioBundle\Example
+
+services:
+#    patrimonio.example:
+#        class: %patrimonio.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

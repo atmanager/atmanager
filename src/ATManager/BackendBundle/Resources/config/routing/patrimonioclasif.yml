@@ -1,0 +1,16 @@
+patrimonioclasif_listado:
+    pattern:  /
+    defaults: { _controller: BackendBundle:PatrimonioClasif:index }
+
+patrimonioclasif_nuevo:
+    pattern:  /new
+    defaults: { _controller: BackendBundle:PatrimonioClasif:new }
+
+patrimonioclasif_editar:
+    pattern:  /edit/{id}
+    defaults: { _controller: BackendBundle:PatrimonioClasif:edit }    
+
+patrimonioclasif_eliminar:
+    pattern:  /delete/{id}
+    defaults: { _controller: BackendBundle:PatrimonioClasif:delete }
+

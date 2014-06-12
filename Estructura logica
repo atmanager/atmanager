@@ -1,0 +1,35 @@
+﻿Bundle/Incrementos:	
+    Bundle:BackendBundle
+        Entities/clases: {
+
+estadio, 
+estadioplus, 
+falla, 
+ 
+inventarioclasif, 
+local, 
+marca, 
+
+
+prioridad, 
+
+proveedor,
+respuesto, 
+rol, 
+
+sector, 
+sectortipo, 
+
+servicioterceros, 
+
+tecnico
+perfil, 
+
+}
+
+            
+
+
+
+
+

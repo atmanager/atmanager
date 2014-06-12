@@ -1,0 +1,66 @@
+{% extends 'PatrimonioBundle::base_patrimonio.html.twig' %} 
+
+{% block content %}
+    <h3>Patrimonios</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Alasector</th>
+                <th>Descripcion</th>
+               <!-- <th>Responsable</th>
+                <th>Modelo</th>
+                <th>Serial</th>
+                <th>Observacion</th>
+                <th>Fechaalta</th>
+                <th>Fechabaja</th>
+                <th>Habilita</th>
+                <th>Precio</th>
+                <th>Actions</th> -->
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('patrimonio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.numero }}</td>
+                <td>{{ entity.alasector }}</td>
+                <td>{{ entity.descripcion }}</td>
+                <!-- <td>{{ entity.responsable }}</td>
+                <td>{{ entity.modelo }}</td>
+                <td>{{ entity.serial }}</td>
+                <td>{{ entity.observacion }}</td>
+                <td>{% if entity.fechaAlta %}{{ entity.fechaAlta|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechaBaja %}{{ entity.fechaBaja|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.habilita }}</td>
+                <td>{{ entity.precio }}</td> -->
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('patrimonio_show', { 'id': entity.id }) }}"> Ver </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('patrimonio_edit', { 'id': entity.id }) }}">Editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('patrimonio_new') }}">
+                Nuevo
+            </a>
+        </li>
+        </ul>
+
+     {% if entities.getTotalItemCount > 10 %}
+     {{ knp_pagination_render(entities) }}
+     {% endif %}
+
+    {% endblock %}

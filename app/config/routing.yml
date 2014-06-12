@@ -1,0 +1,16 @@
+#definicion de una ruta, en este caso es el inicio (viejo index.php)
+# de la aplicacion
+inicio:
+    pattern:  /
+    defaults: { _controller: BackendBundle:Default:inicio }
+
+# importar los archivos de ruteo de los bundles.
+patrimonio:
+    resource: "@PatrimonioBundle/Resources/config/routing.yml"
+    prefix:   /patrimonio
+
+backend:
+    resource: "@BackendBundle/Resources/config/routing.yml"
+    prefix:   /backend
+
+

@@ -1,0 +1,19 @@
+local_listado:
+    pattern:  /
+    defaults: { _controller: BackendBundle:Local:index }
+
+local_nuevo:
+    pattern:  /new
+    defaults: { _controller: BackendBundle:Local:new }
+
+local_nuevo:
+    pattern:  /edit{id}
+    defaults: { _controller: BackendBundle:Local:delete }
+
+local_nuevo:
+    pattern:  /delete{id}
+    defaults: { _controller: BackendBundle:Local:delete }    
+
+#backend_homepage:
+#    pattern:  /hello/{name}
+#    defaults: { _controller: BackendBundle:Default:index }
