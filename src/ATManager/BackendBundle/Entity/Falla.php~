@@ -1,0 +1,163 @@
+<?php
+
+namespace ATManager\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+/**
+ * Falla
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Falla
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=60, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripamplia", type="text")
+     */
+    private $descripamplia;
+
+    /**
+     *  @ORM\ManyToMany(targetEntity="ATManager\BackendBundle\Entity\Sector")
+     */
+    private $sector;
+
+    /**
+     * @var boolean
+     * 
+     * @ORM\Column(name="estado", type="boolean")
+     */
+    private $estado;
+
+    public function __construct(){
+        $this->estado = true;  // produce que aparezca en el form inicializado
+    }
+
+    /*
+    mis metodos
+    */
+
+    public function __toString(){
+        return " ".$this->getNombre();
+    }
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Falla
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set descripamplia
+     *
+     * @param string $descripamplia
+     * @return Falla
+     */
+    public function setDescripamplia($descripamplia)
+    {
+        $this->descripamplia = $descripamplia;
+
+        return $this;
+    }
+
+    /**
+     * Get descripamplia
+     *
+     * @return string 
+     */
+    public function getDescripamplia()
+    {
+        return $this->descripamplia;
+    }
+
+    /**
+     * Set sector
+     *
+     * @param string $sector
+     * @return Falla
+     */
+    public function setSector($sector)
+    {
+        $this->sector = $sector;
+
+        return $this;
+    }
+
+    /**
+     * Get sector
+     *
+     * @return string 
+     */
+    public function getSector()
+    {
+        return $this->sector;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param boolean $estado
+     * @return Falla
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return boolean 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+}

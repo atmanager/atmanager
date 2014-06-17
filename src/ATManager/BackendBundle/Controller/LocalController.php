@@ -57,4 +57,27 @@ class LocalController extends Controller
     	return $this->render('BackendBundle:Local:new.html.twig', array(
       'form' => $form->createView()        ));
     }
+
+    #    editar
+    public function editAction($id)
+    {
+      
+        $em = $this->getDoctrine()->getManager();
+        $objLocal = $em->getRepository('BackendBundle:Local')->find($id);
+        $form = $this->createForm(new LocalType(), $objLocal);
+
+        $form->handleRequest($this->getRequest());
+
+        if ($form->isValid())
+        {
+          $em->persist($objLocal);
+          $em->flush();
+          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
+          return $this->redirect($this->generateUrl('local_listado'));
+
+        }
+
+
+      return $this->render('BackendBundle:Local:edit.html.twig', array('form'=>$form->createView()));
+    }
 }

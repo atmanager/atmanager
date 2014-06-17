@@ -1,5 +1,9 @@
 #definicion de una ruta, en este caso es el inicio (viejo index.php)
 # de la aplicacion
+ayuda:
+    pattern:  /ayuda/
+    defaults: {_controller: BackendBundle:Default:ayuda }
+
 inicio:
     pattern:  /
     defaults: { _controller: BackendBundle:Default:inicio }

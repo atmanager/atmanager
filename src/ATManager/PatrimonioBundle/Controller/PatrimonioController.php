@@ -33,7 +33,7 @@ class PatrimonioController extends Controller
 
         #$entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findBy(array('descripcion' => 'CARRO PORTABOLSA COLOR NEGRO'));
         $paginator = $this->get('knp_paginator');
-        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 5);
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
         return $this->render('PatrimonioBundle:Patrimonio:index.html.twig', array(
             'entities' => $entities,
         ));
@@ -76,7 +76,7 @@ class PatrimonioController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Nuevo/Guardar'));
 
         return $form;
     }
@@ -155,7 +155,7 @@ class PatrimonioController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Editar'));
 
         return $form;
     }
@@ -225,7 +225,7 @@ class PatrimonioController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('patrimonio_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Borrar'))
             ->getForm()
         ;
     }

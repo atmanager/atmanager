@@ -1,0 +1,242 @@
+<?php
+
+namespace ATManager\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+/**
+ * Sector
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Sector
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=80, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="internos", type="string", length=30)
+     */
+    private $internos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=50)
+     */
+    private $mail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="referente", type="string", length=45)
+     */
+    private $referente;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\SectorTipo")
+     */
+    private $tipo;
+    
+    public function __construct(){
+        
+    }
+
+    /*
+    mis metodos
+    */
+
+    public function __toString(){
+        return " ".$this->getDescripcion();
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Sector
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set internos
+     *
+     * @param string $internos
+     * @return Sector
+     */
+    public function setInternos($internos)
+    {
+        $this->internos = $internos;
+
+        return $this;
+    }
+
+    /**
+     * Get internos
+     *
+     * @return string 
+     */
+    public function getInternos()
+    {
+        return $this->internos;
+    }
+
+    /**
+     * Set mail
+     *
+     * @param string $mail
+     * @return Sector
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * Get mail
+     *
+     * @return string 
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * Set referente
+     *
+     * @param string $referente
+     * @return Sector
+     */
+    public function setReferente($referente)
+    {
+        $this->referente = $referente;
+
+        return $this;
+    }
+
+    /**
+     * Get referente
+     *
+     * @return string 
+     */
+    public function getReferente()
+    {
+        return $this->referente;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param \ATManager\BackendBundle\Entity\SectorTipo $tipo
+     * @return Sector
+     */
+    public function setTipo(\ATManager\BackendBundle\Entity\SectorTipo $tipo=null)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+
+    /**
+     * Get tipo
+     *
+     * @return \ATManager\BackendBundle\Entity\SectorTipo 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set falla
+     *
+     * @param string $falla
+     * @return Sector
+     */
+    public function setFalla($falla)
+    {
+        $this->falla = $falla;
+
+        return $this;
+    }
+
+    /**
+     * Get falla
+     *
+     * @return string 
+     */
+    public function getFalla()
+    {
+        return $this->falla;
+    }
+
+    /**
+     * Add falla
+     *
+     * @param \ATManager\BackendBundle\Entity\Falla $falla
+     * @return Sector
+     */
+    public function addFalla(\ATManager\BackendBundle\Entity\Falla $falla)
+    {
+        $this->falla[] = $falla;
+
+        return $this;
+    }
+
+    /**
+     * Remove falla
+     *
+     * @param \ATManager\BackendBundle\Entity\Falla $falla
+     */
+    public function removeFalla(\ATManager\BackendBundle\Entity\Falla $falla)
+    {
+        $this->falla->removeElement($falla);
+    }
+}

@@ -1,0 +1,486 @@
+    1  passwd root
+    2  umount /mnt/lino
+    3  clear
+    4  exit
+    5  apt-get install php5-sqlite
+    6  apt-get install php5-intl
+    7  apt-get install php5-apc
+    8  apt-get install php-apc
+    9  gedit /etc/php5/cli/php.ini
+   10  gedit /etc/php5/apache/php.ini
+   11  gedit /etc/php5/apache2/php.ini
+   12  exit
+   13  gedit /etc/php5/cli/php.ini
+   14  gedit /etc/php5/apache2/php.ini
+   15  cd proyectos/symfony/app
+   16  cd proyectos/Symfony/app
+   17  clear
+   18  nano /etc
+   19  php check.app > errores
+   20  php check.php > errores
+   21  nano errores
+   22  gedit /etc/php5/cli/php.ini
+   23  gedit /etc/php5/apache2/php.ini
+   24  php check.php > errores
+   25  nano errores
+   26  setfacl -R -m u:www-data:rwx -m u: whoami :rwx app/cache app/logs
+   27  setfacl -R -m u:www-data:rwx -m u:whoami:rwx app/cache app/logs
+   28  setfacl -R -m u: www-data :rwx -m u: whoami :rwx app/cache app/logs
+   29  setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+   30  dir
+   31  ls
+   32  cd ..
+   33  clear
+   34  setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+   35  setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+   36  ls
+   37  cd web
+   38  ls
+   39  nano app_dev.php
+   40  ls
+   41  cd ..
+   42  ls
+   43  cd app
+   44  ls
+   45  cd config
+   46  ls
+   47  ls -l
+   48  nano parameters.yml
+   49  nano /etc/php5/apache2/php.ini
+   50  nano /etc/hosts
+   51  nano /etc/hosts restart
+   52  nano /etc/hosts
+   53  /etc/init.d/apache2/restart
+   54  /etc/init.d/apache2/apache2 restart
+   55  /etc/init.d/apache2/apache2 
+   56  /etc/init.d/apache2 restart
+   57  nano /etc/hosts
+   58  /etc/init.d/apache2 restart
+   59  nmap localhost
+   60  apache2 -V
+   61  nano /etc/hosts
+   62  nano /etc/apache2/sites-available/default
+   63  gedit /etc/apache2/sites-available/default
+   64  sudo service apache2 restart
+   65  app check.php
+   66  clear
+   67  php check.php
+   68  ls
+   69  cd ..
+   70  ls
+   71  cd app
+   72  clear
+   73  php check.php
+   74  sudo gedit /etc/php5/cli/php.ini
+   75  php check.php
+   76  php -v
+   77  sudo service apache2 restart
+   78  gedit /etc/php5/apache2/php.ini
+   79  sudo service apache2 restart
+   80  ls
+   81  cd config
+   82  gedit parameters.ini
+   83  gedit parameters.yml
+   84  apt-get install git
+   85  git config --global user.name dario allasina
+   86  git config --global user.email <tu-email>
+   87  git config --global user.email soporte.masvernat@gmail.com
+   88  sudo apt-get install php5-curl
+   89  service apache2 restart
+   90  curl -sS https://getcomposer.org/installer | php
+   91  curl
+   92  apt-get install curl
+   93  curl -sS https://getcomposer.org/installer | php
+   94  ls
+   95  sudo mv composer.phar /usr/local/bin/composer
+   96  sudo chmod a+x /usr/local/bin/composer
+   97  composer
+   98  cd ..
+   99  cd..
+  100  cd ..
+  101  composer create-project symfony/framework-standard-edition "/Proyectos/Cupon"
+  102  clear
+  103  exit
+  104  apt-get install tasksel
+  105  sudo /etc/apache2/sites-available/default
+  106  gedit /etc/apache2/sites-available/default
+  107  ls
+  108  clear
+  109  cd proyectos/symfony
+  110  cd proyectos/Symfony
+  111  dir
+  112  php /app/check.php
+  113  cd php
+  114  ls
+  115  cd app
+  116  ls
+  117  clear
+  118  ls
+  119  php check.php
+  120  php check.php> errores
+  121  gedit errores
+  122  exit
+  123  php app/console generate:bundle
+  124  exit
+  125  cmake
+  126  apt-get install cmake
+  127  cd ..
+  128  mkdir -p $HOME/src
+  129  ls
+  130  cd home
+  131  ls
+  132  cd ..
+  133  cd $HOME/src
+  134  ped
+  135  pwd
+  136  get clone get://anongit.kde.org/umbrello
+  137  git clone git://anongit.kde.org/umbrello
+  138  cd umbrello
+  139  mkdir build
+  140  cd build
+  141  cmake -DCMAKE_INSTALL_PREFIX=$HOME/umbrello -DCMAKE_BUILD_TYPE=Debug ../
+  142  cd ..
+  143  pwd
+  144  sudo add-apt-repository ppa:webupd8team/sublime-text-2
+  145  sudo apt-get update
+  146  sudo apt-get install sublime-text
+  147  apt-get install gcc-4.8 g++-4.8
+  148  apt-get update
+  149  apt-get install gcc-4.8 g++-4.8
+  150  pwd
+  151  cd /home/proyectos/Symfony/src
+  152  cd /home/dario/proyectos/Symfony/src
+  153  ls
+  154  cleart
+  155  clear
+  156  ls -l
+  157  chmod 777 ATManager
+  158  ls -l
+  159  chmod -R 777 ATManager
+  160  chmod -R 7777 ATManager
+  161  chmod -R rwrwrw ATManager
+  162  chmod -R 775 ATManager
+  163  chmod -R 777 ATManager
+  164  exit
+  165  composer
+  166  composer create-project symfony/framework-standard-edition "/Proyectos/Cupon"
+  167  composer create-project symfony/framework-standard-edition "/Home/darioProyectos/Cupon"
+  168  ls
+  169  composer create-project symfony/framework-standard-edition "/Home/dario/proyectos/Cupon"
+  170  clear
+  171  composer create-project symfony/framework-standard-edition "/Home/dario/proyectos/Cupon" 2.4.*
+  172  sudo composer create-project symfony/framework-standard-edition "/Home/dario/proyectos/Cupon" 2.4.*
+  173  clear
+  174  sudo composer create-project symfony/framework-standard-edition "/Home/dario/proyectos/Cupon" 2.4.*
+  175  ls
+  176  cd proyectos
+  177  ls
+  178  cd Symfony
+  179  ls
+  180  cd ..
+  181  ls
+  182  cd ..
+  183  ls
+  184  cd proyectos
+  185  ls
+  186  ls -a
+  187  cd ..
+  188  pwd
+  189  cd ..
+  190  pwd
+  191  ls
+  192  cd home
+  193  ls
+  194  cd dario
+  195  ls
+  196  cd ..
+  197  ls
+  198  cd Home
+  199  ls
+  200  cd dario
+  201  ls
+  202  cd proyectos
+  203  ls
+  204  cd Cupon
+  205  ls
+  206  cd ..
+  207  cp -R /Home/dario/proyectos/Cupon /home/dario/proyectos/
+  208  cd /home/dario/proyectos/Symfony
+  209  ls
+  210  php app/console generate:bundle
+  211  ls
+  212  cd src
+  213  ls
+  214  cd atmanager
+  215  ls
+  216  chmod 655 ATManager
+  217  ls
+  218  cd ATManager
+  219  ls
+  220  ls -l
+  221  chmod 655 PatrimonioBundle
+  222  ls
+  223  ls -l
+  224  chmod 666 PatrimonioBundle
+  225  ls -l
+  226  chmod 777 PatrimonioBundle
+  227  chmod -R 777 PatrimonioBundle
+  228  composer require "twig/twig:1.*"
+  229  exit
+  230  ls -l
+  231  cd src
+  232  ls
+  233  cd ATManager/PatrimonioBundle/
+  234  ls
+  235  sudo chmod -R 755 Entity
+  236  ls -l
+  237  sudo chmod -R 777 Entity
+  238  ls -l
+  239  php app/console doctrine:generate:entities PatrimonioBundle:Patrimonio
+  240  php app/console doctrine:schema:update --dump-sql
+  241  php -m
+  242  apt-get install php5-mysql
+  243  php app/console doctrine:schema:update --dump-sql
+  244  php app/console doctrine:database:create
+  245  php app/console doctrine:schema:create --dump-sql
+  246  php app/console doctrine:schema:create --force 
+  247  php app/console doctrine:schema:create --force
+  248  php app/console doctrine:schema:create
+  249  exit
+  250  clear
+  251  who
+  252  php app/console doctrine:generate:entity
+  253  php app/console doctrine:generate:entities PatrimonioBundle:Patrimonio
+  254  sudo su
+  255  exit
+  256  whoami
+  257  cd/src/ATManager/BackendBundle/Entity
+  258  cd src/ATManager/BackendBundle/Entity
+  259  clear
+  260  ls -l
+  261  chmod 666 *
+  262  ls
+  263  ls -l
+  264  sudo apt-get install phpmyadmin
+  265  sudo ln -s /usr/share/phpmyadmin /var/www/
+  266  gedit /etc/phpmyadmin/config.inc.php
+  267  cd ..
+  268  php app/console generate:doctrine:entities TiendaBundle
+  269  php app/console generate:doctrine:entities PatrimonioBundle
+  270  clear
+  271  php app/console doctrine:schema:create --dump-sql
+  272  php app/console doctrine:schema:create
+  273  $ php app/console doctrine:schema:update --dump-sql
+  274  php app/console doctrine:schema:update --dump-sql
+  275  php app/console doctrine:schema:update --force
+  276  exit
+  277  cd /src/ATManager/BackendBundle
+  278  cd src/ATManager/BackendBundle
+  279  clear
+  280  ls
+  281  ls -l Entity
+  282  chmod 755 Entity
+  283  ls -l
+  284  chmod 744 Entity
+  285  ls -l
+  286  chmod 775 Entity
+  287  ls -l
+  288  chmod =r Entity
+  289  ls -l
+  290  chmod 666 Entity
+  291  ls -l
+  292  chmod -R 666 Entity
+  293  ls -l
+  294  clear
+  295  php app/console doctrine:generate:entity
+  296  cd ..
+  297  ls
+  298  cd ..
+  299  ls
+  300  cd app
+  301  clear
+  302  php app/console doctrine:generate:entity
+  303  sudo php app/console 
+  304  ls
+  305  cd console
+  306  ls -l
+  307  php app/console 
+  308  clear
+  309  cd ..
+  310  ld
+  311  ls
+  312  history
+  313  clear
+  314  ls
+  315  php app/console doctrine:generate:entity
+  316  ls -l
+  317  sudo su
+  318  exit
+  319  whoami
+  320  su dario
+  321  exit
+  322  ifconfig
+  323  ping 192.168.101.254
+  324  ping www.google.com.ar
+  325  ls
+  326  cd proyectos
+  327  ls
+  328  cd Symfony
+  329  clear
+  330  ls
+  331  history > historial
+  332  nano historial
+  333  gedit historial
+  334  sudo su
+  335  exit
+  336  pwd
+  337  cd proyectos
+  338  ls
+  339  cd Symfony
+  340  ls
+  341  history
+  342  php app/console doctrine:schema:update --force
+  343  php app/console generate:doctrine:entities PatrimonioBundle:Patrimonio
+  344  php app/console doctrine:schema:update --force
+  345  cd proyectos
+  346  cd Symfony
+  347  ls
+  348  clear
+  349  php app/console generate:doctrine:entities PatrimonioBundle:Patrimonio
+  350  php app/console doctrine:schema:update --force
+  351  exit
+  352  mysql -h localhost -u root -p
+  353  mysql -h localhost -u admin -p
+  354  exit
+  355  cd proyectos/Symfony
+  356  ls
+  357  composer
+  358  composer update
+  359  composer install
+  360  clear
+  361  composer install
+  362  php app/console doctrine:generate:crud
+  363  chmod -R 666 src
+  364  chmod -R 766 src
+  365  chmod -R 777 src
+  366  cd proyectos/Symfony
+  367  php app/console doctrine:schema:update --dump-sql
+  368  php app/console doctrine:schema:update --force
+  369  exit
+  370  history
+  371  php app/console doctrine:generate:entity
+  372  cd proyectos
+  373  cd Symfony
+  374  ls
+  375  php app/console doctrine:generate:entity
+  376  $ php app/console doctrine:schema:update --dump-sql
+  377  php app/console doctrine:schema:update --dump-sql
+  378  php app/console doctrine:schema:update --force
+  379  exit
+  380  cd ..
+  381  cd /home/proyectos/Symfony
+  382  cd /home/dario/proyectos/Symfony
+  383  ls
+  384  clear
+  385  php app/console doctrine:generate:entity
+  386  history
+  387  clear
+  388  ls
+  389  cd resources
+  390  ls
+  391  cd src
+  392  ls
+  393  cd ATManager
+  394  ls
+  395  cd BackendBundle/
+  396  ls
+  397  cd Entity/
+  398  ls
+  399  ls -l
+  400  chmod +rw *.php
+  401  ls -l
+  402  chmod +rw SectorTipo.php
+  403  ls -l
+  404  sudo chmod 666 SectorTipo.php
+  405  ls -l
+  406  sudo chmod 666 PatrimonioClasif.php
+  407  ls -l
+  408  sudo chmod 666 *.php
+  409  ls-l
+  410  ls -l
+  411  clear
+  412  cd /home/dario/
+  413  cd proyectos/
+  414  cd Symfony
+  415  $ php app/console doctrine:schema:update --dump-sql
+  416  php app/console doctrine:schema:update --dump-sql
+  417  php app/console doctrine:generate:entity
+  418  chmod 666 file:///home/dario/proyectos/Symfony/src/ATManager/BackendBundle/Entity /PatrimonioClasif.php
+  419  chmod 666 /home/dario/proyectos/Symfony/src/ATManager/BackendBundle/Entity/PatrimonioClasif.php
+  420  php app/console doctrine:schema:update --dump-sql
+  421  php app/console doctrine:schema:update --force
+  422  clear
+  423  php app/console doctrine:schema:update --force
+  424  php app/console doctrine:schema:update --dump-sql
+  425  php app/console doctrine:schema:update --force
+  426  clear
+  427  php app/console doctrine:schema:update --force
+  428  clear
+  429  exit
+  430  cd /var/www/test
+  431  ls
+  432  cp mantisbt-1.1.7.tar.gz /var/www
+  433  cd ..
+  434  ls
+  435  chmod +777 mantisbt-1.1.7.tar.gz
+  436  chmod 777 mantisbt-1.1.7.tar.gz
+  437  ls
+  438  tar xvf mantisbt-1.1.7.tar.gz
+  439  ls
+  440  mv mantisbt-1.1.7 mantisbt
+  441  ls
+  442  clear
+  443  sudo su
+  444  exit
+  445  php app/console doctrine:schema:update --dump-sql
+  446  php app/console doctrine:schema:update --force
+  447  php app/console doctrine:schema:update --dump-sql
+  448  php app/console doctrine:schema:update --force
+  449  php app/console doctrine:schema:update --dump-sql
+  450  php app/console doctrine:schema:update --force
+  451  php app/console doctrine:schema:update --dump-sql
+  452  php app/console doctrine:schema:update --force
+  453  clear
+  454  git init
+  455  git config --global user.mail "atmanagerpro@gmail.com"
+  456  git config --global user.mail
+  457  git config --global user.name "Dario"
+  458  git remote add origin https://github.com/atmanager/atmanager.git
+  459  git add composer.json
+  460  git commit -m "primer prueba"
+  461  git push origin master
+  462  git add composer.lock
+  463  git commit -m "agregar composer.lock"
+  464  git push origin master
+  465  git add -A 
+  466  git commit -m "Symfony completo"
+  467  git push origin master
+  468  clear
+  469  git add -A
+  470  git commit -m "Symfony dia 1"
+  471  git push origin master
+  472  cd /var/www
+  473  ls
+  474  git clone https://github.com/atmanager/atmanager.git
+  475  exit
+  476  ls
+  477  proyectos
+  478  cd proyectos
+  479  ls
+  480  cd Symfony
+  481  ls
+  482  cd proyectos
+  483  cd Symfony
+  484  ls
+  485  git status
+  486  history > historial2

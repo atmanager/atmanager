@@ -3,6 +3,8 @@
 namespace ATManager\PatrimonioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+// Assert = controles de validacion sobre los atributos de clases en vez
+// de validar en el formulario
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

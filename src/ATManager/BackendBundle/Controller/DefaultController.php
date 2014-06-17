@@ -3,6 +3,8 @@
 namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class DefaultController extends Controller
 {
@@ -19,6 +21,16 @@ class DefaultController extends Controller
     public function indexAction()
     {
         return $this->render('BackendBundle::index.html.twig');
+       
+
+    }
+
+     #    ayuda de la aplicación
+    public function ayudaAction()
+    {
+        //return new Response('Ayuda');
+
+        return $this->render('::ayuda.html.twig');
        
 
     }
