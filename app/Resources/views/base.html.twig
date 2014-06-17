@@ -104,8 +104,14 @@
       <hr>
 
       <footer>
-        <p>&copy; Ocampo - Allasina 2014 <em>by Symfony </em> </p>
+        <p> &copy; {{ 'now' | date('Y') }} - AT Manager  <em> <strong> By Symfony </strong> </em> 
+        <a href="{{ path('pagina_estatica', { 'pagina': 'ayuda' }) }}">[Ayuda]</a>
+        <a href="{{ path('pagina_estatica', { 'pagina': 'contacto' }) }}">[Contacto]</a>
+        <a href="{{ path('pagina_estatica', { 'pagina': 'privacidad' }) }}">[Privacidad]</a>
+        <a href="{{ path('pagina_estatica', { 'pagina': 'sobre-nosotros' }) }}">[Sobre el Proyecto]</a>
+        </p>
       </footer>
+
 
     </div><!--/.container-->
 

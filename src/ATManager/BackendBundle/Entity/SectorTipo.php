@@ -52,7 +52,7 @@ class SectorTipo
     */
 
     public function __toString(){
-        return " ".$this->getNombre();
+        return " ".$this->getDescripcion();
     }
 
 

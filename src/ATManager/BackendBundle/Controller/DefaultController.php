@@ -34,4 +34,14 @@ class DefaultController extends Controller
        
 
     }
+
+    #    ayuda de la aplicación
+    public function portadaAction()
+    {
+        //return new Response('Ayuda');
+
+        return $this->render('::portada.html.twig');
+       
+
+    }
 }

@@ -1,0 +1,30 @@
+sector_listado:
+    pattern:  /
+    defaults: { _controller: "BackendBundle:Sector:index" }
+
+sector_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BackendBundle:Sector:show" }
+
+sector_new:
+    pattern:  /new
+    defaults: { _controller: "BackendBundle:Sector:new" }
+
+sector_create:
+    pattern:  /create
+    defaults: { _controller: "BackendBundle:Sector:create" }
+    requirements: { _method: post }
+
+sector_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BackendBundle:Sector:edit" }
+
+sector_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BackendBundle:Sector:update" }
+    requirements: { _method: post|put }
+
+sector_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BackendBundle:Sector:delete" }
+    requirements: { _method: post|delete }    

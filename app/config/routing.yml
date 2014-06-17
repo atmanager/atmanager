@@ -1,5 +1,15 @@
 #definicion de una ruta, en este caso es el inicio (viejo index.php)
 # de la aplicacion
+
+
+portada:
+    pattern:  /portada/
+    defaults: {_controller: BackendBundle:Default:portada }
+
+pagina_estatica:
+    pattern:  /estatica/
+    defaults: {_controller: BackendBundle:Default:portada }    
+
 ayuda:
     pattern:  /ayuda/
     defaults: {_controller: BackendBundle:Default:ayuda }

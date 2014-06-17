@@ -17,3 +17,11 @@ patrimonioclasif:
 sectortipo:
     resource: "@BackendBundle/Resources/config/routing/sectortipo.yml"
     prefix:   /sectortipo
+
+falla:
+    resource: "@BackendBundle/Resources/config/routing/falla.yml"
+    prefix:   /falla
+
+sector:
+    resource: "@BackendBundle/Resources/config/routing/sector.yml"
+    prefix:   /sector    
