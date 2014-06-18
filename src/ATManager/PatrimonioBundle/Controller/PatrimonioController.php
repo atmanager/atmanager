@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use ATManager\PatrimonioBundle\Entity\Patrimonio;
 use ATManager\PatrimonioBundle\Form\PatrimonioType;
+use ATManager\PatrimonioBundle\Form\PatrimonioBuscadorType;
 
 /**
  * Patrimonio controller.
@@ -19,23 +20,45 @@ class PatrimonioController extends Controller
      * Lists all Patrimonio entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new PatrimonioBuscadorType(), null, array(
+            'method' => 'GET',
+        ));
+
+        $form->handleRequest($request);
+
+        $entities = array();
+
+        if ($form->isValid()) {
+            $descripcion=$form->get('descripcion')->getData();
+            $clasificacion=$form->get('clasificacion')->getData();
+            $local=$form->get('local')->getData();
+            $marca=$form->get('marca')->getData();
+
+            $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($descripcion, $clasificacion, $local, $marca);
+
+
+
+
+        }
 
         #$entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findAll();
 
 
-        $dql = "select p from PatrimonioBundle:Patrimonio p where p.descripcion like :descripcion";
-        $query = $em->createQuery($dql);
-        $query->setParameter('descripcion', '%MONITOR%');
-        $entities = $query->getResult();        
+        // $dql = "select p from PatrimonioBundle:Patrimonio p where p.descripcion like :descripcion";
+        // $query = $em->createQuery($dql);
+        // $query->setParameter('descripcion', '%MONITOR%');
+        // $entities = $query->getResult();        
 
-        #$entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findBy(array('descripcion' => 'CARRO PORTABOLSA COLOR NEGRO'));
+        // #$entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findBy(array('descripcion' => 'CARRO PORTABOLSA COLOR NEGRO'));
         $paginator = $this->get('knp_paginator');
         $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
         return $this->render('PatrimonioBundle:Patrimonio:index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $entities, 
+            'form'=>$form->createView()
         ));
     }
     /**

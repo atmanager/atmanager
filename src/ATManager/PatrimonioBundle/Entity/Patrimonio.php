@@ -123,8 +123,6 @@ class Patrimonio
 
 
 
-
-
     public function __construct(){
         $this->fechaAlta= new \DateTime();
         $this->habilita = true;  // produce que aparezca en el form inicializado

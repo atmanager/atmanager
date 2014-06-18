@@ -1,26 +1,7 @@
 {% extends 'PatrimonioBundle::base_patrimonio.html.twig' %} 
 {% block content %}
     <h4>Listado Patrimonios</h4>
-{% block buscar1 %}
-          <form name="formi" class="navbar-form navbar-left" role="search">
-    <select name="cboxfiltro" onfocus="formi.submit();">
-                    <option value="1" selected="selected">Número</option>
-                    <option value="2">Descripción</option>
-                    <option value="3">Clasificación</option>
-                    <option value="4">Local</option>
-                    <option value="5">Marca</option>
-                </select>
-
-            {% if 'cboxfiltro' == 1 %} <p> Uno </p> {% endif %}
-
-
-
-            <div class="form-group">
-               <input type="text" class="form-control" placeholder="Seleccione Filtro">
-            </div>
-            <button type="submit" class="btn btn-default">Buscar...</button>
-          </form>
-{% endblock %}
+    {{ form(form)}}
     <table class="table">
 
         <thead>

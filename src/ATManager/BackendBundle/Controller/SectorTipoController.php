@@ -82,4 +82,28 @@ class SectorTipoController extends Controller
     }   
 
 
+     #    editar
+    public function editAction($id)
+    {
+      
+        $em = $this->getDoctrine()->getManager();
+        $objST = $em->getRepository('BackendBundle:SectorTipo')->find($id);
+        $form = $this->createForm(new SectorTipoType(), $objST);
+
+        $form->handleRequest($this->getRequest());
+
+        if ($form->isValid())
+        {
+          $em->persist($objST);
+          $em->flush();
+          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
+          return $this->redirect($this->generateUrl('sectortipo_listado'));
+
+        }
+
+
+        return $this->render('BackendBundle:SectorTipo:edit.html.twig', array('form'=>$form->createView()));
+    }
+
+
 }

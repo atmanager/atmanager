@@ -5,6 +5,7 @@ namespace ATManager\BackendBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class FallaType extends AbstractType
 {
@@ -18,7 +19,16 @@ class FallaType extends AbstractType
             ->add('nombre')
             ->add('descripamplia')
             ->add('estado')
-            ->add('sector')
+            ->add('sector','entity', array(
+                'class' => 'BackendBundle:Sector',
+                'multiple'=>true,
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('s')
+                    ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
+                    ->setParameter('destino',true)
+                    ;
+                },
+            ))
         ;
     }
     

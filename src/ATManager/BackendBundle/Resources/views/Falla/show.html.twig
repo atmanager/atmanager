@@ -21,6 +21,16 @@
                 <th>Estado</th>
                 <td>{{ entity.estado }}</td>
             </tr>
+
+            <tr>
+                <th>Sectores</th>
+
+                <td>{% for sector in entity.sector %} 
+                    <p>{{ sector }}</p>
+                    {% endfor %}
+                </td>
+            
+            </tr>
         </tbody>
     </table>
 

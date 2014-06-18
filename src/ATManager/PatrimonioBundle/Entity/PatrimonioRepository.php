@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class PatrimonioRepository extends EntityRepository
 {
+	public function findByFiltroPatrimonio($descripcion, $clasificacion, $local, $marca)
+	{
+
+		$em = $this->getEntityManager();
+		$query = $em->createQueryBuilder()
+		->select('p')
+		->from('PatrimonioBundle:Patrimonio','p')
+		->where('p.clasificacion = :clasif')
+		->setParameter('clasif',$clasificacion)
+		->getQuery();
+		return $query->getResult();
+	}
 }

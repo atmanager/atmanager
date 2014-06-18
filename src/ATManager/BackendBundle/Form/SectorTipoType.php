@@ -12,8 +12,14 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
 	  ->add('descripcion')
-	  ->add('origen')
-	  ->add('destino')
+	  ->add('origen',null,array(
+	  	'required'=>false,
+	  	'label'=>'Acepta Origen: '
+	  	))
+	  ->add('destino',null,array(
+	  	'required'=>false,
+	  	'label'=>'Acepta Destino: '
+	  	))
 	  ->add('Submit','submit',array('label'=>'Guardar'));
 
 }

@@ -4,6 +4,7 @@ namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Falla
  *
@@ -50,6 +51,7 @@ class Falla
 
     public function __construct(){
         $this->estado = true;  // produce que aparezca en el form inicializado
+        $this->sector = new ArrayCollection();
     }
 
     /*
@@ -59,6 +61,8 @@ class Falla
     public function __toString(){
         return " ".$this->getNombre();
     }
+    
+
     /**
      * Get id
      *
@@ -116,29 +120,6 @@ class Falla
     }
 
     /**
-     * Set sector
-     *
-     * @param string $sector
-     * @return Falla
-     */
-    public function setSector($sector)
-    {
-        $this->sector = $sector;
-
-        return $this;
-    }
-
-    /**
-     * Get sector
-     *
-     * @return string 
-     */
-    public function getSector()
-    {
-        return $this->sector;
-    }
-
-    /**
      * Set estado
      *
      * @param boolean $estado
@@ -182,5 +163,15 @@ class Falla
     public function removeSector(\ATManager\BackendBundle\Entity\Sector $sector)
     {
         $this->sector->removeElement($sector);
+    }
+
+    /**
+     * Get sector
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSector()
+    {
+        return $this->sector;
     }
 }
