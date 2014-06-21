@@ -15,7 +15,7 @@ class PatrimonioBuscadorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion','text',array(
+            ->add('numero','integer',array(
                 'required'=>false
             ))  // ver Form Types Reference Symfony.com (2.5)
             ->add('clasificacion','entity',array(

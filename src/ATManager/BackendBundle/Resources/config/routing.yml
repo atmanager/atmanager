@@ -24,4 +24,8 @@ falla:
 
 sector:
     resource: "@BackendBundle/Resources/config/routing/sector.yml"
-    prefix:   /sector    
+    prefix:   /sector
+
+perfil:
+    resource: "@BackendBundle/Resources/config/routing/perfil.yml"
+    prefix:   /perfil      

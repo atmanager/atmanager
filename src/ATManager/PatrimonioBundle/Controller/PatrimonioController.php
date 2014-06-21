@@ -33,12 +33,16 @@ class PatrimonioController extends Controller
         $entities = array();
 
         if ($form->isValid()) {
-            $descripcion=$form->get('descripcion')->getData();
+
+            $numero=$form->get('numero')->getData();
             $clasificacion=$form->get('clasificacion')->getData();
             $local=$form->get('local')->getData();
             $marca=$form->get('marca')->getData();
 
-            $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($descripcion, $clasificacion, $local, $marca);
+            if ($numero or $clasificacion or $local or $marca)
+            {
+            $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $clasificacion, $local, $marca);
+            }
 
 
 

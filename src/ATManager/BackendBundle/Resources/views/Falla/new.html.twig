@@ -1,15 +1,31 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
+
     <h3>Nueva Falla</h3>
+{{ form_start(form) }}    
 
-    {{ form(form) }}
+<div class="row"> 
 
-        <ul class="record_actions">
-    <li>
+	<div class="col-xs-6"> 
+	{{ form_row(form.nombre)}}
+	{{ form_row(form.descripamplia)}}
+	{{ form_row(form.estado)}}
+	</div> 
+
+	<div class="col-xs-6">
+	 {{ form_row(form.sector)}}
+	 {{ form_row(form.submit)}}
+	</div>
+
+</div>
+{{ form_end(form) }}    
+
+
+    
         <a href="{{ path('falla_listado') }}">
             Regresar a Listado
         </a>
-    </li>
-</ul>
+    
+
 {% endblock %}

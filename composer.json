@@ -19,7 +19,10 @@
         "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
-        "knplabs/knp-paginator-bundle": "~2.4"
+        "knplabs/knp-paginator-bundle": "~2.4",
+        "braincrafted/bootstrap-bundle": "~2.0",
+        "twbs/bootstrap": "3.1.*",
+        "jquery/jquery":  "1.10.*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -49,5 +52,18 @@
         "branch-alias": {
             "dev-master": "2.4-dev"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "1.10.2",
+                "dist": {
+                    "url": "http://code.jquery.com/jquery-1.10.2.js",
+                    "type": "file"
+                }
+            }
+        }
+    ]
 }

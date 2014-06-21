@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new ATManager\BackendBundle\BackendBundle(),
             new ATManager\PatrimonioBundle\PatrimonioBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),  # este bundle es externo a symfony, se agrega a mano
+            new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

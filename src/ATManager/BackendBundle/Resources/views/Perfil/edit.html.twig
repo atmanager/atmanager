@@ -1,14 +1,14 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Editando Falla</h3>
+    <h1>Perfil edit</h1>
 
-    {{ form(edit_form, {'style':'horizontal'}) }}
+    {{ form(edit_form,{'attr': {'novalidate':'novalidate'}}) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('falla_listado') }}">
-            Regresar a listado
+        <a href="{{ path('perfil_listado') }}">
+            Back to the list
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>

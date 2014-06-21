@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use ATManager\BackendBundle\Entity\Sector;
-use ATManager\BackendBundle\Form\SectorType;
+use ATManager\BackendBundle\Entity\Perfil;
+use ATManager\BackendBundle\Form\PerfilType;
 
 /**
- * Sector controller.
+ * Perfil controller.
  *
- * @Route("/sector")
+ * @Route("/perfil")
  */
-class SectorController extends Controller
+class PerfilController extends Controller
 {
 
     /**
-     * Lists all Sector entities.
+     * Lists all Perfil entities.
      *
-     * @Route("/", name="sector")
+     * @Route("/", name="perfil")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +29,22 @@ class SectorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BackendBundle:Sector')->findAll();
+        $entities = $em->getRepository('BackendBundle:Perfil')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new Sector entity.
+     * Creates a new Perfil entity.
      *
-     * @Route("/", name="sector_create")
+     * @Route("/", name="perfil_create")
      * @Method("POST")
-     * @Template("BackendBundle:Sector:new.html.twig")
+     * @Template("BackendBundle:Perfil:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Sector();
+        $entity = new Perfil();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +53,7 @@ class SectorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sector_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('perfil_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,34 +63,34 @@ class SectorController extends Controller
     }
 
     /**
-    * Creates a form to create a Sector entity.
+    * Creates a form to create a Perfil entity.
     *
-    * @param Sector $entity The entity
+    * @param Perfil $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Sector $entity)
+    private function createCreateForm(Perfil $entity)
     {
-        $form = $this->createForm(new SectorType(), $entity, array(
-            'action' => $this->generateUrl('sector_create'),
+        $form = $this->createForm(new PerfilType(), $entity, array(
+            'action' => $this->generateUrl('perfil_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar'));
 
         return $form;
     }
 
     /**
-     * Displays a form to create a new Sector entity.
+     * Displays a form to create a new Perfil entity.
      *
-     * @Route("/new", name="sector_new")
+     * @Route("/new", name="perfil_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Sector();
+        $entity = new Perfil();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +100,9 @@ class SectorController extends Controller
     }
 
     /**
-     * Finds and displays a Sector entity.
+     * Finds and displays a Perfil entity.
      *
-     * @Route("/{id}", name="sector_show")
+     * @Route("/{id}", name="perfil_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +110,10 @@ class SectorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BackendBundle:Sector')->find($id);
+        $entity = $em->getRepository('BackendBundle:Perfil')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sector entity.');
+            throw $this->createNotFoundException('Unable to find Perfil entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +125,9 @@ class SectorController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Sector entity.
+     * Displays a form to edit an existing Perfil entity.
      *
-     * @Route("/{id}/edit", name="sector_edit")
+     * @Route("/{id}/edit", name="perfil_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +135,10 @@ class SectorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BackendBundle:Sector')->find($id);
+        $entity = $em->getRepository('BackendBundle:Perfil')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sector entity.');
+            throw $this->createNotFoundException('Unable to find Perfil entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +152,16 @@ class SectorController extends Controller
     }
 
     /**
-    * Creates a form to edit a Sector entity.
+    * Creates a form to edit a Perfil entity.
     *
-    * @param Sector $entity The entity
+    * @param Perfil $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Sector $entity)
+    private function createEditForm(Perfil $entity)
     {
-        $form = $this->createForm(new SectorType(), $entity, array(
-            'action' => $this->generateUrl('sector_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new PerfilType(), $entity, array(
+            'action' => $this->generateUrl('perfil_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +170,20 @@ class SectorController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Sector entity.
+     * Edits an existing Perfil entity.
      *
-     * @Route("/{id}", name="sector_update")
+     * @Route("/{id}", name="perfil_update")
      * @Method("PUT")
-     * @Template("BackendBundle:Sector:edit.html.twig")
+     * @Template("BackendBundle:Perfil:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BackendBundle:Sector')->find($id);
+        $entity = $em->getRepository('BackendBundle:Perfil')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sector entity.');
+            throw $this->createNotFoundException('Unable to find Perfil entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +193,7 @@ class SectorController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sector_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('perfil_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +203,9 @@ class SectorController extends Controller
         );
     }
     /**
-     * Deletes a Sector entity.
+     * Deletes a Perfil entity.
      *
-     * @Route("/{id}", name="sector_delete")
+     * @Route("/{id}", name="perfil_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +215,21 @@ class SectorController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BackendBundle:Sector')->find($id);
+            $entity = $em->getRepository('BackendBundle:Perfil')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Sector entity.');
+                throw $this->createNotFoundException('Unable to find Perfil entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('sector'));
+        return $this->redirect($this->generateUrl('perfil_listado'));
     }
 
     /**
-     * Creates a form to delete a Sector entity by id.
+     * Creates a form to delete a Perfil entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +238,7 @@ class SectorController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('sector_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('perfil_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
