@@ -28,4 +28,9 @@ sector:
 
 perfil:
     resource: "@BackendBundle/Resources/config/routing/perfil.yml"
-    prefix:   /perfil      
+    prefix:   /perfil  
+
+tecnico:
+    resource: "@BackendBundle/Resources/config/routing/tecnico.yml"
+    prefix:   /tecnico      
+      

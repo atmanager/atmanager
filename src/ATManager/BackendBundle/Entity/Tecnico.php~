@@ -2,44 +2,41 @@
 
 namespace ATManager\BackendBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+// Assert = controles de validacion sobre los atributos de clases en vez
+// de validar en el formulario
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
- * Tecnico
- *
- * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Table
  */
-class Tecnico
+class Tecnico extends BaseUser
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
-    /**
-     * @var string
+      /**
+     * @var String
      *
-     * @ORM\Column(name="cedula", type="string", length=12)
+     * @ORM\Column(name="documento", type="string", length=12, unique=true)
+     * @Assert\NotBlank()
      */
-    private $cedula;
+    private $documento;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="apellido", type="string", length=60)
-     */
-    private $apellido;
-
+   
     /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=60)
-     */
+     * @Assert\NotBlank()
+    */
     private $nombre;
 
     /**
@@ -47,57 +44,37 @@ class Tecnico
      */
     private $sector;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Perfil")
-     */
-    private $perfil;
-
+    
     /**
      * @var string
      *
-     * @ORM\Column(name="movil", type="string", length=14)
+     * @ORM\Column(name="movil", type="string", length=14, nullable=true)
      */
     private $movil;
 
-    /**
-     * @var string
+
+     /**
+     * @var datetime
      *
-     * @ORM\Column(name="correo", type="string", length=100)
+     * @ORM\Column(name="fechaUltimaActualizacion", type="datetime", nullable=true)
      */
-    private $correo;
+    private $fechaUltimaActualizacion;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=50)
-     */
-    private $login;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=64)
-     */
-    private $password;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="habilita", type="boolean")
-     */
-    private $habilita;
-
-    public function __construct(){
-        $this->habilita = true;  // produce que aparezca en el form inicializado
-    }
-
-    /*
+   
+     /*
     mis metodos
     */
 
-    public function __toString(){
-        return getApellido()." ".$this->getNombre();
+   public function __construct() {
+        parent::__construct();
+    
     }
+
+    public function __toString(){
+        return getNombre();
+    }
+
     /**
      * Get id
      *
@@ -109,49 +86,26 @@ class Tecnico
     }
 
     /**
-     * Set cedula
+     * Set documento
      *
-     * @param string $cedula
+     * @param string $documento
      * @return Tecnico
      */
-    public function setCedula($cedula)
+    public function setDocumento($documento)
     {
-        $this->cedula = $cedula;
+        $this->documento = $documento;
 
         return $this;
     }
 
     /**
-     * Get cedula
+     * Get documento
      *
      * @return string 
      */
-    public function getCedula()
+    public function getDocumento()
     {
-        return $this->cedula;
-    }
-
-    /**
-     * Set apellido
-     *
-     * @param string $apellido
-     * @return Tecnico
-     */
-    public function setApellido($apellido)
-    {
-        $this->apellido = $apellido;
-
-        return $this;
-    }
-
-    /**
-     * Get apellido
-     *
-     * @return string 
-     */
-    public function getApellido()
-    {
-        return $this->apellido;
+        return $this->documento;
     }
 
     /**
@@ -201,98 +155,6 @@ class Tecnico
     }
 
     /**
-     * Set correo
-     *
-     * @param string $correo
-     * @return Tecnico
-     */
-    public function setCorreo($correo)
-    {
-        $this->correo = $correo;
-
-        return $this;
-    }
-
-    /**
-     * Get correo
-     *
-     * @return string 
-     */
-    public function getCorreo()
-    {
-        return $this->correo;
-    }
-
-    /**
-     * Set login
-     *
-     * @param string $login
-     * @return Tecnico
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    /**
-     * Get login
-     *
-     * @return string 
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return Tecnico
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set habilita
-     *
-     * @param boolean $habilita
-     * @return Tecnico
-     */
-    public function setHabilita($habilita)
-    {
-        $this->habilita = $habilita;
-
-        return $this;
-    }
-
-    /**
-     * Get habilita
-     *
-     * @return boolean 
-     */
-    public function getHabilita()
-    {
-        return $this->habilita;
-    }
-
-    /**
      * Set sector
      *
      * @param \ATManager\BackendBundle\Entity\Sector $sector
@@ -315,26 +177,5 @@ class Tecnico
         return $this->sector;
     }
 
-    /**
-     * Set perfil
-     *
-     * @param \ATManager\BackendBundle\Entity\Perfil $perfil
-     * @return Tecnico
-     */
-    public function setPerfil(\ATManager\BackendBundle\Entity\Perfil $perfil = null)
-    {
-        $this->perfil = $perfil;
-
-        return $this;
-    }
-
-    /**
-     * Get perfil
-     *
-     * @return \ATManager\BackendBundle\Entity\Perfil 
-     */
-    public function getPerfil()
-    {
-        return $this->perfil;
-    }
+    
 }

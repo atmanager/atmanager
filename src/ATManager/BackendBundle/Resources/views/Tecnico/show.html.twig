@@ -1,0 +1,62 @@
+{% extends 'BackendBundle::base_backend.html.twig' %}
+
+{% block content %}
+    <h3>Visualizar Tecnico</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+
+            <tr>
+                <th>Nombre de usuario</th>
+                <td>{{ entity.username }}</td>
+            </tr>
+
+             <tr>
+                <th>Password</th>
+                <td>{{ entity.password }}</td>
+            </tr>
+
+             <tr>
+                <th>Movil</th>
+                <td>{{ entity.movil }}</td>
+            </tr>
+
+             <tr>
+                <th>Correo electrónico</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+            
+            <tr>
+                <th>Sectores</th>
+
+                <td>{% for sector in entity.sector %} 
+                    <p>{{ sector }}</p>
+                    {% endfor %}
+                </td>
+            
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('tecnico_listado') }}">
+            Regresar a listado
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('tecnico_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

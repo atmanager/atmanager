@@ -87,3 +87,8 @@ knp_paginator:
 
 braincrafted_bootstrap:
     less_filter: less          
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: ATManager\BackendBundle\Entity\Tecnico

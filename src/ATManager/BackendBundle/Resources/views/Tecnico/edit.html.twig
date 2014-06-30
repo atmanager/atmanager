@@ -1,0 +1,16 @@
+{% extends 'BackendBundle::base_backend.html.twig' %}
+
+{% block content %}
+    <h3>Editando Tecnico</h3>
+
+    {{ form(form, {'style':'horizontal'}) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('tecnico_listado') }}">
+            Regresar a listado
+        </a>
+    </li>
+    <li>{{ form(form) }}</li>
+</ul>
+{% endblock %}

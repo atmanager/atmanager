@@ -1,0 +1,43 @@
+{% extends 'BackendBundle::base_backend.html.twig' %}
+
+{% block content %}
+    <h3>listado de técnicos</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Login de usuario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in tecnicos %}
+            <tr>
+                <td><a href="{{ path('tecnico_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.documento }}</td>
+                <td>{{ entity.username }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('tecnico_show', { 'id': entity.id }) }}">Ver</a>
+                         <a href="{{ path('tecnico_edit', { 'id': entity.id }) }}">Editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('tecnico_new') }}">
+                Crear nuevo técnico
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
