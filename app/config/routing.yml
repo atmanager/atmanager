@@ -1,6 +1,6 @@
+
 #definicion de una ruta, en este caso es el inicio (viejo index.php)
 # de la aplicacion
-
 
 portada:
     pattern:  /portada/
@@ -26,6 +26,10 @@ patrimonio:
 backend:
     resource: "@BackendBundle/Resources/config/routing.yml"
     prefix:   /backend
+
+frontend:
+    resource: "@FrontendBundle/Resources/config/routing.yml"
+    prefix:   /frontend    
 
 
 fos_user_security:

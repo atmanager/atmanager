@@ -34,7 +34,7 @@ class TecnicoController extends Controller
 
 
    public function newAction(Request $request){
-        $userManager = $this->container->get('fos_user.user_manager');
+        $userManager = $this->container->get('fos_user.user_manager');  // declarado en security.yml
         $entity = $userManager->createUser();
 
         $form = $this->createForm(new TecnicoNewType());

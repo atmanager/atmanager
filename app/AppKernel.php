@@ -20,7 +20,8 @@ class AppKernel extends Kernel
             new ATManager\PatrimonioBundle\PatrimonioBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),  # este bundle es externo a symfony, se agrega a mano
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(), # Hoja estilo
-             new FOS\UserBundle\FOSUserBundle() # clase user, login
+            new FOS\UserBundle\FOSUserBundle(), # clase user, login,
+            new ATManager\FrontendBundle\FrontendBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %} 
 
-         <h3 class="title">Bienvenidos!</h3>
+         <h3 class="title">Bienvenido</h3>
          {% if app.user %}
          {{ app.user.nombre }}
          <a href="{{ path('fos_user_security_logout')}}">logout</a> 

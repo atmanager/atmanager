@@ -41,7 +41,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Moviles</a>
+        
           </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -72,7 +72,7 @@
             <li><a href="{{ path('inicio')}}">Inicio</a></li>
             <li class="dropdown">
              <a href="#"  class="active" class="dropdown-toggle" data-toggle="dropdown">AsistenciasTécnicas <b class="caret"></b></a>  <ul class="dropdown-menu">
-                <li><a href="#">Solicitar</a></li>
+                <li><a href="{{path('frontend_inicial')}}">Solicitar</a></li>
                 <li><a href="#">Reclamar</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Seguimiento</a></li>
@@ -110,6 +110,8 @@
         <a href="{{ path('pagina_estatica', { 'pagina': 'contacto' }) }}">[Contacto]</a>
         <a href="{{ path('pagina_estatica', { 'pagina': 'privacidad' }) }}">[Privacidad]</a>
         <a href="{{ path('pagina_estatica', { 'pagina': 'sobre-nosotros' }) }}">[Sobre el Proyecto]</a>
+        <a href="{{ path('fos_user_security_login')}}">[Inicio Sesión]</a>
+        <a href="{{ path('fos_user_security_logout')}}">[Fin Sesión]</a>
         </p>
       </footer>
 
