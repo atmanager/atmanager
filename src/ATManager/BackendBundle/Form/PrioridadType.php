@@ -5,9 +5,8 @@ namespace ATManager\BackendBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
 
-class FallaType extends AbstractType
+class PrioridadType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -17,18 +16,6 @@ class FallaType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('descripamplia')
-            ->add('estado')
-            ->add('sector','entity', array(
-                'class' => 'BackendBundle:Sector',
-                'multiple'=>true,
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('s')
-                    ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
-                    ->setParameter('destino',true)
-                    ;
-                },
-            ))
         ;
     }
     
@@ -38,7 +25,7 @@ class FallaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ATManager\BackendBundle\Entity\Falla'
+            'data_class' => 'ATManager\BackendBundle\Entity\Prioridad'
         ));
     }
 
@@ -47,6 +34,6 @@ class FallaType extends AbstractType
      */
     public function getName()
     {
-        return 'atmanager_backendbundle_falla';
+        return 'atmanager_backendbundle_prioridad';
     }
 }

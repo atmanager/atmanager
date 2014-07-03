@@ -1,0 +1,100 @@
+<?php
+
+namespace ATManager\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+/**
+ * At
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="ATManager\FrontendBundle\Entity\AtRepository")
+ */
+class At
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="numero", type="integer")
+     * @Assert\GreaterThanOrEqual(value=0)
+     */
+    private $numero;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechasolicitud", type="datetime")
+     */
+    private $fechasolicitud;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechafin", type="datetime", nullable=true)
+     */
+    private $fechafin;
+
+    /** 
+     *   @ORM\ManyToOne(targetEntity="ATManager\PatrimonioBundle\Entity\Patrimonio") 
+    */
+    private $patrimonio;
+
+    /** 
+     *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Sector") 
+    */
+    private $sectorsolicita;
+
+    /** 
+     *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Sector") 
+    */
+    private $sectordestino;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="personasolicita", type="string", length=100)
+     * @Assert\NotBlank()
+     */
+    private $personasolicita;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ipsolicita", type="string", length=15)
+     */
+    private $ipsolicita;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hostsolicita", type="string", length=100)
+     */
+    private $hostsolicita;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $descripcion;
+
+    /** 
+     *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Prioridad") 
+    */
+    private $prioridad;
+
+    public function __construct(){
+        $this->fechasolicitud= new \DateTime();
+    }
+
+}

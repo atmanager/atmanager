@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>At list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Fechasolicitud</th>
+                <th>Fechafin</th>
+                <th>Personasolicita</th>
+                <th>Ipsolicita</th>
+                <th>Hostsolicita</th>
+                <th>Descripcion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('at_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.numero }}</td>
+                <td>{% if entity.fechasolicitud %}{{ entity.fechasolicitud|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechafin %}{{ entity.fechafin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.personasolicita }}</td>
+                <td>{{ entity.ipsolicita }}</td>
+                <td>{{ entity.hostsolicita }}</td>
+                <td>{{ entity.descripcion }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('at_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('at_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('at_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

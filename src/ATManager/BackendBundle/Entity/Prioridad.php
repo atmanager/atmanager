@@ -3,14 +3,14 @@
 namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
- * Local
+ * Prioridad
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Local
+class Prioridad
 {
     /**
      * @var integer
@@ -24,30 +24,16 @@ class Local
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=45, unique=true)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="codigointerno", type="string", length=10)
-     */
-    private $codigointerno;
-
-
     public function __construct(){
-        
     }
-
-    /*
-    mis metodos
-    */
-
     public function __toString(){
-        return " ".$this->getNombre();
+        return $this->getNombre();
     }
-
     /**
      * Get id
      *
@@ -62,7 +48,7 @@ class Local
      * Set nombre
      *
      * @param string $nombre
-     * @return Local
+     * @return Prioridad
      */
     public function setNombre($nombre)
     {
@@ -79,28 +65,5 @@ class Local
     public function getNombre()
     {
         return $this->nombre;
-    }
-
-    /**
-     * Set codigointerno
-     *
-     * @param string $codigointerno
-     * @return Local
-     */
-    public function setCodigointerno($codigointerno)
-    {
-        $this->codigointerno = $codigointerno;
-
-        return $this;
-    }
-
-    /**
-     * Get codigointerno
-     *
-     * @return string 
-     */
-    public function getCodigointerno()
-    {
-        return $this->codigointerno;
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace ATManager\BackendBundle\Tests\Controller;
+namespace ATManager\FrontendBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PerfilControllerTest extends WebTestCase
+class AtControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class PerfilControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/perfil/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /perfil/");
+        $crawler = $client->request('GET', '/at/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /at/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'atmanager_backendbundle_perfiltype[field_name]'  => 'Test',
+            'atmanager_frontendbundle_attype[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class PerfilControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'atmanager_backendbundle_perfiltype[field_name]'  => 'Foo',
+            'atmanager_frontendbundle_attype[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

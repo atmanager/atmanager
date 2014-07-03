@@ -1,0 +1,15 @@
+{% extends 'BackendBundle::base_backend.html.twig' %} 
+
+{% block content %}
+    <h1>Prioridad creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('prioridad_listado') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

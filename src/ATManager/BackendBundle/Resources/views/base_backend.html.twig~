@@ -14,7 +14,7 @@
             <a href="#" class="list-group-item">Repuestos e Insumos</a>
             <a href="#" class="list-group-item">Servicios de Terceros</a>
             <a href="#" class="list-group-item">Proveedores</a>
-	    <a href="{{ path('prioridad_listado')}}" class="list-group-item">Prioridades</a>	
+
             <a href="{{ path('sectortipo_listado')}}" class="list-group-item">Tipo de Sectores</a>
             <a href="{{ path('sector_listado')}}" class="list-group-item">Sectores</a>
           </div>

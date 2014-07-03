@@ -1,12 +1,12 @@
 <?php
 
-namespace ATManager\BackendBundle\Form;
+namespace ATManager\FrontendBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PerfilType extends AbstractType
+class AtType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,8 +15,17 @@ class PerfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('numero')
+            ->add('fechasolicitud')
+            ->add('fechafin')
+            ->add('personasolicita')
+            ->add('ipsolicita')
+            ->add('hostsolicita')
             ->add('descripcion')
-            ->add('comentario')
+            ->add('patrimonio')
+            ->add('sectorsolicita')
+            ->add('sectordestino')
+            ->add('prioridad')
         ;
     }
     
@@ -26,7 +35,7 @@ class PerfilType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ATManager\BackendBundle\Entity\Perfil'
+            'data_class' => 'ATManager\FrontendBundle\Entity\At'
         ));
     }
 
@@ -35,6 +44,6 @@ class PerfilType extends AbstractType
      */
     public function getName()
     {
-        return 'atmanager_backendbundle_perfil';
+        return 'atmanager_frontendbundle_at';
     }
 }
