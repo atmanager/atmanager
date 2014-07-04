@@ -4,16 +4,13 @@ namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use ATManager\BackendBundle\Entity\Prioridad;
 use ATManager\BackendBundle\Form\PrioridadType;
 
 /**
  * Prioridad controller.
  *
- * @Route("/prioridad")
  */
 class PrioridadController extends Controller
 {
@@ -21,9 +18,6 @@ class PrioridadController extends Controller
     /**
      * Lists all Prioridad entities.
      *
-     * @Route("/", name="prioridad")
-     * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
@@ -31,16 +25,13 @@ class PrioridadController extends Controller
 
         $entities = $em->getRepository('BackendBundle:Prioridad')->findAll();
 
-        return array(
+        return $this->render('BackendBundle:Prioridad:index.html.twig', array(
             'entities' => $entities,
-        );
+        ));
     }
     /**
      * Creates a new Prioridad entity.
      *
-     * @Route("/", name="prioridad_create")
-     * @Method("POST")
-     * @Template("BackendBundle:Prioridad:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -56,10 +47,10 @@ class PrioridadController extends Controller
             return $this->redirect($this->generateUrl('prioridad_show', array('id' => $entity->getId())));
         }
 
-        return array(
+        return $this->render('BackendBundle:Prioridad:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
@@ -72,7 +63,7 @@ class PrioridadController extends Controller
     private function createCreateForm(Prioridad $entity)
     {
         $form = $this->createForm(new PrioridadType(), $entity, array(
-            'action' => $this->generateUrl('prioridad_new'),
+            'action' => $this->generateUrl('prioridad_create'),
             'method' => 'POST',
         ));
 
@@ -84,27 +75,21 @@ class PrioridadController extends Controller
     /**
      * Displays a form to create a new Prioridad entity.
      *
-     * @Route("/new", name="prioridad_new")
-     * @Method("GET")
-     * @Template()
      */
     public function newAction()
     {
         $entity = new Prioridad();
         $form   = $this->createCreateForm($entity);
 
-        return array(
+        return $this->render('BackendBundle:Prioridad:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
      * Finds and displays a Prioridad entity.
      *
-     * @Route("/{id}", name="prioridad_show")
-     * @Method("GET")
-     * @Template()
      */
     public function showAction($id)
     {
@@ -118,18 +103,14 @@ class PrioridadController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('BackendBundle:Prioridad:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+            'delete_form' => $deleteForm->createView(),        ));
     }
 
     /**
      * Displays a form to edit an existing Prioridad entity.
      *
-     * @Route("/{id}/edit", name="prioridad_edit")
-     * @Method("GET")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -144,11 +125,11 @@ class PrioridadController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('BackendBundle:Prioridad:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -172,9 +153,6 @@ class PrioridadController extends Controller
     /**
      * Edits an existing Prioridad entity.
      *
-     * @Route("/{id}", name="prioridad_update")
-     * @Method("PUT")
-     * @Template("BackendBundle:Prioridad:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -196,17 +174,15 @@ class PrioridadController extends Controller
             return $this->redirect($this->generateUrl('prioridad_edit', array('id' => $id)));
         }
 
-        return array(
+        return $this->render('BackendBundle:Prioridad:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
     /**
      * Deletes a Prioridad entity.
      *
-     * @Route("/{id}", name="prioridad_delete")
-     * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
     {

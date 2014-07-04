@@ -27,4 +27,4 @@ prioridad_update:
 prioridad_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Prioridad:delete" }
-    requirements: { _method: post|delete }    
+    requirements: { _method: post|delete }

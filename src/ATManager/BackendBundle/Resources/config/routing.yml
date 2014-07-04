@@ -35,6 +35,6 @@ tecnico:
     prefix:   /tecnico  
 
 prioridad:
-    resource: "@BackendBundle/Resources/config/routing/prioridad.yml"
-    prefix:   /prioridad      
+        resource: "@BackendBundle/Resources/config/routing/prioridad.yml"
+        prefix:   /prioridad
       

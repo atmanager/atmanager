@@ -1,15 +1,9 @@
-at_listado:
-    pattern:  /
-    defaults: { _controller: FrontendBundle:At:index }
 
-at_nuevo:
+at_new:
     pattern:  /new
     defaults: { _controller: FrontendBundle:At:new }
 
-at_editar:
-    pattern:  /edit/{id}
-    defaults: { _controller: FrontendBundle:At:edit }    
-
-at_eliminar:
-    pattern:  /delete/{id}
-    defaults: { _controller: FrontendBundle:At:delete }
+at_show:
+    pattern:  /show/{id}
+    defaults: { _controller: FrontendBundle:At:show }    
+    

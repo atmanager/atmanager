@@ -4,6 +4,7 @@ namespace ATManager\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * At
  *
@@ -24,7 +25,7 @@ class At
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero", type="integer")
+     * @ORM\Column(name="numero", type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(value=0)
      */
     private $numero;
@@ -50,11 +51,15 @@ class At
 
     /** 
      *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Sector") 
+     *   @ORM\JoinColumn(nullable=false)
+     *   @Assert\NotNull()
     */
     private $sectorsolicita;
 
     /** 
      *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Sector") 
+     *   @ORM\JoinColumn(nullable=false)
+     *   @Assert\NotNull()
     */
     private $sectordestino;
 
@@ -69,14 +74,14 @@ class At
     /**
      * @var string
      *
-     * @ORM\Column(name="ipsolicita", type="string", length=15)
+     * @ORM\Column(name="ipsolicita", type="string", length=15, nullable=true)
      */
     private $ipsolicita;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="hostsolicita", type="string", length=100)
+     * @ORM\Column(name="hostsolicita", type="string", length=100, nullable=true)
      */
     private $hostsolicita;
 

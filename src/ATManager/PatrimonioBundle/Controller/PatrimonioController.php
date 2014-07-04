@@ -3,6 +3,7 @@
 namespace ATManager\PatrimonioBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use ATManager\PatrimonioBundle\Entity\Patrimonio;
@@ -143,6 +144,24 @@ class PatrimonioController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
     }
+
+
+    public function existeAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('PatrimonioBundle:Patrimonio')->find($id);
+
+        if (!$entity) {
+            return new Response('Error',400);
+            
+        }
+
+        $data = array('descripcion'=>$entity->getDescripcion());
+        return new Response(json_encode($data),200);
+       
+    }
+
 
     /**
      * Displays a form to edit an existing Patrimonio entity.

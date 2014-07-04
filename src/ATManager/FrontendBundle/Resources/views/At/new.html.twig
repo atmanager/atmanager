@@ -1,15 +1,33 @@
-{% extends '::base.html.twig' %}
+{% extends 'FrontendBundle::base_frontend.html.twig' %} 
+{% block title %} Solicitud de AT {% endblock %}       
+{% block content %}
+<h3> Nuevo Pedido </h3>
 
-{% block body -%}
-    <h1>At creation</h1>
 
-    {{ form(form) }}
+{{ form(form)}}
+<a href="{{path('patrimonio_existe')}}" id="consulta"> Consultar </a>
+<p id="descripcion"> </p>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('at') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">$(document).ready(function(){
+	$('#consulta').on('click',function(){ 
+	$.ajax({
+	url: $(this).attr('href')+"/"+$('#atmanager_frontendbundle_at_patrimonio').val(),
+	dataType: "json",
+	error: function(jqXHR,textstatus){
+
+	},
+	success: function(data, textstatus){
+		console.log(data);
+		$('#descripcion').html(data.descripcion);
+	}
+	});
+	return false;
+	});
+
+});</script>
+
 {% endblock %}

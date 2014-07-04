@@ -28,3 +28,9 @@ patrimonio_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "PatrimonioBundle:Patrimonio:delete" }
     requirements: { _method: post|delete }
+
+patrimonio_existe:
+    pattern:  /existe/{id}
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:existe", id:null }
+    
+

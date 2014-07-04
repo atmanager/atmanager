@@ -1,6 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends 'BackendBundle::base_backend.html.twig' %}
 
-{% block body -%}
+{% block content %}
     <h1>Prioridad</h1>
 
     <table class="record_properties">
@@ -18,7 +18,7 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('prioridad') }}">
+        <a href="{{ path('prioridad_listado') }}">
             Back to the list
         </a>
     </li>
