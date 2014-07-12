@@ -1,0 +1,41 @@
+{% extends 'BackendBundle::base_backend.html.twig' %}
+
+{% block content %}
+    <h3>Visualizando Estadios</h3>
+
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Comentario</th>
+                <td>{{ entity.comentario }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ entity.estado }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+          
+        <a href="{{ path('estadio_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+
+        <a href="{{ path('estadio') }}">
+            Retornar a listado
+        </a>
+    
+    </li>
+    
+</ul>
+{% endblock %}

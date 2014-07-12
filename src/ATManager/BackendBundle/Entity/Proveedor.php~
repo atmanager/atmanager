@@ -1,0 +1,86 @@
+<?php
+
+namespace ATManager\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+/**
+ * Proveedor
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Proveedor
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cuit", type="string", length=13, unique=true,nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $cuit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=80, unique=true,nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="calle", type="string", length=80, nullable=true)
+     */
+    private $calle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="puerta", type="string", length=25, nullable=true)
+     */
+    private $puerta;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=25, nullable=true)
+     */
+    private $telefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correo", type="string", length=50, nullable=true)
+     */
+    private $correo;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="comentario", type="text", length=50, nullable=true)
+     */
+    private $comentario;
+
+      public function __construct(){
+        
+    }
+
+    /*
+    mis metodos
+    */
+
+    public function __toString(){
+        return " ".$this->getNombre();
+    }
+}

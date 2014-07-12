@@ -1,0 +1,28 @@
+{% extends 'FrontendBundle::base_frontend.html.twig' %}
+
+
+{% block content %}
+    <h3>Visualizar AT</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="">
+            Regresar a 
+        </a>
+    </li>
+   
+</ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+serviciotercero:
+    pattern:  /
+    defaults: { _controller: "BackendBundle:ServicioTercero:index" }
+
+serviciotercero_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BackendBundle:ServicioTercero:show" }
+
+serviciotercero_new:
+    pattern:  /new
+    defaults: { _controller: "BackendBundle:ServicioTercero:new" }
+
+serviciotercero_create:
+    pattern:  /create
+    defaults: { _controller: "BackendBundle:ServicioTercero:create" }
+    requirements: { _method: post }
+
+serviciotercero_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BackendBundle:ServicioTercero:edit" }
+
+serviciotercero_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BackendBundle:ServicioTercero:update" }
+    requirements: { _method: post|put }
+
+serviciotercero_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BackendBundle:ServicioTercero:delete" }
+    requirements: { _method: post|delete }

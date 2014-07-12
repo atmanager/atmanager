@@ -1,0 +1,30 @@
+rol:
+    pattern:  /
+    defaults: { _controller: "BackendBundle:Rol:index" }
+
+rol_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BackendBundle:Rol:show" }
+
+rol_new:
+    pattern:  /new
+    defaults: { _controller: "BackendBundle:Rol:new" }
+
+rol_create:
+    pattern:  /create
+    defaults: { _controller: "BackendBundle:Rol:create" }
+    requirements: { _method: post }
+
+rol_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BackendBundle:Rol:edit" }
+
+rol_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BackendBundle:Rol:update" }
+    requirements: { _method: post|put }
+
+rol_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BackendBundle:Rol:delete" }
+    requirements: { _method: post|delete }

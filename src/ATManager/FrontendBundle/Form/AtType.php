@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use ATManager\FrontendBundle\Form\DataTransformer\PatrimonioToNumberTransformer;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class AtType extends AbstractType
 {
@@ -24,20 +26,57 @@ class AtType extends AbstractType
         $builder
                    
             
-            ->add('personasolicita')
-            ->add('descripcion')
-            #->add('patrimonio')
-            ->add('sectorsolicita')
-            ->add('sectordestino')
-            ->add('prioridad')
-        ;
-        $entityManager = $this->em;
-        $transformer = new PatrimonioToNumberTransformer($entityManager);
-        $builder->add(
-            $builder->create('patrimonio', 'text', array('required'=>false))
-                ->addModelTransformer($transformer)
+            ->add('personasolicita','text', array(
+            'label'=>'[*] Apellido y Nombre del Solicitante :'
+            ))
+            ->add('descripcion','textarea', array(
+            'label'=>'[*] Describa cual es el sintoma/problema observado: '
+            ))
+            
+           ->add('sectorsolicita','entity', array(
+                'label'=>'[*] Sector de origen : ',
+                'class' => 'BackendBundle:Sector',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('s')
+                    ->innerJoin('s.tipo','t', 'WITH', 't.origen = :origen')
+                    ->setParameter('origen',true)
+                    ;
+                },
+            ))
 
-        );
+            
+            ->add('sectordestino','entity', array(
+                'label'=>'[*] Para sector técnico : ',
+                'class' => 'BackendBundle:Sector',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('s')
+                    ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
+                    ->setParameter('destino',true)
+                    ;
+                },
+            ))
+            
+
+            ->add('prioridad','entity', array(
+                'label'=>'Escoja una prioridad',
+                'class' => 'BackendBundle:Prioridad'
+                
+            ));
+            
+                #->add('patrimonio')
+                $entityManager = $this->em;
+                $transformer = new PatrimonioToNumberTransformer($entityManager);
+                $builder->add(
+                    $builder->create('patrimonio', 'text', array(
+                        'required'=>false,
+                        'label'=>'Ingrese número de Patrimonio [Dejar en blanco si no corresponde]'
+             ))
+            
+            ->addModelTransformer($transformer)
+
+            );
+
+
     }
     
     /**

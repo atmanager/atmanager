@@ -1,0 +1,30 @@
+estadioclasif:
+    pattern:  /
+    defaults: { _controller: "BackendBundle:EstadioClasif:index" }
+
+estadioclasif_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BackendBundle:EstadioClasif:show" }
+
+estadioclasif_new:
+    pattern:  /new
+    defaults: { _controller: "BackendBundle:EstadioClasif:new" }
+
+estadioclasif_create:
+    pattern:  /create
+    defaults: { _controller: "BackendBundle:EstadioClasif:create" }
+    requirements: { _method: post }
+
+estadioclasif_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BackendBundle:EstadioClasif:edit" }
+
+estadioclasif_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BackendBundle:EstadioClasif:update" }
+    requirements: { _method: post|put }
+
+estadioclasif_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BackendBundle:EstadioClasif:delete" }
+    requirements: { _method: post|delete }

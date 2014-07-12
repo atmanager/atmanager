@@ -1,0 +1,35 @@
+{% extends 'FrontendBundle::base_frontend.html.twig' %}
+
+
+{% block content %}
+    <h3>Historico AT de: {{ entity.id }} </h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            
+            {% for estadio in entity.getHistoricos %}
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ estadio.estadio }}</td>
+                <td>{{ estadio.fecha | date('d/m/y H:i') }}</td>
+                <td>{{ estadio.comentario }}</td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="">
+            Regresar a 
+        </a>
+    </li>
+   
+</ul>
+{% endblock %}

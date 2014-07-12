@@ -1,0 +1,30 @@
+estadio:
+    pattern:  /
+    defaults: { _controller: "BackendBundle:Estadio:index" }
+
+estadio_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BackendBundle:Estadio:show" }
+
+estadio_new:
+    pattern:  /new
+    defaults: { _controller: "BackendBundle:Estadio:new" }
+
+estadio_create:
+    pattern:  /create
+    defaults: { _controller: "BackendBundle:Estadio:create" }
+    requirements: { _method: post }
+
+estadio_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BackendBundle:Estadio:edit" }
+
+estadio_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BackendBundle:Estadio:update" }
+    requirements: { _method: post|put }
+
+estadio_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BackendBundle:Estadio:delete" }
+    requirements: { _method: post|delete }

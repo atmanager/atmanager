@@ -35,6 +35,29 @@ tecnico:
     prefix:   /tecnico  
 
 prioridad:
-        resource: "@BackendBundle/Resources/config/routing/prioridad.yml"
-        prefix:   /prioridad
-      
+    resource: "@BackendBundle/Resources/config/routing/prioridad.yml"
+    prefix:   /prioridad
+
+estadioclasif:
+    resource: "@BackendBundle/Resources/config/routing/estadioclasif.yml"
+    prefix:   /estadioclasif  
+
+estadio:
+    resource: "@BackendBundle/Resources/config/routing/estadio.yml"
+    prefix:   /estadio               
+
+rol:
+    resource: "@BackendBundle/Resources/config/routing/rol.yml"
+    prefix:   /rol
+
+repuesto:
+    resource: "@BackendBundle/Resources/config/routing/repuesto.yml"
+    prefix:   /repuesto
+
+proveedor:
+    resource: "@BackendBundle/Resources/config/routing/proveedor.yml"
+    prefix:   /proveedor
+
+serviciotercero:
+    resource: "@BackendBundle/Resources/config/routing/serviciotercero.yml"
+    prefix:   /serviciotercero

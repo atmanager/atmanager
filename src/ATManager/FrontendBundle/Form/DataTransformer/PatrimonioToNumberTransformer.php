@@ -58,7 +58,7 @@ class PatrimonioToNumberTransformer implements DataTransformerInterface
 
         if (null === $patrimonio) {
             throw new TransformationFailedException(sprintf(
-                'An issue with number "%s" does not exist!',
+                'An Patrimonio with number "%s" does not exist!',
                 $patrimonio
             ));
         }

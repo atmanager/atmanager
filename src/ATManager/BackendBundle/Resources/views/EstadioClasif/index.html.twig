@@ -1,0 +1,43 @@
+{% extends 'BackendBundle::base_backend.html.twig' %}
+
+{% block content %}
+    <h3>Listado de Clasificación de Estadios</h3>
+ <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Inicializa AT</th>
+                <th>Finaliza AT</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('estadioclasif_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.iniciaAt }}</td>
+                <td>{{ entity.finalizaAt }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('estadioclasif_show', { 'id': entity.id }) }}">Ver</a>
+                   
+                        <a href="{{ path('estadioclasif_edit', { 'id': entity.id }) }}">Editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('estadioclasif_new') }}">
+                Crear nueva Clasificación
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,11 +1,13 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %} 
 {% block title %} Solicitud de AT {% endblock %}       
 {% block content %}
-<h3> Nuevo Pedido </h3>
+<p> <h4> Nuevo Pedido de Asistencia técnica </h4> </p>
+<p> <h6> [* <em>Datos obligatorios</em> ]</h6> </p>
 
 
-{{ form(form)}}
-<a href="{{path('patrimonio_existe')}}" id="consulta"> Consultar </a>
+ {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
+
+<a href="{{path('patrimonio_existe')}}" id="consulta"> Validar patrimonio </a>
 <p id="descripcion"> </p>
 
 
@@ -18,7 +20,8 @@
 	url: $(this).attr('href')+"/"+$('#atmanager_frontendbundle_at_patrimonio').val(),
 	dataType: "json",
 	error: function(jqXHR,textstatus){
-
+		$('#descripcion').html('No existe patrimonio...');
+		//alert("No existe!!");
 	},
 	success: function(data, textstatus){
 		console.log(data);

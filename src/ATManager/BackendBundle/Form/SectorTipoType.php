@@ -11,7 +11,9 @@ class SectorTipoType extends AbstractType {
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
-	  ->add('descripcion')
+	  ->add('descripcion','text', array(
+	  	 	'label'=>'Descripcion del Tipo:'
+	  	 	))
 	  ->add('origen',null,array(
 	  	'required'=>false,
 	  	'label'=>'Acepta Origen: '

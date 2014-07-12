@@ -1,0 +1,52 @@
+<?php
+
+namespace ATManager\AtBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * AtHistorico
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="ATManager\AtBundle\Entity\AtHistoricoRepository")
+ */
+class AtHistorico
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At", inversedBy="historicos") 
+    */
+    private $at;
+
+    /**
+     *  
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Estadio") 
+     */
+    private $estadio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    private $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="text", nullable=false)
+     */
+    private $comentario;
+
+
+   }

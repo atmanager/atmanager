@@ -98,10 +98,21 @@ class At
     */
     private $prioridad;
 
-    public function __construct(){
-        $this->fechasolicitud= new \DateTime();
-    }
+    /** 
+     *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtHistorico", mappedBy="at") 
+    */
+    private $historicos;
 
+  
+
+     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fechasolicitud= new \DateTime();
+        $this->historicos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -303,7 +314,7 @@ class At
      * @param \ATManager\BackendBundle\Entity\Sector $sectorsolicita
      * @return At
      */
-    public function setSectorsolicita(\ATManager\BackendBundle\Entity\Sector $sectorsolicita = null)
+    public function setSectorsolicita(\ATManager\BackendBundle\Entity\Sector $sectorsolicita)
     {
         $this->sectorsolicita = $sectorsolicita;
 
@@ -326,7 +337,7 @@ class At
      * @param \ATManager\BackendBundle\Entity\Sector $sectordestino
      * @return At
      */
-    public function setSectordestino(\ATManager\BackendBundle\Entity\Sector $sectordestino = null)
+    public function setSectordestino(\ATManager\BackendBundle\Entity\Sector $sectordestino)
     {
         $this->sectordestino = $sectordestino;
 
@@ -365,4 +376,39 @@ class At
     {
         return $this->prioridad;
     }
+
+    /**
+     * Add historicos
+     *
+     * @param \ATManager\AtBundle\Entity\AtHistorico $historicos
+     * @return At
+     */
+    public function addHistorico(\ATManager\AtBundle\Entity\AtHistorico $historicos)
+    {
+        $this->historicos[] = $historicos;
+
+        return $this;
+    }
+
+    /**
+     * Remove historicos
+     *
+     * @param \ATManager\AtBundle\Entity\AtHistorico $historicos
+     */
+    public function removeHistorico(\ATManager\AtBundle\Entity\AtHistorico $historicos)
+    {
+        $this->historicos->removeElement($historicos);
+    }
+
+    /**
+     * Get historicos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getHistoricos()
+    {
+        return $this->historicos;
+    }
+  
+
 }

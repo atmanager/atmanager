@@ -1,0 +1,66 @@
+<?php
+
+namespace ATManager\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Estadio
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Estadio
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=50, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="text")
+     */
+    private $comentario;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\EstadioClasif")
+     */
+    private $clasificacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="estado", type="boolean", nullable=true)
+     */
+    private $estado;
+
+     public function __construct(){
+        
+    }
+
+    /*
+    mis metodos
+    */
+
+    public function __toString(){
+        return " ".$this->getNombre();
+    }
+
+
+    
+}

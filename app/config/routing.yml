@@ -1,3 +1,7 @@
+at:
+    resource: "@AtBundle/Resources/config/routing.yml"
+    prefix:   /
+
 
 #definicion de una ruta, en este caso es el inicio (viejo index.php)
 # de la aplicacion

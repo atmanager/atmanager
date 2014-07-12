@@ -1,0 +1,16 @@
+{% extends 'BackendBundle::base_backend.html.twig' %}
+
+{% block content %}
+    <h1>Proveedor edit</h1>
+
+	{{ form(edit_form,{'attr': {'novalidate':'novalidate'}} )}}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('proveedor') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
