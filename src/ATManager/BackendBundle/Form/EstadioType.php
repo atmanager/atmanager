@@ -18,7 +18,8 @@ class EstadioType extends AbstractType
             ->add('nombre')
             ->add('comentario')
             ->add('clasificacion')
-             ->add('estado')
+            ->add('estado')
+            ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
     

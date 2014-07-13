@@ -3,6 +3,7 @@
 namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Validator\Constraints as Assert;
 
 # indicar en el createForm (newAction) que tipo de form es
 use ATManager\BackendBundle\Form\MarcaType; 
@@ -60,11 +61,19 @@ class MarcaController extends Controller
 
         if ($form->isValid())
         {
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($objMarca);
-          $em->flush();
-          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-          return $this->redirect($this->generateUrl('marca_listado'));
+
+          try{
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($objMarca);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
+            return $this->redirect($this->generateUrl('marca_listado'));
+          }
+          catch(\Exception $e){
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item');  
+            return $this->redirect($this->generateUrl('marca_listado'));
+          }
+
 
         }
         
@@ -99,19 +108,20 @@ class MarcaController extends Controller
 
     #    borrar
     public function deleteAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $objMarca = $em->getRepository('BackendBundle:Marca')->find($id);
-        
+    {                
         try{
+            $em = $this->getDoctrine()->getManager();
+            $objMarca = $em->getRepository('BackendBundle:Marca')->find($id);
             $em->remove($objMarca); 
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('marca_listado'));
+
         }catch(\Exception $e) {
             $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('marca_listado'));
         }
-        $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
-        return $this->redirect($this->generateUrl('marca_listado'));
+       
       	
     }
 }

@@ -2,13 +2,12 @@
 {% block title %} Clasificaciones de Patrimonios {% endblock %}       
 {% block content %}
 <h3> Nuevas Clasificaciones </h3>
-<table>
-<tr>
-<td>
-
- {{ form(form,{'attr': {'novalidate':'novalidate'}} )}}   <!-- novalidate anula la validacion de los browser y se los reemplaza por los asserts-->
-
-</td>
-</tr>
-</table>
+ {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
+    <ul class="record_actions">
+    <li>
+        <a href="{{ path('patrimonioclasif_listado') }}">
+            Volver a Listado
+        </a>
+    </li>
+</ul>
 {% endblock %}

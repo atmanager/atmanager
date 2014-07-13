@@ -33,7 +33,7 @@ class Falla
     /**
      * @var string
      *
-     * @ORM\Column(name="descripamplia", type="text")
+     * @ORM\Column(name="descripamplia", type="text", nullable=true)
      */
     private $descripamplia;
 
@@ -81,7 +81,7 @@ class Falla
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }

@@ -4,7 +4,11 @@
 <h3> Nuevas Marca </h3>
 
 
-{{ form(form)}}
+  {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
+
+  <a href="{{ path('marca_listado') }}">
+            Volver a listado
+   </a>
 
 
 {% endblock %}

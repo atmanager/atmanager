@@ -5,12 +5,7 @@
 
     	{{ form(edit_form,{'attr': {'novalidate':'novalidate'}} )}} <!-- novalidate anula la validacion de los browser y se los reemplaza por los asserts-->      
 
-        <ul class="record_actions">
-    <li>
         <a href="{{ path('estadio') }}">
             Retornar a listado
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}

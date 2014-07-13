@@ -1,7 +1,7 @@
 <?php
 
 namespace ATManager\BackendBundle\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,12 +25,14 @@ class Marca
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=60, unique=true)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
 
 
     public function __construct(){
+
         
     }
 
@@ -60,7 +62,7 @@ class Marca
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }

@@ -30,6 +30,8 @@ class FallaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('BackendBundle:Falla')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);        
 
         return $this->render('BackendBundle:Falla:index.html.twig', array(
             'entities' => $entities,
@@ -50,11 +52,18 @@ class FallaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('falla_show', array('id' => $entity->getId())));
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Falla Guardada');
+                return $this->redirect($this->generateUrl('falla_show', array('id' => $entity->getId())));                
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('falla_listado'));
+             }
+            
         }
 
         return array(
@@ -187,12 +196,19 @@ class FallaController extends Controller
             throw $this->createNotFoundException('Unable to find Falla entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        //$deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            try{
+
             $em->flush();
+
+            }catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion');
+                return $this->redirect($this->generateUrl('falla_listado'));
+             }
 
             return $this->redirect($this->generateUrl('falla_edit', array('id' => $id)));
         }
@@ -226,7 +242,7 @@ class FallaController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('falla'));
+        return $this->redirect($this->generateUrl('falla_listado'));
     }
 
     /**
@@ -244,5 +260,24 @@ class FallaController extends Controller
             ->add('submit', 'submit', array('label' => 'Borrar'))
             ->getForm()
         ;
+    }
+
+    #    borrar
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objFalla = $em->getRepository('BackendBundle:Falla')->find($id);
+            $em->remove($objFalla); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('falla_listado'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('falla_listado'));
+        }
+       
+        
     }
 }

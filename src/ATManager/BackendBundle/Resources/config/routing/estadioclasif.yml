@@ -28,3 +28,7 @@ estadioclasif_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:EstadioClasif:delete" }
     requirements: { _method: post|delete }
+
+estadioclasif_eliminar:
+    pattern:  /delete/{id}
+    defaults: { _controller: BackendBundle:EstadioClasif:eliminar }    

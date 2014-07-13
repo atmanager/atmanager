@@ -40,11 +40,20 @@ class EstadioClasifController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            try{
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('success','Se agregó nueva clasificación de estadio');
             return $this->redirect($this->generateUrl('estadioclasif_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('estadioclasif'));
+             }
+
+            
         }
 
         return $this->render('BackendBundle:EstadioClasif:new.html.twig', array(
@@ -67,9 +76,7 @@ class EstadioClasifController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
+         return $form;
     }
 
     /**
@@ -146,7 +153,7 @@ class EstadioClasifController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -219,5 +226,25 @@ class EstadioClasifController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+
+      #    borrar
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objEstClasif = $em->getRepository('BackendBundle:EstadioClasif')->find($id);
+            $em->remove($objEstClasif); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('estadioclasif'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('estadioclasif'));
+        }
+       
+        
     }
 }

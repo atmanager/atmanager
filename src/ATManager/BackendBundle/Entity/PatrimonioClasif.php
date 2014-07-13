@@ -3,7 +3,7 @@
 namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * PatrimonioClasif
  *
@@ -24,7 +24,8 @@ class PatrimonioClasif
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=100, unique=true)
+     * @ORM\Column(name="nombre", type="string", length=100, unique=true, nullable=false)
+     * @Assert\NotBlank()
      */
     private $nombre;
 

@@ -3,14 +3,17 @@
 {% block content %}
     <h3>Editando Falla</h3>
 
-    {{ form(edit_form, {'style':'horizontal'}) }}
+    {{ form(edit_form, {'attr': {'novalidate':'novalidate'}}) }}
 
-        <ul class="record_actions">
-    <li>
+<!-- {'style':'horizontal'}, -->
+
+
+       
+  <!--  <li>{{ form(delete_form) }}</li> -->
+
+
         <a href="{{ path('falla_listado') }}">
             Regresar a listado
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+
 {% endblock %}

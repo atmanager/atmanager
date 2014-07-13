@@ -28,3 +28,7 @@ estadio_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Estadio:delete" }
     requirements: { _method: post|delete }
+
+estadio_eliminar:
+    pattern:  /delete/{id}
+    defaults: { _controller: "BackendBundle:Estadio:eliminar" }

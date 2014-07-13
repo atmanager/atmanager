@@ -40,11 +40,18 @@ class EstadioController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('estadio_show', array('id' => $entity->getId())));
+            try
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Estadio Guardado');
+                return $this->redirect($this->generateUrl('estadio_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('estadio'));
+            }
         }
 
         return $this->render('BackendBundle:Estadio:new.html.twig', array(
@@ -67,7 +74,7 @@ class EstadioController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -101,11 +108,10 @@ class EstadioController extends Controller
             throw $this->createNotFoundException('Unable to find Estadio entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
+       
         return $this->render('BackendBundle:Estadio:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'      => $entity
+        /*    'delete_form' => $deleteForm->createView(),     */   ));
     }
 
     /**
@@ -123,12 +129,11 @@ class EstadioController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        //$deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BackendBundle:Estadio:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 
@@ -146,7 +151,7 @@ class EstadioController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -169,9 +174,15 @@ class EstadioController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('estadio_edit', array('id' => $id)));
+            try{
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Estadio Modificado');
+                return $this->redirect($this->generateUrl('estadio_edit', array('id' => $id)));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('estadio'));
+             }
         }
 
         return $this->render('BackendBundle:Estadio:edit.html.twig', array(
@@ -184,6 +195,8 @@ class EstadioController extends Controller
      * Deletes a Estadio entity.
      *
      */
+
+
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
@@ -219,5 +232,23 @@ class EstadioController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $obje = $em->getRepository('BackendBundle:Estadio')->find($id);
+            $em->remove($obje); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('estadio'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('estadio'));
+        }
+       
+        
     }
 }

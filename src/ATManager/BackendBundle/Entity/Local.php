@@ -3,7 +3,7 @@
 namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Local
  *
@@ -24,14 +24,16 @@ class Local
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=255 , nullable=false)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="codigointerno", type="string", length=10)
+     * @ORM\Column(name="codigointerno", type="string", length=10, nullable=false)
+     * @Assert\NotBlank()
      */
     private $codigointerno;
 

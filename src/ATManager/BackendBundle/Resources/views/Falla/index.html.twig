@@ -1,36 +1,28 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>listado de fallas</h3>
+    <h3>Gestión de fallas</h3>
 
-    <table class="table">
+    <table class="table table-bordered table-striped" >
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Descripamplia</th>
                 <th>Estado</th>
-                <th>Actions</th>
+                <th colspan="3" style="text-align:center"> Acciones </th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('falla_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td>{{ entity.descripamplia }}</td>
                 <td>{{ entity.estado }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('falla_show', { 'id': entity.id }) }}">Ver</a>
-                         <a href="{{ path('falla_edit', { 'id': entity.id }) }}">Editar</a>
-                    </li>
-                    <li>
-                       
-                    </li>
-                </ul>
-                </td>
+                <td><a href="{{ path('falla_show', { 'id': entity.id }) }}">Ver</a></td>
+                <td><a href="{{ path('falla_edit', { 'id': entity.id }) }}">Editar</a></td>
+                <td><a href="{{ path('falla_eliminar', { 'id': entity.id }) }}">Borrar</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -43,4 +35,9 @@
             </a>
         </li>
     </ul>
+
+    {% if entities.getTotalItemCount > 10 %}
+    {{ knp_pagination_render(entities) }}
+    {% endif %}
+
     {% endblock %}

@@ -28,3 +28,7 @@ falla_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Falla:delete" }
     requirements: { _method: post|delete }    
+
+falla_eliminar:
+    pattern:  /delete/{id}
+    defaults: { _controller: BackendBundle:Falla:eliminar }    

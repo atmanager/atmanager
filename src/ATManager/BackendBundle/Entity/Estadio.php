@@ -25,7 +25,7 @@ class Estadio
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=50, unique=true)
+     * @ORM\Column(name="nombre", type="string", length=50, unique=true, nullable=false)
      * @Assert\NotBlank()
      */
     private $nombre;
@@ -33,19 +33,20 @@ class Estadio
     /**
      * @var string
      *
-     * @ORM\Column(name="comentario", type="text")
+     * @ORM\Column(name="comentario", type="text",nullable=true)
      */
     private $comentario;
 
     /**
      * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\EstadioClasif")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $clasificacion;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="estado", type="boolean", nullable=true)
+     * @ORM\Column(name="estado", type="boolean",nullable=false)
      */
     private $estado;
 
@@ -82,7 +83,7 @@ class Estadio
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }

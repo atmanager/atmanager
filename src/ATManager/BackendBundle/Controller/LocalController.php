@@ -40,16 +40,22 @@ class LocalController extends Controller
 
         if ($form->isValid())
         {
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($objLocal);
+          try{
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($objLocal);
 
-          #commit transaccional
-          $em->flush();
-          
-          #mensaje
-          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-          
-          return $this->redirect($this->generateUrl('local_listado'));
+            #commit transaccional
+            $em->flush();
+            
+            #mensaje
+            $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
+            
+            return $this->redirect($this->generateUrl('local_listado'));
+          }
+          catch(\Exception $e){
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item');  
+            return $this->redirect($this->generateUrl('local_listado'));
+          }
 
         }
         
@@ -79,5 +85,23 @@ class LocalController extends Controller
 
 
       return $this->render('BackendBundle:Local:edit.html.twig', array('form'=>$form->createView()));
+    }
+
+    public function deleteAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objLocal = $em->getRepository('BackendBundle:Local')->find($id);
+            $em->remove($objLocal); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('local_listado'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('local_listado'));
+        }
+       
+        
     }
 }

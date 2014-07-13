@@ -3,7 +3,9 @@
 {% block content %}
 
     <h3>Nueva Falla</h3>
-{{ form_start(form) }}    
+<!-- {{ form_start(form) }} -->
+
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
 
 <div class="row"> 
 

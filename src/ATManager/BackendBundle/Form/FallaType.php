@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class FallaType extends AbstractType
 {
@@ -16,6 +17,11 @@ class FallaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+           /* ->add('nombre', 'text', array(
+                'label' => 'Nombre de falla *',
+                'required' => true,
+                'constraints'=>array(new Assert\NotBlank())
+            ))*/
             ->add('nombre')
             ->add('descripamplia')
             ->add('estado')

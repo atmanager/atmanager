@@ -18,6 +18,7 @@ class EstadioClasifType extends AbstractType
             ->add('nombre')
             ->add('iniciaAt')
             ->add('finalizaAt')
+            ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
     

@@ -1,7 +1,14 @@
 {% extends 'BackendBundle::base_backend.html.twig' %} 
 {% block title %} Editando Locales {% endblock %}       
 {% block content %}
- <h3> Locales </h3>
-{{ form(form) }}
+ <h3> Editar Local </h3>
+{{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
+    <ul class="record_actions">
+    <li>
+        <a href="{{ path('local_listado') }}">
+            Volver a Listado
+        </a>
+    </li>
+</ul>
 
 {% endblock %}

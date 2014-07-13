@@ -1,33 +1,29 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Listado de estadios</h3>
+    <h3>Gestión de estadios</h3>
 
      <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Estadio</th>
                 <th>Nombre</th>
                 <th>Comentario</th>
                 <th>Estado</th>
-                <th>Acciones</th>
+                <th colspan="3">Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('estadio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td>{{ entity.comentario }}</td>
                 <td>{{ entity.estado }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('estadio_show', { 'id': entity.id }) }}">Ver</a>
-                        <a href="{{ path('estadio_edit', { 'id': entity.id }) }}">Editar</a>
-                    </li>
-                </ul>
-                </td>
+                <td><a href="{{ path('estadio_show', { 'id': entity.id }) }}">Ver</td>
+                <td><a href="{{ path('estadio_edit', { 'id': entity.id }) }}">Editar</a></td>
+                <td><a href="{{ path('estadio_eliminar', { 'id': entity.id }) }}">Eliminar</a></td>
+                
             </tr>
         {% endfor %}
         </tbody>
