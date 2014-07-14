@@ -1,12 +1,11 @@
 <?php
 
 namespace ATManager\BackendBundle\Controller;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use ATManager\BackendBundle\Entity\ServicioTercero;
 use ATManager\BackendBundle\Form\ServicioTerceroType;
+use ATManager\BackendBundle\Form\BuscadorType; 
 
 /**
  * ServicioTercero controller.
@@ -19,14 +18,21 @@ class ServicioTerceroController extends Controller
      * Lists all ServicioTercero entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('BackendBundle:ServicioTercero')->findAll();
-
+        $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
+        $form->handleRequest($request);
+        $entities =array();
+        if ($form->isValid()) {
+            $nombre=$form->get('nombre')->getData();
+            $entities = $em->getRepository('BackendBundle:ServicioTercero')->findByName($nombre);
+        }
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
         return $this->render('BackendBundle:ServicioTercero:index.html.twig', array(
             'entities' => $entities,
+            'form'=>$form->createView()
         ));
     }
     /**
@@ -39,13 +45,20 @@ class ServicioTerceroController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('serviciotercero_show', array('id' => $entity->getId())));
-        }
+        if ($form->isValid()) 
+        {
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','ServicioTercero Guardado');
+                return $this->redirect($this->generateUrl('serviciotercero_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('repuesto'));
+            }
+        }    
 
         return $this->render('BackendBundle:ServicioTercero:new.html.twig', array(
             'entity' => $entity,
@@ -67,7 +80,7 @@ class ServicioTerceroController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -105,7 +118,8 @@ class ServicioTerceroController extends Controller
 
         return $this->render('BackendBundle:ServicioTercero:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            //'delete_form' => $deleteForm->createView(),   
+            ));
     }
 
     /**
@@ -123,12 +137,12 @@ class ServicioTerceroController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+       // $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BackendBundle:ServicioTercero:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+         //   'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -146,7 +160,7 @@ class ServicioTerceroController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -164,20 +178,28 @@ class ServicioTerceroController extends Controller
             throw $this->createNotFoundException('Unable to find ServicioTercero entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        //$deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
+            try{
             $em->flush();
-
-            return $this->redirect($this->generateUrl('serviciotercero_edit', array('id' => $id)));
+             $this->get('session')->getFlashBag()->add('success','ServicioTercero Guardado');
+             return $this->redirect($this->generateUrl('serviciotercero_edit', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Error al editar');
+                return $this->redirect($this->generateUrl('serviciotercero'));
+            }
+            
         }
 
         return $this->render('BackendBundle:ServicioTercero:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
@@ -219,5 +241,21 @@ class ServicioTerceroController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+     public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objst = $em->getRepository('BackendBundle:ServicioTercero')->find($id);
+            $em->remove($objst); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('serviciotercero'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Error al borrar...');
+            return $this->redirect($this->generateUrl('serviciotercero'));
+        }     
     }
 }

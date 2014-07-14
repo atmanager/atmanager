@@ -16,8 +16,9 @@ class RepuestoType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('descripamplia')
+            ->add('descripamplia','text', array('label' => 'Descripción Amplia'))
             ->add('comentario')
+            ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
     

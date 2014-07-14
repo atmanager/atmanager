@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\BackendBundle\Entity\Sector;
 use ATManager\BackendBundle\Form\SectorType;
-
+use ATManager\BackendBundle\Form\BuscadorType; 
 /**
  * Sector controller.
  *
@@ -25,15 +25,22 @@ class SectorController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('BackendBundle:Sector')->findAll();
-
+        $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
+        $form->handleRequest($request);
+        $entities =array();
+        if ($form->isValid()) {
+            $nombre=$form->get('nombre')->getData();
+            $entities = $em->getRepository('BackendBundle:Sector')->findByName($nombre);
+        }
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
         return array(
             'entities' => $entities,
-        );
+            'form'=>$form->createView()
+             );
     }
     /**
      * Creates a new Sector entity.
@@ -49,11 +56,17 @@ class SectorController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('sector_show', array('id' => $entity->getId())));
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Sector Guardado');
+                return $this->redirect($this->generateUrl('sector_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('sector_listado'));
+             }
         }
 
         return array(
@@ -76,7 +89,7 @@ class SectorController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -116,11 +129,11 @@ class SectorController extends Controller
             throw $this->createNotFoundException('Unable to find Sector entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+       // $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+       //     'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -165,7 +178,7 @@ class SectorController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+       // $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -186,20 +199,26 @@ class SectorController extends Controller
             throw $this->createNotFoundException('Unable to find Sector entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+       // $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('sector_edit', array('id' => $id)));
+            try{
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Sector Editado');
+                return $this->redirect($this->generateUrl('sector_edit', array('id' => $id)));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('sector_listado'));
+            }
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+    //        'delete_form' => $deleteForm->createView(),
         );
     }
     /**
@@ -243,5 +262,20 @@ class SectorController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objs = $em->getRepository('BackendBundle:Sector')->find($id);
+            $em->remove($objs); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('sector_listado'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('sector_listado'));
+        }     
     }
 }

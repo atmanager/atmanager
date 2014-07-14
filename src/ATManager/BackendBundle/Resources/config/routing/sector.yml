@@ -27,4 +27,8 @@ sector_update:
 sector_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Sector:delete" }
-    requirements: { _method: post|delete }    
+    requirements: { _method: post|delete }
+
+sector_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "BackendBundle:Sector:eliminar" }        

@@ -1,39 +1,33 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Rol list</h3>
+    <h3>Gestión de Roles de Técnicos y Fallas</h3>
 
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th colspan="3" style="text-align:center">Acciones</th>
                 <th>Id</th>
                 <th>Nombre</th>
-                <th>Actions</th>
+                
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('rol_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('rol_show', { 'id': entity.id }) }}">Ver</a></td>    
+                <td><a href="{{ path('rol_edit', { 'id': entity.id }) }}">Editar</a></td>
+                <td><a href="{{ path('rol_eliminar', { 'id': entity.id }) }}">Eliminar</a></td>
+                <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('rol_show', { 'id': entity.id }) }}">show</a>
-                        <a href="{{ path('rol_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
+                
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
+    
             <a href="{{ path('rol_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+                Crear Rol de Técnicos y Fallas
+           </a>      
+
     {% endblock %}

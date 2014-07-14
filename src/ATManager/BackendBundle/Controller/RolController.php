@@ -40,12 +40,18 @@ class RolController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+           try{
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('rol_show', array('id' => $entity->getId())));
-        }
+            $this->get('session')->getFlashBag()->add('success','Rol Guardado');
+                return $this->redirect($this->generateUrl('rol_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('rol'));
+             }
+    }
 
         return $this->render('BackendBundle:Rol:new.html.twig', array(
             'entity' => $entity,
@@ -67,7 +73,7 @@ class RolController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -146,7 +152,7 @@ class RolController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+     //  $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -169,9 +175,16 @@ class RolController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('rol_edit', array('id' => $id)));
+           
+            try{
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Rol Editado');
+                return $this->redirect($this->generateUrl('rol_edit', array('id' => $id)));
+            }
+             catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','error al editar..');
+                return $this->redirect($this->generateUrl('rol'));
+             }
         }
 
         return $this->render('BackendBundle:Rol:edit.html.twig', array(
@@ -219,5 +232,22 @@ class RolController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objr = $em->getRepository('BackendBundle:Rol')->find($id);
+            $em->remove($objr); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('rol'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('rol'));
+        }     
     }
 }

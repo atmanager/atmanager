@@ -28,3 +28,8 @@ tecnico_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Tecnico:delete" }
     requirements: { _method: post|delete }    
+
+tecnico_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "BackendBundle:Tecnico:eliminar" }
+

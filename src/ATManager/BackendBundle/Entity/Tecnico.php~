@@ -11,7 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\TecnicoRepository")
  * @ORM\Table
+ * @ORM\HasLifecycleCallbacks()
  */
 class Tecnico extends BaseUser
 {
@@ -71,6 +73,15 @@ class Tecnico extends BaseUser
     
     }
 
+
+    /*
+    * @ORM\PreUpdate
+    */
+   public function preUpdate() {
+        $this->fechaUltimaActualizacion = new \DateTime();
+    
+    }
+
     public function __toString(){
         return getNombre();
     }
@@ -116,7 +127,7 @@ class Tecnico extends BaseUser
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }
@@ -178,4 +189,27 @@ class Tecnico extends BaseUser
     }
 
     
+
+    /**
+     * Set fechaUltimaActualizacion
+     *
+     * @param \DateTime $fechaUltimaActualizacion
+     * @return Tecnico
+     */
+    public function setFechaUltimaActualizacion($fechaUltimaActualizacion)
+    {
+        $this->fechaUltimaActualizacion = $fechaUltimaActualizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaUltimaActualizacion
+     *
+     * @return \DateTime 
+     */
+    public function getFechaUltimaActualizacion()
+    {
+        return $this->fechaUltimaActualizacion;
+    }
 }

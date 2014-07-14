@@ -22,7 +22,7 @@ class TecnicoNewType extends AbstractType
             ))
 
             ->add('documento', 'text', array(
-                'label' => 'Documento número *',
+                'label' => 'Documento número *(Único)',
                 'required' => true,
                 'constraints'=>array(new Assert\NotBlank())
 
@@ -34,13 +34,15 @@ class TecnicoNewType extends AbstractType
             ))
 
             ->add('email', 'email', array(
-                'label' => 'E-mail *',
+                'label' => 'E-mail *(Único)',
                 'required' => true,
-                'constraints'=>array(new Assert\Email())
+                'constraints'=>array(
+                            new Assert\Email(),
+                            new Assert\NotBlank())
             ))
 
             ->add('username', 'text', array(
-                'label' => 'User de logueo *',
+                'label' => 'User de logueo *(Único)',
                 'required' => true,
                 'constraints'=>array(new Assert\NotBlank())
             ))
@@ -79,7 +81,7 @@ class TecnicoNewType extends AbstractType
             ))
 
 
-            ->add('submit', 'submit', array('label'=>'Guardar'))
+            ->add('submit', 'submit', array('label'=>'Aceptar'))
 
         ;
     }

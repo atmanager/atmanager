@@ -18,17 +18,19 @@ class TecnicoEditarType extends AbstractType
             ->add('nombre', 'text', array(
                 'label' => 'Nombre completo *',
                 'required' => true,
+                'constraints'=>array(new Assert\NotBlank())
             ))
 
             ->add('username', 'text', array(
-                'label' => 'Usuario Login *',
+                'label' => 'Usuario Login *(Único)',
                 'disabled'=>true,
                 'required' => true,
             ))
 
             ->add('documento', 'text', array(
-                'label' => 'Documento *',
+                'label' => 'Documento *(Único)',
                 'required' => true,
+                'constraints'=>array(new Assert\NotBlank())
             ))
 
             ->add('movil', 'text', array(
@@ -38,8 +40,11 @@ class TecnicoEditarType extends AbstractType
 
 
             ->add('email', 'email', array(
-                'label' => 'E-mail *',
+                'label' => 'E-mail *(Único)',
                 'required' => true,
+                'constraints'=>array(
+                            new Assert\Email(),
+                            new Assert\NotBlank())
             ))
             ->add('plainpassword', 'repeated', array(
                 'type' => 'password',
@@ -81,9 +86,7 @@ class TecnicoEditarType extends AbstractType
             ))
 
 
-           ->add('submit', 'submit')
-
-
+           ->add('submit', 'submit', array('label'=>'Aceptar'))
         ;
     }
 

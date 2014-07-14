@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\TecnicoRepository")
  * @ORM\Table
  * @ORM\HasLifecycleCallbacks()
  */
@@ -126,7 +127,7 @@ class Tecnico extends BaseUser
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }

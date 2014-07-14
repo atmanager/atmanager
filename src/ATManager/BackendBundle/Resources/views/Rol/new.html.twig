@@ -1,15 +1,13 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Nuevo Rol</h3>
+    <h3>Rol Nuevo</h3>
 
   {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
 
-        <ul class="record_actions">
-    <li>
         <a href="{{ path('rol') }}">
-            Back to the list
+            Volver a listado
         </a>
-    </li>
-</ul>
+    
+
 {% endblock %}

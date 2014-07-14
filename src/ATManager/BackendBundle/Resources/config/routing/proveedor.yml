@@ -28,3 +28,7 @@ proveedor_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Proveedor:delete" }
     requirements: { _method: post|delete }
+
+proveedor_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "BackendBundle:Proveedor:eliminar" }

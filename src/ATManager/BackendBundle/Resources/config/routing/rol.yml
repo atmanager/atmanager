@@ -28,3 +28,7 @@ rol_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Rol:delete" }
     requirements: { _method: post|delete }
+
+rol_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "BackendBundle:Rol:eliminar" }    

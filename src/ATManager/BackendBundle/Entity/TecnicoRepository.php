@@ -1,6 +1,6 @@
 <?php
 
-namespace GrupoITe\UserBundle\Entity;
+namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -51,5 +51,10 @@ class TecnicoRepository extends EntityRepository{
         }
         return $usersAux;
     }
-
+    public function findByOrden($nombre) {
+        $em = $this->getEntityManager();
+        $query= $em->createQuery('select t from BackendBundle:Tecnico t where t.nombre like :nombre order by t.enabled desc,t.nombre')
+            ->setParameter('nombre','%'.$nombre.'%');
+        return $query->getResult();                   
+    }
 }

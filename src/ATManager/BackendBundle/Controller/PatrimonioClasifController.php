@@ -2,25 +2,33 @@
 
 namespace ATManager\BackendBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 # indicar en el createForm (newAction) que tipo de form es
 use ATManager\BackendBundle\Form\PatrimonioClasifType; 
-
+use ATManager\BackendBundle\Form\BuscadorType; 
 #indicar al new (newAction) a que entidad nos referimos 
 use ATManager\BackendBundle\Entity\PatrimonioClasif;  
 
 class PatrimonioClasifController extends Controller
 {
 #    listado
-    public function indexAction()
+    public function indexAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$clasificaciones = $em->getRepository('BackendBundle:PatrimonioClasif')->findAll();
+        $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
+        $form->handleRequest($request);
+        $clasificaciones =array();
+        if ($form->isValid()) {
+            $nombre=$form->get('nombre')->getData();
+            $clasificaciones = $em->getRepository('BackendBundle:PatrimonioClasif')->findByName($nombre);
+        }
         $paginator = $this->get('knp_paginator');
         $clasificaciones = $paginator->paginate($clasificaciones, $this->getRequest()->query->get('pagina',1), 10);        
         return $this->render('BackendBundle:PatrimonioClasif:index.html.twig', array(
-        	'clasificaciones'=> $clasificaciones	
+        	'clasificaciones'=> $clasificaciones,
+            'form'=>$form->createView()	
         ));
 
     }

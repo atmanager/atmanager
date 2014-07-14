@@ -15,11 +15,12 @@ class SectorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion')
-            ->add('internos')
+            ->add('nombre','text', array('label' => 'Nombre: *'))
+            ->add('internos','text', array('label' => 'Teléfonos Internos: *'))
             ->add('mail')
-            ->add('referente')
+            ->add('referente','text', array('label' => 'Referente: *'))
             ->add('tipo')
+            ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
     

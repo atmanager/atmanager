@@ -3,14 +3,9 @@
 {% block content %}
     <h3>Editando Tecnico</h3>
 
-    {{ form(form, {'style':'horizontal'}) }}
+	{{ form(form,{'attr': {'novalidate':'novalidate'}} )}}
 
-        <ul class="record_actions">
-    <li>
         <a href="{{ path('tecnico_listado') }}">
-            Regresar a listado
+            Volver a listado
         </a>
-    </li>
-    <li>{{ form(form) }}</li>
-</ul>
 {% endblock %}

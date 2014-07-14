@@ -1,16 +1,14 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h1>Rol edit</h1>
+    <h3>Editar Rol</h3>
 
 {{ form(edit_form,{'attr': {'novalidate':'novalidate'}} )}}
 
-        <ul class="record_actions">
-    <li>
+            
         <a href="{{ path('rol') }}">
-            Back to the list
+            Volver a listado
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    
+
 {% endblock %}

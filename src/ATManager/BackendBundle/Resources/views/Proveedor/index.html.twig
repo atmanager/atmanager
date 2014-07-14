@@ -1,53 +1,35 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h1>Proveedor list</h1>
+    <h1>Gestión de Proveedores</h1>
 
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th colspan="3" style="text-align:center">Acciones</th>
                 <th>Id</th>
                 <th>Cuit</th>
                 <th>Nombre</th>
-                <th>Calle</th>
-                <th>Puerta</th>
+                <th>Dirección</th>
                 <th>Telefono</th>
-                <th>Correo</th>
-                <th>Comentario</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('proveedor_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('proveedor_show', { 'id': entity.id }) }}">Ver</a></td>
+                <td><a href="{{ path('proveedor_edit', { 'id': entity.id }) }}">Editar</a></td>
+                <td><a href="{{ path('proveedor_eliminar', { 'id': entity.id }) }}">Eliminar</a></td>
+                <td>{{ entity.id }}</td>
                 <td>{{ entity.cuit }}</td>
                 <td>{{ entity.nombre }}</td>
-                <td>{{ entity.calle }}</td>
-                <td>{{ entity.puerta }}</td>
+                <td>{{ entity.calle ~ ' ' ~ entity.puerta }}</td>
                 <td>{{ entity.telefono }}</td>
-                <td>{{ entity.correo }}</td>
-                <td>{{ entity.comentario }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('proveedor_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('proveedor_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('proveedor_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+    <a href="{{ path('proveedor_new') }}">
+        Crear Proveedor
+    </a>    
+{% endblock %}

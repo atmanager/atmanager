@@ -16,6 +16,7 @@ class RolType extends AbstractType
     {
         $builder
             ->add('nombre')
+            ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
     

@@ -40,11 +40,17 @@ class ProveedorController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('proveedor_show', array('id' => $entity->getId())));
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Proveedor Guardado');
+                return $this->redirect($this->generateUrl('proveedor_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('proveedor'));
+            }
         }
 
         return $this->render('BackendBundle:Proveedor:new.html.twig', array(
@@ -66,9 +72,6 @@ class ProveedorController extends Controller
             'action' => $this->generateUrl('proveedor_create'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
         return $form;
     }
 
@@ -100,12 +103,9 @@ class ProveedorController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Proveedor entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('BackendBundle:Proveedor:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            ));
     }
 
     /**
@@ -123,12 +123,10 @@ class ProveedorController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BackendBundle:Proveedor:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -145,9 +143,6 @@ class ProveedorController extends Controller
             'action' => $this->generateUrl('proveedor_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
         return $form;
     }
     /**
@@ -163,21 +158,23 @@ class ProveedorController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Proveedor entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('proveedor_edit', array('id' => $id)));
+            try{
+                $em->flush();
+                return $this->redirect($this->generateUrl('proveedor_edit', array('id' => $id)));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Error al editar, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('proveedor'));
+            }
         }
 
         return $this->render('BackendBundle:Proveedor:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
     /**
@@ -219,5 +216,20 @@ class ProveedorController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objp = $em->getRepository('BackendBundle:Proveedor')->find($id);
+            $em->remove($objp); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('proveedor'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('proveedor'));
+        }     
     }
 }

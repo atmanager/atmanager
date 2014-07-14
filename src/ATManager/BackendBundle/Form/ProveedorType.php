@@ -22,6 +22,7 @@ class ProveedorType extends AbstractType
             ->add('telefono')
             ->add('correo')
             ->add('comentario')
+            ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
     

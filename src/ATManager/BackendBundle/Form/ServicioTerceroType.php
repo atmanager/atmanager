@@ -18,6 +18,7 @@ class ServicioTerceroType extends AbstractType
             ->add('nombre')
             ->add('descripamplia')
             ->add('comentario')
+            ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
     

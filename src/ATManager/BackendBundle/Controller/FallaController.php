@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\BackendBundle\Entity\Falla;
 use ATManager\BackendBundle\Form\FallaType;
-
+use ATManager\BackendBundle\Form\BuscadorType;
 /**
  * Falla controller.
  *
@@ -25,16 +25,22 @@ class FallaController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('BackendBundle:Falla')->findAll();
+        $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
+        $form->handleRequest($request);
+        $entities =array();
+        if ($form->isValid()) {
+            $nombre=$form->get('nombre')->getData();
+            $entities = $em->getRepository('BackendBundle:Falla')->findByName($nombre);
+        }
         $paginator = $this->get('knp_paginator');
         $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);        
 
         return $this->render('BackendBundle:Falla:index.html.twig', array(
             'entities' => $entities,
+            'form'=>$form->createView()
         ));
 
     }
@@ -276,8 +282,6 @@ class FallaController extends Controller
         }catch(\Exception $e) {
             $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('falla_listado'));
-        }
-       
-        
+        }     
     }
 }

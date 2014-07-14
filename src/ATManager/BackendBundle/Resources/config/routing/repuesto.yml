@@ -28,3 +28,7 @@ repuesto_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Repuesto:delete" }
     requirements: { _method: post|delete }
+
+repuesto_eliminar:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BackendBundle:Repuesto:eliminar" }

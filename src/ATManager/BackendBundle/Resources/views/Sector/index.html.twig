@@ -1,47 +1,40 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Listado de Sectores</h3>
-
-     <table class="table table-bordered table-striped">
+    <h3>Gestión de Sectores</h3>
+    {{ form(form)}}
+    <br />
+     <table class="table table-bordered table-striped" >
         <thead>
             <tr>
+                <th colspan="3" style="text-align:center">Acciones</th>
                 <th>Id</th>
-                <th>Descripcion</th>
+                <th>Nombre</th>
                 <th>Internos</th>
                 <th>Mail</th>
-                <th>Referente</th>
-                <th>Actions</th>
+                <th>Referente</th>    
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('sector_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.descripcion }}</td>
+                <td><a href="{{ path('sector_show', { 'id': entity.id }) }}">Ver</a></td>
+                <td><a href="{{ path('sector_edit', { 'id': entity.id }) }}">Editar</a></td>
+                <td><a href="{{ path('sector_eliminar', { 'id': entity.id }) }}">Eliminar</a></td>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.nombre }}</td>
                 <td>{{ entity.internos }}</td>
                 <td>{{ entity.mail }}</td>
                 <td>{{ entity.referente }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('sector_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('sector_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('sector_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+    <a href="{{ path('sector_new') }}">
+        Crear Sector
+    </a>
+    <br />
+    {% if entities.getTotalItemCount > 10 %}
+        {{ knp_pagination_render(entities) }}
+    {% endif %}
+{% endblock %}

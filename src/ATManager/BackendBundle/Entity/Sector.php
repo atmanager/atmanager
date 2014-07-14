@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\SectorRepository")
  */
 class Sector
 {
@@ -24,29 +25,31 @@ class Sector
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=80, unique=true)
+     * @ORM\Column(name="nombre", type="string", length=80, unique=true,nullable=false)
      * @Assert\NotBlank()
      */
-    private $descripcion;
+    private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="internos", type="string", length=30)
+     * @ORM\Column(name="internos", type="string", length=30,nullable=true)
      */
     private $internos;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=50)
+     * @ORM\Column(name="mail", type="string", length=50,nullable=true)
+     * @Assert\Email()
      */
     private $mail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="referente", type="string", length=45)
+     * @ORM\Column(name="referente", type="string", length=45, nullable=false)
+     * @Assert\NotBlank()
      */
     private $referente;
 
@@ -64,7 +67,7 @@ class Sector
     */
 
     public function __toString(){
-        return " ".$this->getDescripcion();
+        return " ".$this->getNombre();
     }
 
 
@@ -79,26 +82,26 @@ class Sector
     }
 
     /**
-     * Set descripcion
+     * Set nombre
      *
-     * @param string $descripcion
+     * @param string $nombre
      * @return Sector
      */
-    public function setDescripcion($descripcion)
+    public function setNombre($nombre)
     {
-        $this->descripcion = $descripcion;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get nombre
      *
      * @return string 
      */
-    public function getDescripcion()
+    public function getNombre()
     {
-        return $this->descripcion;
+        return $this->nombre;
     }
 
     /**

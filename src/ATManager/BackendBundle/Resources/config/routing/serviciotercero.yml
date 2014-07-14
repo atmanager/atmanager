@@ -28,3 +28,9 @@ serviciotercero_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:ServicioTercero:delete" }
     requirements: { _method: post|delete }
+
+serviciotercero_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "BackendBundle:ServicioTercero:eliminar" }
+    
+

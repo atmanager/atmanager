@@ -2,6 +2,7 @@
 
 namespace ATManager\BackendBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 # indicar en el createForm (newAction) que tipo de form es
@@ -9,21 +10,26 @@ use ATManager\BackendBundle\Form\LocalType;
 
 #indicar al new (newAction) a que entidad nos referimos 
 use ATManager\BackendBundle\Entity\Local; 
+use ATManager\BackendBundle\Form\BuscadorType;
 
 class LocalController extends Controller
 {
 #    public function indexAction($name)
-    public function indexAction()
+    public function indexAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$locales = $em->getRepository('BackendBundle:Local')->findAll();
-
-
+        $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
+        $form->handleRequest($request);
+        $locales =array();
+        if ($form->isValid()) {
+            $nombre=$form->get('nombre')->getData();
+            $locales = $em->getRepository('BackendBundle:Local')->findByName($nombre);
+        }
     	$paginator = $this->get('knp_paginator');
         $locales = $paginator->paginate($locales, $this->getRequest()->query->get('pagina',1), 10);
-        
         return $this->render('BackendBundle:Local:index.html.twig', array(
-        	'locales'=> $locales	
+        	'locales'=> $locales,
+            'form'=>$form->createView()	
         ));
 
     }
@@ -76,10 +82,16 @@ class LocalController extends Controller
 
         if ($form->isValid())
         {
-          $em->persist($objLocal);
-          $em->flush();
-          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-          return $this->redirect($this->generateUrl('local_listado'));
+            try{  
+                $em->persist($objLocal);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
+                return $this->redirect($this->generateUrl('local_listado'));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item');  
+                return $this->redirect($this->generateUrl('local_listado'));
+          }    
 
         }
 
@@ -91,8 +103,8 @@ class LocalController extends Controller
     {                
         try{
             $em = $this->getDoctrine()->getManager();
-            $objLocal = $em->getRepository('BackendBundle:Local')->find($id);
-            $em->remove($objLocal); 
+            $objl = $em->getRepository('BackendBundle:Local')->find($id);
+            $em->remove($objl); 
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
             return $this->redirect($this->generateUrl('local_listado'));

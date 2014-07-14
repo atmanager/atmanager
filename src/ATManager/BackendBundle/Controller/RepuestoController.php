@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use ATManager\BackendBundle\Entity\Repuesto;
 use ATManager\BackendBundle\Form\RepuestoType;
-
+use ATManager\BackendBundle\Form\BuscadorType; 
 /**
  * Repuesto controller.
  *
@@ -19,14 +19,21 @@ class RepuestoController extends Controller
      * Lists all Repuesto entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('BackendBundle:Repuesto')->findAll();
-
+        $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
+        $form->handleRequest($request);
+        $entities =array();
+        if ($form->isValid()) {
+            $nombre=$form->get('nombre')->getData();
+            $entities = $em->getRepository('BackendBundle:Repuesto')->findByName($nombre);
+        }
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
         return $this->render('BackendBundle:Repuesto:index.html.twig', array(
             'entities' => $entities,
+            'form'=>$form->createView()
         ));
     }
     /**
@@ -40,11 +47,16 @@ class RepuestoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('repuesto_show', array('id' => $entity->getId())));
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                return $this->redirect($this->generateUrl('repuesto_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('repuesto'));
+            }
         }
 
         return $this->render('BackendBundle:Repuesto:new.html.twig', array(
@@ -66,9 +78,6 @@ class RepuestoController extends Controller
             'action' => $this->generateUrl('repuesto_create'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
         return $form;
     }
 
@@ -101,11 +110,8 @@ class RepuestoController extends Controller
             throw $this->createNotFoundException('Unable to find Repuesto entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('BackendBundle:Repuesto:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'      => $entity));
     }
 
     /**
@@ -123,12 +129,10 @@ class RepuestoController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('BackendBundle:Repuesto:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -145,9 +149,6 @@ class RepuestoController extends Controller
             'action' => $this->generateUrl('repuesto_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
         return $form;
     }
     /**
@@ -164,20 +165,23 @@ class RepuestoController extends Controller
             throw $this->createNotFoundException('Unable to find Repuesto entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('repuesto_edit', array('id' => $id)));
+            try{
+                $em->flush();
+                return $this->redirect($this->generateUrl('repuesto_edit', array('id' => $id)));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                return $this->redirect($this->generateUrl('repuesto'));
+            }
         }
 
         return $this->render('BackendBundle:Repuesto:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
@@ -219,5 +223,20 @@ class RepuestoController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objs = $em->getRepository('BackendBundle:Repuesto')->find($id);
+            $em->remove($objs); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('repuesto'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Error al borrar...');
+            return $this->redirect($this->generateUrl('repuesto'));
+        }     
     }
 }

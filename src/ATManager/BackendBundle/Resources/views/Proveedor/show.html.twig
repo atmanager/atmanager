@@ -1,56 +1,41 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h1>Proveedor</h1>
+    <h3>Ver Proveedor</h3>
 
-    <table class="table table-bordered table-striped">
+    <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id:</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Cuit</th>
+                <th>Cuit:</th>
                 <td>{{ entity.cuit }}</td>
             </tr>
             <tr>
-                <th>Nombre</th>
+                <th>Nombre:</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
             <tr>
-                <th>Calle</th>
-                <td>{{ entity.calle }}</td>
+                <th>Dirección:</th>
+                <td>{{ entity.calle ~ ' ' ~ entity.puerta }}</td>
             </tr>
             <tr>
-                <th>Puerta</th>
-                <td>{{ entity.puerta }}</td>
-            </tr>
-            <tr>
-                <th>Telefono</th>
+                <th>Telefono:</th>
                 <td>{{ entity.telefono }}</td>
             </tr>
             <tr>
-                <th>Correo</th>
+                <th>Correo:</th>
                 <td>{{ entity.correo }}</td>
             </tr>
             <tr>
-                <th>Comentario</th>
+                <th>Comentario:</th>
                 <td>{{ entity.comentario }}</td>
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('proveedor') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('proveedor_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <a href="{{ path('proveedor') }}">
+        Back to the list
+    </a>
 {% endblock %}
