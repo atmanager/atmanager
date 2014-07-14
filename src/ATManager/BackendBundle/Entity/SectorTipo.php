@@ -3,6 +3,7 @@
 namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SectorTipo
@@ -25,6 +26,7 @@ class SectorTipo
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=45, unique=true)
+     * @Assert\NotBlank()
      */
     private $descripcion;
 
@@ -74,7 +76,7 @@ class SectorTipo
      */
     public function setDescripcion($descripcion)
     {
-        $this->descripcion = $descripcion;
+        $this->descripcion = strtoupper($descripcion);
 
         return $this;
     }

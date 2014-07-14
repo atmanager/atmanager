@@ -1,8 +1,9 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h1>Gestión de Proveedores</h1>
-
+    <h3>Gestión de Proveedores</h3>
+    {{ form(form)}}
+    <br />
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -31,5 +32,9 @@
     </table>
     <a href="{{ path('proveedor_new') }}">
         Crear Proveedor
-    </a>    
+    </a>   
+    <br />
+    {% if entities.getTotalItemCount > 10 %}
+        {{ knp_pagination_render(entities) }}
+    {% endif %} 
 {% endblock %}

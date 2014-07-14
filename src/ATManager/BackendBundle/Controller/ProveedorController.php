@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use ATManager\BackendBundle\Entity\Proveedor;
 use ATManager\BackendBundle\Form\ProveedorType;
+use ATManager\BackendBundle\Form\BuscadorType; 
 
 /**
  * Proveedor controller.
@@ -19,14 +20,21 @@ class ProveedorController extends Controller
      * Lists all Proveedor entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('BackendBundle:Proveedor')->findAll();
-
+        $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
+        $form->handleRequest($request);
+        $entities =array();
+        if ($form->isValid()) {
+            $nombre=$form->get('nombre')->getData();
+            $entities = $em->getRepository('BackendBundle:Proveedor')->findByName($nombre);
+        }
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
         return $this->render('BackendBundle:Proveedor:index.html.twig', array(
             'entities' => $entities,
+            'form'=>$form->createView()
         ));
     }
     /**

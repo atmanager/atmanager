@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\ProveedorRepository")
  */
 class Proveedor
 {
@@ -62,6 +63,7 @@ class Proveedor
      * @var string
      *
      * @ORM\Column(name="correo", type="string", length=50, nullable=true)
+     * @Assert\Email() 
      */
     private $correo;
 
@@ -125,7 +127,7 @@ class Proveedor
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }

@@ -69,11 +69,17 @@ class SectorTipoController extends Controller
 
         if ($form->isValid())
         {
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($objSectorTipo);
-          $em->flush();
-          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-          return $this->redirect($this->generateUrl('sectortipo_listado'));
+            try{
+                  $em = $this->getDoctrine()->getManager();
+                  $em->persist($objSectorTipo);
+                  $em->flush();
+                  $this->get('session')->getFlashBag()->add('success','Nuevo sector agregado');
+                   return $this->redirect($this->generateUrl('sectortipo_listado'));
+           }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('success','Error al guardar un nuevo item');
+                 return $this->redirect($this->generateUrl('sectortipo_listado'));
+            }
 
         }
           return $this->render('BackendBundle:SectorTipo:new.html.twig', array(
@@ -94,15 +100,39 @@ class SectorTipoController extends Controller
 
         if ($form->isValid())
         {
-          $em->persist($objST);
-          $em->flush();
-          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-          return $this->redirect($this->generateUrl('sectortipo_listado'));
+          try{
+              $em->persist($objST);
+              $em->flush();
+              $this->get('session')->getFlashBag()->add('success','Sector actualizado.');
+             return $this->redirect($this->generateUrl('sectortipo_listado'));
+             }
+                catch(\Exception $e){
+                    $this->get('session')->getFlashBag()->add('success','Error al intentar actualizar un nuevo item');
+                    return $this->redirect($this->generateUrl('sectortipo_listado'));
+                }
 
         }
 
 
         return $this->render('BackendBundle:SectorTipo:edit.html.twig', array('form'=>$form->createView()));
+    }
+
+    public function eliminarAction($id)
+    {                
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objSt = $em->getRepository('BackendBundle:SectorTipo')->find($id);
+            $em->remove($objSt); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            return $this->redirect($this->generateUrl('sectortipo_listado'));
+
+        }catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('sectortipo_listado'));
+        }
+       
+        
     }
 
 

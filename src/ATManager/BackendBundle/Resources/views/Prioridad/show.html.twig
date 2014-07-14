@@ -1,9 +1,9 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h1>Prioridad</h1>
+    <h3>Ver Prioridad</h3>
 
-    <table class="record_properties">
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -16,17 +16,8 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
         <a href="{{ path('prioridad_listado') }}">
-            Back to the list
+            Volver a listado
         </a>
-    </li>
-    <li>
-        <a href="{{ path('prioridad_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    
 {% endblock %}

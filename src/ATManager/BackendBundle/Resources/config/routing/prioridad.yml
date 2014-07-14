@@ -28,3 +28,7 @@ prioridad_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BackendBundle:Prioridad:delete" }
     requirements: { _method: post|delete }
+
+prioridad_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "BackendBundle:Prioridad:eliminar" }    

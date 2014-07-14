@@ -18,3 +18,7 @@ sectortipo_show:
     pattern:  /{id}/show
     defaults: { _controller: "BackendBundle:SectorTipo:show" }    
 
+sectortipo_eliminar:
+    pattern:  /eliminar/{id}
+    defaults: { _controller: BackendBundle:SectorTipo:eliminar}    
+

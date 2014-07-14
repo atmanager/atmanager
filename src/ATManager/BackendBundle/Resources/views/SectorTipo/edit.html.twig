@@ -2,6 +2,9 @@
 {% block title %} Editando Tipo de Sectores {% endblock %}       
 {% block content %}
  <h3> Tipo de Sectores </h3>
-{{ form(form) }}
+{{ form(form,{'attr': {'novalidate':'novalidate'}} )}}    
+        <a href="{{ path('sectortipo_listado') }}">
+            Volver a listado
+        </a>
 
 {% endblock %}
