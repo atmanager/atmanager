@@ -23,7 +23,8 @@ class EstadioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BackendBundle:Estadio')->findAll();
+        $entities = $em->getRepository('BackendBundle:Estadio')->findBy(array(), array('nombre'=>'ASC'));
+        # findBy: primer array para where; segundo ordenacion
 
         return $this->render('BackendBundle:Estadio:index.html.twig', array(
             'entities' => $entities,
@@ -49,7 +50,7 @@ class EstadioController extends Controller
                 return $this->redirect($this->generateUrl('estadio_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion');
                 return $this->redirect($this->generateUrl('estadio'));
             }
         }
@@ -169,7 +170,6 @@ class EstadioController extends Controller
             throw $this->createNotFoundException('Unable to find Estadio entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
@@ -180,15 +180,14 @@ class EstadioController extends Controller
                 return $this->redirect($this->generateUrl('estadio_edit', array('id' => $id)));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('estadio'));
              }
         }
 
         return $this->render('BackendBundle:Estadio:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
     /**
@@ -245,7 +244,7 @@ class EstadioController extends Controller
             return $this->redirect($this->generateUrl('estadio'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('estadio'));
         }
        

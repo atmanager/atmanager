@@ -38,7 +38,6 @@ class PrioridadController extends Controller
         $entity = new Prioridad();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             try{
                 $em = $this->getDoctrine()->getManager();
@@ -47,17 +46,15 @@ class PrioridadController extends Controller
                 $this->get('session')->getFlashBag()->add('success','Prioridad Guardada');
                 return $this->redirect($this->generateUrl('prioridad_show', array('id' => $entity->getId())));
             }catch(\Exception $e){
-                    $this->get('session')->getFlashBag()->add('success','Error al intentar agregar un items..');
-                    return $this->redirect($this->generateUrl('prioridad_listado', array('id' => $entity->getId())));
-                   }
+                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar un items..');
+                return $this->redirect($this->generateUrl('prioridad_listado', array('id' => $entity->getId())));
+            }
         }
-
         return $this->render('BackendBundle:Prioridad:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
-
     /**
     * Creates a form to create a Prioridad entity.
     *
@@ -109,8 +106,7 @@ class PrioridadController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BackendBundle:Prioridad:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'      => $entity));
     }
 
     /**
@@ -132,8 +128,7 @@ class PrioridadController extends Controller
 
         return $this->render('BackendBundle:Prioridad:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 
@@ -178,18 +173,16 @@ class PrioridadController extends Controller
                 $em->flush();          
                 $this->get('session')->getFlashBag()->add('success','Prioridad actualiza..');
                 return $this->redirect($this->generateUrl('prioridad_edit', array('id' => $entity->getId())));
-            }catch(\Exception $e){
-                        $this->get('session')->getFlashBag()->add('success','Error al intentar actualizar un items..');
-                        return $this->redirect($this->generateUrl('prioridad_listado', array('id' => $entity->getId())));
-                    }
-
-
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar un items..');
+                return $this->redirect($this->generateUrl('prioridad_listado', array('id' => $entity->getId())));
+            }
         }
 
         return $this->render('BackendBundle:Prioridad:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
     /**
@@ -245,7 +238,7 @@ class PrioridadController extends Controller
             return $this->redirect($this->generateUrl('prioridad_listado'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('prioridad_listado'));
         }
        

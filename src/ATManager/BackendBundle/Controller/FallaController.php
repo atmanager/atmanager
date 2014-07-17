@@ -66,7 +66,7 @@ class FallaController extends Controller
                 return $this->redirect($this->generateUrl('falla_show', array('id' => $entity->getId())));                
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('falla_listado'));
              }
             
@@ -132,11 +132,8 @@ class FallaController extends Controller
             throw $this->createNotFoundException('Unable to find Falla entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $entity
         );
     }
 
@@ -210,9 +207,11 @@ class FallaController extends Controller
             try{
 
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Se actualizó correctamente un items');
+                return $this->redirect($this->generateUrl('falla_listado'));
 
             }catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion');
                 return $this->redirect($this->generateUrl('falla_listado'));
              }
 
@@ -271,7 +270,7 @@ class FallaController extends Controller
     #    borrar
     public function eliminarAction($id)
     {                
-        try{
+        /*try{
             $em = $this->getDoctrine()->getManager();
             $objFalla = $em->getRepository('BackendBundle:Falla')->find($id);
             $em->remove($objFalla); 
@@ -282,6 +281,20 @@ class FallaController extends Controller
         }catch(\Exception $e) {
             $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('falla_listado'));
-        }     
+        } */
+
+          try{
+                $em = $this->getDoctrine()->getManager();
+                $objf = $em->getRepository('BackendBundle:Falla')->find($id);
+                $objf->setEstado(false);
+                $em->persist($objf);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Ok al borrar');
+                return $this->redirect($this->generateUrl('falla_listado'));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar');  
+                return $this->redirect($this->generateUrl('falla_listado'));
+            }     
     }
 }

@@ -77,7 +77,7 @@ class SectorTipoController extends Controller
                    return $this->redirect($this->generateUrl('sectortipo_listado'));
            }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Error al guardar un nuevo item');
+                $this->get('session')->getFlashBag()->add('error','Error al guardar un nuevo item');
                  return $this->redirect($this->generateUrl('sectortipo_listado'));
             }
 
@@ -107,7 +107,7 @@ class SectorTipoController extends Controller
              return $this->redirect($this->generateUrl('sectortipo_listado'));
              }
                 catch(\Exception $e){
-                    $this->get('session')->getFlashBag()->add('success','Error al intentar actualizar un nuevo item');
+                    $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar un nuevo item');
                     return $this->redirect($this->generateUrl('sectortipo_listado'));
                 }
 
@@ -128,7 +128,7 @@ class SectorTipoController extends Controller
             return $this->redirect($this->generateUrl('sectortipo_listado'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('sectortipo_listado'));
         }
        

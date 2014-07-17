@@ -30,5 +30,5 @@ repuesto_delete:
     requirements: { _method: post|delete }
 
 repuesto_eliminar:
-    pattern:  /{id}/edit
+    pattern:  /{id}/eliminar
     defaults: { _controller: "BackendBundle:Repuesto:eliminar" }

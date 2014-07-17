@@ -59,7 +59,7 @@ class LocalController extends Controller
             return $this->redirect($this->generateUrl('local_listado'));
           }
           catch(\Exception $e){
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item');  
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item');  
             return $this->redirect($this->generateUrl('local_listado'));
           }
 
@@ -89,7 +89,7 @@ class LocalController extends Controller
                 return $this->redirect($this->generateUrl('local_listado'));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item');  
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item');  
                 return $this->redirect($this->generateUrl('local_listado'));
           }    
 
@@ -110,10 +110,22 @@ class LocalController extends Controller
             return $this->redirect($this->generateUrl('local_listado'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('local_listado'));
+        }    
+    }
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BackendBundle:Local')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Marca entity.');
         }
-       
-        
+
+         return $this->render('BackendBundle:Local:show.html.twig', 
+            array('entity' => $entity)
+        );
     }
 }

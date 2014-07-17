@@ -64,7 +64,7 @@ class SectorController extends Controller
                 return $this->redirect($this->generateUrl('sector_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('sector_listado'));
              }
         }
@@ -155,12 +155,10 @@ class SectorController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -210,7 +208,7 @@ class SectorController extends Controller
                 return $this->redirect($this->generateUrl('sector_edit', array('id' => $id)));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('sector_listado'));
             }
         }
@@ -274,7 +272,7 @@ class SectorController extends Controller
             return $this->redirect($this->generateUrl('sector_listado'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('sector_listado'));
         }     
     }

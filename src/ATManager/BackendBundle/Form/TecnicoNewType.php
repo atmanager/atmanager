@@ -72,6 +72,7 @@ class TecnicoNewType extends AbstractType
 
             ->add('sector','entity', array(
                 'class' => 'BackendBundle:Sector',
+                'label' => 'Sector *',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                     ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')

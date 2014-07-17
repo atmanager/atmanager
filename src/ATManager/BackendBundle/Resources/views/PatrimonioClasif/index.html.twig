@@ -13,12 +13,13 @@
 
 <table class="table table-bordered table-striped" >
 <tr>
-	<th colspan="2" style="text-align:center"> Acciones </th>
+	<th colspan="3" style="text-align:center"> Acciones </th>
 	<th> Id </th>
 	<th> Nombre </th>
 </tr>
 {% for clapat in clasificaciones %}
 <tr>
+	<td><a href="{{ path('patrimonioclasif_show', {'id': clapat.id} )}}">Ver</a></td> 
 	<td><a href="{{ path('patrimonioclasif_editar', {'id': clapat.id} )}}">Editar</a></td>
 	<td><a href="{{ path('patrimonioclasif_eliminar', {'id': clapat.id} )}}">Eliminar</a></td> 
 	<td> {{ clapat.id }} </td>

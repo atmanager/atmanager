@@ -41,9 +41,13 @@ class TecnicoController extends Controller
 
 
    public function newAction(Request $request){
-        $userManager = $this->container->get('fos_user.user_manager');  // declarado en security.yml
+        $userManager = $this->container->get('fos_user.user_manager');  // 1) declarado en security.yml
         $entity = $userManager->createUser();
 
+        # crea un nuevo objeto de tecnico. Ver config.yml ahi se relaciona
+        # user.manager con el técnico.
+
+    
         $form = $this->createForm(new TecnicoNewType());
 
         $form->handleRequest($request);
@@ -75,7 +79,7 @@ class TecnicoController extends Controller
                 $request->getSession()->getFlashBag()->add('success', 'Guardado correctamente');
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             } catch(\Exception $ex) {
-                $request->getSession()->getFlashBag()->add('success', 'El Técnico ya existe');
+                $request->getSession()->getFlashBag()->add('error', 'Ocurrio un problema al cargar un nuevo técnico');
                 return $this->redirect($this->generateUrl('tecnico_new'));
             }
         }
@@ -130,7 +134,7 @@ class TecnicoController extends Controller
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             } 
             catch(\Exception $ex) {
-               $request->getSession()->getFlashBag()->add('success', 'El Técnico ya existe');
+               $request->getSession()->getFlashBag()->add('error', 'El Técnico ya existe');
                 //return $this->redirect($this->generateUrl('tecnico_listado'));
             }
         }
@@ -171,11 +175,10 @@ class TecnicoController extends Controller
             throw $this->createNotFoundException('Unable to find Tecnico entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('BackendBundle:Tecnico:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView()
+        ));
     }
 
 
@@ -208,7 +211,7 @@ class TecnicoController extends Controller
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar');  
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar');  
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             }    
         

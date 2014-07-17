@@ -12,7 +12,11 @@ local_edit:
 
 local_delete:
     pattern:  /delete/{id}
-    defaults: { _controller: BackendBundle:Local:delete }    
+    defaults: { _controller: BackendBundle:Local:delete }
+
+local_show:
+    pattern:  /show/{id}
+    defaults: { _controller: BackendBundle:Local:show }        
 
 #backend_homepage:
 #    pattern:  /hello/{name}

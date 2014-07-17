@@ -25,7 +25,7 @@ class Proveedor
     /**
      * @var string
      *
-     * @ORM\Column(name="cuit", type="string", length=13, unique=true,nullable=false)
+     * @ORM\Column(name="cuit", type="string", length=13)
      * @Assert\NotBlank()
      */
     private $cuit;

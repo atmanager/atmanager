@@ -55,6 +55,7 @@ class Sector
 
     /**
      * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\SectorTipo")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $tipo;
     

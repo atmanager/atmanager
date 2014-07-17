@@ -23,8 +23,9 @@ class TecnicoEditarType extends AbstractType
 
             ->add('username', 'text', array(
                 'label' => 'Usuario Login *(Único)',
-                'disabled'=>true,
+            //    'disabled'=>true,
                 'required' => true,
+                 'constraints'=>array(new Assert\NotBlank())
             ))
 
             ->add('documento', 'text', array(
@@ -34,7 +35,7 @@ class TecnicoEditarType extends AbstractType
             ))
 
             ->add('movil', 'text', array(
-                'label' => 'Teléfono Movil *',
+                'label' => 'Teléfono Movil ',
                 'required' => true,
             ))
 
@@ -59,7 +60,7 @@ class TecnicoEditarType extends AbstractType
            ->add('rol', 'choice', array(
                 'required' => true,
                 'multiple' => false,
-                'label' => 'Permiso *',
+                'label' => 'Perfil *',
                 'choices' => array(
                     'ROLE_ADMIN' => 'Super Administrador', 
                     'ROLE_JDS' => 'Jefe de Sector',

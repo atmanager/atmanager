@@ -1,0 +1,21 @@
+{% extends 'BackendBundle::base_backend.html.twig' %}
+
+{% block content %}
+    <h3>Ver Clasificación de Patrimonio</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Marca:</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre:</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+    </table>
+        <a href="{{ path('patrimonioclasif_listado') }}">
+            Volver a listado
+        </a>
+
+{% endblock %}

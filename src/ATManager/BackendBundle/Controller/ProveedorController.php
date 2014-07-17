@@ -56,7 +56,7 @@ class ProveedorController extends Controller
                 return $this->redirect($this->generateUrl('proveedor_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al guardar, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('proveedor'));
             }
         }
@@ -175,7 +175,7 @@ class ProveedorController extends Controller
                 return $this->redirect($this->generateUrl('proveedor_edit', array('id' => $id)));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Error al editar, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al editar, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('proveedor'));
             }
         }
@@ -236,7 +236,7 @@ class ProveedorController extends Controller
             return $this->redirect($this->generateUrl('proveedor'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('proveedor'));
         }     
     }

@@ -14,3 +14,6 @@ patrimonioclasif_eliminar:
     pattern:  /delete/{id}
     defaults: { _controller: BackendBundle:PatrimonioClasif:delete }
 
+patrimonioclasif_show:
+    pattern:  /show/{id}
+    defaults: { _controller: BackendBundle:PatrimonioClasif:show }

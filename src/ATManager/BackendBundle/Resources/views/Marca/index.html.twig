@@ -13,18 +13,20 @@
 
 <table class="table table-bordered table-striped" >
 <tr>
-<th> Nombre </th>
+<th colspan="3" style="text-align:center"> Acciones </th>
 <th> Id </th>
-<th colspan="2" style="text-align:center"> Acciones </th>
+<th> Nombre </th>
+
 
 </tr>
 {% for marca in marcas %}
 
 <tr>
-<td> {{ marca }} </td>
-<td> {{ marca.id }} </td>
+<td><a href="{{ path('marca_show', {'id': marca.id} )}}">Ver</a></td>
 <td><a href="{{ path('marca_editar', {'id': marca.id} )}}">Editar</a></td>
 <td><a href="{{ path('marca_eliminar', {'id': marca.id} )}}">Eliminar</a></td> 
+<td> {{ marca.id }} </td>
+<td> {{ marca.nombre }} </td>
 </tr>
 {% endfor %}
 </table>

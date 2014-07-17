@@ -14,3 +14,6 @@ marca_eliminar:
     pattern:  /delete/{id}
     defaults: { _controller: BackendBundle:Marca:delete }
 
+marca_show:
+    pattern:  /show/{id}
+    defaults: { _controller: BackendBundle:Marca:show }

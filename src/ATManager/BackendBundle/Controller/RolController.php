@@ -48,7 +48,7 @@ class RolController extends Controller
                 return $this->redirect($this->generateUrl('rol_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('rol'));
              }
     }
@@ -107,11 +107,9 @@ class RolController extends Controller
             throw $this->createNotFoundException('Unable to find Rol entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('BackendBundle:Rol:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'      => $entity
+        ));
     }
 
     /**
@@ -129,12 +127,10 @@ class RolController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BackendBundle:Rol:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 
@@ -170,7 +166,6 @@ class RolController extends Controller
             throw $this->createNotFoundException('Unable to find Rol entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
@@ -182,7 +177,7 @@ class RolController extends Controller
                 return $this->redirect($this->generateUrl('rol_edit', array('id' => $id)));
             }
              catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','error al editar..');
+                $this->get('session')->getFlashBag()->add('error','error al editar..');
                 return $this->redirect($this->generateUrl('rol'));
              }
         }
@@ -190,7 +185,6 @@ class RolController extends Controller
         return $this->render('BackendBundle:Rol:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
@@ -246,7 +240,7 @@ class RolController extends Controller
             return $this->redirect($this->generateUrl('rol'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
             return $this->redirect($this->generateUrl('rol'));
         }     
     }

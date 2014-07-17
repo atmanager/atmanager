@@ -55,7 +55,7 @@ class ServicioTerceroController extends Controller
                 return $this->redirect($this->generateUrl('serviciotercero_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al guardar, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('repuesto'));
             }
         }    
@@ -190,7 +190,7 @@ class ServicioTerceroController extends Controller
              return $this->redirect($this->generateUrl('serviciotercero_edit', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Error al editar');
+                $this->get('session')->getFlashBag()->add('error','Error al editar');
                 return $this->redirect($this->generateUrl('serviciotercero'));
             }
             
@@ -254,7 +254,7 @@ class ServicioTerceroController extends Controller
             return $this->redirect($this->generateUrl('serviciotercero'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Error al borrar...');
+            $this->get('session')->getFlashBag()->add('error','Error al borrar...');
             return $this->redirect($this->generateUrl('serviciotercero'));
         }     
     }

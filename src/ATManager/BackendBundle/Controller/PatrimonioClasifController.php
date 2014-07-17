@@ -32,8 +32,6 @@ class PatrimonioClasifController extends Controller
         ));
 
     }
-
-
     #    nuevo
     public function newAction()
     {
@@ -50,29 +48,22 @@ class PatrimonioClasifController extends Controller
                 $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
                 return $this->redirect($this->generateUrl('patrimonioclasif_listado'));
             }catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('patrimonioclasif_listado'));
              }
         }
         return $this->render('BackendBundle:PatrimonioClasif:new.html.twig', array(
             'form' => $form->createView()
         ));
-
-
-
     	return $this->render('BackendBundle:PatrimonioClasif:new.html.twig');
     }
-
     #    editar
     public function editAction($id)
     {
-
         $em = $this->getDoctrine()->getManager();
         $objPatClasif = $em->getRepository('BackendBundle:PatrimonioClasif')->find($id);
         $form = $this->createForm(new PatrimonioClasifType(), $objPatClasif);
-
         $form->handleRequest($this->getRequest());
-
         if ($form->isValid())
         {
             try{
@@ -82,17 +73,12 @@ class PatrimonioClasifController extends Controller
                 return $this->redirect($this->generateUrl('patrimonioclasif_listado'));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('patrimonioclasif_listado'));
             }    
         }
-
-
         return $this->render('BackendBundle:PatrimonioClasif:edit.html.twig', array('form'=>$form->createView()));
-
-    	
     }
-
     #    borrar
     public function deleteAction($id)
     {
@@ -104,10 +90,24 @@ class PatrimonioClasifController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
             return $this->redirect($this->generateUrl('patrimonioat_listado'));
-        }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
-            return $this->redirect($this->generateUrl('patrimonioclasif_listado'));
         }
-        
+        catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('patrimonioclasif_listado'));
+        }    
+    }
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BackendBundle:PatrimonioClasif')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find PatrimonioClasif entity.');
+        }
+
+         return $this->render('BackendBundle:PatrimonioClasif:show.html.twig', 
+            array('entity' => $entity)
+        );
     }
 }

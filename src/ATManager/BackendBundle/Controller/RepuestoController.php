@@ -25,6 +25,7 @@ class RepuestoController extends Controller
         $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
         $form->handleRequest($request);
         $entities =array();
+
         if ($form->isValid()) {
             $nombre=$form->get('nombre')->getData();
             $entities = $em->getRepository('BackendBundle:Repuesto')->findByName($nombre);
@@ -51,10 +52,11 @@ class RepuestoController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Nuevo items agregado... ');
                 return $this->redirect($this->generateUrl('repuesto_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al guardar, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('repuesto'));
             }
         }
@@ -171,10 +173,11 @@ class RepuestoController extends Controller
         if ($editForm->isValid()) {
             try{
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Actualizacion correcta...');
                 return $this->redirect($this->generateUrl('repuesto_edit', array('id' => $id)));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('success','Error al guardar, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al guardar, posible duplicacion ...[Pres. F5]');
                 return $this->redirect($this->generateUrl('repuesto'));
             }
         }
@@ -235,7 +238,7 @@ class RepuestoController extends Controller
             return $this->redirect($this->generateUrl('repuesto'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Error al borrar...');
+            $this->get('session')->getFlashBag()->add('error','Error al borrar...');
             return $this->redirect($this->generateUrl('repuesto'));
         }     
     }

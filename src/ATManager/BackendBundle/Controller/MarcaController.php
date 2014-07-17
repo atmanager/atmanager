@@ -48,8 +48,6 @@ class MarcaController extends Controller
         # ordenado por nombre ascendente, no funciona ver con Martin
         #$marcas = $em->getRepository('BackendBundle:Marca')->findBy(array('nombre' => 'ASC'));
 
-
-
         $paginator = $this->get('knp_paginator');
         $marcas = $paginator->paginate($marcas, $this->getRequest()->query->get('pagina',1), 10);
         return $this->render('BackendBundle:Marca:index.html.twig', array(
@@ -80,7 +78,7 @@ class MarcaController extends Controller
             return $this->redirect($this->generateUrl('marca_listado'));
           }
           catch(\Exception $e){
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar agregar un nuevo item');  
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item');  
             return $this->redirect($this->generateUrl('marca_listado'));
           }
 
@@ -105,14 +103,18 @@ class MarcaController extends Controller
 
         if ($form->isValid())
         {
-          $em->persist($objMarca);
-          $em->flush();
-          $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-          return $this->redirect($this->generateUrl('marca_listado'));
-
+            try{
+                $em->persist($objMarca);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
+                return $this->redirect($this->generateUrl('marca_listado'));
+            }
+            catch(\Exception $e)
+            {
+                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item');  
+                return $this->redirect($this->generateUrl('marca_listado'));
+            }
         }
-
-
     	return $this->render('BackendBundle:Marca:edit.html.twig', array('form'=>$form->createView()));
     }
 
@@ -126,12 +128,25 @@ class MarcaController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
             return $this->redirect($this->generateUrl('marca_listado'));
-
-        }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
-            return $this->redirect($this->generateUrl('marca_listado'));
         }
-       
-      	
+        catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
+            return $this->redirect($this->generateUrl('marca_listado'));
+        }    	
+    }
+    
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BackendBundle:Marca')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Marca entity.');
+        }
+
+         return $this->render('BackendBundle:Marca:show.html.twig', 
+            array('entity' => $entity)
+        );
     }
 }
