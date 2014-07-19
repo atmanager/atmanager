@@ -12,7 +12,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
 	  ->add('nombre')
-	  ->add('Submit','submit',array('label'=>'Guardar'));
+	  ->add('Submit','submit',array('label'=>'Aceptar'));
 
 }
 

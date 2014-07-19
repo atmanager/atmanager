@@ -17,14 +17,6 @@ use ATManager\BackendBundle\Form\BuscadorType;
  */
 class FallaController extends Controller
 {
-
-    /**
-     * Lists all Falla entities.
-     *
-     * @Route("/", name="falla")
-     * @Method("GET")
-     * @Template()
-     */
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -42,77 +34,30 @@ class FallaController extends Controller
             'entities' => $entities,
             'form'=>$form->createView()
         ));
-
     }
-    /**
-     * Creates a new Falla entity.
-     *
-     * @Route("/", name="falla_create")
-     * @Method("POST")
-     * @Template("BackendBundle:Falla:new.html.twig")
-     */
-    public function createAction(Request $request)
+    public function newAction()
     {
         $entity = new Falla();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $form   = $this->createForm(new FallaType(), $entity);
+	$form->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
             try{
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Falla Guardada');
+                $this->get('session')->getFlashBag()->add('success','Item Guardado');
                 return $this->redirect($this->generateUrl('falla_show', array('id' => $entity->getId())));                
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
                 return $this->redirect($this->generateUrl('falla_listado'));
-             }
-            
+             }       
         }
-
-        return array(
+        return $this->render('BackendBundle:Falla:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to create a Falla entity.
-    *
-    * @param Falla $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Falla $entity)
-    {
-        $form = $this->createForm(new FallaType(), $entity, array(
-            'action' => $this->generateUrl('falla_create'),
-            'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Crear'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Falla entity.
-     *
-     * @Route("/new", name="falla_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Falla();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -132,8 +77,8 @@ class FallaController extends Controller
             throw $this->createNotFoundException('Unable to find Falla entity.');
         }
 
-        return array(
-            'entity'      => $entity
+        return $this->render('BackendBundle:Falla:show.html.twig', 
+            array('entity' => $entity)
         );
     }
 
@@ -147,153 +92,41 @@ class FallaController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BackendBundle:Falla')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Falla entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Falla entity.
-    *
-    * @param Falla $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Falla $entity)
-    {
-        $form = $this->createForm(new FallaType(), $entity, array(
-            'action' => $this->generateUrl('falla_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Actualizar'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Falla entity.
-     *
-     * @Route("/{id}", name="falla_update")
-     * @Method("PUT")
-     * @Template("BackendBundle:Falla:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BackendBundle:Falla')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Falla entity.');
-        }
-
-        //$deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
+        $editForm = $this->createForm(new FallaType(), $entity);
+        $editForm->handleRequest($this->getRequest());
+	if ($editForm->isValid()) {
             try{
+		$em->persist($entity);
+            	$em->flush();
+            	$this->get('session')->getFlashBag()->add('success','Item actualizado');
+                return $this->redirect('falla_edit', array('id' => $id));
 
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Se actualizó correctamente un items');
-                return $this->redirect($this->generateUrl('falla_listado'));
-
-            }catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion');
+            }
+	    catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
                 return $this->redirect($this->generateUrl('falla_listado'));
              }
-
-            return $this->redirect($this->generateUrl('falla_edit', array('id' => $id)));
-        }
-
+	}
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
+            
         );
     }
-    /**
-     * Deletes a Falla entity.
-     *
-     * @Route("/{id}", name="falla_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BackendBundle:Falla')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Falla entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('falla_listado'));
-    }
-
-    /**
-     * Creates a form to delete a Falla entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('falla_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Borrar'))
-            ->getForm()
-        ;
-    }
-
-    #    borrar
     public function eliminarAction($id)
     {                
-        /*try{
-            $em = $this->getDoctrine()->getManager();
-            $objFalla = $em->getRepository('BackendBundle:Falla')->find($id);
-            $em->remove($objFalla); 
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
-            return $this->redirect($this->generateUrl('falla_listado'));
-
-        }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
-            return $this->redirect($this->generateUrl('falla_listado'));
-        } */
-
           try{
                 $em = $this->getDoctrine()->getManager();
                 $objf = $em->getRepository('BackendBundle:Falla')->find($id);
                 $objf->setEstado(false);
                 $em->persist($objf);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Ok al borrar');
+                $this->get('session')->getFlashBag()->add('success','Item Eliminado');
                 return $this->redirect($this->generateUrl('falla_listado'));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar');  
+                $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item');  
                 return $this->redirect($this->generateUrl('falla_listado'));
             }     
     }

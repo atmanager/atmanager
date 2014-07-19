@@ -1,13 +1,10 @@
 {% extends 'BackendBundle::base_backend.html.twig' %} 
-{% block title %} Clasificaciones de Patrimonios {% endblock %}       
 {% block content %}
-<h3> Nuevas Clasificaciones </h3>
- {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
-    <ul class="record_actions">
-    <li>
+
+<h3> Crear Clasificación de Patrimonio</h3>
+
+{{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
         <a href="{{ path('patrimonioclasif_listado') }}">
             Volver a Listado
         </a>
-    </li>
-</ul>
 {% endblock %}

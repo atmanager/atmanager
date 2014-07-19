@@ -4,6 +4,9 @@
     <h3>Gestión de Técnicos</h3>
     {{ form(form)}}
     <br />
+    <a href="{{ path('tecnico_new') }}">
+        <h4>[Crear Técnico]</h4>
+    </a>
     <table class="table table-bordered table-striped" >
         <thead>
             <tr>
@@ -34,11 +37,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('tecnico_new') }}">
-        Crear Técnico
-    </a>
-    <br />
     {% if tecnicos.getTotalItemCount > 10 %}
-    {{ knp_pagination_render(tecnicos) }}
+    	{{ knp_pagination_render(tecnicos) }}
     {% endif %}    
-    {% endblock %}
+{% endblock %}

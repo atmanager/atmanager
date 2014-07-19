@@ -15,6 +15,7 @@ class BuscadorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+	
             ->add('nombre','text',array('required'=>false))
             ->add('filtrar','submit')
             ;

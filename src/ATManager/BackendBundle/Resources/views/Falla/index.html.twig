@@ -2,8 +2,11 @@
 
 {% block content %}
     <h3>Gestión de Fallas</h3>
-    {{ form(form)}}
+    {{ form(form) }}
     <br />
+    <a href="{{ path('falla_new') }}">
+    	<h4>[Crear Falla]</h4>
+    </a>	
     <table class="table table-bordered table-striped" >
         <thead>
             <tr>
@@ -28,10 +31,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-            <a href="{{ path('falla_new') }}">
-                Crear Falla
-            </a>
+    
     <br />
     {% if entities.getTotalItemCount > 10 %}
     {{ knp_pagination_render(entities) }}

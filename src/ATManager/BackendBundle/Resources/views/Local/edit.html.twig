@@ -3,12 +3,9 @@
 {% block content %}
  <h3> Editar Local </h3>
 {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
-    <ul class="record_actions">
-    <li>
+
         <a href="{{ path('local_listado') }}">
             Volver a Listado
         </a>
-    </li>
-</ul>
 
 {% endblock %}

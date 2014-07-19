@@ -1,8 +1,10 @@
 {% extends 'BackendBundle::base_backend.html.twig' %} 
 
 {% block content %}
-    <h3>Gestión de tipo de sectores</h3>
-
+    <h3>Gestión de Clasificación de Sectores</h3>
+    <a href="{{ path('sectortipo_new') }}">
+   	<h4>[Crear Clasificación]</h4>
+    </a>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -31,13 +33,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-      <ul>
-        <li>
-            <a href="{{ path('sectortipo_new') }}">
-                Nuevo Tipo
-            </a>
-        </li>
-        </ul>
-
     {% endblock %}

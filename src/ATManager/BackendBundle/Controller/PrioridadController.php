@@ -4,7 +4,6 @@ namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use ATManager\BackendBundle\Entity\Prioridad;
 use ATManager\BackendBundle\Form\PrioridadType;
 
@@ -29,60 +28,24 @@ class PrioridadController extends Controller
             'entities' => $entities,
         ));
     }
-    /**
-     * Creates a new Prioridad entity.
-     *
-     */
-    public function createAction(Request $request)
+    public function newAction()
     {
         $entity = new Prioridad();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $form = $this->createForm(new PrioridadType(), $entity);
+        $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
             try{
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Prioridad Guardada');
+                $this->get('session')->getFlashBag()->add('success','Item Guardado');
                 return $this->redirect($this->generateUrl('prioridad_show', array('id' => $entity->getId())));
-            }catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar un items..');
-                return $this->redirect($this->generateUrl('prioridad_listado', array('id' => $entity->getId())));
+            }
+	    catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
+                return $this->redirect($this->generateUrl('prioridad_listado'));
             }
         }
-        return $this->render('BackendBundle:Prioridad:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-    /**
-    * Creates a form to create a Prioridad entity.
-    *
-    * @param Prioridad $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Prioridad $entity)
-    {
-        $form = $this->createForm(new PrioridadType(), $entity, array(
-            'action' => $this->generateUrl('prioridad_create'),
-            'method' => 'POST',
-        ));
-
-        // $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Prioridad entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Prioridad();
-        $form   = $this->createCreateForm($entity);
-
         return $this->render('BackendBundle:Prioridad:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -96,14 +59,11 @@ class PrioridadController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BackendBundle:Prioridad')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Prioridad entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BackendBundle:Prioridad:show.html.twig', array(
             'entity'      => $entity));
@@ -116,117 +76,25 @@ class PrioridadController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BackendBundle:Prioridad')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Prioridad entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('BackendBundle:Prioridad:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
-        ));
-    }
-
-    /**
-    * Creates a form to edit a Prioridad entity.
-    *
-    * @param Prioridad $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Prioridad $entity)
-    {
-        $form = $this->createForm(new PrioridadType(), $entity, array(
-            'action' => $this->generateUrl('prioridad_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-      //  $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Prioridad entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BackendBundle:Prioridad')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Prioridad entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
+        $editForm =  $this->createForm(new PrioridadType(), $entity);
+	$editForm->handleRequest($this->getRequest());
+	if ($editForm->isValid()) {
             try{
                 $em->flush();          
-                $this->get('session')->getFlashBag()->add('success','Prioridad actualiza..');
+                $this->get('session')->getFlashBag()->add('success','Item actualizado');
                 return $this->redirect($this->generateUrl('prioridad_edit', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar un items..');
-                return $this->redirect($this->generateUrl('prioridad_listado', array('id' => $entity->getId())));
+                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
+                return $this->redirect($this->generateUrl('prioridad_listado'));
             }
         }
-
         return $this->render('BackendBundle:Prioridad:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView()
         ));
     }
-    /**
-     * Deletes a Prioridad entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BackendBundle:Prioridad')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Prioridad entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('prioridad_listado'));
-    }
-
-    /**
-     * Creates a form to delete a Prioridad entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('prioridad_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
-
-
     public function eliminarAction($id)
     {                
         try{
@@ -234,14 +102,12 @@ class PrioridadController extends Controller
             $objPv = $em->getRepository('BackendBundle:Prioridad')->find($id);
             $em->remove($objPv); 
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            $this->get('session')->getFlashBag()->add('success','Item Eliminado');
             return $this->redirect($this->generateUrl('prioridad_listado'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
             return $this->redirect($this->generateUrl('prioridad_listado'));
-        }
-       
-        
+        }      
     }
 }

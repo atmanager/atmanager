@@ -1,9 +1,12 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Gestión de Sectores</h3>
-    {{ form(form)}}
-    <br />
+     <h3>Gestión de Sectores</h3>
+     {{ form(form)}}
+     <br />
+     <a href="{{ path('sector_new') }}">
+        <h4>[Crear Sector]</h4>
+     </a>
      <table class="table table-bordered table-striped" >
         <thead>
             <tr>
@@ -30,10 +33,6 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('sector_new') }}">
-        Crear Sector
-    </a>
-    <br />
     {% if entities.getTotalItemCount > 10 %}
         {{ knp_pagination_render(entities) }}
     {% endif %}

@@ -3,14 +3,13 @@
 
 {% block content %}
 
+<h3> Gestión de Clasificaciones de Patrimonios </h3>
 
-<div class="row">
-	<div class="col-xs-9"> <h3> Gestión de Clasificaciones de Patrimonios </h3> </div>
-	<div class="col-xs-3"> <a href="{{ path('patrimonioclasif_nuevo')}}" class="btn btn-primary">Nuevo</a> </div>
-</div>
 {{ form(form)}}
 <br />
-
+<a href="{{ path('patrimonioclasif_nuevo')}}">
+	<h4>[Crear Clasificación]</h4>
+</a>
 <table class="table table-bordered table-striped" >
 <tr>
 	<th colspan="3" style="text-align:center"> Acciones </th>
@@ -27,9 +26,7 @@
 </tr>
 {% endfor %}
 </table>
-
 {% if clasificaciones.getTotalItemCount > 10 %}
 	{{ knp_pagination_render(clasificaciones) }}
 {% endif %}
-
 {% endblock %}

@@ -1,10 +1,10 @@
 {% extends 'BackendBundle::base_backend.html.twig' %} 
-{% block title %} Editando Marcas {% endblock %}       
 {% block content %}
- <h3> Editar Marcas </h3>
+ <h3> Editar Marca </h3>
+ 
  {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
  <a href="{{ path('marca_listado') }}">
-            Volver a listado
+ 	Volver a listado
  </a>
 
 {% endblock %}

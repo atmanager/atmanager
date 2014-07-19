@@ -2,13 +2,13 @@
 
 {% block content %}
 
-    <h3>Nuevo Tecnico</h3>
-{{ form(form,{'attr': {'novalidate':'novalidate'}} )}} <!-- novalidate anula la validacion de los browser y se los reemplaza por los asserts-->   
+<h3>Crear Técnico</h3>
 
+{{ form(form,{'attr': {'novalidate':'novalidate'}} )}} <!-- novalidate anula la validacion de los browser y se los reemplaza por los asserts-->   
    
-        <a href="{{ path('tecnico_listado') }}">
-            Volver a Listado
-        </a>
+<a href="{{ path('tecnico_listado') }}">
+	Volver al Listado
+</a>
     
 
 {% endblock %}

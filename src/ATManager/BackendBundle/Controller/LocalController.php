@@ -4,11 +4,7 @@ namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-# indicar en el createForm (newAction) que tipo de form es
-use ATManager\BackendBundle\Form\LocalType; 
-
-#indicar al new (newAction) a que entidad nos referimos 
+use ATManager\BackendBundle\Form\LocalType;  
 use ATManager\BackendBundle\Entity\Local; 
 use ATManager\BackendBundle\Form\BuscadorType;
 
@@ -31,74 +27,51 @@ class LocalController extends Controller
         	'locales'=> $locales,
             'form'=>$form->createView()	
         ));
-
     }
-
-
-    #    nuevo
     public function newAction()
     {
-        $objLocal = new Local();
-        
-        $form = $this->createForm(new LocalType(), $objLocal);
-
+        $objl = new Local();
+        $form = $this->createForm(new LocalType(), $objl);
         $form->handleRequest($this->getRequest());
-
         if ($form->isValid())
         {
-          try{
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($objLocal);
-
-            #commit transaccional
-            $em->flush();
-            
-            #mensaje
-            $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-            
-            return $this->redirect($this->generateUrl('local_listado'));
-          }
-          catch(\Exception $e){
-            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item');  
-            return $this->redirect($this->generateUrl('local_listado'));
-          }
-
+           try{
+              $em = $this->getDoctrine()->getManager();
+              $em->persist($objl);
+              $em->flush();
+              $this->get('session')->getFlashBag()->add('success','Item Guardado');         
+              return $this->redirect($this->generateUrl('local_show', array('id' => $objl->getId())));
+           }
+           catch(\Exception $e){
+              $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
+              return $this->redirect($this->generateUrl('local_listado'));
+           }
         }
-        
-
     	return $this->render('BackendBundle:Local:new.html.twig', array(
-      'form' => $form->createView()        ));
+      	   'form' => $form->createView()        
+	));
     }
-
-    #    editar
     public function editAction($id)
-    {
-      
+    {    
         $em = $this->getDoctrine()->getManager();
-        $objLocal = $em->getRepository('BackendBundle:Local')->find($id);
-        $form = $this->createForm(new LocalType(), $objLocal);
-
+        $objl = $em->getRepository('BackendBundle:Local')->find($id);
+        $form = $this->createForm(new LocalType(), $objl);
         $form->handleRequest($this->getRequest());
-
         if ($form->isValid())
         {
             try{  
-                $em->persist($objLocal);
+                $em->persist($objl);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-                return $this->redirect($this->generateUrl('local_listado'));
+                $this->get('session')->getFlashBag()->add('success','Item actualizado');
+                return $this->redirect($this->generateUrl('local_edit', array('id' => $objl->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item');  
+                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
                 return $this->redirect($this->generateUrl('local_listado'));
-          }    
-
+            }    
         }
-
-
-      return $this->render('BackendBundle:Local:edit.html.twig', array('form'=>$form->createView()));
+        return $this->render('BackendBundle:Local:edit.html.twig', array('form'=>$form->createView()));
     }
-
     public function deleteAction($id)
     {                
         try{
@@ -106,11 +79,11 @@ class LocalController extends Controller
             $objl = $em->getRepository('BackendBundle:Local')->find($id);
             $em->remove($objl); 
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            $this->get('session')->getFlashBag()->add('success','Item Eliminado');
             return $this->redirect($this->generateUrl('local_listado'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
             return $this->redirect($this->generateUrl('local_listado'));
         }    
     }

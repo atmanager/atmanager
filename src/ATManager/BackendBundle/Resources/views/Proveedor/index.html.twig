@@ -4,6 +4,9 @@
     <h3>Gestión de Proveedores</h3>
     {{ form(form)}}
     <br />
+    <a href="{{ path('proveedor_new') }}">
+        <h4>[Crear Proveedor]</h4>
+    </a> 
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -29,11 +32,7 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-    <a href="{{ path('proveedor_new') }}">
-        Crear Proveedor
-    </a>   
-    <br />
+    </table>  
     {% if entities.getTotalItemCount > 10 %}
         {{ knp_pagination_render(entities) }}
     {% endif %} 

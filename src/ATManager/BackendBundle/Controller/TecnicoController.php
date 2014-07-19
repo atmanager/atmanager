@@ -4,25 +4,17 @@ namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-# indicar en el createForm (newAction) que tipo de form es
 use ATManager\BackendBundle\Form\TecnicoNewType; 
-
 use ATManager\BackendBundle\Form\TecnicoEditarType; 
 use ATManager\BackendBundle\Form\BuscadorType; 
-#indicar al new (newAction) a que entidad nos referimos 
 use ATManager\BackendBundle\Entity\Tecnico;   
-
 
 class TecnicoController extends Controller
 {
     public function indexAction(Request $request)
     {
-    	
-        #La manipulación de la información de Doctrine2 (buscar, crear, modificar y borrar registros en
-        #las tablas) se realiza a través de un objeto especial llamado Entity Manager ($em).
+
         $em = $this->getDoctrine()->getManager(); 	
-        # trae todos los registros ordenanos por su ID.
         $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
         $form->handleRequest($request);
         $tecnicos = array();
@@ -36,11 +28,8 @@ class TecnicoController extends Controller
         	'tecnicos'=> $tecnicos,
             'form'=>$form->createView()	
         ));
-
     }
-
-
-   public function newAction(Request $request){
+    public function newAction(Request $request){
         $userManager = $this->container->get('fos_user.user_manager');  // 1) declarado en security.yml
         $entity = $userManager->createUser();
 
@@ -76,10 +65,10 @@ class TecnicoController extends Controller
             $entity->setLastLogin(null);
             try {
                 $userManager->updateUser($entity);
-                $request->getSession()->getFlashBag()->add('success', 'Guardado correctamente');
-                return $this->redirect($this->generateUrl('tecnico_listado'));
+                $request->getSession()->getFlashBag()->add('success','Item Guardado');
+                return $this->redirect($this->generateUrl('tecnico_show', array('id' => $entity->getId())));
             } catch(\Exception $ex) {
-                $request->getSession()->getFlashBag()->add('error', 'Ocurrio un problema al cargar un nuevo técnico');
+                $request->getSession()->getFlashBag()->add('error','Error al intentar agregar item');
                 return $this->redirect($this->generateUrl('tecnico_new'));
             }
         }
@@ -95,7 +84,6 @@ class TecnicoController extends Controller
         $userManager = $this->container->get('fos_user.user_manager');
         $em = $this->getDoctrine()->getManager();
         $objTecnico = $em->getRepository('BackendBundle:Tecnico')->find($id);
-
         $options['nombre'] = $objTecnico->getNombre();
         $options['documento'] = $objTecnico->getDocumento();
         $options['username'] = $objTecnico->getUsername();
@@ -106,9 +94,7 @@ class TecnicoController extends Controller
         $roles = $objTecnico->getRoles();
         $options['rol'] = $roles[0];
         $form = $this->createForm(new TecnicoEditarType(), $options); // no pasar objeto tecnico
-
         $form->handleRequest($this->getRequest());
-
         if ($form->isValid())
         {
 
@@ -120,7 +106,6 @@ class TecnicoController extends Controller
             $objTecnico->setEnabled($form->get('enabled')->getData());  
             $objTecnico->setSector($form->get('sector')->getData());  
             $contrasenia = $form->get('plainpassword')->getData();
-
             if (!empty($contrasenia))
             {  
                 $objTecnico->setPlainPassword($contrasenia);
@@ -130,35 +115,15 @@ class TecnicoController extends Controller
             $objTecnico->setRoles($arrayRoles); 
             try {
                 $userManager -> updateUser($objTecnico);
-                $this->get('session')->getFlashBag()->add('success','Tuvo exito la transacción');
-                return $this->redirect($this->generateUrl('tecnico_listado'));
+                $this->get('session')->getFlashBag()->add('success','Item actualizado');
+                return $this->redirect($this->generateUrl('tecnico_edit', array('id' => $entity->getId())));
             } 
             catch(\Exception $ex) {
-               $request->getSession()->getFlashBag()->add('error', 'El Técnico ya existe');
+               $request->getSession()->getFlashBag()->add('error','Error al intentar actualizar item');
                 //return $this->redirect($this->generateUrl('tecnico_listado'));
             }
         }
-
-
     	return $this->render('BackendBundle:Tecnico:edit.html.twig', array('form'=>$form->createView()));
-    }
-
-    #    borrar
-    public function deleteAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $objTecnico = $em->getRepository('BackendBundle:Tecnico')->find($id);
-        
-        try{
-            $em->remove($objTecnico); 
-            $em->flush();
-        }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('success','Hubo un error al intentar borrar...');
-            return $this->redirect($this->generateUrl('tecnico_listado'));
-        }
-        $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
-        return $this->redirect($this->generateUrl('tecnico_listado'));
-      	
     }
 
      /**
@@ -168,37 +133,16 @@ class TecnicoController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BackendBundle:Tecnico')->find($id);
-
-        if (!$entity) {
+        
+	if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tecnico entity.');
         }
 
         return $this->render('BackendBundle:Tecnico:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView()
+            'entity'      => $entity
         ));
     }
-
-
-     /**
-     * Creates a form to delete a Tecnico entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('tecnico_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Borrar'))
-            ->getForm()
-        ;
-    }
-
     public function eliminarAction($id)
     {
             try{
@@ -207,14 +151,12 @@ class TecnicoController extends Controller
                 $objt->setEnabled(false);
                 $em->persist($objt);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Ok al borrar');
+                $this->get('session')->getFlashBag()->add('success','Item Eliminado');
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar');  
+                $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             }    
-        
-        //return $this->render('BackendBundle:Local:edit.html.twig', array('form'=>$form->createView()));
     }
 }

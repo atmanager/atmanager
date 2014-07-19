@@ -1,8 +1,11 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Gestión de Roles de Técnicos y Fallas</h3>
+    <h3>Gestión de Roles</h3>
 
+    <a href="{{ path('rol_new') }}">
+   	<h4>[Crear Rol]</h4>
+    </a>	
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -24,10 +27,5 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-    
-            <a href="{{ path('rol_new') }}">
-                Crear Rol de Técnicos y Fallas
-           </a>      
-
-    {% endblock %}
+    </table>          
+{% endblock %}

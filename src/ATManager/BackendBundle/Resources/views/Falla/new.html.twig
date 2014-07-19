@@ -3,7 +3,6 @@
 {% block content %}
 
     <h3>Nueva Falla</h3>
-<!-- {{ form_start(form) }} -->
 
 {{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
 
@@ -20,13 +19,13 @@
 	 {{ form_row(form.submit)}}
 	</div>
 
-</div>
+</div> 
 {{ form_end(form) }}    
 
 
     
         <a href="{{ path('falla_listado') }}">
-            Regresar a Listado
+            Volver a Listado
         </a>
     
 

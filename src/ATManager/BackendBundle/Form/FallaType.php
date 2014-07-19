@@ -17,17 +17,13 @@ class FallaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           /* ->add('nombre', 'text', array(
-                'label' => 'Nombre de falla *',
-                'required' => true,
-                'constraints'=>array(new Assert\NotBlank())
-            ))*/
             ->add('nombre')
-            ->add('descripamplia')
+            ->add('descripamplia','text',array('label'=>'Descripción Ampliada:'))
             ->add('estado')
             ->add('sector','entity', array(
                 'class' => 'BackendBundle:Sector',
                 'multiple'=>true,
+		'label'=>'Ctrl+Click para escoger más de un sector..',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                     ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
@@ -35,6 +31,7 @@ class FallaType extends AbstractType
                     ;
                 },
             ))
+	    ->add('submit', 'submit', array('label' => 'Aceptar'))
         ;
     }
     

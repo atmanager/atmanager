@@ -1,9 +1,10 @@
 {% extends 'BackendBundle::base_backend.html.twig' %} 
-{% block title %} Tipos de Sectores {% endblock %}       
 {% block content %}
-<h3>Crear un Tipo de Sector</h3>
 
-    {{ form(form,{'attr': {'novalidate':'novalidate'}} )}}    
+<h3>Crear Clasificación de Sector</h3>
+
+{{ form(form,{'attr': {'novalidate':'novalidate'}} )}}    
+
         <a href="{{ path('sectortipo_listado') }}">
             Volver a listado
         </a>

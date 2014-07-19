@@ -1,15 +1,10 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Editando Clasificaciones de estadios</h3>
+    <h3>Editar Clasificación de Estadio</h3>
 
     {{ form(edit_form) }}
-
-        <ul class="record_actions">
-		    <li>
-		        <a href="{{ path('estadioclasif') }}">
-		            Retornar a la lista
-		        </a>
-		    </li>
-   </ul>
+    <a href="{{ path('estadioclasif') }}">
+	Volver al listado
+    </a>
 {% endblock %}

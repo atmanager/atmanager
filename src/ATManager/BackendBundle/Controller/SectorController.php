@@ -10,21 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\BackendBundle\Entity\Sector;
 use ATManager\BackendBundle\Form\SectorType;
 use ATManager\BackendBundle\Form\BuscadorType; 
-/**
- * Sector controller.
- *
- * @Route("/sector")
- */
+
 class SectorController extends Controller
 {
-
-    /**
-     * Lists all Sector entities.
-     *
-     * @Route("/", name="sector")
-     * @Method("GET")
-     * @Template()
-     */
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -37,88 +25,34 @@ class SectorController extends Controller
         }
         $paginator = $this->get('knp_paginator');
         $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
-        return array(
+        return $this->render('BackendBundle:Sector:index.html.twig',array(
             'entities' => $entities,
             'form'=>$form->createView()
-             );
+             ));
     }
-    /**
-     * Creates a new Sector entity.
-     *
-     * @Route("/", name="sector_create")
-     * @Method("POST")
-     * @Template("BackendBundle:Sector:new.html.twig")
-     */
-    public function createAction(Request $request)
+    public function newAction()
     {
         $entity = new Sector();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
+        $form = $this->createForm(new SectorType(), $entity);
+        $form->handleRequest($this->getRequest());
         if ($form->isValid()) {
             try{
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Sector Guardado');
+                $this->get('session')->getFlashBag()->add('success','Item Guardado');
                 return $this->redirect($this->generateUrl('sector_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
                 return $this->redirect($this->generateUrl('sector_listado'));
              }
         }
-
-        return array(
+        return $this->render('BackendBundle:Sector:new.html.twig',array(
             'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to create a Sector entity.
-    *
-    * @param Sector $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Sector $entity)
-    {
-        $form = $this->createForm(new SectorType(), $entity, array(
-            'action' => $this->generateUrl('sector_create'),
-            'method' => 'POST',
+            'form'   => $form->createView()
         ));
-
-        //$form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
-
-    /**
-     * Displays a form to create a new Sector entity.
-     *
-     * @Route("/new", name="sector_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Sector();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a Sector entity.
-     *
-     * @Route("/{id}", name="sector_show")
-     * @Method("GET")
-     * @Template()
-     */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -128,138 +62,32 @@ class SectorController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Sector entity.');
         }
-
-       // $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-       //     'delete_form' => $deleteForm->createView(),
+        return $this->render('BackendBundle:Sector:show.html.twig', 
+            array('entity' => $entity)
         );
     }
-
-    /**
-     * Displays a form to edit an existing Sector entity.
-     *
-     * @Route("/{id}/edit", name="sector_edit")
-     * @Method("GET")
-     * @Template()
-     */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BackendBundle:Sector')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sector entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
-        );
-    }
-
-    /**
-    * Creates a form to edit a Sector entity.
-    *
-    * @param Sector $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Sector $entity)
-    {
-        $form = $this->createForm(new SectorType(), $entity, array(
-            'action' => $this->generateUrl('sector_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-       // $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Sector entity.
-     *
-     * @Route("/{id}", name="sector_update")
-     * @Method("PUT")
-     * @Template("BackendBundle:Sector:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BackendBundle:Sector')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sector entity.');
-        }
-
-       // $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
+        $editForm =  $this->createForm(new SectorType(), $entity);
+	$editForm->handleRequest($this->getRequest());
+	if ($editForm->isValid()) {
             try{
+		$em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Sector Editado');
+                $this->get('session')->getFlashBag()->add('success','Item actualizado');
                 return $this->redirect($this->generateUrl('sector_edit', array('id' => $id)));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar agregar un nuevo item, posible duplicacion ...[Pres. F5]');
+                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
                 return $this->redirect($this->generateUrl('sector_listado'));
             }
         }
-
-        return array(
+        return $this->render('BackendBundle:Sector:edit.html.twig',array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-    //        'delete_form' => $deleteForm->createView(),
-        );
-    }
-    /**
-     * Deletes a Sector entity.
-     *
-     * @Route("/{id}", name="sector_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BackendBundle:Sector')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Sector entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('sector'));
-    }
-
-    /**
-     * Creates a form to delete a Sector entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('sector_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            'edit_form'   => $editForm->createView()
+        ));
     }
     public function eliminarAction($id)
     {                
@@ -268,11 +96,11 @@ class SectorController extends Controller
             $objs = $em->getRepository('BackendBundle:Sector')->find($id);
             $em->remove($objs); 
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Ok al borrar...');
+            $this->get('session')->getFlashBag()->add('success','Item Eliminado');
             return $this->redirect($this->generateUrl('sector_listado'));
 
         }catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('error','Hubo un error al intentar borrar...');
+            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item');
             return $this->redirect($this->generateUrl('sector_listado'));
         }     
     }
