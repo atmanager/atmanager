@@ -24,7 +24,7 @@ class Prioridad
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=45, unique=true)
+     * @ORM\Column(name="nombre", type="string", length=45, unique=true, nullable=false)
      * @Assert\NotBlank()
      */
     private $nombre;

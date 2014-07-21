@@ -23,17 +23,18 @@ class Proveedor
     private $id;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="cuit", type="string", length=13)
+     * @ORM\Column(name="cuit", type="integer",unique=true,nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Type(type="numeric")
      */
     private $cuit;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=80, unique=true,nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=80, nullable=false)
      * @Assert\NotBlank()
      */
     private $nombre;

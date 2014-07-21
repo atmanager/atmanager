@@ -116,11 +116,11 @@ class TecnicoController extends Controller
             try {
                 $userManager -> updateUser($objTecnico);
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('tecnico_edit', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('tecnico_show', array('id' => $entity->getId())));
             } 
             catch(\Exception $ex) {
                $request->getSession()->getFlashBag()->add('error','Error al intentar actualizar item');
-                //return $this->redirect($this->generateUrl('tecnico_listado'));
+               return $this->redirect($this->generateUrl('tecnico_listado'));
             }
         }
     	return $this->render('BackendBundle:Tecnico:edit.html.twig', array('form'=>$form->createView()));

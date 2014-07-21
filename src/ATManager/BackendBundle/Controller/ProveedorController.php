@@ -91,7 +91,7 @@ class ProveedorController extends Controller
 		$em->persist($entity);
                 $em->flush();
 		$this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('proveedor_edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('proveedor_show', array('id' => $id)));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');

@@ -10,7 +10,6 @@ use ATManager\BackendBundle\Entity\PatrimonioClasif;
 
 class PatrimonioClasifController extends Controller
 {
-#    listado
     public function indexAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
@@ -30,7 +29,6 @@ class PatrimonioClasifController extends Controller
     }
     public function newAction()
     {
-
         $objpc= new PatrimonioClasif();
         $form = $this->createForm(new PatrimonioClasifType(), $objpc);
         $form->handleRequest($this->getRequest());
@@ -64,7 +62,7 @@ class PatrimonioClasifController extends Controller
                 $em->persist($objpc);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('patrimonioclasif_edit', array('id' => $objpc->getId())));
+                return $this->redirect($this->generateUrl('patrimonioclasif_show', array('id' => $objpc->getId())));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');

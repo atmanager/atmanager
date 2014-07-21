@@ -12,7 +12,7 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Comentario</th>
-                <th>Estado</th>
+                <th>Activo</th>
                 
             </tr>
         </thead>
@@ -21,11 +21,15 @@
             <tr>
                 <td><a href="{{ path('estadio_show', { 'id': entity.id }) }}">Ver</td>
                 <td><a href="{{ path('estadio_edit', { 'id': entity.id }) }}">Editar</a></td>
-                <td><a href="{{ path('estadio_eliminar', { 'id': entity.id }) }}">Eliminar</a></td>
+                <td><a href="{{ path('estadio_eliminar', { 'id': entity.id }) }}" onclick="return confirm('¿Desea eliminar el item seleccionado?');">Eliminar</a></td>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td>{{ entity.comentario }}</td>
-                <td>{{ entity.estado }}</td>
+                {% if entity.estado %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

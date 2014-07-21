@@ -17,7 +17,7 @@
 <tr>
     <td><a href="{{ path('marca_show', {'id': marca.id} )}}">Ver</a></td>
     <td><a href="{{ path('marca_editar', {'id': marca.id} )}}">Editar</a></td>
-    <td><a href="{{ path('marca_eliminar', {'id': marca.id} )}}">Eliminar</a></td> 
+    <td><a href="{{ path('marca_eliminar', {'id': marca.id} )}}"  onclick="return confirm('¿Desea eliminar el item seleccionado?');">Eliminar</a></td> 
     <td> {{ marca.id }} </td>
     <td> {{ marca.nombre }} </td>
 </tr>

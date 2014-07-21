@@ -51,6 +51,7 @@ class MarcaController extends Controller
             'form' => $form->createView()
         ));
     }
+
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -63,7 +64,7 @@ class MarcaController extends Controller
                 $em->persist($objm);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('falla_edit', array('id' => $objm->getId())));
+                return $this->redirect($this->generateUrl('marca_show', array('id' => $objm->getId())));
             }
             catch(\Exception $e)
             {
@@ -73,6 +74,7 @@ class MarcaController extends Controller
         }
     	return $this->render('BackendBundle:Marca:edit.html.twig', array('form'=>$form->createView()));
     }
+   
     public function deleteAction($id)
     {                
         try{

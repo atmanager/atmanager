@@ -81,14 +81,6 @@ class FallaController extends Controller
             array('entity' => $entity)
         );
     }
-
-    /**
-     * Displays a form to edit an existing Falla entity.
-     *
-     * @Route("/{id}/edit", name="falla_edit")
-     * @Method("GET")
-     * @Template()
-     */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -100,19 +92,17 @@ class FallaController extends Controller
 		$em->persist($entity);
             	$em->flush();
             	$this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect('falla_edit', array('id' => $id));
-
+                return $this->redirect('falla_show', array('id' => $id));
             }
 	    catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
+                $this->get('session')->getFlashBag()->add('error',/*'Error al intentar actualizar item'*/ $e->getMessage());
                 return $this->redirect($this->generateUrl('falla_listado'));
              }
 	}
-        return array(
+        return $this->render('BackendBundle:Falla:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
-            
-        );
+            'edit_form'   => $editForm->createView()            
+        ));
     }
     public function eliminarAction($id)
     {                

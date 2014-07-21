@@ -1,25 +1,29 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Visualizar Falla</h3>
+    <h3>Ver Falla</h3>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id:</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Nombre</th>
+                <th>Nombre:</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
             <tr>
-                <th>Descripamplia</th>
+                <th>Descripción Ampliada:</th>
                 <td>{{ entity.descripamplia }}</td>
             </tr>
             <tr>
-                <th>Estado</th>
-                <td>{{ entity.estado }}</td>
+                <th>Activo:</th>
+                {% if entity.estado %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
             </tr>
 
             <tr>
@@ -33,14 +37,7 @@
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
         <a href="{{ path('falla_listado') }}">
             Regresar a listado
         </a>
-    </li>
-  
-    
-</ul>
 {% endblock %}

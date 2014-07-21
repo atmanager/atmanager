@@ -46,7 +46,7 @@ class Falla
     /**
      * @var boolean
      * 
-     * @ORM\Column(name="estado", type="boolean")
+     * @ORM\Column(name="estado", type="boolean",nullable=false)
      */
     private $estado;
 

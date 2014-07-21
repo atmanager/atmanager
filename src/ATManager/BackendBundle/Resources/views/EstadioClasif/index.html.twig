@@ -20,11 +20,19 @@
             <tr>
                 <td><a href="{{ path('estadioclasif_show', { 'id': entity.id }) }}">Ver</a> </td>
                 <td><a href="{{ path('estadioclasif_edit', { 'id': entity.id }) }}">Editar</a> </td>
-                <td><a href="{{ path('estadioclasif_eliminar', { 'id': entity.id }) }}">Eliminar</a> </td>
+                <td><a href="{{ path('estadioclasif_eliminar', { 'id': entity.id }) }}"  onclick="return confirm('¿Desea eliminar el item seleccionado?');">Eliminar</a> </td>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
-                <td>{{ entity.iniciaAt }}</td>
-                <td>{{ entity.finalizaAt }}</td>
+                {% if entity.iniciaAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+                {% if entity.finalizaAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

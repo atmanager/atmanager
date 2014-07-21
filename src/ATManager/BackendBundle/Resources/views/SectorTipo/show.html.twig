@@ -1,7 +1,7 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 {% block content %}
     <h3>Ver Clasificación del Sector</h3>
-    <table class="table table-bordered table-striped">
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id:</th>
@@ -13,11 +13,19 @@
             </tr>
             <tr>
                 <th>Origen:</th>
-                <td>{{ entity.origen }}</td>
+                {% if entity.origen %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
             </tr>
             <tr>
                 <th>Destino:</th>
-                <td>{{ entity.destino }}</td>
+                {% if entity.destino %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}   
             </tr>
         </tbody>
     </table>

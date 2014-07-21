@@ -94,7 +94,7 @@ class SectorTipoController extends Controller
               	$em->persist($objst);
               	$em->flush();
               	$this->get('session')->getFlashBag()->add('success','Item actualizado');
-             	return $this->redirect($this->generateUrl('sectortipo_edit', array('id' => $objst->getId())));
+             	return $this->redirect($this->generateUrl('sectortipo_show', array('id' => $objst->getId())));
      	    }
             catch(\Exception $e){
            	$this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');

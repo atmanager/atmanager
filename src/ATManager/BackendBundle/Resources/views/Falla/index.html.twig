@@ -1,5 +1,4 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
-
 {% block content %}
     <h3>Gestión de Fallas</h3>
     {{ form(form) }}
@@ -14,7 +13,7 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Descripamplia</th>
-                <th>Estado</th>    
+                <th>Activo</th>    
             </tr>
         </thead>
         <tbody>
@@ -22,19 +21,20 @@
             <tr>
                 <td><a href="{{ path('falla_show', { 'id': entity.id }) }}">Ver</a></td>
                 <td><a href="{{ path('falla_edit', { 'id': entity.id }) }}">Editar</a></td>
-                <td><a href="{{ path('falla_eliminar', { 'id': entity.id }) }}">Borrar</a></td>
+                <td><a href="{{ path('falla_eliminar', { 'id': entity.id }) }}"  onclick="return confirm('¿Desea eliminar el item seleccionado?');">Borrar</a></td>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td>{{ entity.descripamplia }}</td>
-                <td>{{ entity.estado }}</td>
+                {% if entity.estado %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-    
-    <br />
+    </table>    
     {% if entities.getTotalItemCount > 10 %}
-    {{ knp_pagination_render(entities) }}
+    	{{ knp_pagination_render(entities) }}
     {% endif %}
-
-    {% endblock %}
+{% endblock %}
