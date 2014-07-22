@@ -1,7 +1,7 @@
 {% extends 'PatrimonioBundle::base_patrimonio.html.twig' %} 
 {% block content %}
     <h4>Listado Patrimonios</h4>
-    {{ form(form)}}
+    
     <table class="table">
 
         <thead>
@@ -51,13 +51,17 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
+       
             <a href="{{ path('patrimonio_new') }}">
                 Nuevo
             </a>
-        </li>
-        </ul>
+            <a href="{{ path('patrimonio_buscador') }}">
+                Volver al buscador
+            </a>
+             <a href="{{ path('patrimonio_exportar') }}">
+                Exportar a CSV file
+            </a>
+        
 
      {% if entities.getTotalItemCount > 10 %}
      {{ knp_pagination_render(entities) }}

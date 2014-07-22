@@ -25,7 +25,7 @@ class Proveedor
     /**
      * @var integer
      *
-     * @ORM\Column(name="cuit", type="integer",unique=true,nullable=false)
+     * @ORM\Column(name="cuit", type="integer", unique=true, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Type(type="numeric")
      */

@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class PatrimonioRepository extends EntityRepository
 {
-	public function findByFiltroPatrimonio($numero, $clasificacion, $local, $marca)
+	public function findByFiltroPatrimonio($numero, $descripcion, $observacion, $serial, $clasificacion, $local, $marca)
 	{
 
 		$em = $this->getEntityManager();
@@ -24,6 +24,21 @@ class PatrimonioRepository extends EntityRepository
 		{
 		$query->andWhere('p.id = :id');
 		$query->setParameter('id',$numero);
+		}
+		if ($descripcion)
+		{
+		$query->andWhere('p.descripcion LIKE :descripcion');
+		$query->setParameter('descripcion','%'.$descripcion.'%');
+		}
+		if ($observacion)
+		{
+		$query->andWhere('p.observacion LIKE :observacion');
+		$query->setParameter('observacion','%'.$observacion.'%');
+		}
+		if ($serial)
+		{
+		$query->andWhere('p.serial LIKE :serial');
+		$query->setParameter('serial','%'.$serial.'%');
 		}
 		if ($clasificacion)
 		{	
@@ -41,6 +56,7 @@ class PatrimonioRepository extends EntityRepository
 		$query->setParameter('marca',$marca);
 	    }
 
+		$query->setMaxResults(500);
 		$query = $query->getQuery();
 		return $query->getResult();
 	}

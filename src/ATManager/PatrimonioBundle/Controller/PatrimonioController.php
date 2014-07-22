@@ -10,6 +10,7 @@ use ATManager\PatrimonioBundle\Entity\Patrimonio;
 use ATManager\PatrimonioBundle\Form\PatrimonioType;
 use ATManager\PatrimonioBundle\Form\PatrimonioBuscadorType;
 
+use Symfony\Component\HttpFoundation\StreamedResponse; // para exportar
 /**
  * Patrimonio controller.
  *
@@ -17,11 +18,12 @@ use ATManager\PatrimonioBundle\Form\PatrimonioBuscadorType;
 class PatrimonioController extends Controller
 {
 
-    /**
+
+     /**
      * Lists all Patrimonio entities.
      *
      */
-    public function indexAction(Request $request)
+    public function buscadorAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -31,41 +33,38 @@ class PatrimonioController extends Controller
 
         $form->handleRequest($request);
 
-        $entities = array();
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
 
+            $entities = array();
             $numero=$form->get('numero')->getData();
+            $descripcion=$form->get('descripcion')->getData();
+            $observacion=$form->get('observacion')->getData();
+            $serial=$form->get('serial')->getData();
             $clasificacion=$form->get('clasificacion')->getData();
             $local=$form->get('local')->getData();
             $marca=$form->get('marca')->getData();
-
-            if ($numero or $clasificacion or $local or $marca)
+            if ($numero or $descripcion or $observacion or $serial or $clasificacion or $local or $marca)
             {
-            $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $clasificacion, $local, $marca);
-            }
-
-
-
-
-        }
-
-        #$entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findAll();
-
-
-        // $dql = "select p from PatrimonioBundle:Patrimonio p where p.descripcion like :descripcion";
-        // $query = $em->createQuery($dql);
-        // $query->setParameter('descripcion', '%MONITOR%');
-        // $entities = $query->getResult();        
-
-        // #$entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findBy(array('descripcion' => 'CARRO PORTABOLSA COLOR NEGRO'));
-        $paginator = $this->get('knp_paginator');
-        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
-        return $this->render('PatrimonioBundle:Patrimonio:index.html.twig', array(
-            'entities' => $entities, 
-            'form'=>$form->createView()
+                $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $descripcion, $observacion, $serial, $clasificacion, $local, $marca);
+                $paginator = $this->get('knp_paginator');
+                $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
+                return $this->render('PatrimonioBundle:Patrimonio:index.html.twig', array(
+                'entities' => $entities, 
+                'form'=>$form->createView()
         ));
-    }
+            }
+        }
+        return $this->render('PatrimonioBundle:Patrimonio:find.html.twig', array(
+                            'form'=>$form->createView()
+        ));
+
+
+    }    
+
+    
+
     /**
      * Creates a new Patrimonio entity.
      *
@@ -275,4 +274,38 @@ class PatrimonioController extends Controller
             ->getForm()
         ;
     }
+
+
+
+     public function exportAction()
+    {
+        // get the service container to pass to the closure
+        $container = $this->container;
+        $response = new StreamedResponse(function() use($container) {
+
+            $em = $container->get('doctrine')->getManager();
+
+            // The getExportQuery method returns a query that is used to retrieve
+            // all the objects (lines of your csv file) you need. The iterate method
+            // is used to limit the memory consumption
+            $results = $em->getRepository('PatrimonioBundle:Patrimonio')->getExportQuery()->iterate();
+            $handle = fopen('php://output', 'r+');
+
+            while (false !== ($row = $results->next())) {
+                // add a line in the csv file. You need to implement a toArray() method
+                // to transform your object into an array
+                fputcsv($handle, $row[0]->toArray());
+                // used to limit the memory consumption
+                $em->detach($row[0]);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Disposition','attachment; filename="export_patri.csv"');
+
+        return $response;
+    }
+
 }

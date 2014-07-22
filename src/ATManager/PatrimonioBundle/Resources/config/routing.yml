@@ -22,3 +22,5 @@ PatrimonioBundle_patrimonio:
     resource: "@PatrimonioBundle/Resources/config/routing/patrimonio.yml"
     prefix:   /patrimonio
 
+
+

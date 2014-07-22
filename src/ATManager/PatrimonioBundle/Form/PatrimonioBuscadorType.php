@@ -18,6 +18,24 @@ class PatrimonioBuscadorType extends AbstractType
             ->add('numero','integer',array(
                 'required'=>false
             ))  // ver Form Types Reference Symfony.com (2.5)
+
+            ->add('descripcion','text',array(
+                'required'=>false,
+                'label'=>'Nombre'
+            ))
+
+            ->add('observacion','text',array(
+                'required'=>false,
+                'label'=>'Algún dato de observación...'
+
+            ))
+
+            ->add('serial','text',array(
+                'required'=>false,
+                'label'=>'Serie'
+
+            ))
+
             ->add('clasificacion','entity',array(
                 'class'=>'BackendBundle:PatrimonioClasif',
                 'required'=>false,

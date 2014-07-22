@@ -1,4 +1,8 @@
-patrimonio:
+patrimonio_buscador:
+    pattern:  /
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:buscador" }
+
+patrimonio_index:
     pattern:  /
     defaults: { _controller: "PatrimonioBundle:Patrimonio:index" }
 
@@ -33,4 +37,6 @@ patrimonio_existe:
     pattern:  /existe/{id}
     defaults: { _controller: "PatrimonioBundle:Patrimonio:existe", id:null }
     
-
+patrimonio_exportar:
+    pattern:  /exportar
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:export" }
