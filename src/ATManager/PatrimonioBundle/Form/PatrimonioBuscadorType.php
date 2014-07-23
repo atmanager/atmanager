@@ -52,6 +52,7 @@ class PatrimonioBuscadorType extends AbstractType
                 'empty_value'=>'Todas...'
             ))
             ->add('filtrar','submit')
+             ->add('exportar','submit')
             ;
     }
     

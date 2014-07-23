@@ -40,7 +40,7 @@ class ServicioTerceroController extends Controller
                 $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item Guardado');
-                return $this->redirect($this->generateUrl('serviciotercero_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('serviciotercero_edit', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
@@ -78,7 +78,7 @@ class ServicioTerceroController extends Controller
 		$em->persist($entity);
             	$em->flush();
              	$this->get('session')->getFlashBag()->add('success','Item actualizado');
-             	return $this->redirect($this->generateUrl('serviciotercero_show', array('id' => $entity->getId())));
+             	return $this->redirect($this->generateUrl('serviciotercero_show', array('id' => $id)));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');

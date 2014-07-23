@@ -55,24 +55,26 @@ class MarcaController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $objm = $em->getRepository('BackendBundle:Marca')->find($id);
-        $form = $this->createForm(new MarcaType(), $objm);
+        $entity = $em->getRepository('BackendBundle:Marca')->find($id);
+        $form = $this->createForm(new MarcaType(), $entity);
         $form->handleRequest($this->getRequest());
         if ($form->isValid())
         {
             try{
-                $em->persist($objm);
+                $em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('marca_show', array('id' => $objm->getId())));
-            }
+                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
+                return $this->redirect($this->generateUrl('marca_editar', array('id' => $id)));
+                }
             catch(\Exception $e)
             {
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item'); 
                 return $this->redirect($this->generateUrl('marca_listado'));
             }
         }
-    	return $this->render('BackendBundle:Marca:edit.html.twig', array('form'=>$form->createView()));
+    	return $this->render('BackendBundle:Marca:edit.html.twig',array(
+            'entity'=>'$entity',
+            'form'=>$form->createView()));
     }
    
     public function deleteAction($id)

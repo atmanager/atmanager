@@ -15,16 +15,18 @@ class PatrimonioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('alasector')
             ->add('descripcion')
             ->add('responsable')
             ->add('modelo')
             ->add('serial')
             ->add('observacion')
             ->add('precio')
+            //->add('estimado')
             ->add('clasificacion')
             ->add('local')
             ->add('marca')
+            ->add('fechaAlta')
+             ->add('submit', 'submit', array('label' => 'Aceptar'))
         ;
     }
     

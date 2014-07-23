@@ -92,10 +92,10 @@ class RepuestoController extends Controller
         $editForm->handleRequest($this->getRequest());
 	if ($editForm->isValid()) {
             try{
-		$em->persist($entity);
+		        $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('repuesto_show', array('id' => $id)));
+                return $this->redirect($this->generateUrl('repuesto_edit', array('id' => $id)));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');

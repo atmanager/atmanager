@@ -43,6 +43,7 @@ class Tecnico extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Sector")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $sector;
 
@@ -83,7 +84,7 @@ class Tecnico extends BaseUser
     }
 
     public function __toString(){
-        return getNombre();
+        return $this->getNombre();
     }
 
     /**

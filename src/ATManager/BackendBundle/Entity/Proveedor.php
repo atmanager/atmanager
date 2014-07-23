@@ -25,11 +25,21 @@ class Proveedor
     /**
      * @var integer
      *
-     * @ORM\Column(name="cuit", type="integer", unique=true, nullable=false)
+     * @ORM\Column(name="cuit", type="bigint", nullable=false, unique=true)
      * @Assert\NotBlank()
      * @Assert\Type(type="numeric")
      */
     private $cuit;
+
+
+
+     /**
+     * @var codigo
+     *
+     * @ORM\Column(name="codigo", type="integer", unique=true, nullable=true)
+     * @Assert\Type(type="numeric")
+     */
+    private $codigo;
 
     /**
      * @var string
@@ -256,5 +266,28 @@ class Proveedor
     public function getComentario()
     {
         return $this->comentario;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param integer $codigo
+     * @return Proveedor
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return integer 
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
     }
 }

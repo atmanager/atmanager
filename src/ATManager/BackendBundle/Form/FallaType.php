@@ -23,7 +23,7 @@ class FallaType extends AbstractType
             ->add('sector','entity', array(
                 'class' => 'BackendBundle:Sector',
                 'multiple'=>true,
-		'label'=>'Ctrl+Click para escoger más de un sector..',
+		        'label'=>'Ctrl+Click para escoger más de un sector..',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                     ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')

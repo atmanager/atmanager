@@ -2,14 +2,46 @@
 
 {% block content %}
     <h3>Nuevo Patrimonio</h3>
+ 
+   
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
 
-    {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} <!-- novalidate anula la validacion de los browser y se los reemplaza por los asserts-->
+<div class="row"> 
 
- <ul class="record_actions">
-    <li>
+	<div class="col-xs-6"> 
+	{{ form_row(form.descripcion)}}
+	{{ form_row(form.responsable)}}
+	{{ form_row(form.modelo)}}
+	{{ form_row(form.serial)}}
+	{{ form_row(form.clasificacion)}}
+	{{ form_row(form.local)}}
+	{{ form_row(form.marca)}}
+
+	</div> 
+
+	<div class="col-xs-6">
+	
+	 {{ form_row(form.precio)}}
+	 {{ form_row(form.fechaAlta)}}
+	 {{ form_row(form.precio)}}
+	 {{ form_row(form.observacion)}}
+	 {{ form_row(form.submit)}}
+	 <a href="{{ path('patrimonio_index') }}">
+     <h5> Regresar a la lista/buscador </h5>
+     </a>
+	
+
+	</div>
+
+
+	 
+
+</div> 
+{{ form_end(form) }}  
+
+
         <a href="{{ path('patrimonio_index') }}">
             <h5> Regresar a la lista </h5>
         </a>
-    </li>
-</ul>
+  
 {% endblock %}

@@ -78,7 +78,7 @@ class Patrimonio
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaAlta", type="datetime")
+     * @ORM\Column(name="fechaAlta", type="datetime", nullable=true)
      */
     private $fechaAlta;
 

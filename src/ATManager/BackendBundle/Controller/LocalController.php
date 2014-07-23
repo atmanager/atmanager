@@ -63,7 +63,7 @@ class LocalController extends Controller
                 $em->persist($objl);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('local_show', array('id' => $objl->getId())));
+                return $this->redirect($this->generateUrl('local_edit', array('id' => $objl->getId())));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  

@@ -62,7 +62,7 @@ class PatrimonioClasifController extends Controller
                 $em->persist($objpc);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('patrimonioclasif_show', array('id' => $objpc->getId())));
+                return $this->redirect($this->generateUrl('patrimonioclasif_editar', array('id' => $objpc->getId())));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');

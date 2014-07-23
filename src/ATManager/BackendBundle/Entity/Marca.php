@@ -25,7 +25,7 @@ class Marca
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=60, unique=true)
+     * @ORM\Column(name="nombre", type="string", length=60, unique=true, nullable=false)
      * @Assert\NotBlank()
      */
     private $nombre;

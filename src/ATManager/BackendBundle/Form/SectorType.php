@@ -19,7 +19,13 @@ class SectorType extends AbstractType
             ->add('internos','text', array('label' => 'Teléfonos Internos: *'))
             ->add('mail')
             ->add('referente','text', array('label' => 'Referente: *'))
-            ->add('tipo')
+            ->add('tipo','entity', array(
+                  'class'=>'BackendBundle:SectorTipo',
+                  'query_builder'=>function($er){
+                                                 return $er->createQueryBuilder('st')
+                                                 ->select('st')
+                                                 ->orderBy('st.descripcion','ASC'); 
+            }))
             ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }

@@ -45,16 +45,22 @@ class PatrimonioController extends Controller
             $clasificacion=$form->get('clasificacion')->getData();
             $local=$form->get('local')->getData();
             $marca=$form->get('marca')->getData();
-            if ($numero or $descripcion or $observacion or $serial or $clasificacion or $local or $marca)
-            {
+           
                 $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $descripcion, $observacion, $serial, $clasificacion, $local, $marca);
+
+                if ($form->get('exportar')->isClicked())
+                {
+                    return $this->export($entities);
+                }    
+                else{
                 $paginator = $this->get('knp_paginator');
                 $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
                 return $this->render('PatrimonioBundle:Patrimonio:index.html.twig', array(
                 'entities' => $entities, 
                 'form'=>$form->createView()
-        ));
-            }
+                ));
+                }
+            
         }
         return $this->render('PatrimonioBundle:Patrimonio:find.html.twig', array(
                             'form'=>$form->createView()
@@ -103,7 +109,7 @@ class PatrimonioController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Nuevo/Guardar'));
+        //$form->add('submit', 'submit', array('label' => 'Nuevo/Guardar'));
 
         return $form;
     }
@@ -255,7 +261,7 @@ class PatrimonioController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('patrimonio'));
+        return $this->redirect($this->generateUrl('patrimonio_buscador'));
     }
 
     /**
@@ -276,35 +282,28 @@ class PatrimonioController extends Controller
     }
 
 
-
-     public function exportAction()
+    /*
+      funcion que exporta a CSV
+    */
+     private function export($entities)
     {
-        // get the service container to pass to the closure
-        $container = $this->container;
-        $response = new StreamedResponse(function() use($container) {
+        
+        $response = new StreamedResponse(function() use($entities) {  
+        $handle = fopen('php://output', 'r+');
+        $elementos = array();
 
-            $em = $container->get('doctrine')->getManager();
-
-            // The getExportQuery method returns a query that is used to retrieve
-            // all the objects (lines of your csv file) you need. The iterate method
-            // is used to limit the memory consumption
-            $results = $em->getRepository('PatrimonioBundle:Patrimonio')->getExportQuery()->iterate();
-            $handle = fopen('php://output', 'r+');
-
-            while (false !== ($row = $results->next())) {
-                // add a line in the csv file. You need to implement a toArray() method
-                // to transform your object into an array
-                fputcsv($handle, $row[0]->toArray());
-                // used to limit the memory consumption
-                $em->detach($row[0]);
+            foreach ($entities as $key) 
+            {
+               $elemento[0]=$key->getDescripcion();
+                $elemento[1]=$key->getId();
+                 fputcsv($handle, $elemento, ';');                   
             }
 
             fclose($handle);
         });
-
-        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->setCharset('ISO-8859-1');
         $response->headers->set('Content-Disposition','attachment; filename="export_patri.csv"');
-
         return $response;
     }
 

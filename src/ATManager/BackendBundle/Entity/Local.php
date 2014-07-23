@@ -33,7 +33,7 @@ class Local
     /**
      * @var string
      *
-     * @ORM\Column(name="codigointerno", type="string", length=10, nullable=false)
+     * @ORM\Column(name="codigointerno", type="string", length=10, nullable=false, unique=true)
      * @Assert\NotBlank()
      */
     private $codigointerno;
@@ -48,7 +48,7 @@ class Local
     */
 
     public function __toString(){
-        return " ".$this->getNombre();
+        return " ".$this->getCodigointerno()." ".$this->getNombre();
     }
 
     /**
