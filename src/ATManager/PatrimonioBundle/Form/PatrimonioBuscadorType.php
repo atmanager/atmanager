@@ -21,7 +21,7 @@ class PatrimonioBuscadorType extends AbstractType
 
             ->add('descripcion','text',array(
                 'required'=>false,
-                'label'=>'Nombre'
+                'label'=>'Descripción'
             ))
 
             ->add('observacion','text',array(
@@ -39,20 +39,20 @@ class PatrimonioBuscadorType extends AbstractType
             ->add('clasificacion','entity',array(
                 'class'=>'BackendBundle:PatrimonioClasif',
                 'required'=>false,
-                'empty_value'=>'Todas...'
+                'empty_value'=>'Selecccione Clasificación [*]'
             ))// ver Form Types Reference Symfony.com (2.5)
             ->add('local','entity',array(
                 'class'=>'BackendBundle:Local',
                 'required'=>false,
-                'empty_value'=>'Todas...'
+                'empty_value'=>'Seleccione Local [*]'
             ))
             ->add('marca','entity',array(
                 'class'=>'BackendBundle:Marca',
                 'required'=>false,
-                'empty_value'=>'Todas...'
+                'empty_value'=>'Seleccione Marca [*]'
             ))
             ->add('filtrar','submit')
-             ->add('exportar','submit')
+            ->add('exportar','submit')
             ;
     }
     

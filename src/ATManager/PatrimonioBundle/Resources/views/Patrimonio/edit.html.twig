@@ -1,16 +1,32 @@
 {% extends 'PatrimonioBundle::base_patrimonio.html.twig' %}
 
 {% block content %}
-    <h1>Editando Patrimonio</h1>
 
-    {{ form(edit_form) }}
+<h3>Editar Patrimonio</h3>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('patrimonio_buscador') }}">
-            Volver a la lista.
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{{ form_start(edit_form,{'attr': {'novalidate':'novalidate'}} )}}  
+<div class="row"> 
+	<div class="col-xs-6"> 
+		{{ form_row(edit_form.clasificacion)}}
+		{{ form_row(edit_form.descripcion)}}
+		{{ form_row(edit_form.local)}}
+		{{ form_row(edit_form.responsable)}}	
+		{{ form_row(edit_form.marca)}}
+		{{ form_row(edit_form.modelo)}}
+		{{ form_row(edit_form.serial)}}
+	</div> 
+	<div class="col-xs-6">
+	 	{{ form_row(edit_form.precio)}}
+	 	{{ form_row(edit_form.estimado)}}
+	 	{{ form_row(edit_form.fechaAlta)}}
+	 	{{ form_row(edit_form.estado)}}
+	 	{{ form_row(edit_form.observacion)}}
+	 	{{ form_row(edit_form.submit)}}
+	 	<a href="{{ path('patrimonio_buscador') }}">
+        	Volver al buscador.
+    	</a>
+	</div>
+</div> 
+{{ form_end(edit_form) }}       
+    
 {% endblock %}

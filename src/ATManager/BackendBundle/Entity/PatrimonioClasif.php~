@@ -3,12 +3,13 @@
 namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * PatrimonioClasif
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\PatrimonioClasifRepository")
  */
 class PatrimonioClasif
 {
@@ -24,7 +25,8 @@ class PatrimonioClasif
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=100, unique=true)
+     * @ORM\Column(name="nombre", type="string", length=100, unique=true, nullable=false)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
@@ -60,7 +62,7 @@ class PatrimonioClasif
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }

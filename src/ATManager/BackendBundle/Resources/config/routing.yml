@@ -57,3 +57,8 @@ proveedor:
 serviciotercero:
     resource: "@BackendBundle/Resources/config/routing/serviciotercero.yml"
     prefix:   /serviciotercero
+
+estadopatri:
+    resource: "@BackendBundle/Resources/config/routing/estadopatri.yml"
+    prefix:   /estadopatri
+

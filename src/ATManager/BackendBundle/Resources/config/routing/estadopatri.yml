@@ -1,0 +1,34 @@
+estadopatri:
+    pattern:  /
+    defaults: { _controller: "BackendBundle:EstadoPatri:index" }
+
+estadopatri_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BackendBundle:EstadoPatri:show" }
+
+estadopatri_new:
+    pattern:  /new
+    defaults: { _controller: "BackendBundle:EstadoPatri:new" }
+
+estadopatri_create:
+    pattern:  /create
+    defaults: { _controller: "BackendBundle:EstadoPatri:create" }
+    requirements: { _method: post }
+
+estadopatri_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BackendBundle:EstadoPatri:edit" }
+
+estadopatri_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BackendBundle:EstadoPatri:update" }
+    requirements: { _method: post|put }
+
+estadopatri_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BackendBundle:EstadoPatri:delete" }
+    requirements: { _method: post|delete }
+
+estadopatri_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "BackendBundle:EstadoPatri:eliminar" }    

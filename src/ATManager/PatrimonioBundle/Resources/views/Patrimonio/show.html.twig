@@ -1,73 +1,83 @@
 {% extends 'PatrimonioBundle::base_patrimonio.html.twig' %}
 
 {% block content %}
-    <h1>Patrimonio</h1>
-
+    <h3>Ver Patrimonio</h3>
+    <form name="frmimprimir">
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Número del Patrimonio:</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Numero</th>
-                <td>{{ entity.numero }}</td>
-            </tr>
-            <tr>
-                <th>Alasector</th>
+                <th>Alasector del Patrimonio:</th>
                 <td>{{ entity.alasector }}</td>
             </tr>
             <tr>
-                <th>Descripcion</th>
+                <th>Nombre del Patrimonio:</th>
                 <td>{{ entity.descripcion }}</td>
             </tr>
             <tr>
-                <th>Responsable</th>
+                <th>Responsable del Patrimonio:</th>
                 <td>{{ entity.responsable }}</td>
             </tr>
             <tr>
-                <th>Modelo</th>
+                <th>Modelo del Patrimonio:</th>
                 <td>{{ entity.modelo }}</td>
             </tr>
             <tr>
-                <th>Serial</th>
+                <th>Serial del Patrimonio:</th>
                 <td>{{ entity.serial }}</td>
             </tr>
             <tr>
-                <th>Observacion</th>
+                <th>Observacion del Patrimonio:</th>
                 <td>{{ entity.observacion }}</td>
             </tr>
             <tr>
-                <th>Fechaalta</th>
-                <td>{{ entity.fechaAlta|date('Y-m-d H:i:s') }}</td>
+                <th>Fecha de Alta:</th>
+                <td>{{ entity.fechaAlta|date('d/m/Y - H:i:s') }}</td>
             </tr>
             <tr>
-                <th>Fechabaja</th>
-
-                <td>{% if entity.fechaBaja is not null %}{{ entity.fechaBaja|date('Y-m-d H:i:s') }} {% endif %}</td>
+                <th>Fecha de Baja:</th>
+                <td>{% if entity.fechaBaja is not null %}
+                        {{ entity.fechaBaja|date('d/m/Y - H:i:s') }} 
+                    {% endif %}
+                </td>
             </tr>
             <tr>
-                <th>Habilita</th>
-                <td>{{ entity.habilita }}</td>
+                <th>Habilita:</th>
+                <td>
+                    {% if entity.habilita %}
+                        {{ 'Sí' }}
+                    {% else %}
+                        {{ 'No' }}    
+                    {% endif %}
+                </td>
             </tr>
             <tr>
-                <th>Precio</th>
-                <td>{{ entity.precio }}</td>
+                <th>Precio:</th>
+                <td>{{ entity.precio }}
+                {% if entity.estimado %} {{ 'Es estimado' }} 
+                    {% else %} {{ '= Factura' }}
+                    {% endif %}</td>
+            </tr>
+             <tr>
+                <th>Ultima actualización realizada por:</th>
+                <td>{% if entity.tecnico %} {{ entity.tecnico }} 
+                    {% else %} {{ 'No hay datos del técnico' }}
+                    {% endif %}
+                </td>
+            </tr>
+             <tr>
+                <th>Fecha Ultima actualización:</th>
+                <td> {{ entity.fechaModifica|date('d/m/Y - H:i:s') }}
+                </td>
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('patrimonio_buscador') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('patrimonio_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <input type="button" value="Imprimir" onClick="window.print();" class="btn btn-primary" />
+    <a href="{{ path('patrimonio_buscador') }}">
+        Volver al Buscador
+    </a>
+    </form>
 {% endblock %}

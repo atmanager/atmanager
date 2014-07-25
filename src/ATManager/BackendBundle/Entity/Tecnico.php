@@ -84,7 +84,7 @@ class Tecnico extends BaseUser
     }
 
     public function __toString(){
-        return $this->getNombre();
+        return " ".$this->getNombre();
     }
 
     /**

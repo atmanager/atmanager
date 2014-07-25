@@ -21,12 +21,42 @@ class PatrimonioType extends AbstractType
             ->add('serial')
             ->add('observacion')
             ->add('precio')
-            //->add('estimado')
-            ->add('clasificacion')
-            ->add('local')
-            ->add('marca')
+            ->add('clasificacion','entity',
+                    array(
+                        'class'=>'BackendBundle:PatrimonioClasif',
+                        'required'=>false,
+                        'empty_value'=>'Selecccione Clasificación [*]'
+                    )
+            )
+            ->add('local','entity',
+                    array(
+                        'class'=>'BackendBundle:Local',
+                        'required'=>false,
+                        'empty_value'=>'Seleccione Local [*]'
+                    )
+            )
+            ->add('marca','entity',
+                    array
+                    (
+                        'class'=>'BackendBundle:Marca',
+                        'required'=>false,
+                        'empty_value'=>'Seleccione Marca [*]'
+                    )
+            )
             ->add('fechaAlta')
-             ->add('submit', 'submit', array('label' => 'Aceptar'))
+            ->add('estimado',null,array(
+                    'required'=>false,
+                    'label'=>'Precio es estimado'
+                ))
+            ->add('estado','entity',
+                    array
+                    (
+                        'class'=>'BackendBundle:EstadoPatri',
+                        'required'=>false,
+                        'empty_value'=>'Seleccione un Estado de conservación [*]'
+                    )
+            )
+            ->add('submit', 'submit', array('label' => 'Aceptar'))
         ;
     }
     

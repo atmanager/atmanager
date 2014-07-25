@@ -5,35 +5,21 @@ namespace ATManager\PatrimonioBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use ATManager\PatrimonioBundle\Entity\Patrimonio;
+use ATManager\BackendBundle\Entity\Tecnico;
 use ATManager\PatrimonioBundle\Form\PatrimonioType;
 use ATManager\PatrimonioBundle\Form\PatrimonioBuscadorType;
-
 use Symfony\Component\HttpFoundation\StreamedResponse; // para exportar
-/**
- * Patrimonio controller.
- *
- */
+
 class PatrimonioController extends Controller
 {
-
-
-     /**
-     * Lists all Patrimonio entities.
-     *
-     */
     public function buscadorAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $form = $this->createForm(new PatrimonioBuscadorType(), null, array(
             'method' => 'GET',
         ));
-
         $form->handleRequest($request);
-
-
         if ($form->isValid())
         {
 
@@ -45,84 +31,44 @@ class PatrimonioController extends Controller
             $clasificacion=$form->get('clasificacion')->getData();
             $local=$form->get('local')->getData();
             $marca=$form->get('marca')->getData();
-           
-                $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $descripcion, $observacion, $serial, $clasificacion, $local, $marca);
-
-                if ($form->get('exportar')->isClicked())
-                {
-                    return $this->export($entities);
-                }    
-                else{
+            $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $descripcion, $observacion, $serial, $clasificacion, $local, $marca);
+            if ($form->get('exportar')->isClicked())
+            {
+                return $this->export($entities);
+            }    
+            else{
                 $paginator = $this->get('knp_paginator');
                 $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
                 return $this->render('PatrimonioBundle:Patrimonio:index.html.twig', array(
-                'entities' => $entities, 
-                'form'=>$form->createView()
+                    'entities' => $entities, 
+                    'form'=>$form->createView()
                 ));
-                }
-            
+            }
         }
         return $this->render('PatrimonioBundle:Patrimonio:find.html.twig', array(
                             'form'=>$form->createView()
         ));
-
-
     }    
-
-    
-
-    /**
-     * Creates a new Patrimonio entity.
-     *
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new Patrimonio();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('patrimonio_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('PatrimonioBundle:Patrimonio:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-    * Creates a form to create a Patrimonio entity.
-    *
-    * @param Patrimonio $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Patrimonio $entity)
-    {
-        $form = $this->createForm(new PatrimonioType(), $entity, array(
-            'action' => $this->generateUrl('patrimonio_create'),
-            'method' => 'POST',
-        ));
-
-        //$form->add('submit', 'submit', array('label' => 'Nuevo/Guardar'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Patrimonio entity.
-     *
-     */
     public function newAction()
     {
         $entity = new Patrimonio();
-        $form   = $this->createCreateForm($entity);
-
+        $form = $this->createForm(new PatrimonioType(), $entity);
+        $form->handleRequest($this->getRequest());
+        /** asi se obtiene el usuario logueado desde una accion en un controlador **/
+        $objt = $this->get('security.context')->getToken()->getUser();
+        $entity->setTecnico($objt);
+        if ($form->isValid()) {
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('sucess','Item Guardado');
+                return $this->redirect($this->generateUrl('patrimonio_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Error al intentar crear item'); 
+            }   return $this->redirect($this->generateUrl('patrimonio_new'));
+        }
         return $this->render('PatrimonioBundle:Patrimonio:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -143,11 +89,10 @@ class PatrimonioController extends Controller
             throw $this->createNotFoundException('Unable to find Patrimonio entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('PatrimonioBundle:Patrimonio:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'      => $entity       
+            ));
     }
 
 
@@ -175,117 +120,53 @@ class PatrimonioController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('PatrimonioBundle:Patrimonio')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Patrimonio entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('PatrimonioBundle:Patrimonio:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-    * Creates a form to edit a Patrimonio entity.
-    *
-    * @param Patrimonio $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Patrimonio $entity)
-    {
-        $form = $this->createForm(new PatrimonioType(), $entity, array(
-            'action' => $this->generateUrl('patrimonio_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Editar'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Patrimonio entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('PatrimonioBundle:Patrimonio')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Patrimonio entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
+        $editForm = $this->createForm(new PatrimonioType(), $entity);
+        $editForm->handleRequest($this->getRequest());
         if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('patrimonio_edit', array('id' => $id)));
+            try{
+                $objt = $this->get('security.context')->getToken()->getUser();
+                $entity->setTecnico($objt);
+                $entity->setFechaModifica(new\DateTime());
+                $em->persist($entity);            
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('sucess','Item Editado'); 
+                return $this->redirect($this->generateUrl('patrimonio_edit', array('id' => $id)));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Error al intentar editar item'); 
+                return $this->redirect($this->generateUrl('patrimonio_edit', array('id' => $id)));
+            }
         }
-
         return $this->render('PatrimonioBundle:Patrimonio:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
-    /**
-     * Deletes a Patrimonio entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
+        try{
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('PatrimonioBundle:Patrimonio')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Patrimonio entity.');
-            }
-
-            $em->remove($entity);
+            $entity->setHabilita(false);
+            $entity->setFechaBaja(new\DateTime());
+            $entity->setFechaModifica(new\DateTime());
+            $objt = $this->get('security.context')->getToken()->getUser();
+            $entity->setTecnico($objt);
+            $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Item Eliminado');
+            return $this->redirect($this->generateUrl('patrimonio_buscador'));
         }
-
-        return $this->redirect($this->generateUrl('patrimonio_buscador'));
+        catch(\Exception $e){
+            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item');  
+            return $this->redirect($this->generateUrl('patrimonio_buscador'));
+        } 
     }
-
-    /**
-     * Creates a form to delete a Patrimonio entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('patrimonio_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Borrar'))
-            ->getForm()
-        ;
-    }
-
-
     /*
       funcion que exporta a CSV
     */
-     private function export($entities)
+    private function export($entities)
     {
         
         $response = new StreamedResponse(function() use($entities) {  

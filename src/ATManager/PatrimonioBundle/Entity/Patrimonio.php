@@ -78,16 +78,23 @@ class Patrimonio
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaAlta", type="datetime", nullable=true)
+     * @ORM\Column(name="fechaAlta", type="date", nullable=true)
      */
     private $fechaAlta;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaBaja", type="date", nullable=true)
+     * @ORM\Column(name="fechaBaja", type="datetime", nullable=true)
      */
     private $fechaBaja;
+
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaModifica", type="datetime", nullable=true)
+     */
+    private $fechaModifica;
 
     /**
      * @var boolean
@@ -104,19 +111,44 @@ class Patrimonio
      */
     private $precio;
 
+     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="estimado", type="boolean", options={"default":0})
+     */
+    private $estimado;
+
     
-    /** @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\PatrimonioClasif") 
-    
+    /** 
+    * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\PatrimonioClasif") 
+    * @ORM\JoinColumn(name="clasificacion_id", referencedColumnName="id", nullable=false)
     */
     private $clasificacion;
 
-    /** @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Local") 
-     *@ORM\OrderBy({"nombre" = "ASC" })
+    /** 
+    * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Local")
+    * @ORM\JoinColumn(name="local_id", referencedColumnName="id", nullable=false)
+    * @ORM\OrderBy({"nombre" = "ASC" })
     */
     private $local;
 
-    /** @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Marca") */
+    /**
+    * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Marca") 
+    * @ORM\JoinColumn(name="marca_id", referencedColumnName="id", nullable=false)
+    */
     private $marca;
+
+     /** 
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Tecnico") 
+     * @ORM\JoinColumn(name="tecnico_id", referencedColumnName="id", nullable=false)
+     */
+    private $tecnico;
+
+    /** 
+    *@ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\EstadoPatri") 
+    * @ORM\JoinColumn(name="estado_id", referencedColumnName="id", nullable=false)
+    */
+    private $estado;
 
 
     // To Do relación a la entidad at, para conocer en cuantas AT abiertas esta el patrimonio...
@@ -126,16 +158,10 @@ class Patrimonio
     public function __construct(){
         $this->fechaAlta= new \DateTime();
         $this->habilita = true;  // produce que aparezca en el form inicializado
+        $this->fechaModifica = new\DateTime();                              
     }
 
-    /*
-    mis metodos
-    */
-
-    public function __toString(){
-        return " ".$this->getDescripcion()." ".$this->getNumero();
-    }
-
+    /*mis metodos*/   
 
     /**
      * Get id
@@ -171,26 +197,26 @@ class Patrimonio
     }
 
     /**
-     * Set sector
+     * Set alasector
      *
-     * @param string $sector
+     * @param integer $alasector
      * @return Patrimonio
      */
-    public function setSector($sector)
+    public function setAlasector($alasector)
     {
-        $this->sector = $sector;
+        $this->alasector = $alasector;
 
         return $this;
     }
 
     /**
-     * Get sector
+     * Get alasector
      *
-     * @return string 
+     * @return integer 
      */
-    public function getSector()
+    public function getAlasector()
     {
-        return $this->sector;
+        return $this->alasector;
     }
 
     /**
@@ -214,52 +240,6 @@ class Patrimonio
     public function getDescripcion()
     {
         return $this->descripcion;
-    }
-
-    /**
-     * Set fechaAlta
-     *
-     * @param \DateTime $fechaAlta
-     * @return Patrimonio
-     */
-    public function setFechaAlta($fechaAlta)
-    {
-        $this->fechaAlta = $fechaAlta;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaAlta
-     *
-     * @return \DateTime 
-     */
-    public function getFechaAlta()
-    {
-        return $this->fechaAlta;
-    }
-
-    /**
-     * Set precio
-     *
-     * @param string $precio
-     * @return Patrimonio
-     */
-    public function setPrecio($precio)
-    {
-        $this->precio = $precio;
-
-        return $this;
-    }
-
-    /**
-     * Get precio
-     *
-     * @return string 
-     */
-    public function getPrecio()
-    {
-        return $this->precio;
     }
 
     /**
@@ -355,6 +335,29 @@ class Patrimonio
     }
 
     /**
+     * Set fechaAlta
+     *
+     * @param \DateTime $fechaAlta
+     * @return Patrimonio
+     */
+    public function setFechaAlta($fechaAlta)
+    {
+        $this->fechaAlta = $fechaAlta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaAlta
+     *
+     * @return \DateTime 
+     */
+    public function getFechaAlta()
+    {
+        return $this->fechaAlta;
+    }
+
+    /**
      * Set fechaBaja
      *
      * @param \DateTime $fechaBaja
@@ -378,12 +381,104 @@ class Patrimonio
     }
 
     /**
+     * Set fechaModifica
+     *
+     * @param \DateTime $fechaModifica
+     * @return Patrimonio
+     */
+    public function setFechaModifica($fechaModifica)
+    {
+        $this->fechaModifica = $fechaModifica;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaModifica
+     *
+     * @return \DateTime 
+     */
+    public function getFechaModifica()
+    {
+        return $this->fechaModifica;
+    }
+
+    /**
+     * Set habilita
+     *
+     * @param boolean $habilita
+     * @return Patrimonio
+     */
+    public function setHabilita($habilita)
+    {
+        $this->habilita = $habilita;
+
+        return $this;
+    }
+
+    /**
+     * Get habilita
+     *
+     * @return boolean 
+     */
+    public function getHabilita()
+    {
+        return $this->habilita;
+    }
+
+    /**
+     * Set precio
+     *
+     * @param string $precio
+     * @return Patrimonio
+     */
+    public function setPrecio($precio)
+    {
+        $this->precio = $precio;
+
+        return $this;
+    }
+
+    /**
+     * Get precio
+     *
+     * @return string 
+     */
+    public function getPrecio()
+    {
+        return $this->precio;
+    }
+
+    /**
+     * Set estimado
+     *
+     * @param boolean $estimado
+     * @return Patrimonio
+     */
+    public function setEstimado($estimado)
+    {
+        $this->estimado = $estimado;
+
+        return $this;
+    }
+
+    /**
+     * Get estimado
+     *
+     * @return boolean 
+     */
+    public function getEstimado()
+    {
+        return $this->estimado;
+    }
+
+    /**
      * Set clasificacion
      *
      * @param \ATManager\BackendBundle\Entity\PatrimonioClasif $clasificacion
      * @return Patrimonio
      */
-    public function setClasificacion(\ATManager\BackendBundle\Entity\PatrimonioClasif $clasificacion = null)
+    public function setClasificacion(\ATManager\BackendBundle\Entity\PatrimonioClasif $clasificacion)
     {
         $this->clasificacion = $clasificacion;
 
@@ -406,7 +501,7 @@ class Patrimonio
      * @param \ATManager\BackendBundle\Entity\Local $local
      * @return Patrimonio
      */
-    public function setLocal(\ATManager\BackendBundle\Entity\Local $local = null)
+    public function setLocal(\ATManager\BackendBundle\Entity\Local $local)
     {
         $this->local = $local;
 
@@ -429,7 +524,7 @@ class Patrimonio
      * @param \ATManager\BackendBundle\Entity\Marca $marca
      * @return Patrimonio
      */
-    public function setMarca(\ATManager\BackendBundle\Entity\Marca $marca = null)
+    public function setMarca(\ATManager\BackendBundle\Entity\Marca $marca)
     {
         $this->marca = $marca;
 
@@ -447,48 +542,48 @@ class Patrimonio
     }
 
     /**
-     * Set alasector
+     * Set tecnico
      *
-     * @param integer $alasector
+     * @param \ATManager\BackendBundle\Entity\Tecnico $tecnico
      * @return Patrimonio
      */
-    public function setAlasector($alasector)
+    public function setTecnico(\ATManager\BackendBundle\Entity\Tecnico $tecnico)
     {
-        $this->alasector = $alasector;
+        $this->tecnico = $tecnico;
 
         return $this;
     }
 
     /**
-     * Get alasector
+     * Get tecnico
      *
-     * @return integer 
+     * @return \ATManager\BackendBundle\Entity\Tecnico 
      */
-    public function getAlasector()
+    public function getTecnico()
     {
-        return $this->alasector;
+        return $this->tecnico;
     }
 
     /**
-     * Set habilita
+     * Set estado
      *
-     * @param boolean $habilita
+     * @param \ATManager\BackendBundle\Entity\EstadoPatri $estado
      * @return Patrimonio
      */
-    public function setHabilita($habilita)
+    public function setEstado(\ATManager\BackendBundle\Entity\EstadoPatri $estado)
     {
-        $this->habilita = $habilita;
+        $this->estado = $estado;
 
         return $this;
     }
 
     /**
-     * Get habilita
+     * Get estado
      *
-     * @return boolean
+     * @return \ATManager\BackendBundle\Entity\EstadoPatri 
      */
-    public function getHabilita()
+    public function getEstado()
     {
-        return $this->habilita;
+        return $this->estado;
     }
 }
