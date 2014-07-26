@@ -71,10 +71,10 @@ class SectorController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BackendBundle:Sector')->find($id);
         $editForm =  $this->createForm(new SectorType(), $entity);
-	    $editForm->handleRequest($this->getRequest());
+	$editForm->handleRequest($this->getRequest());
 	if ($editForm->isValid()) {
             try{
-		      $em->persist($entity);
+		$em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
                 return $this->redirect($this->generateUrl('sector_edit', array('id' => $id)));

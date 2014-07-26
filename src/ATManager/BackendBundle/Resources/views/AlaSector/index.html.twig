@@ -1,0 +1,33 @@
+{% extends 'BackendBundle::base_backend.html.twig' %} 
+{% block content %}
+    <h3>Gestión de Ala Sectores</h3>
+   {{ form(form)}}
+   <br />
+    <a href="{{ path('alasector_new') }}">
+    	<h4>[Crear Ala Sector]</h4>
+    </a>	
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+		<th colspan="3" style="text-align:center">Acciones</th>
+                <th>Id</th>
+                <th>Codigointerno</th>
+                <th>Nombre</th>             
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+		<td><a href="{{ path('alasector_show', { 'id': entity.id }) }}">Ver</a></td>
+		<td><a href="{{ path('alasector_edit', { 'id': entity.id }) }}">Editar</a></td>
+		<td><a href="{{ path('alasector_eliminar', { 'id': entity.id }) }}">Eliminar</a></td>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.codigointerno }}</td>
+                <td>{{ entity.nombre }}</td>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if entities.getTotalItemCount > 10 %}
+	{{ knp_pagination_render(entities) }}
+    {% endif %}	
+{% endblock %}

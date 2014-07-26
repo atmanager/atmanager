@@ -1,0 +1,19 @@
+alasector:
+    path:     /
+    defaults: { _controller: "BackendBundle:AlaSector:index" }
+
+alasector_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:AlaSector:show" }
+
+alasector_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:AlaSector:new" }
+
+alasector_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:AlaSector:edit" }
+
+alasector_eliminar:
+    path:     /{id}/eliminar
+    defaults: { _controller: "BackendBundle:AlaSector:eliminar" }

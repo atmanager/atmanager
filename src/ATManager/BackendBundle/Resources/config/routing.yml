@@ -62,3 +62,8 @@ estadopatri:
     resource: "@BackendBundle/Resources/config/routing/estadopatri.yml"
     prefix:   /estadopatri
 
+alasector:
+    resource: "@BackendBundle/Resources/config/routing/alasector.yml"
+    prefix:   /alasector
+
+

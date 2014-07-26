@@ -1,0 +1,10 @@
+{% extends 'BackendBundle::base_backend.html.twig' %} 
+{% block content -%}
+    <h3>Editar Ala Sector</h3>
+
+    {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
+
+    <a href="{{ path('alasector') }}">
+     	Volver al Listado
+    </a>
+{% endblock %}

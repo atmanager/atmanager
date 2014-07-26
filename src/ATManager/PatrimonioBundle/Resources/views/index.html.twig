@@ -3,5 +3,8 @@
 {% block content %}
 
         <p> index de <strong> Patrimonio </strong></p>
-
+	{% if app.user %}
+         {{ app.user.nombre }}  {{ app.user.sector }}
+         <a href="{{ path('fos_user_security_logout')}}">logout</a> 
+      {% endif %} 
  {% endblock %}

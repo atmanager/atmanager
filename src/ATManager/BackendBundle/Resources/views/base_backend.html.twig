@@ -3,11 +3,11 @@
 {% block menuwrap %}
         <div class="col-xs-3" id="sidebar" role="navigation">
           <div class="list-group">
-            <a href="{{ path('marca_listado')}}" class="list-group-item">Marcas</a>
+            <a href="{{ path('marca_listado')}}" class="list-group-item" title="Marcas de los Patrimonios">Marcas</a>
             <a href="{{ path('local_listado')}}" class="list-group-item">Locales</a>
             <a href="{{ path('patrimonioclasif_listado')}}" class="list-group-item">Clasificación de Patrimonio</a>
-             <a href="{{ path('estadopatri')}}" class="list-group-item">Estados del patrimonio</a>
-       
+            <a href="{{ path('estadopatri')}}" class="list-group-item">Estados del patrimonio</a>
+       	    <a href="{{ path('alasector')}}" class="list-group-item">Ala Sector</a>	
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('falla_listado')}}" class="list-group-item">Fallas</a>
             <a href="{{ path('estadioclasif')}}" class="list-group-item">Clasificación de Estadios</a>

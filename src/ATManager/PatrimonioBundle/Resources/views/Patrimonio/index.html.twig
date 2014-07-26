@@ -1,67 +1,33 @@
 {% extends 'PatrimonioBundle::base_patrimonio.html.twig' %} 
 {% block content %}
-    <h4>Listado Patrimonios</h4>
-    
-    <table class="table">
+    <h3>Gestión de Patrimonios</h3>
+    <a href="{{ path('patrimonio_buscador') }}">
+    	<h4>[Buscar]</h4>
+    </a>
+    <table class="table table-bordered table-striped">
 
         <thead>
             <tr>
+		<th colspan="3" style="text-align:center">Acciones</th>
                 <th>Id</th>
-                <th>Numero</th>
-                <th>Alasector</th>
                 <th>Descripcion</th>
-               <!-- <th>Responsable</th>
-                <th>Modelo</th>
-                <th>Serial</th>
-                <th>Observacion</th>
-                <th>Fechaalta</th>
-                <th>Fechabaja</th>
-                <th>Habilita</th>
-                <th>Precio</th>
-                <th>Actions</th> -->
+		<th>Local</th>                
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                 <td><a href="{{ path('patrimonio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td> 
-                <td>{{ entity.numero }}</td>
-                <td>{{ entity.alasector }}</td>
+		<td><a href="{{ path('patrimonio_show', { 'id': entity.id }) }}"> Ver </a></td>
+		<td><a href="{{ path('patrimonio_edit', { 'id': entity.id }) }}">Editar</a></td>
+		<td><a href="{{ path('patrimonio_delete', { 'id': entity.id }) }}">Eliminar</a></td>
+                <td>{{ entity.id }}</td>
                 <td>{{ entity.descripcion }}</td>
-                <!-- <td>{{ entity.responsable }}</td>
-                <td>{{ entity.modelo }}</td>
-                <td>{{ entity.serial }}</td>
-                <td>{{ entity.observacion }}</td>
-                <td>{% if entity.fechaAlta %}{{ entity.fechaAlta|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.fechaBaja %}{{ entity.fechaBaja|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.habilita }}</td>
-                <td>{{ entity.precio }}</td> -->
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('patrimonio_show', { 'id': entity.id }) }}"> Ver </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('patrimonio_edit', { 'id': entity.id }) }}">Editar</a>
-                    </li>
-                </ul>
-                </td>
+		<td>{{ entity.local.getCodigoInterno() ~ ' ' ~ entity.local.getNombre() }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-       
-            <a href="{{ path('patrimonio_new') }}">
-                Nuevo
-            </a>
-            <a href="{{ path('patrimonio_buscador') }}">
-                Volver al buscador
-            </a>
-             <a href="{{ path('patrimonio_exportar') }}">
-                Exportar a CSV file
-            </a>
-        
+ 
 
      {% if entities.getTotalItemCount > 10 %}
      {{ knp_pagination_render(entities) }}

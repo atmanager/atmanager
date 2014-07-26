@@ -1,0 +1,94 @@
+<?php
+
+namespace ATManager\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AlaSector
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class AlaSector
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="codigointerno", type="integer")
+     */
+    private $codigointerno;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=80)
+     */
+    private $nombre;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codigointerno
+     *
+     * @param integer $codigointerno
+     * @return AlaSector
+     */
+    public function setCodigointerno($codigointerno)
+    {
+        $this->codigointerno = $codigointerno;
+
+        return $this;
+    }
+
+    /**
+     * Get codigointerno
+     *
+     * @return integer 
+     */
+    public function getCodigointerno()
+    {
+        return $this->codigointerno;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return AlaSector
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+}

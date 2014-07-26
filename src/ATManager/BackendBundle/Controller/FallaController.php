@@ -89,15 +89,15 @@ class FallaController extends Controller
         $editForm->handleRequest($this->getRequest());
 	if ($editForm->isValid()) {
             try{
-		        $em->persist($entity);
+		$em->persist($entity);
             	$em->flush();
             	$this->get('session')->getFlashBag()->add('success','Item actualizado');
                 return $this->redirect($this->generateUrl('falla_edit', array('id' => $id)));
             }
-	          catch(\Exception $e){
+	    catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
                 return $this->redirect($this->generateUrl('falla_listado'));
-             }
+            }
 	}
         return $this->render('BackendBundle:Falla:edit.html.twig', array(
             'entity'      => $entity,

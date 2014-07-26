@@ -3,12 +3,13 @@
 namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Local
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\LocalRepository")
  */
 class Local
 {
@@ -24,18 +25,23 @@ class Local
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=255 , nullable=false)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="codigointerno", type="string", length=10)
+     * @ORM\Column(name="codigointerno", type="string", length=10, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     private $codigointerno;
-
-
+    /**
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\AlaSector")
+     */	
+    private $alasector;
+	
     public function __construct(){
         
     }
@@ -45,7 +51,7 @@ class Local
     */
 
     public function __toString(){
-        return " ".$this->getNombre();
+        return " ".$this->getCodigointerno()." ".$this->getNombre();
     }
 
     /**
@@ -66,7 +72,7 @@ class Local
      */
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }

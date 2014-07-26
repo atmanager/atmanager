@@ -37,8 +37,12 @@ class Local
      * @Assert\NotBlank()
      */
     private $codigointerno;
-
-
+    /**
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\AlaSector")
+     * @ORM\JoinColumn(nullable=false)
+     */	
+    private $alasector;
+	
     public function __construct(){
         
     }
@@ -105,5 +109,28 @@ class Local
     public function getCodigointerno()
     {
         return $this->codigointerno;
+    }
+
+    /**
+     * Set alasector
+     *
+     * @param \ATManager\BackendBundle\Entity\AlaSector $alasector
+     * @return Local
+     */
+    public function setAlasector(\ATManager\BackendBundle\Entity\AlaSector $alasector = null)
+    {
+        $this->alasector = $alasector;
+
+        return $this;
+    }
+
+    /**
+     * Get alasector
+     *
+     * @return \ATManager\BackendBundle\Entity\AlaSector 
+     */
+    public function getAlasector()
+    {
+        return $this->alasector;
     }
 }

@@ -13,7 +13,14 @@ public function buildForm(FormBuilderInterface $builder, array $options)
   $builder
 	  ->add('nombre')
 	  ->add('codigointerno')
-	  ->add('Submit','submit',array('label'=>'Guardar'));
+	  ->add('alasector','entity', array(
+                  'class'=>'BackendBundle:AlaSector',
+                  'query_builder'=>function($er){
+                        	return $er->createQueryBuilder('al')
+                             		->select('al')
+                                      	->orderBy('al.codigointerno','ASC'); 
+            }))
+	  ->add('Submit','submit',array('label'=>'Aceptar'));
 
 }
 
