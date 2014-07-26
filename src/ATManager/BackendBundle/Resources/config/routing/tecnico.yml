@@ -10,24 +10,9 @@ tecnico_new:
     pattern:  /new
     defaults: { _controller: "BackendBundle:Tecnico:new" }
 
-tecnico_create:
-    pattern:  /create
-    defaults: { _controller: "BackendBundle:Tecnico:create" }
-    requirements: { _method: post }
-
 tecnico_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "BackendBundle:Tecnico:edit" }
-
-tecnico_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "BackendBundle:Tecnico:update" }
-    requirements: { _method: post|put }
-
-tecnico_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "BackendBundle:Tecnico:delete" }
-    requirements: { _method: post|delete }    
 
 tecnico_eliminar:
     pattern:  /{id}/eliminar

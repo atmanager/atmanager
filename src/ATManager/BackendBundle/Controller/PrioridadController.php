@@ -43,7 +43,7 @@ class PrioridadController extends Controller
             }
 	    catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('prioridad_listado'));
+                return $this->redirect($this->generateUrl('prioridad_new'));
             }
         }
         return $this->render('BackendBundle:Prioridad:new.html.twig', array(
@@ -87,7 +87,7 @@ class PrioridadController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('prioridad_listado'));
+                return $this->redirect($this->generateUrl('prioridad_show', array('id' => $entity->getId())));
             }
         }
         return $this->render('BackendBundle:Prioridad:edit.html.twig', array(

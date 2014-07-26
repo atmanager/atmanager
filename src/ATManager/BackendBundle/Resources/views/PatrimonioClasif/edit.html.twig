@@ -1,11 +1,11 @@
 {% extends 'BackendBundle::base_backend.html.twig' %} 
-{% block title %} Editar Clasif. Patrimonio {% endblock %}       
+     
 {% block content %}
 <h3> Editar Clasificación de Patrimonio </h3>
 
 {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
   	<a href="{{ path('patrimonioclasif_listado') }}">
-        Volver a Listado
-    </a>
+            Cancelar
+    	</a>
     
 {% endblock %}

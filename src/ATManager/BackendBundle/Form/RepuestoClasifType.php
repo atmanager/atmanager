@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RepuestoType extends AbstractType
+class RepuestoClasifType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,15 +16,6 @@ class RepuestoType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('descripamplia','text', array('label' => 'Descripción Amplia'))
-            ->add('comentario')
-	    ->add('clasif','entity', array(
-                  'class'=>'BackendBundle:RepuestoClasif',
-                  'query_builder'=>function($er){
-                                                 return $er->createQueryBuilder('rc')
-                                                 ->select('rc')
-                                                 ->orderBy('rc.nombre','ASC'); 
-            }))
             ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
@@ -35,7 +26,7 @@ class RepuestoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ATManager\BackendBundle\Entity\Repuesto'
+            'data_class' => 'ATManager\BackendBundle\Entity\RepuestoClasif'
         ));
     }
 
@@ -44,6 +35,6 @@ class RepuestoType extends AbstractType
      */
     public function getName()
     {
-        return 'atmanager_backendbundle_repuesto';
+        return 'atmanager_backendbundle_repuestoclasif';
     }
 }

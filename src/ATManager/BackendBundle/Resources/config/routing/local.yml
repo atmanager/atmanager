@@ -18,6 +18,4 @@ local_show:
     pattern:  /show/{id}
     defaults: { _controller: BackendBundle:Local:show }        
 
-#backend_homepage:
-#    pattern:  /hello/{name}
-#    defaults: { _controller: BackendBundle:Default:index }
+

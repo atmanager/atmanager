@@ -10,24 +10,9 @@ prioridad_new:
     pattern:  /new
     defaults: { _controller: "BackendBundle:Prioridad:new" }
 
-prioridad_create:
-    pattern:  /create
-    defaults: { _controller: "BackendBundle:Prioridad:create" }
-    requirements: { _method: post }
-
 prioridad_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "BackendBundle:Prioridad:edit" }
-
-prioridad_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "BackendBundle:Prioridad:update" }
-    requirements: { _method: post|put }
-
-prioridad_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "BackendBundle:Prioridad:delete" }
-    requirements: { _method: post|delete }
 
 prioridad_eliminar:
     pattern:  /{id}/eliminar

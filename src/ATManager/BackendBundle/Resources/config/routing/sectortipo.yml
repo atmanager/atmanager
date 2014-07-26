@@ -10,10 +10,6 @@ sectortipo_edit:
     pattern:  /edit/{id}
     defaults: { _controller: BackendBundle:SectorTipo:edit }    
 
-sectortipo_delete:
-    pattern:  /delete/{id}
-    defaults: { _controller: BackendBundle:SectorTipo:delete }
-
 sectortipo_show:
     pattern:  /{id}/show
     defaults: { _controller: "BackendBundle:SectorTipo:show" }    

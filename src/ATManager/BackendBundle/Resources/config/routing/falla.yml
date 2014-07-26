@@ -10,24 +10,9 @@ falla_new:
     pattern:  /new
     defaults: { _controller: "BackendBundle:Falla:new" }
 
-falla_create:
-    pattern:  /create
-    defaults: { _controller: "BackendBundle:Falla:create" }
-    requirements: { _method: post }
-
 falla_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "BackendBundle:Falla:edit" }
-
-falla_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "BackendBundle:Falla:update" }
-    requirements: { _method: post|put }
-
-falla_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "BackendBundle:Falla:delete" }
-    requirements: { _method: post|delete }    
 
 falla_eliminar:
     pattern:  /{id}/eliminar

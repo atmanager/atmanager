@@ -10,24 +10,9 @@ proveedor_new:
     pattern:  /new
     defaults: { _controller: "BackendBundle:Proveedor:new" }
 
-proveedor_create:
-    pattern:  /create
-    defaults: { _controller: "BackendBundle:Proveedor:create" }
-    requirements: { _method: post }
-
 proveedor_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "BackendBundle:Proveedor:edit" }
-
-proveedor_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "BackendBundle:Proveedor:update" }
-    requirements: { _method: post|put }
-
-proveedor_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "BackendBundle:Proveedor:delete" }
-    requirements: { _method: post|delete }
 
 proveedor_eliminar:
     pattern:  /{id}/eliminar

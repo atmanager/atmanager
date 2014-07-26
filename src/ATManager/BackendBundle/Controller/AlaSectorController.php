@@ -47,7 +47,7 @@ class AlaSectorController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-              return $this->redirect($this->generateUrl('alasector'));
+              return $this->redirect($this->generateUrl('alasector_new'));
            }
         }
     	return $this->render('BackendBundle:AlaSector:new.html.twig', array(
@@ -70,7 +70,7 @@ class AlaSectorController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
-                return $this->redirect($this->generateUrl('alasector'));
+                return $this->redirect($this->generateUrl('alasector_edit', array('id' => $entity->getId())));
             }    
         }
         return $this->render('BackendBundle:AlaSector:edit.html.twig', array('form'=>$form->createView()));

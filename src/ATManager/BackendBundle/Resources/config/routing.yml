@@ -66,4 +66,9 @@ alasector:
     resource: "@BackendBundle/Resources/config/routing/alasector.yml"
     prefix:   /alasector
 
+repuestoclasif:
+   resource: "@BackendBundle/Resources/config/routing/repuestoclasif.yml"
+   prefix:   /repuestoclasif
+
+
 

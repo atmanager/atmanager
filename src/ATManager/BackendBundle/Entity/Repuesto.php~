@@ -45,7 +45,7 @@ class Repuesto
     private $comentario;
     /**
      * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\RepuestoClasif")
-     * @ORM\JoinColumn(nullable=false)
+     
      */
     private $clasif;	
     
@@ -83,6 +83,7 @@ class Repuesto
 
         return $this;
     }
+
     /**
      * Get nombre
      *
@@ -105,6 +106,7 @@ class Repuesto
 
         return $this;
     }
+
     /**
      * Get descripamplia
      *
@@ -114,6 +116,7 @@ class Repuesto
     {
         return $this->descripamplia;
     }
+
     /**
      * Set comentario
      *
@@ -135,26 +138,5 @@ class Repuesto
     public function getComentario()
     {
         return $this->comentario;
-    }
-    /**
-     * Set clasif
-     *
-     * @param \ATManager\BackendBundle\Entity\RepuestoClasif $clasif
-     * @return Repuesto
-     */
-    public function setClasif(\ATManager\BackendBundle\Entity\RepuestoClasif $clasif = null)
-    {
-        $this->clasif = $clasif;
-
-        return $this;
-    }
-    /**
-     * Get clasif
-     *
-     * @return \ATManager\BackendBundle\Entity\RepuestoClasif 
-     */
-    public function getClasif()
-    {
-        return $this->clasif;
     }
 }

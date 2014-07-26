@@ -1,9 +1,20 @@
 {% extends 'PatrimonioBundle::base_patrimonio.html.twig' %} 
 {% block content %}
     <h3>Gestión de Patrimonios</h3>
-    <a href="{{ path('patrimonio_buscador') }}">
-    	<h4>[Buscar]</h4>
-    </a>
+    <table>
+    <tr>
+	<td>
+	    <a href="{{ path('patrimonio_new') }}">
+        	<h4>[Crear]&nbsp;</h4>
+    	    </a>
+	</td>	
+	<td>
+	    <a href="{{ path('patrimonio_buscador') }}">
+    		<h4>[Buscar]</h4>
+	    </a>
+	</td>    
+    </tr>
+    </table>    	
     <table class="table table-bordered table-striped">
 
         <thead>
@@ -27,10 +38,7 @@
         {% endfor %}
         </tbody>
     </table>
- 
-
-     {% if entities.getTotalItemCount > 10 %}
-     {{ knp_pagination_render(entities) }}
-     {% endif %}
-
-    {% endblock %}
+    {% if entities.getTotalItemCount > 10 %}
+     	{{ knp_pagination_render(entities) }}
+    {% endif %}
+{% endblock %}

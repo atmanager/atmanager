@@ -4,7 +4,7 @@
    {{ form(form)}}
    <br />
    <a href="{{ path('local_nuevo')}}"> <!-- class="btn btn-primary" --> 
-	<h4>[Crear Local]</h4>
+	<h4>[Crear]</h4>
    </a>
    <table class="table table-bordered table-striped" >
    	<tr>
@@ -12,6 +12,7 @@
 	    <th> Id </th>
 	    <th> Nombre </th>
 	    <th> Referencia </th>
+	    <th> Ala Sector </th>
    	</tr>
    	{% for local in locales %}
    	<tr>
@@ -21,6 +22,7 @@
 	    <td> {{ local.id }} </td>
 	    <td> {{ local.nombre }} </td>
 	    <td> {{ local.codigointerno }} </td>
+	    <td> {{ local.alasector.nombre }} </td>
    	</tr>
  	{% endfor %}
     </table>

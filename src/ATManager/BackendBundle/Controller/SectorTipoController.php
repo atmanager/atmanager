@@ -70,7 +70,7 @@ class SectorTipoController extends Controller
             }
             catch(\Exception $e){
                   $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                  return $this->redirect($this->generateUrl('sectortipo_listado'));
+                  return $this->redirect($this->generateUrl('sectortipo_new'));
             }
 
         }
@@ -98,7 +98,7 @@ class SectorTipoController extends Controller
      	    }
             catch(\Exception $e){
            	$this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-          	return $this->redirect($this->generateUrl('sectortipo_listado'));
+          	return $this->redirect($this->generateUrl('sectortipo_edit', array('id' => $id)));
             }
         }
         return $this->render('BackendBundle:SectorTipo:edit.html.twig', array('form'=>$form->createView()));

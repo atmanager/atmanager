@@ -1,0 +1,20 @@
+repuestoclasif:
+    path:     /
+    defaults: { _controller: "BackendBundle:RepuestoClasif:index" }
+
+repuestoclasif_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackendBundle:RepuestoClasif:show" }
+
+repuestoclasif_new:
+    path:     /new
+    defaults: { _controller: "BackendBundle:RepuestoClasif:new" }
+
+repuestoclasif_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackendBundle:RepuestoClasif:edit" }
+
+repuestoclasif_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackendBundle:RepuestoClasif:delete" }
+

@@ -45,7 +45,7 @@ class SectorController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('sector_listado'));
+                return $this->redirect($this->generateUrl('sector_new'));
              }
         }
         return $this->render('BackendBundle:Sector:new.html.twig',array(

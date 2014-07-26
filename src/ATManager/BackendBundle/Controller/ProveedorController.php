@@ -49,7 +49,7 @@ class ProveedorController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('proveedor'));
+                return $this->redirect($this->generateUrl('proveedor_new'));
             }
         }
         return $this->render('BackendBundle:Proveedor:new.html.twig', array(
@@ -95,7 +95,7 @@ class ProveedorController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('proveedor'));
+                return $this->redirect($this->generateUrl('proveedor_edit', array('id' => $id)));
             }
         }
         return $this->render('BackendBundle:Proveedor:edit.html.twig', array(

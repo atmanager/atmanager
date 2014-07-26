@@ -5,7 +5,7 @@
     {{ form(form)}}
     <br />
     <a href="{{ path('repuesto_new') }}">
-        <h4>[Crear Repuesto]</h4>
+        <h4>[Crear]</h4>
     </a>
     <table class="table table-bordered table-striped">
         <thead>
@@ -14,7 +14,8 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Descripción Amplia</th>
-                <th>Comentario</th>          
+                <th>Comentario</th> 
+		<th>Clasificación</th>          
             </tr>
         </thead>
         <tbody>
@@ -26,7 +27,8 @@
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td>{{ entity.descripamplia }}</td>
-                <td>{{ entity.comentario }}</td>          
+                <td>{{ entity.comentario }}</td>
+		<td>{{ entity.clasif.nombre }}</td>          
             </tr>
         {% endfor %}
         </tbody>

@@ -2,31 +2,12 @@
 
 {% block content %}
 
-    <h3>Nueva Falla</h3>
+    <h3>Crear Falla</h3>
 
-{{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
+    {{ form(form,{'attr': {'novalidate':'novalidate'}} )}}    
 
-<div class="row"> 
-
-	<div class="col-xs-6"> 
-	{{ form_row(form.nombre)}}
-	{{ form_row(form.descripamplia)}}
-	{{ form_row(form.estado)}}
-	</div> 
-
-	<div class="col-xs-6">
-	 {{ form_row(form.sector)}}
-	 {{ form_row(form.submit)}}
-	</div>
-
-</div> 
-{{ form_end(form) }}    
-
-
+    <a href="{{ path('falla_listado') }}">
+  	Volver a Listado
+    </a>
     
-        <a href="{{ path('falla_listado') }}">
-            Volver a Listado
-        </a>
-    
-
 {% endblock %}
