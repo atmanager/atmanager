@@ -2,16 +2,12 @@
 
 {% block content %}
     <h3>Ver Patrimonio</h3>
-    <form name="frmimprimir">
+    <!-- <form name="frmimprimir"> -->
     <table class="table">
         <tbody>
             <tr>
                 <th>Número del Patrimonio:</th>
                 <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Alasector del Patrimonio:</th>
-                <td>{{ entity.alasector }}</td>
             </tr>
             <tr>
                 <th>Nombre del Patrimonio:</th>
@@ -75,9 +71,9 @@
             </tr>
         </tbody>
     </table>
-    <input type="button" value="Imprimir" onClick="window.print();" class="btn btn-primary" />
+   <!-- <input type="button" value="Imprimir" onClick="window.print();" class="btn btn-primary" /> -->
     <a href="{{ path('patrimonio_buscador') }}">
         Volver al Buscador
     </a>
-    </form>
+   <!-- </form> -->
 {% endblock %}

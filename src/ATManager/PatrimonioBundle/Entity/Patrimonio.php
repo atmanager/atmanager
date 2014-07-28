@@ -23,21 +23,6 @@ class Patrimonio
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="numero", type="integer", unique=true, nullable=true)
-     */
-    private $numero;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="alasector", type="integer", nullable=true)
-     */
-    private $alasector;
-
     /**
      * @var string
      *
@@ -171,52 +156,6 @@ class Patrimonio
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set numero
-     *
-     * @param integer $numero
-     * @return Patrimonio
-     */
-    public function setNumero($numero)
-    {
-        $this->numero = $numero;
-
-        return $this;
-    }
-
-    /**
-     * Get numero
-     *
-     * @return integer 
-     */
-    public function getNumero()
-    {
-        return $this->numero;
-    }
-
-    /**
-     * Set alasector
-     *
-     * @param integer $alasector
-     * @return Patrimonio
-     */
-    public function setAlasector($alasector)
-    {
-        $this->alasector = $alasector;
-
-        return $this;
-    }
-
-    /**
-     * Get alasector
-     *
-     * @return integer 
-     */
-    public function getAlasector()
-    {
-        return $this->alasector;
     }
 
     /**
