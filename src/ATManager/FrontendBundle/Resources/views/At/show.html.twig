@@ -1,28 +1,47 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %}
 
-
 {% block content %}
-    <h3>Visualizar AT</h3>
+    <h3>Constancia de Solicitud de Asistencia técnica</h3>
 
     <table class="table">
         <tbody>
+            
+            {% if entity %}
+            
             <tr>
-                <th>Id</th>
+                <th>Numero de Solicitud</th>
                 <td>{{ entity.id }}</td>
             </tr>
+        
             <tr>
-                <th>Descripcion</th>
+                <th>Falla declarada</th>
                 <td>{{ entity.descripcion }}</td>
             </tr>
+
+            <tr>
+                <th>Solicitante</th>
+                <td>{{ entity.personasolicita }}</td>
+            </tr>
+
+            <tr>
+                <th>Sector de Solicitante</th>
+                <td>{{ entity.sectorsolicita }}</td>
+            </tr>
+
+            <tr>
+                <th>Sector técnico destinatario</th>
+                <td>{{ entity.sectordestino }}</td>
+            </tr>
+
+            {% endif %}
+        
+
+
         </tbody>
     </table>
+    <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>
 
-        <ul class="record_actions">
-    <li>
-        <a href="">
-            Regresar a 
-        </a>
-    </li>
-   
-</ul>
+{% endblock %}
+
+{% block pie %}
 {% endblock %}

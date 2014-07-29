@@ -115,7 +115,7 @@
       </div><!--/row-->
 
       <hr>
-
+    {% block pie %}
       <footer>
         <p> &copy; {{ 'now' | date('Y') }} - AT Manager  <em> <strong> By Symfony </strong> </em> 
         <a href="{{ path('pagina_estatica', { 'pagina': 'ayuda' }) }}">[Ayuda]</a>
@@ -126,6 +126,7 @@
         <a href="{{ path('fos_user_security_logout')}}">[Fin Sesión]</a>
         </p>
       </footer>
+    {% endblock %}  
 
 
     </div><!--/.container-->

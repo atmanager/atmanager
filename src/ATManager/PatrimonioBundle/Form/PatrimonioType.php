@@ -56,6 +56,10 @@ class PatrimonioType extends AbstractType
                         'empty_value'=>'Seleccione un Estado de conservación [*]'
                     )
             )
+            ->add('habilita',null,array(
+                    'required'=>false,
+                    'label'=>'Activo'
+              ))
             ->add('submit', 'submit', array('label' => 'Aceptar'))
         ;
     }

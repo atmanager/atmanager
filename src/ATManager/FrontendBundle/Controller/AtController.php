@@ -15,29 +15,7 @@ use ATManager\FrontendBundle\Form\AtType;
 class AtController extends Controller
 {
 
-    
-  
-    public function createAction(Request $request)
-    {
-        $entity = new At();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('at_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-  
+      
     private function createCreateForm(At $entity)
     {
         $em = $this->getDoctrine()->getManager();
@@ -59,31 +37,35 @@ class AtController extends Controller
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            $entity->setIpsolicita($request->getClientIp());
-            //$entity->setIpsolicita($request->getHost());
+            try{
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            
+                $entity->setIpsolicita($request->getClientIp());
+                //$entity->setIpsolicita($request->getHost());
 
-            $atHistorico= new atHistorico();
-            $atHistorico->setAt($entity);
-            
-            $em = $this->getDoctrine()->getManager();
-            
-            $clasificacion = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
-            $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasificacion);
-            $atHistorico->setEstadio($estadio);
-            $atHistorico->setComentario('Inicializado');
-            $em->persist($atHistorico);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                
 
+                $atHistorico= new atHistorico();
+                $atHistorico->setAt($entity);
+                
+                $em = $this->getDoctrine()->getManager();
+                
+                $clasificacion = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
+                $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasificacion);
+                $atHistorico->setEstadio($estadio);
+                $atHistorico->setComentario('Inicializado');
+                $em->persist($atHistorico);
+                $em->flush();
+                 $request->getSession()->getFlashBag()->add('success','Solicitud Aceptada');
+                return $this->redirect($this->generateUrl('at_show', array('id' => $entity->getId())));
+               }catch(\Exception $ex){
+                $request->getSession()->getFlashBag()->add('error','Problemas al solicitar Atencion Técnica');
+                return $this->redirect($this->generateUrl('at_show'));
+            }
 
-            $em->flush();
+        }
 
-
-            return $this->redirect($this->generateUrl('at_show', array('id' => $entity->getId())));
-
-        } 
         return $this->render('FrontendBundle:At:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -108,42 +90,6 @@ class AtController extends Controller
         );
     }
 
-
-  
-     
-    
-    private function createDeleteForm($id)
-    {
-
-            return $this->createFormBuilder()
-            ->setAction($this->generateUrl('at_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Borrar'))
-            ->getForm()
-        ;
-    }
-
-
-      public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FrontendBundle:At')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find At entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('at'));
-    }  
-
      public function verHistoricoAction(Request $request, $id)
     {
         
@@ -159,7 +105,39 @@ class AtController extends Controller
         return $this->render('FrontendBundle:At:showHistorico.html.twig', array(
             'entity' => $entity,
         ));
-    }  
+    } 
+
+
+    public function buscadorAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new AtBuscadorType(), null, array(
+            'method' => 'GET',
+        ));
+        $form->handleRequest($request);
+        if ($form->isValid())
+        {
+
+            $entities = array();
+            $numero=$form->get('numero')->getData();
+            $personasolicita=$form->get('personasolicita')->getData();
+            $sectorsolicita=$form->get('sectorsolicita')->getData();
+            
+
+            $entities = $em->getRepository('FrontendBundle:At')->findByFiltroAt($numero, $personasolicita, $sectorsolicita);
+            
+            
+                $paginator = $this->get('knp_paginator');
+                $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
+                return $this->render('FrontendBundle:At:index.html.twig', array(
+                    'entities' => $entities, 
+                    'form'=>$form->createView()
+                ));
+        }
+        return $this->render('FrontendBundle:At:find.html.twig', array(
+                            'form'=>$form->createView()
+        ));
+    }     
 
 
 

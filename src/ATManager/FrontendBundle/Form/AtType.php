@@ -23,9 +23,24 @@ class AtType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-                   
+        #->add('patrimonio')
+        $entityManager = $this->em;
+        $transformer = new PatrimonioToNumberTransformer($entityManager);
+
+        $builder->add(
+                    $builder->create('patrimonio', 'text', array(
+                        'required'=>false,
+                        'label'=>'Ingrese número de Patrimonio [Dejar en blanco si no corresponde]'
+             ))
             
+            ->addModelTransformer($transformer)
+
+            );
+
+
+
+
+        $builder                 
             ->add('personasolicita','text', array(
             'label'=>'[*] Apellido y Nombre del Solicitante :'
             ))
@@ -63,19 +78,7 @@ class AtType extends AbstractType
                 
             ));
             
-                #->add('patrimonio')
-                $entityManager = $this->em;
-                $transformer = new PatrimonioToNumberTransformer($entityManager);
-                $builder->add(
-                    $builder->create('patrimonio', 'text', array(
-                        'required'=>false,
-                        'label'=>'Ingrese número de Patrimonio [Dejar en blanco si no corresponde]'
-             ))
-            
-            ->addModelTransformer($transformer)
-
-            );
-
+                
 
     }
     

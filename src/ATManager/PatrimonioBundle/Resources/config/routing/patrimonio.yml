@@ -18,6 +18,10 @@ patrimonio_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "PatrimonioBundle:Patrimonio:edit" }
 
+patrimonio_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PatrimonioBundle:Patrimonio:delete" }    
+
 patrimonio_existe:
     pattern:  /existe/{id}
     defaults: { _controller: "PatrimonioBundle:Patrimonio:existe", id:null }

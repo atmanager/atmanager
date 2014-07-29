@@ -4,5 +4,29 @@
     <a href="{{ path('patrimonio_new') }}">
         <h4>[Crear]</h4>
     </a>
-    {{ form(form)}}
+    
+    {{ form(form)}} 
+
+<!-- {{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
+<div class="row"> 
+	<div class="col-xs-6"> 
+		
+		{{ form_row(form.numero)}}
+		{{ form_row(form.descripcion)}}
+		{{ form_row(form.serial)}}
+	    {{ form_row(form.observacion)}}
+
+	</div> 
+    
+    <div class="col-xs-6">	 		 		 	 
+        {{ form_row(form.local)}}
+		{{ form_row(form.marca)}}
+	    {{ form_row(form.clasificacion)}}
+    </div>
+
+</div> 
+{{ form_end(form) }} -->      
+    
+
+
 {% endblock %}
