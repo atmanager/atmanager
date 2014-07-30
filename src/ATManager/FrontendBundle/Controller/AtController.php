@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\FrontendBundle\Entity\At;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtType;
+use ATManager\FrontendBundle\Form\AtBusType; 
 
 
 class AtController extends Controller
@@ -111,35 +112,29 @@ class AtController extends Controller
     public function buscadorAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new AtBuscadorType(), null, array(
-            'method' => 'GET',
+        $form = $this->createForm(new AtBusType(), null, array(
+            'method' => 'GET'
         ));
-        $form->handleRequest($request);
+	$form->handleRequest($request);
         if ($form->isValid())
         {
-
-            $entities = array();
+	    $entities =array();        	
             $numero=$form->get('numero')->getData();
             $personasolicita=$form->get('personasolicita')->getData();
             $sectorsolicita=$form->get('sectorsolicita')->getData();
             
 
             $entities = $em->getRepository('FrontendBundle:At')->findByFiltroAt($numero, $personasolicita, $sectorsolicita);
-            
-            
                 $paginator = $this->get('knp_paginator');
                 $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
-                return $this->render('FrontendBundle:At:index.html.twig', array(
-                    'entities' => $entities, 
-                    'form'=>$form->createView()
+                return $this->render('FrontendBundle:At:index.html.twig', array( 
+                    'form'=>$form->createView(),
+		    'entities' => $entities 	
                 ));
         }
         return $this->render('FrontendBundle:At:find.html.twig', array(
-                            'form'=>$form->createView()
+                            'form'=>$form->createView(),
+			 	
         ));
-    }     
-
-
-
-    
+    }         
 }

@@ -12,6 +12,6 @@ at_ver_historico:
     defaults: { _controller: "FrontendBundle:At:verHistorico" }
 
 at_buscador:
-    pattern:  /
+    pattern:  /buscador
     defaults: { _controller: "FrontendBundle:At:buscador" } 
            

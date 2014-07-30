@@ -5,8 +5,9 @@ namespace ATManager\FrontendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
- * At
+ * 
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ATManager\FrontendBundle\Entity\AtRepository")

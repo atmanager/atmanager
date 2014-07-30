@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AtBuscadorType extends AbstractType
+class AtBusType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -47,6 +47,6 @@ class AtBuscadorType extends AbstractType
      */
     public function getName()
     {
-        return 'pb';
+        return 'atb';
     }
 }
