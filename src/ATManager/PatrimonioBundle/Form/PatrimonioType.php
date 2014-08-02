@@ -25,24 +25,39 @@ class PatrimonioType extends AbstractType
                     array(
                         'class'=>'BackendBundle:PatrimonioClasif',
                         'required'=>false,
-                        'empty_value'=>'Selecccione Clasificación [*]'
-                    )
-            )
+                        'empty_value'=>'Selecccione Clasificación [*]',
+			'query_builder'=>function($er)
+				{
+				return $er->createQueryBuilder('pc')
+					->select('pc')
+					->orderBy('pc.nombre','ASC');
+				}
+			))
             ->add('local','entity',
                     array(
                         'class'=>'BackendBundle:Local',
                         'required'=>false,
-                        'empty_value'=>'Seleccione Local [*]'
-                    )
-            )
+                        'empty_value'=>'Seleccione Local [*]',
+			'query_builder'=>function($er)
+				{
+				return $er->createQueryBuilder('l')
+					->select('l')
+					->orderBy('l.codigointerno','ASC');
+				}
+			))
             ->add('marca','entity',
                     array
                     (
                         'class'=>'BackendBundle:Marca',
                         'required'=>false,
-                        'empty_value'=>'Seleccione Marca [*]'
-                    )
-            )
+                        'empty_value'=>'Seleccione Marca [*]',
+			'query_builder'=>function($er)
+				{
+				return $er->createQueryBuilder('m')
+					->select('m')
+					->orderBy('m.nombre','ASC');
+				}
+			))
             ->add('fechaAlta')
             ->add('estimado',null,array(
                     'required'=>false,
@@ -53,9 +68,14 @@ class PatrimonioType extends AbstractType
                     (
                         'class'=>'BackendBundle:EstadoPatri',
                         'required'=>false,
-                        'empty_value'=>'Seleccione un Estado de conservación [*]'
-                    )
-            )
+                        'empty_value'=>'Seleccione un Estado de conservación [*]',
+			'query_builder'=>function($er)
+				{
+				return $er->createQueryBuilder('pe')
+					->select('pe')
+					->orderBy('pe.nombre','ASC');
+				}
+			))
             ->add('habilita',null,array(
                     'required'=>false,
                     'label'=>'Activo'

@@ -51,23 +51,30 @@ class PatrimonioController extends Controller
     }    
     public function newAction()
     {
+	$hoy=new \DateTime();
         $entity = new Patrimonio();
         $form = $this->createForm(new PatrimonioType(), $entity);
         $form->handleRequest($this->getRequest());
         /** asi se obtiene el usuario logueado desde una accion en un controlador **/
         $objt = $this->get('security.context')->getToken()->getUser();
         $entity->setTecnico($objt);
-        if ($form->isValid()) {
-            try{
-                $em = $this->getDoctrine()->getManager();
+        if ($form->isValid()){
+	   if($entity->getFechaAlta()>$hoy){
+		$this->get('session')->getFlashBag()->add('error','Error: Fecha de alta es mayor que la actual'); 
+               	return $this->redirect($this->generateUrl('patrimonio_new'));		
+	   }
+	   try    	
+	   {                
+		$em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('sucess','Item Guardado');
+                $this->get('session')->getFlashBag()->add('success','Item Guardado');
                 return $this->redirect($this->generateUrl('patrimonio_show', array('id' => $entity->getId())));
-            }
-            catch(\Exception $e){
+           }
+           catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar crear item'); 
-            }   return $this->redirect($this->generateUrl('patrimonio_new'));
+               	return $this->redirect($this->generateUrl('patrimonio_new'));
+	   }
         }
         return $this->render('PatrimonioBundle:Patrimonio:new.html.twig', array(
             'entity' => $entity,
@@ -119,18 +126,23 @@ class PatrimonioController extends Controller
      */
     public function editAction($id)
     {
+	$hoy=new \DateTime();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('PatrimonioBundle:Patrimonio')->find($id);
         $editForm = $this->createForm(new PatrimonioType(), $entity);
         $editForm->handleRequest($this->getRequest());
         if ($editForm->isValid()) {
+	    if($entity->getFechaAlta()>$hoy){
+		$this->get('session')->getFlashBag()->add('error','Error: Fecha de alta es mayor que la actual'); 
+               	return $this->redirect($this->generateUrl('patrimonio_edit', array('id' => $id)));		
+	    }	
             try{
                 $objt = $this->get('security.context')->getToken()->getUser();
                 $entity->setTecnico($objt);
                 $entity->setFechaModifica(new\DateTime());
                 $em->persist($entity);            
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('sucess','Item Editado'); 
+                $this->get('session')->getFlashBag()->add('success','Item Editado'); 
                 return $this->redirect($this->generateUrl('patrimonio_edit', array('id' => $id)));
             }
             catch(\Exception $e){
@@ -171,15 +183,28 @@ class PatrimonioController extends Controller
         
         $response = new StreamedResponse(function() use($entities) {  
         $handle = fopen('php://output', 'r+');
-        $elementos = array();
-
-            foreach ($entities as $key) 
+        $elementos = array();	
+        foreach ($entities as $key) 
             {
-               $elemento[0]=$key->getDescripcion();
-                $elemento[1]=$key->getId();
-                 fputcsv($handle, $elemento, ';');                   
+		$elemento[0]=$key->getId();
+               	$elemento[1]=$key->getDescripcion();
+                $elemento[2]=$key->getPrecio();
+		$elemento[3]=$key->getEstimado();
+		$elemento[4]=$key->getResponsable();
+		$elemento[5]=$key->getModelo();
+		$elemento[6]=$key->getSerial();
+                $elemento[7]=$key->getObservacion();
+		$elemento[8]=$key->getHabilita();
+		$elemento[9]=$key->getClasificacion()->getNombre();
+		$elemento[10]=$key->getLocal()->getNombre();
+		$elemento[11]=$key->getMarca()->getNombre();				
+		$elemento[12]=$key->getEstado()->getNombre();
+		$elemento[13]=$key->getTecnico()->getNombre();
+		$elemento[14]=$key->getFechaAlta();
+		$elemento[15]=$key->getFechaBaja();		
+		$elemento[16]=$key->getFechaModifica();
+		fputcsv($handle, $elemento, ';');                   
             }
-
             fclose($handle);
         });
         $response->headers->set('Content-Type', 'text/csv');

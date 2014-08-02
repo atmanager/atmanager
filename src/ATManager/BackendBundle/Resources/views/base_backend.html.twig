@@ -3,25 +3,24 @@
 {% block menuwrap %}
         <div class="col-xs-3" id="sidebar" role="navigation">
           <div class="list-group">
-            <a href="{{ path('marca_listado')}}" class="list-group-item" title="Marcas de los Patrimonios">Marcas</a>
-            <a href="{{ path('local_listado')}}" class="list-group-item">Locales</a>
-            <a href="{{ path('patrimonioclasif_listado')}}" class="list-group-item">Clasificación de Patrimonio</a>
-            <a href="{{ path('estadopatri')}}" class="list-group-item">Estados del patrimonio</a>
-       	    <a href="{{ path('alasector')}}" class="list-group-item">Ala Sector</a>	
+            <a href="{{ path('marca_listado')}}" class="list-group-item" title="Gestión de marcas de los bienes de uso">Marcas</a>
+            <a href="{{ path('local_listado')}}" class="list-group-item" title="Gestión de ubicación de los bienes de uso">Locales</a>
+            <a href="{{ path('patrimonioclasif_listado')}}" class="list-group-item" title="Gestión de clasificaciones de los bienes de uso">Clasificación de Patrimonio</a>
+            <a href="{{ path('estadopatri')}}" class="list-group-item" title="Gestión de estados de los bienes de uso">Estados del Patrimonio</a>
+	    <a href="{{ path('alasector')}}" class="list-group-item" title="Gestión del espacio físico que contiene a los locales">Ala Sector</a>	
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('falla_listado')}}" class="list-group-item">Fallas</a>
-            <a href="{{ path('estadioclasif')}}" class="list-group-item">Clasificación de Estadios</a>
-            <a href="{{ path('estadio')}}" class="list-group-item">Estadios</a>
-            <a href="{{ path('tecnico_listado')}}" class="list-group-item">Técnicos</a>
-            <a href="{{ path('rol')}}" class="list-group-item">Roles</a>
-
-            <a href="{{ path('repuesto')}}" class="list-group-item">Repuestos</a>
-            <a href="{{ path('repuestoclasif')}}" class="list-group-item">Clasificación de Repuestos</a>
-            <a href="{{ path('serviciotercero')}}" class="list-group-item">Servicios de Terceros</a>
-            <a href="{{ path('proveedor')}}" class="list-group-item">Proveedores</a>
-	       <a href="{{ path('prioridad_listado')}}" class="list-group-item">Prioridades</a>	
-            <a href="{{ path('sectortipo_listado')}}" class="list-group-item">Clasificación de Sectores</a>
-            <a href="{{ path('sector_listado')}}" class="list-group-item">Sectores</a>
+            <a href="{{ path('falla_listado')}}" class="list-group-item" title="Gestión de los motivos de reparación">Fallas</a>
+            <a href="{{ path('estadioclasif')}}" class="list-group-item" title="Gestión de los tipos de estadios">Clasificación de Estadios</a>
+            <a href="{{ path('estadio')}}" class="list-group-item" title="Gestión de los distintos estados de una AT">Estadios</a>
+            <a href="{{ path('tecnico_listado')}}" class="list-group-item" title="Gestión de Técnicos">Técnicos</a>
+            <a href="{{ path('rol')}}" class="list-group-item" title="Gestión de los roles de técnicos y fallas">Roles</a>
+            <a href="{{ path('repuesto')}}" class="list-group-item" title="Gestión de los repuestos usados en una AT">Repuestos</a>
+            <a href="{{ path('repuestoclasif')}}" class="list-group-item" title="Gestión de los tipos de repuestos">Clasificación de Repuestos</a>
+            <a href="{{ path('serviciotercero')}}" class="list-group-item" title="Gestión de contrataciones externas">Servicios de Terceros</a>
+            <a href="{{ path('proveedor')}}" class="list-group-item" title="Gestiòn de proveedores">Proveedores</a>
+	    <a href="{{ path('prioridad_listado')}}" class="list-group-item" title="Gestión de prioridades para las AT">Prioridades</a>	
+            <a href="{{ path('sectortipo_listado')}}" class="list-group-item" title="Gestión de los tipos de sectores">Clasificación de Sectores</a>
+            <a href="{{ path('sector_listado')}}" class="list-group-item" title="Gestión de Sectores">Sectores</a>
         {% endif %}      
        
           </div>

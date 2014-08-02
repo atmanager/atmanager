@@ -83,11 +83,11 @@ class PrioridadController extends Controller
             try{
                 $em->flush();          
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('prioridad_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('prioridad_edit', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('prioridad_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('prioridad_edit', array('id' => $entity->getId())));
             }
         }
         return $this->render('BackendBundle:Prioridad:edit.html.twig', array(

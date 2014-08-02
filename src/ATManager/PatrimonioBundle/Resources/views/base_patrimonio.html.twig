@@ -4,12 +4,13 @@
 
         <div class="col-xs-3" id="sidebar" role="navigation">
           <div class="list-group">
-            <a href="{{ path('patrimonio_buscador')}}" class="list-group-item">Patrimonios</a>
-            <a href="{{ path('marca_listado')}}" class="list-group-item">Marcas</a>
-            <a href="{{ path('local_listado')}}" class="list-group-item">Locales</a>
-            <a href="{{ path('patrimonioclasif_listado')}}" class="list-group-item">Clasificación de Patrimonio</a>
-             <a href="{{ path('estadopatri')}}" class="list-group-item">Estados del Patrimonio</a>
+            <a href="{{ path('patrimonio_buscador')}}" class="list-group-item" title="Gestión de los bienes de uso">Patrimonios</a>
+            <a href="{{ path('marca_listado')}}" class="list-group-item" title="Gestión de marcas de los bienes de uso">Marcas</a>
+            <a href="{{ path('local_listado')}}" class="list-group-item" title="Gestión de ubicación de los bienes de uso">Locales</a>
+            <a href="{{ path('patrimonioclasif_listado')}}" class="list-group-item" title="Gestión de clasificaciones de los bienes de uso">Clasificación de Patrimonio</a>
+            <a href="{{ path('estadopatri')}}" class="list-group-item" title="Gestión de estados de los bienes de uso">Estados del Patrimonio</a>
+	    <a href="{{ path('alasector')}}" class="list-group-item" title="Gestión del espacio físico que contiene a los locales">Ala Sector</a>
           </div>
-        </div><!--/span-->
+        </div>
 
  {% endblock %}

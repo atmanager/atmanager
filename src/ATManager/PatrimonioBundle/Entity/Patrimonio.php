@@ -58,8 +58,6 @@ class Patrimonio
      * @ORM\Column(name="observacion", type="text", nullable=true)
      */
     private $observacion;
-
-
     /**
      * @var \DateTime
      *
@@ -113,7 +111,6 @@ class Patrimonio
     /** 
     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Local")
     * @ORM\JoinColumn(name="local_id", referencedColumnName="id", nullable=false)
-    * @ORM\OrderBy({"nombre" = "ASC" })
     */
     private $local;
 
