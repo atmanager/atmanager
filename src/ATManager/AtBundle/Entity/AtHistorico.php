@@ -15,23 +15,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class AtHistorico
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * 
-     *   @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At", inversedBy="historicos") 
-    */
-    private $at;
-
-    /**
      *  
-     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Estadio") 
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Estadio")
+     * @ORM\Id 
      */
     private $estadio;
 

@@ -26,7 +26,6 @@ class AtType extends AbstractType
         #->add('patrimonio')
         $entityManager = $this->em;
         $transformer = new PatrimonioToNumberTransformer($entityManager);
-
         $builder->add(
                     $builder->create('patrimonio', 'text', array(
                         'required'=>false,
@@ -36,9 +35,6 @@ class AtType extends AbstractType
             ->addModelTransformer($transformer)
 
             );
-
-
-
 
         $builder                 
             ->add('personasolicita','text', array(
@@ -58,7 +54,6 @@ class AtType extends AbstractType
                     ;
                 },
             ))
-
             
             ->add('sectordestino','entity', array(
                 'label'=>'[*] Para sector técnico : ',
@@ -71,17 +66,15 @@ class AtType extends AbstractType
                 },
             ))
             
-
             ->add('prioridad','entity', array(
                 'label'=>'Escoja una prioridad',
                 'class' => 'BackendBundle:Prioridad'
                 
-            ));
-            
-                
+            ))
 
-    }
-    
+	    ->add('submit', 'submit', array('label' => 'Aceptar'));	
+	    ;
+    }    
     /**
      * @param OptionsResolverInterface $resolver
      */

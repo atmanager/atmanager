@@ -20,7 +20,7 @@ class AtBusType extends AbstractType
             'label'=>'[*] Apellido y Nombre del Solicitante :'
             ))
                        
-           ->add('sectorsolicita','entity', array(
+     /*      ->add('sectorsolicita','entity', array(
                 'label'=>'[*] Sector de origen : ',
                 'class' => 'BackendBundle:Sector',
                 'query_builder' => function(EntityRepository $er) {
@@ -29,7 +29,7 @@ class AtBusType extends AbstractType
                     ->setParameter('origen',true)
                     ;
                 },
-            ))
+            ))*/
             ->add('filtrar','submit')           
             ;
     }

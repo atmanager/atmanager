@@ -1,47 +1,34 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %}
-
 {% block content %}
     <h3>Constancia de Solicitud de Asistencia técnica</h3>
-
     <table class="table">
         <tbody>
-            
-            {% if entity %}
-            
             <tr>
-                <th>Numero de Solicitud</th>
+                <th>Numero de Solicitud:</th>
                 <td>{{ entity.id }}</td>
             </tr>
-        
             <tr>
-                <th>Falla declarada</th>
+                <th>Falla declarada:</th>
                 <td>{{ entity.descripcion }}</td>
             </tr>
-
             <tr>
-                <th>Solicitante</th>
+                <th>Solicitante:</th>
                 <td>{{ entity.personasolicita }}</td>
             </tr>
-
             <tr>
-                <th>Sector de Solicitante</th>
+                <th>Sector de Solicitante:</th>
                 <td>{{ entity.sectorsolicita }}</td>
             </tr>
-
             <tr>
-                <th>Sector técnico destinatario</th>
+                <th>Sector técnico destinatario:</th>
                 <td>{{ entity.sectordestino }}</td>
             </tr>
-
-            {% endif %}
-        
-
-
         </tbody>
     </table>
-    <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>
-
+    <a href="{{ path('at_buscador') }}">
+	Volver Al Buscador
+    </a>	
 {% endblock %}
-
 {% block pie %}
+    <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>	
 {% endblock %}

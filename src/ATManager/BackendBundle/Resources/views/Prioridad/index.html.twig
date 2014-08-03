@@ -18,7 +18,7 @@
             <tr>
                 <td><a href="{{ path('prioridad_show', { 'id': entity.id }) }}">Ver</a></td>
                 <td><a href="{{ path('prioridad_edit', { 'id': entity.id }) }}">Editar</a></td>
-                <td><a href="{{ path('prioridad_eliminar', { 'id': entity.id }) }}"  onclick="return confirm('¿Desea eliminar el item seleccionado?');">Eliminar</a></td>
+                <td><a href="{{ path('prioridad_eliminar', { 'id': entity.id }) }}" onclick="return confirm('¿Desea eliminar el item seleccionado?');">Eliminar</a></td>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>                
             </tr>

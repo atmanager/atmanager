@@ -1,44 +1,37 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %} 
-{% block title %} Solicitud de AT {% endblock %}       
-	{% block content %}
-	<p> <h4> Nuevo Pedido de Asistencia técnica </h4> </p>
-		
-			<a href="{{path('patrimonio_existe')}}" id="consulta"> Validar patrimonio </a>
-			<p id="descripcion"> </p>
-	   
-		 	 {{ form(form,{'attr': {'novalidate':'novalidate'}})}} 
-	 		
-
-	{% endblock %}
+{% block content %}
+   <h3> Solicitar Asistencia técnica </h3>
+	<p align="right"><a href="{{path('patrimonio_existe')}}" id="consulta" class="btn btn-primary"> Validar patrimonio </a></p>
+	<p id="descripcion"> </p>   
+	
+	{{ form(form,{'attr': {'novalidate':'novalidate'}})}} 	 		
+	
+	<a href="{{ path('at_buscador') }}">
+	   Volver Al Buscador
+	</a>
+{% endblock %}
  
-
-
 {% block javascript %}
-	<script type="text/javascript">
-
+   <script type="text/javascript">
 	$(document).ready(function(){
-		$('#consulta').on('click',
-			function(){ 
-						$.ajax({
-								url: $(this).attr('href')+"/"+$('#atmanager_frontendbundle_at_patrimonio').val(),
-								dataType: "json",
-								error: function(jqXHR,textstatus)
-								{
-									$('#descripcion').html('No existe patrimonio...');
-									//alert("No existe!!");
-								},
-								
-								success: function(data, textstatus)
-								{
-									console.log(data);
-									$('#descripcion').html(data.descripcion);
-								}
-							   });
+		$('#consulta').on('click',function()
+		{ 
+			$.ajax({
+				url: $(this).attr('href')+"/"+$('#atmanager_frontendbundle_at_patrimonio').val(),
+				dataType: "json",
+				error: function(jqXHR,textstatus)
+				{
+					$('#descripcion').html('No existe patrimonio...');
+					//alert("No existe!!");
+				},
+				success: function(data, textstatus)
+				{
+					console.log(data);
+					$('#descripcion').html(data.descripcion);
+				}
+			});
 		return false;
 		});
-
 	});
-
-	</script>
-
+   </script>
 {% endblock %}
