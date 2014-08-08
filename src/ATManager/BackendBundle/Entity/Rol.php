@@ -29,6 +29,8 @@ class Rol
      */
     private $nombre;
 
+     
+
     public function __construct(){
         
     }

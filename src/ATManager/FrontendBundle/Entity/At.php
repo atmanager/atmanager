@@ -1,6 +1,8 @@
 <?php
 
 namespace ATManager\FrontendBundle\Entity;
+//use ATManager\FrontendBundle\Controller;
+//use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -8,9 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * 
- *
- * @ORM\Table()
  * @ORM\Entity(repositoryClass="ATManager\FrontendBundle\Entity\AtRepository")
+ * @ORM\Table()
  */
 class At
 {
@@ -94,10 +95,14 @@ class At
      */
     private $descripcion;
 
+
+ 
     /** 
      *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Prioridad") 
     */
     private $prioridad;
+
+
 
     /** 
      *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtHistorico", mappedBy="at") 
@@ -113,6 +118,20 @@ class At
     {
         $this->fechasolicitud= new \DateTime();
         $this->historicos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    public function __toString(){
+        return " ".$this->getId();
+    }
+
+    
+    # devolver el codigo del ultimo estadio
+    public function miUltimoEstadio($id)
+    {
+        return $this->getId();
+
+        
     }
 
     /**

@@ -27,6 +27,8 @@ security:
         #- { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY } 
         - { path: ^/patrimonio/patrimonio/existe/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/patrimonio/, role: ROLE_OPERPAT }
+
+        - { path: ^/atecnica/, role: ROLE_JDS }
         - { path: ^/backend/marca/, role: ROLE_OPERPAT }
         - { path: ^/backend/local/, role: ROLE_OPERPAT }
         - { path: ^/backend/patrimonioclasif/, role: ROLE_OPERPAT }

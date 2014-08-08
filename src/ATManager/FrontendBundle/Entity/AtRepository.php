@@ -3,6 +3,8 @@
 namespace ATManager\FrontendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
+use ATManager\AtBundle\Entity\AtHistorico;
 
 /**
  * AtRepository
@@ -14,30 +16,111 @@ class AtRepository extends EntityRepository
 {
 	public function findByFiltroAt($numero, $personasolicita, $sectorsolicita)
 	{
+			
+		// if (!isset($numero) and !isset($personasolicita) and !isset($sectorsolicita))
+		
+			$em = $this->getEntityManager();
+			$query = $em->createQueryBuilder()
+			->select('a')
+			->from('FrontendBundle:At','a')
+			->where('1 = 1');
+			if ($numero)
+			{
+			$query->andWhere('a.id = :id');
+			$query->setParameter('id',$numero);
+			}
+			if ($personasolicita)
+			{
+			$query->andWhere('a.personasolicita LIKE :personasolicita');
+			$query->setParameter('personasolicita','%'.$personasolicita.'%');
+			}
+			if ($sectorsolicita)
+		    {
+	    	$query->andWhere('a.sectorsolicita = :sectorsolicita');
+			$query->setParameter('sectorsolicita',$sectorsolicita);
+		    }
+		    
+			$query->setMaxResults(50);
+			$query = $query->getQuery();
+			return $query->getResult();
+			
+	}
 
-		$em = $this->getEntityManager();
-		$query = $em->createQueryBuilder()
-		->select('p')
-		->from('FrontendBundle:At','a')
-		->where('1 = 1');
-		if ($numero)
-		{
-		$query->andWhere('a.id = :id');
-		$query->setParameter('id',$numero);
-		}
-		if ($personasolicita)
-		{
-		$query->andWhere('a.personasolicita LIKE :personasolicita');
-		$query->setParameter('personasolicita','%'.$personasolicita.'%');
-		}
-		if ($sectorsolicita)
-	    {
-    	$query->andWhere('a.sectorsolicita = :sectorsolicita');
-		$query->setParameter('sectorsolicita',$sectorsolicita);
-	    }
-	    
-		$query->setMaxResults(50);
-		$query = $query->getQuery();
-		return $query->getResult();
+
+	public function findByFiltroPorSectorEstadio($sector, $estadio)
+	{
+
+			/*SELECT estadio_id
+			FROM AtHistorico
+			WHERE fecha = (
+			SELECT max( fecha )
+			FROM AtHistorico
+			WHERE at_id =5 ) 
+
+			*/
+
+			$em = $this->getEntityManager();		  	
+			$query = $em->createQuery('SELECT a
+			FROM FrontendBundle:At a
+			INNER JOIN AtBundle:AtHistorico h WITH a.id = h.at
+			WHERE a.sectordestino = :sector
+			AND h.estadio = :estadio
+			AND h.estadio = (SELECT IDENTITY(h1.estadio)
+			FROM AtBundle:AtHistorico h1 
+			WHERE h1.fecha = (
+			SELECT max(h2.fecha)
+			FROM AtBundle:AtHistorico h2
+			WHERE h2.at = a.id))')
+				
+			->setParameter('sector', $sector)
+    		->setParameter('estadio', $estadio);
+
+    		$query->setMaxResults(50);
+			return $query->getResult();
+
+
+						
+			/*$query = $em->createQueryBuilder()
+			->select('a')
+			->from('FrontendBundle:At','a')
+			->innerJoin('AtBundle:AtHistorico', 'h', 'WITH', 'a.id = h.at');
+
+			if ($sector)
+			{
+			$query->andWhere('a.sectordestino = :sectordestino');
+			$query->setParameter('sectordestino',$sector);
+			}
+			if ($estadio)
+		    {
+	    	$query->andWhere('h.estadio = :estadio');
+			$query->setParameter('estadio',$estadio);
+		    }
+		    
+			$query->setMaxResults(50);
+			$query = $query->getQuery();
+			return $query->getResult();*/
+
+			
+			  
+	}
+
+	public function findByFiltroUltimoEstadio($at)
+	{
+			echo $at;
+			$em = $this->getEntityManager();		  	
+			$query = $em->createQuery('SELECT IDENTITY(h1.estadio)
+			FROM AtBundle:AtHistorico h1 
+			WHERE h1.fecha = (SELECT max(h2.fecha)
+			FROM AtBundle:AtHistorico h2 WHERE h2.at = :at )')			
+			->setParameter('at', $at);
+
+     		   
+			$estadio = $query->getOneOrNullResult();
+			echo "Estadio: ".$estadio;
+			return $estadio;
+
+
+				   
+			
 	}
 }

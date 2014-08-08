@@ -14,4 +14,8 @@ at_ver_historico:
 at_buscador:
     pattern:  /buscador
     defaults: { _controller: "FrontendBundle:At:buscador" } 
+
+at_ver_ultimo_estadio:
+    pattern:  /{id}/verUltimoEstadio
+    defaults: { _controller: "FrontendBundle:At:verUltimoEstadio" }    
            

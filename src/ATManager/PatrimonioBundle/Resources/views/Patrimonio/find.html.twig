@@ -2,12 +2,12 @@
 {% block content %}
     <h3>Buscar Patrimonios</h3>
     <a href="{{ path('patrimonio_new') }}">
-        <h4>[Crear]</h4>
+        [Crear]
     </a>
     
-    {{ form(form)}} 
+     {#form(form)#}
 
-<!-- {{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
 <div class="row"> 
 	<div class="col-xs-6"> 
 		
@@ -16,16 +16,26 @@
 		{{ form_row(form.serial)}}
 	    {{ form_row(form.observacion)}}
 
+
+
 	</div> 
     
     <div class="col-xs-6">	 		 		 	 
         {{ form_row(form.local)}}
 		{{ form_row(form.marca)}}
 	    {{ form_row(form.clasificacion)}}
+
+	     <div class="form-group">
+	    
+	     {{ form_row(form.filtrar)}}
+	     {{ form_row(form.exportar)}}
+	     </div> 
+
+
     </div>
 
 </div> 
-{{ form_end(form) }} -->      
+{{ form_end(form) }} 
     
 
 

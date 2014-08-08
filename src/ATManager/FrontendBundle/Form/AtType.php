@@ -28,9 +28,9 @@ class AtType extends AbstractType
         $transformer = new PatrimonioToNumberTransformer($entityManager);
 
         $builder->add(
-                    $builder->create('patrimonio', 'text', array(
-                        'required'=>false,
-                        'label'=>'Ingrese número de Patrimonio [Dejar en blanco si no corresponde]'
+            $builder->create('patrimonio', 'text', array(
+            'required'=>false,
+            'label'=>'Ingrese número de Patrimonio '
              ))
             
             ->addModelTransformer($transformer)
@@ -48,6 +48,7 @@ class AtType extends AbstractType
             'label'=>'[*] Describa cual es el sintoma/problema observado: '
             ))
             
+           
            ->add('sectorsolicita','entity', array(
                 'label'=>'[*] Sector de origen : ',
                 'class' => 'BackendBundle:Sector',
@@ -55,28 +56,40 @@ class AtType extends AbstractType
                     return $er->createQueryBuilder('s')
                     ->innerJoin('s.tipo','t', 'WITH', 't.origen = :origen')
                     ->setParameter('origen',true)
+                     ->orderBy('s.nombre','ASC')
                     ;
                 },
             ))
 
-            
-            ->add('sectordestino','entity', array(
-                'label'=>'[*] Para sector técnico : ',
-                'class' => 'BackendBundle:Sector',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('s')
-                    ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
-                    ->setParameter('destino',true)
-                    ;
-                },
+
+                       
+            ->add('sectordestino','entity', 
+                array(
+                        'label'=>'[*] Para sector técnico : ',
+                        'class' => 'BackendBundle:Sector',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('s')
+                            ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
+                            ->setParameter('destino',true)
+                            ->orderBy('s.nombre','ASC')
+                            ;
+                        },
             ))
             
 
             ->add('prioridad','entity', array(
                 'label'=>'Escoja una prioridad',
-                'class' => 'BackendBundle:Prioridad'
+                'class' => 'BackendBundle:Prioridad',
+                'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('p')
+                            ->orderBy('p.nombre','DESC')
+                            ;
+                        },
                 
-            ));
+            ))
+
+            ->add('submit', 'submit', array('label' => 'Aceptar'))
+            ;
             
                 
 

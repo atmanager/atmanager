@@ -1,0 +1,44 @@
+<?php
+
+namespace ATManager\AtBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AtTecnico
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="ATManager\AtBundle\Entity\AtTecnicoRepository")
+ */
+class AtTecnico
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /** 
+     * @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At") 
+     * @ORM\JoinColumn(name="at_id", referencedColumnName="id", nullable=false)
+     */
+    private $at;
+
+     /** 
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Tecnico") 
+     * @ORM\JoinColumn(name="tecnico_id", referencedColumnName="id", nullable=false)
+     */
+    private $tecnico;
+
+     /** 
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Rol") 
+     * @ORM\JoinColumn(name="rol_id", referencedColumnName="id", nullable=false)
+     */
+    private $rol;
+
+
+   
+}

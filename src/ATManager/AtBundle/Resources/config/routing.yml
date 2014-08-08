@@ -1,3 +1,7 @@
-at_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: AtBundle:Default:index }
+atecnica_inicial:
+    path:   /
+    defaults: { _controller: AtBundle:Default:index}
+
+atecnica:
+  resource: "@AtBundle/Resources/config/routing/Atecnica.yml"
+  prefix:   /atecnica      

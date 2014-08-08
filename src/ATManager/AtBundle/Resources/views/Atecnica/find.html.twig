@@ -1,10 +1,10 @@
-{% extends 'FrontendBundle::base_frontend.html.twig' %} 
+{% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
     <h3>Buscar Asistencias Técnicas</h3>
     <a href="{{ path('at_new') }}">
         <h4>[Solicitar Nueva]</h4>
     </a>
     
-    {{ form(form,{'attr': {'novalidate':'novalidate'}} )}} 
+    {{ form(form)}} 
 
 {% endblock %}

@@ -2,6 +2,7 @@
 
 {% block content %}
     <h3>Constancia de Solicitud de Asistencia técnica</h3>
+      <a href="javascript:history.back(1)">[Volver]</a>
 
     <table class="table">
         <tbody>
@@ -33,6 +34,18 @@
                 <td>{{ entity.sectordestino }}</td>
             </tr>
 
+            <tr>
+                <th>Patrimonio Involucrado</th>
+                {% if entity.patrimonio %}
+                <td>{{ entity.patrimonio }}</td>
+                {% else %}
+                <td>{{ 'No hay patrimonio asociado' }}</td>
+                {% endif %}
+            </tr>
+
+
+
+
             {% endif %}
         
 
@@ -40,6 +53,7 @@
         </tbody>
     </table>
     <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>
+
 
 {% endblock %}
 

@@ -18,11 +18,9 @@
 
     <!-- Custom styles for this template -->
     <link href="offcanvas.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bundles/backend/css/local.css')}}"> 
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+       <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -47,12 +45,47 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="{{path('backend_inicial')}}">Administración</a></li>
-            <li><a href="{{path('patrimonio_inicial')}}">Patrimonio</a></li>
-             <li><a href="#">Abordar AT</a></li>
-              <li><a href="#">Indicadores</a></li>
+
+            <li><a href="{{path('backend_inicial')}}" 
+                   title="Gestionar datos auxiliares del sistema"
+                   >Administración</a>
+            </li>
+            
+            <li><a href="{{path('patrimonio_inicial')}}" 
+                  title="Gestionar bienes de uso/equipamiento"
+                  >Patrimonio</a>
+            </li>
+
+            <li><a href="{{path('atecnica_inicial')}}"
+                  title="Abordaje y evolución de asistencias técnicas"
+                  >Abordaje de AT</a>
+            </li>
+             
+            <li><a href="#"
+                title="Obtener indicadores sobre asistencias técnicas"
+                >Indicadores</a>
+            </li>
+
+            <li><a href="{{path('frontend_inicial')}}"
+                    title="Solicitar/Consultar Asistencia técnica (No requiere login)"
+                    >Solicitar Asistencia</a>
+            </li>
+
+          </ul>    
+
+           {% block buscar %}
+          
+           {% endblock %}
+
+
+                  
+        
+          
+          <ul class="nav navbar-nav navbar-right">
+
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayuda<b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayuda
+                <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Descargar Manual Usuario</a></li>
                 <li><a href="#">Descargar Manual Técnico</a></li>
@@ -61,24 +94,15 @@
                 <li class="divider"></li>
                 <li><a href="#">Acerca de AT Manager</a></li>
               </ul>
-            </li>
+          </li>
+
+              <li>  
+                <a href="{{ path('inicio')}}">Inicio</a>  
+              </li>
+
+
           </ul>
 
-          {% block buscar %}
-          
-          {% endblock %}
-          
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ path('inicio')}}">Inicio</a></li>
-            <li class="dropdown">
-             <a href="#"  class="active" class="dropdown-toggle" data-toggle="dropdown">AsistenciasTécnicas <b class="caret"></b></a>  <ul class="dropdown-menu">
-                <li><a href="{{path('frontend_inicial')}}">Solicitar</a></li>
-                <li><a href="#">Reclamar</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Seguimiento</a></li>
-              </ul>
-            </li>
-          </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </div> <!-- fin navbar -->
@@ -110,12 +134,14 @@
         </div><!--/span-->
         
         {% block menuwrap %}
+
         {% endblock %}
 
       </div><!--/row-->
 
       <hr>
     {% block pie %}
+
       <footer>
         <p> &copy; {{ 'now' | date('Y') }} - AT Manager  <em> <strong> By Symfony </strong> </em> 
         <a href="{{ path('pagina_estatica', { 'pagina': 'ayuda' }) }}">[Ayuda]</a>
@@ -124,7 +150,7 @@
         <a href="{{ path('pagina_estatica', { 'pagina': 'sobre-nosotros' }) }}">[Sobre el Proyecto]</a>
         <a href="{{ path('fos_user_security_login')}}">[Inicio Sesión]</a>
         <a href="{{ path('fos_user_security_logout')}}">[Fin Sesión]</a>
-        </p>
+        </p>        
       </footer>
     {% endblock %}  
 

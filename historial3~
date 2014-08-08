@@ -416,6 +416,9 @@
   678  exit
   679  git commit -m "seguridad - tecnico - login"
   680  ls
+# crear un formulario en el bundle
+  776  php app/console generate:doctrine:form FrontendBundle:At
+
 
 
   682  git add -A
@@ -478,4 +481,13 @@
   750  php app/console doctrine:schema:update --dump-sql 
   751  php app/console doctrine:schema:update --force
   752  clear
+# para publicar el css local (recordar que el original está en la carpeta BackendBundle/resources/public/css)
+ 1160  php app/console assets:install web
+ 1161  php app/console assets:install web --symlink
+
+# crear solo el formulario
+ 1171  php app/console generate:doctrine:form AtBundle:AtTecnico
+
+
+
 

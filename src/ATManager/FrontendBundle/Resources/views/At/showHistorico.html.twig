@@ -2,18 +2,25 @@
 
 
 {% block content %}
-    <h3>Historico AT de: {{ entity.id }} </h3>
+    <h4>Historico/Evolución de Asistencias Técnicas</h4>
+     <a href="javascript:history.back(1)">[Volver]</a>
+     <a href="{{ path('at_show', { 'id': entity.id }) }}">[Ver Técnicos]</a>
+     <a href="{{ path('at_show', { 'id': entity.id }) }}">[Ver Fallas]</a>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>AT</th>
+                <th>Estadio</th>
+                <th>Fecha</th>
+                <th>Descripción</th>
+              
+                
             </tr>
-            
+
             {% for estadio in entity.getHistoricos %}
             <tr>
-                <th>Descripcion</th>
+                <td><a href="{{ path('at_show', { 'id': entity.id }) }}"> {{ estadio.id }} </a></td>
                 <td>{{ estadio.estadio }}</td>
                 <td>{{ estadio.fecha | date('d/m/y H:i') }}</td>
                 <td>{{ estadio.comentario }}</td>
@@ -24,12 +31,7 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="">
-            Regresar a 
-        </a>
-    </li>
-   
-</ul>
+        
+        
+ 
 {% endblock %}

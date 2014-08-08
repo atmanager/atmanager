@@ -51,21 +51,22 @@ class PatrimonioController extends Controller
     }    
     public function newAction()
     {
-	$hoy=new \DateTime();
+	    $hoy=new \DateTime();
         $entity = new Patrimonio();
         $form = $this->createForm(new PatrimonioType(), $entity);
         $form->handleRequest($this->getRequest());
-        /** asi se obtiene el usuario logueado desde una accion en un controlador **/
-        $objt = $this->get('security.context')->getToken()->getUser();
-        $entity->setTecnico($objt);
-        if ($form->isValid()){
+       
+       if ($form->isValid()){
 	   if($entity->getFechaAlta()>$hoy){
 		$this->get('session')->getFlashBag()->add('error','Error: Fecha de alta es mayor que la actual'); 
                	return $this->redirect($this->generateUrl('patrimonio_new'));		
 	   }
 	   try    	
-	   {                
-		$em = $this->getDoctrine()->getManager();
+	   {       
+                /** asi se obtiene el usuario logueado desde una accion en un controlador **/
+                $objt = $this->get('security.context')->getToken()->getUser();
+                $entity->setTecnico($objt);         
+        		$em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item Guardado');

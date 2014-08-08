@@ -8,16 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PatrimonioBuscadorType extends AbstractType
 {
-        /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
+/**
+* @param FormBuilderInterface $builder
+* @param array $options
+*/
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('numero','integer',array(
                 'required'=>false
-            ))  // ver Form Types Reference Symfony.com (2.5)
+            )) // ver Form Types Reference Symfony.com (2.5)
 
             ->add('descripcion','text',array(
                 'required'=>false,
@@ -57,18 +57,19 @@ class PatrimonioBuscadorType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
-     */
+    * @param OptionsResolverInterface $resolver
+    */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         
     }
 
     /**
-     * @return string
-     */
+    * @return string
+    */
     public function getName()
     {
         return 'pb';
     }
+        
 }

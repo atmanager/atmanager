@@ -1,6 +1,10 @@
-{% extends 'FrontendBundle::base_frontend.html.twig' %}
+{% extends 'AtBundle::base_at.html.twig' %}
 
 {% block content %}
-    <p> Index del <strong>Frontend</strong> </p>
-       
+
+       <h3> <p> Funcionalidad <strong>Abordaje y evolución de AT</strong> </p> </h3>
+	{% if app.user %}
+         {{ app.user.nombre }}  {{ app.user.sector }}
+         <a href="{{ path('fos_user_security_logout')}}">logout</a> 
+      {% endif %} 
  {% endblock %}

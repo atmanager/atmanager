@@ -1,0 +1,20 @@
+
+atecnica_new:
+    pattern:  /new
+    defaults: { _controller: "AtBundle:Atecnica:new" }
+
+atecnica_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AtBundle:Atecnica:show" }
+
+atecnica_ver_historico:
+    pattern:  /{id}/ver_historico
+    defaults: { _controller: "AtBundle:Atecnica:verHistorico" }
+
+atecnica_buscador:
+    pattern:  /buscador
+    defaults: { _controller: "AtBundle:Atecnica:buscador" } 
+
+atecnica_genero_AgendaTecnico:
+    pattern:  /{id}/generoAgendaTecnico
+    defaults: { _controller: "AtBundle:Atecnica:generoAgendaTecnico" }           

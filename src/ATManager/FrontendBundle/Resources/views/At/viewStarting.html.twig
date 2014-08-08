@@ -1,0 +1,59 @@
+{% extends 'FrontendBundle::base_frontend.html.twig' %}
+{% block menuwrap %}
+{% endblock %}
+
+{% block content %}
+    
+  <h4 class="title">Visualizando pedidos de Asistencias</h4>
+         {% if app.user %}
+         {{ ' Responsable: ' ~ app.user.nombre }}
+          <br />
+         {{ ' Sector: ' ~  app.user.sector }}
+         {% endif %}
+  <a href="javascript:history.back(1)">[Volver]</a>       
+
+  <br>
+  <table class="table table-bordered table-striped table-condensed">
+
+        <thead>
+        <tr>
+		    <th colspan="4" style="text-align:center">Acciones</th>
+            <th>AT Nro.</th>
+            <th>Fecha Solicitud</th>
+            <th>Solicitante</th>
+            <th>Sector Solicitante</th>
+            <th>Descripción del problema</th>        		
+        </tr>
+        </thead>
+       
+    <tbody>
+
+	   
+        {% for entity in entities %}
+		    <tr>
+			<td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Reasignar la AT a otro sector"> Derivar </a></td>
+            <td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Cancela AT motivos válidos"> Cancelar </a></td>
+			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualiza los avance en la reperación de la AT">Evolución </a> </td>
+            <td><a href="{{ path('atecnica_genero_AgendaTecnico', { 'id': entity.id }) }}" title="Asigna un técnico para el diagnóstico" >Aceptar</a> </td>                
+			
+            <td>{{ entity.id }}</td>
+            <td>{{ entity.fechasolicitud|date('d/m/Y - H:i:s') }}</td>
+		    <td>{{ entity.personasolicita }}</td>
+			<td>{{ entity.sectorsolicita }}</td>
+            <td>{{ entity.descripcion }}</td>
+
+
+		    </tr>
+
+	    {% endfor %}
+    </tbody>
+  
+
+   </table>
+
+       
+    {% if entities.getTotalItemCount > 10 %}
+     	{{ knp_pagination_render(entities) }}
+    {% endif %}   
+       
+ {% endblock %}

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\FrontendBundle\Entity\At;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtType;
-use ATManager\FrontendBundle\Form\AtBusType; 
+use ATManager\FrontendBundle\Form\AtBuscadorType; 
 
 
 class AtController extends Controller
@@ -25,9 +25,7 @@ class AtController extends Controller
             'method' => 'POST'
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
+      return $form;
     }
 
     
@@ -40,6 +38,18 @@ class AtController extends Controller
         {
             try{
 
+                # evalua,  si el patrimonio esta de baja no permite abrir la atencion
+                if($entity->getPatrimonio())
+                {   
+                    $objPatri = $entity->getPatrimonio();
+                    if($objPatri->getHabilita()==false)
+                    {    
+                    $request->getSession()->getFlashBag()->add('error',$objPatri->getDescripcion()." : Esta de baja !!, no se acepta Solicitud de AT " ); 
+                    return $this->redirect($this->generateUrl('at_new'));
+                    }
+                }    
+                  
+                
                 $entity->setIpsolicita($request->getClientIp());
                 //$entity->setIpsolicita($request->getHost());
 
@@ -50,7 +60,7 @@ class AtController extends Controller
                 $atHistorico= new atHistorico();
                 $atHistorico->setAt($entity);
                 
-                $em = $this->getDoctrine()->getManager();
+               // $em = $this->getDoctrine()->getManager();
                 
                 $clasificacion = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
                 $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasificacion);
@@ -58,12 +68,13 @@ class AtController extends Controller
                 $atHistorico->setComentario('Inicializado');
                 $em->persist($atHistorico);
                 $em->flush();
+                
                  $request->getSession()->getFlashBag()->add('success','Solicitud Aceptada');
                 return $this->redirect($this->generateUrl('at_show', array('id' => $entity->getId())));
                }catch(\Exception $ex){
-                $request->getSession()->getFlashBag()->add('error','Problemas al solicitar Atencion Técnica');
-                return $this->redirect($this->generateUrl('at_show'));
-            }
+                $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
+                return $this->redirect($this->generateUrl('at_new'));
+               }
 
         }
 
@@ -109,16 +120,46 @@ class AtController extends Controller
     } 
 
 
+    public function verUltimoEstadioAction(Request $request, $id)
+    {
+        
+        try{
+                $em = $this->getDoctrine()->getManager();
+                $estadio = $em->getRepository('FrontendBundle:At')->findByFiltroUltimoEstadio($id);
+                $esta = $em->getRepository('BackendBundle:Estadio')->find($estadio);
+                echo "".$esta;
+
+               if (!$estadio)
+               {
+                    throw $this->createNotFoundException('No pude obtener el ultimo estadio');
+               }
+
+               echo "Estadio ".$estadio;
+
+               
+                return $this->redirect($this->generateUrl('at_buscador'));
+            
+       
+            }catch(\Exception $ex){        
+                $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
+             return $this->redirect($this->generateUrl('at_buscador'));
+        }
+            
+    } 
+
+
     public function buscadorAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new AtBusType(), null, array(
+        
+        $form = $this->createForm(new AtBuscadorType(), null, array(
             'method' => 'GET'
         ));
-	$form->handleRequest($request);
+
+	   $form->handleRequest($request);
         if ($form->isValid())
         {
-	    $entities =array();        	
+	        $entities =array();        	
             $numero=$form->get('numero')->getData();
             $personasolicita=$form->get('personasolicita')->getData();
             $sectorsolicita=$form->get('sectorsolicita')->getData();

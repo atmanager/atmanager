@@ -1,35 +1,36 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %}
 
 {% block content %}
-    <p> Index del <strong>Frontend</strong> </p>
+    <p> Resultado busqueda <strong>AT</strong> </p>
+     <a href="{{ path('at_buscador')}}">[Volver a buscar]</a>
   <table class="table table-bordered table-striped">
 
         <thead>
-        <tr>
-		    <th colspan="3" style="text-align:center">Acciones</th>
+         <tr>
+		    <th colspan="2" style="text-align:center">Acciones</th>
         
-            <th>Solicitud Nro.</th>
+            <th>AT n°</th>
             <th>Solicitante</th>
             <th>Sector Solicitante</th>
+            <th>Estadio actual</th>
 		
-        </tr>
+         </tr>
         </thead>
        
-    <tbody>
+            <tbody>
+                {% for entity in entities %}
+        		    <tr>
+        			<td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Consultar/reimprimir Solicitud"> Ver </a></td>
+        			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Consultar evolución de AT">Evolución</a> </td>                
+        			<td>{{ entity.id }}</td>
+        		  <td>{{ entity.personasolicita }}</td>
+        			<td>{{ entity.sectorsolicita }}</td>
+              <td><a href="{{ path('at_ver_ultimo_estadio', { 'id': entity.id }) }}" title="Consultar ultimo estadio de la AT">Ver</a> </td> 
 
-	   
-        {% for entity in entities %}
-		    <tr>
-			<td><a href="{{ path('at_show', { 'id': entity.id }) }}"> Ver </a></td>
-			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}">Ver Historico</a> </td>                
-			<td>{{ entity.id }}</td>
-		    <td>{{ entity.personasolicita }}</td>
-			<td>{{ entity.sectorsolicita }}</td>
-		    </tr>
-	    {% endfor %}
-    </tbody>
-  
-
+        		    </tr>
+        	    {% endfor %}
+            </tbody>
+          
    </table>
     
     {% if entities.getTotalItemCount > 10 %}

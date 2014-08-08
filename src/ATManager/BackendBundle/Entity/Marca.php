@@ -4,12 +4,18 @@ namespace ATManager\BackendBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
+// DON'T forget this use statement!!!
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * Marca
  *
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\MarcaRepository")
+ * @UniqueEntity(
+ *     fields={"nombre"},
+ *     message="Ya existe el nombre en otro items"
+ * )
  */
 class Marca
 {

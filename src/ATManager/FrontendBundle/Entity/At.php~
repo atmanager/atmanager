@@ -5,11 +5,11 @@ namespace ATManager\FrontendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
- * At
- *
- * @ORM\Table()
+ * 
  * @ORM\Entity(repositoryClass="ATManager\FrontendBundle\Entity\AtRepository")
+ * @ORM\Table()
  */
 class At
 {
@@ -103,9 +103,16 @@ class At
     */
     private $historicos;
 
-    //  $this->fechasolicitud= new \DateTime();
+  
 
-   
+     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fechasolicitud= new \DateTime();
+        $this->historicos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -402,4 +409,6 @@ class At
     {
         return $this->historicos;
     }
+  
+
 }

@@ -143,6 +143,14 @@ class Patrimonio
         $this->fechaModifica = new\DateTime();                              
     }
 
+
+    public function __toString(){
+        return " ".$this->getId()." ".$this->getDescripcion();
+    }
+
+
+
+
     /*mis metodos*/   
 
     /**
