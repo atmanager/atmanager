@@ -157,9 +157,13 @@ class AtecnicaController extends Controller
          $objAtTec->setAt($entity);
          $objAtTec->setRol($rol);
 
-        
+        // capturo el tecnico jefe logueado
+        $objtecnicoLogin = $this->get('security.context')->getToken()->getUser();       
+        // asigno a $opciones el sector del tecnico jefe logueado
+        $opciones = $objtecnicoLogin->getSector();
+        // $form = $this->createForm(new PlumeOptionsType($opciones)
 
-         $form = $this->createForm(new AtTecnicoType(), $objAtTec, array(
+         $form = $this->createForm(new AtTecnicoType($opciones), $objAtTec, array(
             'method' => 'GET'
         ));
 

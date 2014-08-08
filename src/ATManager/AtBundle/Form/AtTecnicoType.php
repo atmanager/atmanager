@@ -10,30 +10,58 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class AtTecnicoType extends AbstractType
 {
+
+    protected $opciones;
+
+
+    public function __construct ($opciones)
+    {
+        $this->opciones = $opciones;
+    }
+
         /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
+        $opciones = $this->opciones;
         
          $builder
                 ->add('tecnico','entity',
                     array(
                         'class'=>'BackendBundle:Tecnico',
-                        'empty_value'=>'Selecccione Clasificación [*]',
-                        'query_builder'=>function($er)
+                        'empty_value'=>'Selecccione un técnico responsable para la AT [*]',
+                        'query_builder'=>function($er) use ($opciones)
                             {
-                            return $er->createQueryBuilder('t')
+                            return $er->createQueryBuilder('t') 
                                 ->select('t')
-                                ->Where('t.sector=1');
-                            }
+                                ->Where('t.sector = :opciones')
+                                ->setParameter('opciones', $opciones);
+                            },
                           ))
                     
                            ->add('submit', 'submit', array('label' => 'Aceptar'));
+                            
         
     }
+
+
+
+
+    /*$builder->add('framePlume', 'entity', array(
+    'class' => 'DessinPlumeBundle:PhysicalPlume',
+    'query_builder' => function(EntityRepository $er) use ($profile)
+                        {
+                            return $er->createQueryBuilder('pp')
+                                ->where("pp.profile = :profile")
+                                ->orderBy('pp.index', 'ASC')
+                                ->setParameter('profile', $profile)
+                            ;
+                        },
+
+));*/
+
    
     /**
      * @param OptionsResolverInterface $resolver
