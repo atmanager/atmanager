@@ -12,7 +12,8 @@
             <th>AT n°</th>
             <th>Solicitante</th>
             <th>Sector Solicitante</th>
-            <th>Estadio actual</th>
+            <th>Sector Destino</th>
+    
 		
          </tr>
         </thead>
@@ -20,12 +21,12 @@
             <tbody>
                 {% for entity in entities %}
         		    <tr>
-        			<td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Consultar/reimprimir Solicitud"> Ver </a></td>
-        			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Consultar evolución de AT">Evolución</a> </td>                
+        			<td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Consultar/reimprimir Solicitud"> Detalle </a></td>
+        			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Consultar evolución de AT">Ver evolución</a> </td>                
         			<td>{{ entity.id }}</td>
         		  <td>{{ entity.personasolicita }}</td>
         			<td>{{ entity.sectorsolicita }}</td>
-              <td><a href="{{ path('at_ver_ultimo_estadio', { 'id': entity.id }) }}" title="Consultar ultimo estadio de la AT">Ver</a> </td> 
+              <td>{{ entity.sectordestino }}</td>
 
         		    </tr>
         	    {% endfor %}

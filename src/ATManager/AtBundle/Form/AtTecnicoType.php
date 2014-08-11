@@ -49,20 +49,7 @@ class AtTecnicoType extends AbstractType
 
 
 
-    /*$builder->add('framePlume', 'entity', array(
-    'class' => 'DessinPlumeBundle:PhysicalPlume',
-    'query_builder' => function(EntityRepository $er) use ($profile)
-                        {
-                            return $er->createQueryBuilder('pp')
-                                ->where("pp.profile = :profile")
-                                ->orderBy('pp.index', 'ASC')
-                                ->setParameter('profile', $profile)
-                            ;
-                        },
-
-));*/
-
-   
+     
     /**
      * @param OptionsResolverInterface $resolver
      */

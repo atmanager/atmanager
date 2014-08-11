@@ -31,7 +31,7 @@
 	   
         {% for entity in entities %}
 		    <tr>
-			<td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Reasignar la AT a otro sector"> Derivar </a></td>
+			<td><a href="{{ path('at_edit', { 'id': entity.id }) }}" title="Reasignar la AT a otro sector"> Editar </a></td>
             <td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Cancela AT motivos válidos"> Cancelar </a></td>
 			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualiza los avance en la reperación de la AT">Evolución </a> </td>
             <td><a href="{{ path('atecnica_genero_AgendaTecnico', { 'id': entity.id }) }}" title="Asigna un técnico para el diagnóstico" >Aceptar</a> </td>                

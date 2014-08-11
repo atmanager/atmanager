@@ -201,5 +201,10 @@ class AtecnicaController extends Controller
                             'form'=>$form->createView(),
                 
         ));
-    }           
+    }    
+
+
+
+   
+
 }

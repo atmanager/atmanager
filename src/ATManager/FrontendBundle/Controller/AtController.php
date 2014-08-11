@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\FrontendBundle\Entity\At;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtType;
+use ATManager\FrontendBundle\Form\AtEditType;
 use ATManager\FrontendBundle\Form\AtBuscadorType; 
 
 
@@ -177,5 +178,43 @@ class AtController extends Controller
                             'form'=>$form->createView(),
 			 	
         ));
-    }         
+    }   
+
+
+     # agosto 8. Dario
+    # Editar una asistencia técnica.
+    # Dejar Cambiar solo Sector Destino y Patrimonio
+
+     /**
+     * Displays a form to edit an existing AT entity.
+     *
+     */
+    public function editAction($id)
+    {
+   
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontendBundle:At')->find($id);
+        $Form = $this->createForm(new AtEditType($em, $id), $entity);
+
+        $Form->handleRequest($this->getRequest());
+        if ($Form->isValid()) {
+         
+            try{
+              
+                $em->persist($entity);            
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Item Editado'); 
+                return $this->redirect($this->generateUrl('at_edit', array('id' => $id)));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Error al intentar editar item'); 
+                return $this->redirect($this->generateUrl('at_edit', array('id' => $id)));
+            }
+        }
+        return $this->render('FrontendBundle:At:edit.html.twig', array(
+            'entity'      => $entity,
+            'form'   => $Form->createView()
+        ));
+    }
+      
 }

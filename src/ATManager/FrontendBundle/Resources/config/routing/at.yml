@@ -7,6 +7,10 @@ at_show:
     pattern:  /{id}/show
     defaults: { _controller: "FrontendBundle:At:show" }
 
+at_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FrontendBundle:At:edit" }    
+
 at_ver_historico:
     pattern:  /{id}/ver_historico
     defaults: { _controller: "FrontendBundle:At:verHistorico" }
