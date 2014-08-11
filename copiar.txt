@@ -1,0 +1,26 @@
+From https://github.com/atmanager/atmanager
+ * branch            master     -> FETCH_HEAD
+Auto-merging src/ATManager/FrontendBundle/Resources/views/At/showHistorico.html.twig
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Resources/views/At/showHistorico.html.twig
+Auto-merging src/ATManager/FrontendBundle/Resources/views/At/show.html.twig
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Resources/views/At/show.html.twig
+Auto-merging src/ATManager/FrontendBundle/Resources/views/At/new.html.twig
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Resources/views/At/new.html.twig
+Auto-merging src/ATManager/FrontendBundle/Resources/views/At/index.html.twig
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Resources/views/At/index.html.twig
+Auto-merging src/ATManager/FrontendBundle/Resources/views/At/find.html.twig
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Resources/views/At/find.html.twig
+Auto-merging src/ATManager/FrontendBundle/Form/AtType.php
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Form/AtType.php
+Auto-merging src/ATManager/FrontendBundle/Form/AtBuscadorType.php
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Form/AtBuscadorType.php
+Auto-merging src/ATManager/FrontendBundle/Entity/AtRepository.php
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Entity/AtRepository.php
+Auto-merging src/ATManager/FrontendBundle/Entity/At.php
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Entity/At.php
+Auto-merging src/ATManager/FrontendBundle/Controller/AtController.php
+CONFLICT (content): Merge conflict in src/ATManager/FrontendBundle/Controller/AtController.php
+CONFLICT (modify/delete): src/ATManager/AtBundle/Entity/AtHistoricoRepository.php deleted in 26207cbbded6add28a26e46022bd62555f284089 and modified in HEAD. Version HEAD of src/ATManager/AtBundle/Entity/AtHistoricoRepository.php left in tree.
+Auto-merging src/ATManager/AtBundle/Entity/AtHistorico.php
+CONFLICT (content): Merge conflict in src/ATManager/AtBundle/Entity/AtHistorico.php
+Automatic merge failed; fix conflicts and then commit the result.
