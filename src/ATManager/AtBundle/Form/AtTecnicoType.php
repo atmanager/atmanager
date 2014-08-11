@@ -13,7 +13,6 @@ class AtTecnicoType extends AbstractType
 
     protected $opciones;
 
-
     public function __construct ($opciones)
     {
         $this->opciones = $opciones;
@@ -26,12 +25,11 @@ class AtTecnicoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $opciones = $this->opciones;
-        
-         $builder
+        $builder
                 ->add('tecnico','entity',
                     array(
                         'class'=>'BackendBundle:Tecnico',
-                        'empty_value'=>'Selecccione un técnico responsable para la AT [*]',
+                        'empty_value'=>'Seleccione Técnico Principal [*]',
                         'query_builder'=>function($er) use ($opciones)
                             {
                             return $er->createQueryBuilder('t') 
@@ -40,15 +38,19 @@ class AtTecnicoType extends AbstractType
                                 ->setParameter('opciones', $opciones);
                             },
                           ))
-                    
-                           ->add('submit', 'submit', array('label' => 'Aceptar'));
-                            
-        
+            /*    ->add('prioridad','entity',
+                    array(
+                        'class'=>'BackendBundle:Prioridad',
+                        'empty_value'=>'Selecccione Prioridad de Abordaje: [*]',
+                        'query_builder'=>function($er) 
+                            {
+                                return $er->createQueryBuilder('p') 
+                                ->select('p')
+                                ->OrderBy('nombre','ASC');                             
+                            },
+                          )) */    
+                ->add('submit', 'submit', array('label' => 'Aceptar'));     
     }
-
-
-
-
      
     /**
      * @param OptionsResolverInterface $resolver
@@ -56,7 +58,8 @@ class AtTecnicoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ATManager\AtBundle\Entity\AtTecnico'
+            'data_class' => 'ATManager\AtBundle\Entity\AtTecnico',
+
         ));
     }
 

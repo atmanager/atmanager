@@ -16,69 +16,44 @@ use ATManager\FrontendBundle\Form\AtBuscadorType;
 
 class AtController extends Controller
 {
-
-      
-    private function createCreateForm(At $entity)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new AtType($em), $entity, array(
-            'action' => $this->generateUrl('at_new'),
-            'method' => 'POST'
-        ));
-
-      return $form;
-    }
-
     
-    public function newAction(Request $request)
+    public function newAction()
     {
         $entity = new At();
-        $form   = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new AtType($em), $entity);
+        $form->handleRequest($this->getRequest());
         if ($form->isValid())
         {
             try{
-
                 # evalua,  si el patrimonio esta de baja no permite abrir la atencion
                 if($entity->getPatrimonio())
                 {   
                     $objPatri = $entity->getPatrimonio();
                     if($objPatri->getHabilita()==false)
                     {    
-                    $request->getSession()->getFlashBag()->add('error',$objPatri->getDescripcion()." : Esta de baja !!, no se acepta Solicitud de AT " ); 
-                    return $this->redirect($this->generateUrl('at_new'));
+                        $request->getSession()->getFlashBag()->add('error',$objPatri->getDescripcion()." : Esta de baja !!, no se acepta Solicitud de AT " ); 
+                        return $this->redirect($this->generateUrl('at_new'));
                     }
                 }    
-                  
+                $entity->setIpsolicita($this->container->get('request')->getClientIp());
                 
-                $entity->setIpsolicita($request->getClientIp());
-                //$entity->setIpsolicita($request->getHost());
-
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
-                
-
                 $atHistorico= new atHistorico();
                 $atHistorico->setAt($entity);
-                
-               // $em = $this->getDoctrine()->getManager();
-                
                 $clasificacion = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
                 $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasificacion);
                 $atHistorico->setEstadio($estadio);
                 $atHistorico->setComentario('Inicializado');
                 $em->persist($atHistorico);
                 $em->flush();
-                
-                 $request->getSession()->getFlashBag()->add('success','Solicitud Aceptada');
+                $this->get('session')->getFlashBag()->add('success','Solicitud Aceptada');
                 return $this->redirect($this->generateUrl('at_show', array('id' => $entity->getId())));
-               }catch(\Exception $ex){
-                $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
+            }catch(\Exception $ex){
+                $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
                 return $this->redirect($this->generateUrl('at_new'));
-               }
-
+            }
         }
-
         return $this->render('FrontendBundle:At:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -96,24 +71,21 @@ class AtController extends Controller
             throw $this->createNotFoundException('Unable to find At entity.');
         }
 
-        // $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FrontendBundle:At:show.html.twig', 
             array('entity' => $entity)
         );
     }
 
-     public function verHistoricoAction(Request $request, $id)
+    public function verHistoricoAction($id)
     {
-        
-                  
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FrontendBundle:At')->find($id);
+                      
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontendBundle:At')->find($id);        
             
-            
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find At entity.');
-            }
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find At entity.');
+        }
 
         return $this->render('FrontendBundle:At:showHistorico.html.twig', array(
             'entity' => $entity,
@@ -121,7 +93,7 @@ class AtController extends Controller
     } 
 
 
-    public function verUltimoEstadioAction(Request $request, $id)
+    public function verUltimoEstadioAction($id)
     {
         
         try{
@@ -142,7 +114,7 @@ class AtController extends Controller
             
        
             }catch(\Exception $ex){        
-                $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
+                $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
              return $this->redirect($this->generateUrl('at_buscador'));
         }
             
@@ -164,14 +136,19 @@ class AtController extends Controller
             $numero=$form->get('numero')->getData();
             $personasolicita=$form->get('personasolicita')->getData();
             $sectorsolicita=$form->get('sectorsolicita')->getData();
-            
+            if($numero=="" and $personasolicita=="" and $sectorsolicita==""){
+                $this->get('session')->getFlashBag()->add('error','Introduce algún criterio');
+                return $this->render('FrontendBundle:At:find.html.twig', array(
+                            'form'=>$form->createView(),
+                ));        
+            }
 
             $entities = $em->getRepository('FrontendBundle:At')->findByFiltroAt($numero, $personasolicita, $sectorsolicita);
                 $paginator = $this->get('knp_paginator');
                 $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
                 return $this->render('FrontendBundle:At:index.html.twig', array( 
                     'form'=>$form->createView(),
-		    'entities' => $entities 	
+		              'entities' => $entities 	
                 ));
         }
         return $this->render('FrontendBundle:At:find.html.twig', array(
@@ -212,7 +189,7 @@ class AtController extends Controller
             }
         }
         return $this->render('FrontendBundle:At:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'form'   => $Form->createView()
         ));
     }

@@ -4,12 +4,20 @@ namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * AlaSector
  *
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\AlaSectorRepository")
+ * @UniqueEntity(
+ *     fields={"codigointerno"},
+ *     message="Ya existe el nombre en otro items"
+ * )
+ * @UniqueEntity(
+ *     fields={"nombre"},
+ *     message="Ya existe el nombre en otro items"
+ * )
  */
 class AlaSector
 {

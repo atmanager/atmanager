@@ -1,37 +1,30 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %}
-
-
 {% block content %}
-    <h4>Historico/Evolución de Asistencias Técnicas</h4>
-     <a href="javascript:history.back(1)">[Volver]</a>
-     <a href="{{ path('at_show', { 'id': entity.id }) }}">[Ver Técnicos]</a>
-     <a href="{{ path('at_show', { 'id': entity.id }) }}">[Ver Fallas]</a>
-
+    <h3>Historico/Evolución de AT: {{ entity.id }}</h3>
+    <table>
+    <tr>
+        <td><a href="javascript:history.back(1)"><h4>[Volver]&nbsp;</h4></a></td>    
+        <td><a href="{{ path('at_show', { 'id': entity.id }) }}"><h4>[Ver Técnicos]&nbsp;</h4></a></td>
+        <td><a href="{{ path('at_show', { 'id': entity.id }) }}"><h4>[Ver Fallas]</h4></a></td>
+    </tr>
+    </table>
     <table class="table">
-        <tbody>
+        <thead>
             <tr>
-                <th>AT</th>
                 <th>Estadio</th>
                 <th>Fecha</th>
-                <th>Descripción</th>
-              
-                
+                <th>Descripción</th>        
             </tr>
-
-            {% for estadio in entity.getHistoricos %}
+        </thead>
+        <tbody>
+            {% for historico in entity.getHistoricos %}
             <tr>
-                <td><a href="{{ path('at_show', { 'id': entity.id }) }}"> {{ estadio.id }} </a></td>
-                <td>{{ estadio.estadio }}</td>
-                <td>{{ estadio.fecha | date('d/m/y H:i') }}</td>
-                <td>{{ estadio.comentario }}</td>
+                <td>{{ historico.at }} </a></td>
+                <td>{{ historico.estadio }}</td>
+                <td>{{ historico.fecha | date('d/m/y H:i') }}</td>
+                <td>{{ historico.comentario }}</td>
             </tr>
-
             {% endfor %}
-
         </tbody>
     </table>
-
-        
-        
- 
 {% endblock %}

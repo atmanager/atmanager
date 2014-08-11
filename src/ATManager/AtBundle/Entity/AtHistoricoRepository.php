@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class AtHistoricoRepository extends EntityRepository
 {
+	public function FindBySector($sector){
+		$em = $this->getEntityManager();		  	
+		$query = $em->createQuery('SELECT t.nombre as tecnico, count(t.nombre) as cantidad FROM AtBundle:AtTecnico att
+			inner join BackendBundle:Tecnico t with att.tecnico = t.id
+			where t.sector= :sector
+			group by t.nombre')	
+			->setParameter('sector', $sector);
+    		
+    		$query->setMaxResults(50);
+			return $query->getResult();
+	}
 }

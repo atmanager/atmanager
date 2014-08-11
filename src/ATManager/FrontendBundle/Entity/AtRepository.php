@@ -50,15 +50,6 @@ class AtRepository extends EntityRepository
 	public function findByFiltroPorSectorEstadio($sector, $estadio)
 	{
 
-			/*SELECT estadio_id
-			FROM AtHistorico
-			WHERE fecha = (
-			SELECT max( fecha )
-			FROM AtHistorico
-			WHERE at_id =5 ) 
-
-			*/
-
 			$em = $this->getEntityManager();		  	
 			$query = $em->createQuery('SELECT a
 			FROM FrontendBundle:At a
@@ -77,31 +68,6 @@ class AtRepository extends EntityRepository
 
     		$query->setMaxResults(50);
 			return $query->getResult();
-
-
-						
-			/*$query = $em->createQueryBuilder()
-			->select('a')
-			->from('FrontendBundle:At','a')
-			->innerJoin('AtBundle:AtHistorico', 'h', 'WITH', 'a.id = h.at');
-
-			if ($sector)
-			{
-			$query->andWhere('a.sectordestino = :sectordestino');
-			$query->setParameter('sectordestino',$sector);
-			}
-			if ($estadio)
-		    {
-	    	$query->andWhere('h.estadio = :estadio');
-			$query->setParameter('estadio',$estadio);
-		    }
-		    
-			$query->setMaxResults(50);
-			$query = $query->getQuery();
-			return $query->getResult();*/
-
-			
-			  
 	}
 
 	public function findByFiltroUltimoEstadio($at)

@@ -27,11 +27,6 @@ class AtBuscadorType extends AbstractType
             'label'=>'[*] Apellido y Nombre del Solicitante :'
             ))
 
-            /*->add('sectorsolicita','entity',array(
-            'class'=>'BackendBundle:Sector',
-            'required'=>false,
-            'empty_value'=>'Selecccione su sector de trabajo'
-            ))*/
                        
             ->add('sectorsolicita','entity', array(
                 'required'=>false,

@@ -1,0 +1,19 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+    <h3>Mapa del Técnico: </h3>
+    <a href="javascript:history.back(1)"><h4>[Volver]</h4></a></td>
+    <table>
+    	<thead>
+    		<th>Técnico</th>
+    		<th>Cantidad de AT </th>
+    	</thead>
+    	<tbody>
+    		{% for mapa in entities %}
+    		<tr>
+    			<td>{{ mapa.tecnico }}</td>
+    			<td>{{ mapa.cantidad }}</td>
+    		</tr>
+    		{% endfor %}
+    	</tbody>
+    </table>	   
+{% endblock %}
