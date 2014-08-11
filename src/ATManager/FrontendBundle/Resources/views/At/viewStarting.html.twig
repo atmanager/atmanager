@@ -5,11 +5,13 @@
 {% block content %}
     
   <h4 class="title">Visualizando pedidos de Asistencias</h4>
+  <h6>  
          {% if app.user %}
          {{ ' Responsable: ' ~ app.user.nombre }}
-          <br />
+         
          {{ ' Sector: ' ~  app.user.sector }}
          {% endif %}
+  </h6>       
   <a href="javascript:history.back(1)">[Volver]</a>       
 
   <br>
