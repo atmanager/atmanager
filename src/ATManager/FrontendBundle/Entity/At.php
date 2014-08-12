@@ -127,9 +127,11 @@ class At
 
     
     # devolver el codigo del ultimo estadio
-    public function miUltimoEstadio($id)
+    public function miUltimoEstadio()
     {
-        return $this->getId();
+        
+        $regis = $this->historicos->last();
+        return $regis->getEstadio();
 
         
     }

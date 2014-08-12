@@ -13,6 +13,7 @@
             <th>Solicitante</th>
             <th>Sector Solicitante</th>
             <th>Sector Destino</th>
+            <th>Estado Actual</th>
     
 		
          </tr>
@@ -27,6 +28,8 @@
         		  <td>{{ entity.personasolicita }}</td>
         			<td>{{ entity.sectorsolicita }}</td>
               <td>{{ entity.sectordestino }}</td>
+              <td>{{ entity.miUltimoEstadio }}</td>
+
 
         		    </tr>
         	    {% endfor %}

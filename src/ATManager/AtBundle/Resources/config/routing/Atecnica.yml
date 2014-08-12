@@ -19,6 +19,3 @@ atecnica_genero_AgendaTecnico:
     pattern:  /{id}/generoAgendaTecnico
     defaults: { _controller: "AtBundle:Atecnica:generoAgendaTecnico" }           
 
-atecnica_vermapa:
-    pattern:  /{sector}/mapaTecnicos
-    defaults: { _controller: "AtBundle:Atecnica:mapaTecnicos" }

@@ -20,7 +20,6 @@ class AtHistoricoRepository extends EntityRepository
 			group by t.nombre')	
 			->setParameter('sector', $sector);
     		
-    		$query->setMaxResults(50);
-			return $query->getResult();
+    				return $query->getResult();
 	}
 }

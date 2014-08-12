@@ -22,11 +22,26 @@ class AtecnicaController extends Controller
 {
     public function buscadorAction(Request $request)
     {
+     $retorno = $request->getHost().$request->getRequestUri();
+     $sesion = $this->get('session');
+     $sesion->set('retorno',$retorno);
+     
+
+
         $em = $this->getDoctrine()->getManager();
+        $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
+        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
+        
+
         $form = $this->createForm(new AtBuscadorInicialType(), null, array(
             'method' => 'GET'
         ));
-	    $form->handleRequest($request);
+
+        $form->get('estadio')->setData($esta);
+	    
+        $form->handleRequest($request);
+        
+
         if ($form->isValid())
         {
 	        $entities =array();        	  
@@ -45,8 +60,13 @@ class AtecnicaController extends Controller
                             'form'=>$form->createView()	 	
         ));
     }   
-    public function generoAgendaTecnicoAction($id)
+    public function generoAgendaTecnicoAction(Request $request, $id)
     {
+
+        
+        
+
+
 
         $objAtTec=new AtTecnico();
         $em = $this->getDoctrine()->getManager();
@@ -57,7 +77,9 @@ class AtecnicaController extends Controller
         // capturo el tecnico jefe logueado
         $objtecnicoLogin = $this->get('security.context')->getToken()->getUser();       
         // asigno a $opciones el sector del tecnico jefe logueado
-        $opciones = $objtecnicoLogin->getSector();
+        $opciones['sector'] = $objtecnicoLogin->getSector();
+        $opciones['prioridad'] = $entity->getPrioridad();
+
         // $form = $this->createForm(new PlumeOptionsType($opciones)
          $form = $this->createForm(new AtTecnicoType($opciones), $objAtTec, array(
             'method' => 'GET'
@@ -83,17 +105,14 @@ class AtecnicaController extends Controller
             }    
             // redirect a visualizar AT
         }
+
+        $entities = $em->getRepository('AtBundle:AtHistorico')->findBySector($opciones['sector']);
         return $this->render('AtBundle:Atecnica:newAtTecnico.html.twig', array(
                             'form'=>$form->createView(),
-                            'entity'=>$entity
+                            'entity'=>$entity,
+                            'entities'=>$entities
         ));
     }    
     
-    public function mapaTecnicosAction($sector){
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('AtBundle:AtHistorico')->findBySector($sector);
-        return $this->render('AtBundle:Atecnica:mapatecnico.html.twig', array(
-                    'entities'=>$entities
-                ));          
-    }
+    
 }

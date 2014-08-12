@@ -34,21 +34,20 @@ class AtTecnicoType extends AbstractType
                             {
                             return $er->createQueryBuilder('t') 
                                 ->select('t')
-                                ->Where('t.sector = :opciones')
-                                ->setParameter('opciones', $opciones);
+                                ->Where('t.sector = :sector')
+                                ->setParameter('sector', $opciones['sector']);
                             },
                           ))
-            /*    ->add('prioridad','entity',
+
+              ->add('prioridad','entity',
                     array(
                         'class'=>'BackendBundle:Prioridad',
                         'empty_value'=>'Selecccione Prioridad de Abordaje: [*]',
-                        'query_builder'=>function($er) 
-                            {
-                                return $er->createQueryBuilder('p') 
-                                ->select('p')
-                                ->OrderBy('nombre','ASC');                             
-                            },
-                          )) */    
+                        'data'=>$opciones['prioridad'],
+                        'mapped'=>false
+                        
+                )) 
+
                 ->add('submit', 'submit', array('label' => 'Aceptar'));     
     }
      
