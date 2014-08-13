@@ -3,55 +3,87 @@
 {% endblock %}
 
 {% block content %}
-    
-  <h4 class="title">Visualizando pedidos de Asistencias</h4>
-  <h6>  
-         {% if app.user %}
-         {{ ' Responsable: ' ~ app.user.nombre }}
-         
-         {{ ' Sector: ' ~  app.user.sector }}
-         {% endif %}
-  </h6>       
-  <a href="javascript:history.back(1)">[Volver]</a>       
 
-  <br>
-  <table class="table table-bordered table-striped table-condensed">
+<h4 class="title" style="text-align:center">Visualizando pedidos de Asistencias</h4>
 
-        <thead>
-        <tr>
-		    <th colspan="4" style="text-align:center">Acciones</th>
-            <th>AT Nro.</th>
-            <th>Fecha Solicitud</th>
-            <th>Solicitante</th>
-            <th>Sector Solicitante</th>
-            <th>Descripción del problema</th>        		
-        </tr>
-        </thead>
+
+<br>
+<table class="table table-bordered table-striped table-condensed">
+
+    <thead>
+      <tr class="active">
+        <th colspan="9" style="text-align:center">Estadio: {{ estadio }}  Responsable: {{ app.user.nombre }}  Sector: {{ app.user.sector }}
+        </th>
+      </tr>  
+      
+      <tr class="info">
+		    <td colspan="4" style="text-align:center">Acciones</td>
+            <td>AT Nro.</td>
+            <td>Fecha Solicitud</td>
+            <td>Solicitante</td>
+            <td>Sector Solicitante</td>
+            <td>Descripción del problema</td>        		
+      </tr>
+    </thead>
        
-    <tbody>
+<tbody>
+   
+  {% for entity in entities %}
+		<tr>
+  		<td><a href="{{ path('at_edit', { 'id': entity.id }) }}"
+             title="Reasignar la AT a otro sector"> Editar 
+           </a>
+      </td>
+      
+      <td><a href="{{ path('at_show', { 'id': entity.id }) }}" 
+             title="Cancela AT motivos válidos"> Cancelar 
+           </a>
+      </td>
 
-	   
-        {% for entity in entities %}
-		    <tr>
-			<td><a href="{{ path('at_edit', { 'id': entity.id }) }}" title="Reasignar la AT a otro sector"> Editar </a></td>
-            <td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Cancela AT motivos válidos"> Cancelar </a></td>
-			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualiza los avance en la reperación de la AT">Evolución </a> </td>
-            <td><a href="{{ path('atecnica_genero_AgendaTecnico', { 'id': entity.id }) }}" title="Asigna un técnico para el diagnóstico" >Aceptar</a> </td>                
+			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" 
+             title="Visualiza los avance en la reperación de la AT">Evolución 
+           </a>
+      </td>
+      
+      <td><a href="{{ path('atecnica_genero_AgendaTecnico', { 'id': entity.id }) }}"
+             title="Asigna un técnico para el diagnóstico" >Aceptar
+           </a>
+      </td>                
 			
-            <td>{{ entity.id }}</td>
-            <td>{{ entity.fechasolicitud|date('d/m/Y - H:i:s') }}</td>
-		    <td>{{ entity.personasolicita }}</td>
-			<td>{{ entity.sectorsolicita }}</td>
-            <td>{{ entity.descripcion }}</td>
+      <td>
+          {{ entity.id }}
+      </td>
+      
+      <td>
+        {{ entity.fechasolicitud|date('d/m/Y - H:i:s') }}
+      </td>
+		  
+      <td>
+          {{ entity.personasolicita }}
+      </td>
+			
+      <td>
+        {{ entity.sectorsolicita }}
+      </td>
+      
+      <td>  
+        {{ entity.descripcion }}
+      </td>
 
+		</tr>
 
-		    </tr>
+    {% else %} 
+     <tr>
+      <td>
+        No Hay datos para mostrar..
+      </td>
+     </tr> 
+	{% endfor %}
+</tbody>
 
-	    {% endfor %}
-    </tbody>
-  
+</table>
 
-   </table>
+      <a href="javascript:history.back(1)">[Volver]</a>   
 
        
     {% if entities.getTotalItemCount > 10 %}
