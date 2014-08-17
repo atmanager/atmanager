@@ -32,6 +32,7 @@ class PatrimonioController extends Controller
             $local=$form->get('local')->getData();
             $marca=$form->get('marca')->getData();
             $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $descripcion, $observacion, $serial, $clasificacion, $local, $marca);
+            $cant=count($entities);
             if ($form->get('exportar')->isClicked())
             {
                 return $this->export($entities);
@@ -41,7 +42,8 @@ class PatrimonioController extends Controller
                 $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
                 return $this->render('PatrimonioBundle:Patrimonio:index.html.twig', array(
                     'entities' => $entities, 
-                    'form'=>$form->createView()
+                    'form'=>$form->createView(),
+                    'cant'=>$cant
                 ));
             }
         }
@@ -184,33 +186,52 @@ class PatrimonioController extends Controller
         
         $response = new StreamedResponse(function() use($entities) {  
         $handle = fopen('php://output', 'r+');
-        $elementos = array();	
+        $elemento = array();
+        $encabezado = array();
+        $encabezado[]='Patrimonio';
+        $encabezado[]='Descripción';
+        $encabezado[]='Precio';
+        $encabezado[]='Estimado';
+        $encabezado[]='Responsable';
+        $encabezado[]='Modelo';
+        $encabezado[]='Serial';
+        $encabezado[]='Observación';
+        $encabezado[]='Habilitado';
+        $encabezado[]='Clasificación';
+        $encabezado[]='Local';
+        $encabezado[]='Marca';                
+        $encabezado[]='Estado';
+        $encabezado[]='Modificador';
+        $encabezado[]='Fecha de Alta';
+        $encabezado[]='Fecha de Baja';     
+        $encabezado[]='Fecha de Edición';
+        fputcsv($handle, $encabezado, ';'); 
         foreach ($entities as $key) 
-            {
-		$elemento[0]=$key->getId();
-               	$elemento[1]=$key->getDescripcion();
-                $elemento[2]=$key->getPrecio();
-		$elemento[3]=$key->getEstimado();
-		$elemento[4]=$key->getResponsable();
-		$elemento[5]=$key->getModelo();
-		$elemento[6]=$key->getSerial();
-                $elemento[7]=$key->getObservacion();
-		$elemento[8]=$key->getHabilita();
-		$elemento[9]=$key->getClasificacion()->getNombre();
-		$elemento[10]=$key->getLocal()->getNombre();
-		$elemento[11]=$key->getMarca()->getNombre();				
-		$elemento[12]=$key->getEstado()->getNombre();
-		$elemento[13]=$key->getTecnico()->getNombre();
-		$elemento[14]=$key->getFechaAlta();
-		$elemento[15]=$key->getFechaBaja();		
-		$elemento[16]=$key->getFechaModifica();
-		fputcsv($handle, $elemento, ';');                   
-            }
-            fclose($handle);
+        {
+		    $elemento[0]=$key->getId();
+            $elemento[1]=$key->getDescripcion();
+            $elemento[2]=$key->getPrecio();
+		    $elemento[3]=$key->getEstimado();
+		    $elemento[4]=$key->getResponsable();
+		    $elemento[5]=$key->getModelo();
+		    $elemento[6]=$key->getSerial();
+            $elemento[7]=$key->getObservacion();
+		    $elemento[8]=$key->getHabilita();
+		    $elemento[9]=$key->getClasificacion()->getNombre();
+		    $elemento[10]=$key->getLocal()->getNombre();
+		    $elemento[11]=$key->getMarca()->getNombre();				
+		    $elemento[12]=$key->getEstado()->getNombre();
+		    $elemento[13]=$key->getTecnico()->getNombre();
+		    $elemento[14]=$key->getFechaAlta();
+		    $elemento[15]=$key->getFechaBaja();		
+		    $elemento[16]=$key->getFechaModifica();
+		    fputcsv($handle, $elemento, ';');                   
+        }
+        fclose($handle);
         });
         $response->headers->set('Content-Type', 'text/csv');
-        $response->setCharset('ISO-8859-1');
-        $response->headers->set('Content-Disposition','attachment; filename="export_patri.csv"');
+        $response->setCharset('iso-8859-1');
+        $response->headers->set('Content-Disposition','attachment; filename="patrimonio.csv"');
         return $response;
     }
 

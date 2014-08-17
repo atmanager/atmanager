@@ -15,7 +15,12 @@ atecnica_buscador:
     pattern:  /buscador
     defaults: { _controller: "AtBundle:Atecnica:buscador" } 
 
-atecnica_genero_AgendaTecnico:
+atecnica_generoAgendaTecnico:
     pattern:  /{id}/generoAgendaTecnico
-    defaults: { _controller: "AtBundle:Atecnica:generoAgendaTecnico" }           
+    defaults: { _controller: "AtBundle:Atecnica:generoAgendaTecnico" }
+
+atecnica_asignarTecnicoAT:
+    pattern:  /{at}/{tec}/asignarTecnicoAT
+    defaults: { _controller: "AtBundle:Atecnica:asignarTecnicoAT" }
+           
 

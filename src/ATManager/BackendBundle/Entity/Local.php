@@ -4,12 +4,22 @@ namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * Local
  *
  * @ORM\Table()
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\LocalRepository")
+ * @UniqueEntity(
+ *     fields={"nombre"},
+ *     message="Ya existe el nombre en otro item"
+ * )
+ * @UniqueEntity(
+ *     fields={"codigointerno"},
+ *     message="Ya existe el código interno en otro item"
+ * )
  */
 class Local
 {
@@ -21,7 +31,6 @@ class Local
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -29,7 +38,6 @@ class Local
      * @Assert\NotBlank()
      */
     private $nombre;
-
     /**
      * @var string
      *

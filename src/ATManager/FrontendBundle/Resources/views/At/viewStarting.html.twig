@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h4 class="title" style="text-align:center">Visualizando pedidos de Asistencias</h4>
+<h3 class="title" style="text-align:center">Visualizando pedidos de Asistencias</h3>
 
 
 <br>
@@ -17,7 +17,7 @@
       </tr>  
       
       <tr class="info">
-		    <td colspan="4" style="text-align:center">Acciones</td>
+	    <td colspan="4" style="text-align:center">Acciones</td>
             <td>AT Nro.</td>
             <td>Fecha Solicitud</td>
             <td>Solicitante</td>
@@ -45,9 +45,13 @@
            </a>
       </td>
       
-      <td><a href="{{ path('atecnica_genero_AgendaTecnico', { 'id': entity.id }) }}"
+      <td>
+        {% if entity.miUltimoEstadio().getNombre() == "INICIAL" %}
+       
+              <a href="{{ path('atecnica_generoAgendaTecnico', { 'id': entity.id }) }}"
              title="Asigna un técnico para el diagnóstico" >Aceptar
-           </a>
+         </a>
+        {% endif %} 
       </td>                
 			
       <td>

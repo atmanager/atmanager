@@ -14,6 +14,7 @@ class PatrimonioType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $actual=date ("Y");
         $builder
             ->add('descripcion')
             ->add('responsable')
@@ -58,7 +59,12 @@ class PatrimonioType extends AbstractType
             					->orderBy('m.nombre','ASC');
             				}
             			))
-            ->add('fechaAlta')
+            ->add('fechaAlta','date',array(
+                    'input'  => 'datetime',
+                    'widget' => 'choice',
+                    'years' => range(2004,$actual)
+
+                ))
             ->add('estimado',null,array(
                     'required'=>false,
                     'label'=>'Precio es estimado'

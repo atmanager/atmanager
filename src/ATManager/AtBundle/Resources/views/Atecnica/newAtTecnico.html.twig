@@ -2,45 +2,49 @@
 {% block content %}
     <h3>Asignar Técnico para AT: {{ entity.id}}</h3>
     
-    			
-    		
-    		<a href="javascript:history.back(1)"><h4>[Volver]</h4></a>
-    {{ form(form)}} 
+    <a href="javascript:history.back(1)"><h4>[Volver]</h4></a>
+   
+      
 
 
-  <br />
 
   <div class="panel-group" id="accordion">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          Ver Mapa técnicos <span class="badge"> {{ entities | length }} </span>
+          Ver Mapa técnicos <span class="badge"> {{ mapatec | length }} </span>
         </a>
       </h4>
     </div>
     <div id="collapseOne" class="panel-collapse collapse">
-      <div class="panel-body">
-    <table class="table table-bordered table-striped table-condensed">
-        <thead>
-            <th>Técnico</th>
-            <th>Cantidad de AT </th>
-        </thead>
-        <tbody>
-            {% for mapa in entities %}
-            <tr>
-                <td>{{ mapa.tecnico }}</td>
-                <td>{{ mapa.cantidad }}</td>
-            </tr>
+      	<div class="panel-body">
+    		<table class="table table-bordered table-striped table-condensed">
+        	<thead>
+	    		<th>Asignar</th>
+            	<th>Técnico</th>
+            	<th>Cantidad de AT </th>
+        	</thead>
+        	<tbody>
+            {% for mapa in mapatec %}
+            	<tr>
+					<td>
+			    		<a href="{{ path('atecnica_asignarTecnicoAT',{ 'at': entity.id,'tec': mapa.idtecnico }) }}"> 	
+			    			{{ '[Principal]' }}
+			    		</a> 	 
+					</td>
+                	<td>{{ mapa.tecnico }}</td>
+                	<td>{{ mapa.cantidad }}</td>
+            	</tr>
             {% endfor %}
-        </tbody>
-    </table>    
-
+        	</tbody>
+    	</table>    
       </div>
     </div>
   </div>
   
-</div>
+</div> 
+
 
 
 

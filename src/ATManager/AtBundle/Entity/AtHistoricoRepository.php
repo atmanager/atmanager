@@ -14,12 +14,12 @@ class AtHistoricoRepository extends EntityRepository
 {
 	public function FindBySector($sector){
 		$em = $this->getEntityManager();		  	
-		$query = $em->createQuery('SELECT t.nombre as tecnico, count(t.nombre) as cantidad FROM AtBundle:AtTecnico att
+		$query = $em->createQuery('SELECT t.id as idtecnico, t.nombre as tecnico, count(t.nombre) as cantidad FROM AtBundle:AtTecnico att
 			inner join BackendBundle:Tecnico t with att.tecnico = t.id
-			where t.sector= :sector
+			where t.sector= :sector and t.enabled= :enabled
 			group by t.nombre')	
-			->setParameter('sector', $sector);
-    		
-    				return $query->getResult();
+			->setParameter('sector', $sector)
+			->setParameter('enabled',true);
+    		return $query->getResult();
 	}
 }

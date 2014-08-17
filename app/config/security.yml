@@ -33,4 +33,5 @@ security:
         - { path: ^/backend/local/, role: ROLE_OPERPAT }
         - { path: ^/backend/patrimonioclasif/, role: ROLE_OPERPAT }
         - { path: ^/backend/estadopatri/, role: ROLE_OPERPAT }
+        - { path: ^/backend/alasector/, role: ROLE_OPERPAT }
         - { path: ^/backend/, role: ROLE_ADMIN }

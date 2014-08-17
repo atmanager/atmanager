@@ -12,11 +12,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\AlaSectorRepository")
  * @UniqueEntity(
  *     fields={"codigointerno"},
- *     message="Ya existe el nombre en otro items"
+ *     message="Ya existe el código interno en otro item"
  * )
  * @UniqueEntity(
  *     fields={"nombre"},
- *     message="Ya existe el nombre en otro items"
+ *     message="Ya existe el nombre en otro item"
  * )
  */
 class AlaSector

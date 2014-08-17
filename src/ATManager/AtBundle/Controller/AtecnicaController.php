@@ -23,7 +23,7 @@ class AtecnicaController extends Controller
 {
     public function buscadorAction(Request $request)
     {
-     
+
       /*
         Asumimos que este es la funcion que inicia un  proceso en cascada
         que incluye: 
@@ -48,27 +48,20 @@ class AtecnicaController extends Controller
 
      /* en esta funcion solo se define la variable de session la que usará en otras funciones
      del controlador como por ejemplo: generoAgendaTecnicoAction(Request $request, $id)*/
-     
 
-
+    
         $em = $this->getDoctrine()->getManager();
         $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
         $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
-        
-
         $form = $this->createForm(new AtBuscadorInicialType(), null, array(
             'method' => 'GET'
         ));
-
         // asigna al select del estadio del type, el estadio que eligio el usuario
-        $form->get('estadio')->setData($esta);
-	    
-        $form->handleRequest($request);
-        
-
+        $form->get('estadio')->setData($esta); 
+        $form->handleRequest($request);        
         if ($form->isValid())
         {
-	        $entities =array();        	  
+	    $entities =array();        	  
             $objt = $this->get('security.context')->getToken()->getUser();
             $sector=$objt->getSector();
             $estadio=$form->get('estadio')->getData();            
@@ -77,7 +70,7 @@ class AtecnicaController extends Controller
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('FrontendBundle:At:viewStarting.html.twig', array( 
                     'form'=>$form->createView(),
-		            'entities' => $entities,
+		    'entities' => $entities,
                     'estadio' => $estadio 	
             ));
         }
@@ -85,64 +78,58 @@ class AtecnicaController extends Controller
                             'form'=>$form->createView()	 	
         ));
     }   
-    public function generoAgendaTecnicoAction(Request $request, $id)
+    public function generoAgendaTecnicoAction($id)
     {
-        
-       /* recupero la variable de session definida en: buscadorAction()*/
+	    $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontendBundle:At')->find($id);
+	    $objtl = $this->get('security.context')->getToken()->getUser();
+ 	    $opciones['sector'] = $objtl->getSector();
+	    $mapatec = $em->getRepository('AtBundle:AtHistorico')->findBySector($opciones['sector']);
+	    return $this->render('AtBundle:Atecnica:newAtTecnico.html.twig', array(
+        	'entity'=>$entity,
+            	'mapatec'=>$mapatec
+        ));          
+    }  
+  
+
+    public function asignarTecnicoATAction($at,$tec)
+    {
+
+
+     /* recupero la variable de session definida en: buscadorAction()*/
         $sesion = $this->get('session');
 
        /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
        el proceso*/ 
         $ret = $sesion->get('retorno');
-       
-                      
-        $objAtTec=new AtTecnico();
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontendBundle:At')->find($id);
-        $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('PRINCIPAL');
-        $objAtTec->setAt($entity);
-        $objAtTec->setRol($rol);
-        // capturo el tecnico jefe logueado
-        $objtecnicoLogin = $this->get('security.context')->getToken()->getUser();       
-        // asigno a $opciones el sector del tecnico jefe logueado
-        $opciones['sector'] = $objtecnicoLogin->getSector();
-        $opciones['prioridad'] = $entity->getPrioridad();
-
-         $form = $this->createForm(new AtTecnicoType($opciones), $objAtTec, array(
-            'method' => 'GET'
-        ));
-        $form->handleRequest($this->getRequest());       
-        if ($form->isValid())
-        {
-            try{
-                $em->persist($objAtTec);
-                $atHistorico= new atHistorico();
-                $atHistorico->setAt($entity);            
-                $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByNombre('EN DIAGNOSTICO');
-                $atHistorico->setEstadio($estadio);
-                $atHistorico->setComentario('At Aceptada. Agregada a la agenda del técnico');
-                // hasta aquí guarda el historico de la at asignada
-                $em->persist($atHistorico);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Se agregaron: Tecnico Responsable y Nueva evolución');
-                
-                /* redirecciono usando la variable de session*/
-                return $this->redirect($ret);
-                
-            }catch(\Exception $ex){
-                $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
-                return $this->redirect($ret);
-            }    
             
-        }
-
-        $entities = $em->getRepository('AtBundle:AtHistorico')->findBySector($opciones['sector']);
-        return $this->render('AtBundle:Atecnica:newAtTecnico.html.twig', array(
-                            'form'=>$form->createView(),
-                            'entity'=>$entity,
-                            'entities'=>$entities
-        ));
-    }    
-    
-    
+        $objatt=new AtTecnico();
+       	$em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontendBundle:At')->find($at);
+	    $objtl = $this->get('security.context')->getToken()->getUser();
+ 	    $opciones['sector'] = $objtl->getSector();
+	    $mapatec = $em->getRepository('AtBundle:AtHistorico')->findBySector($opciones['sector']);
+	    try{	
+	    	$objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
+	    	$rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('PRINCIPAL');			
+	    	$objatt->setAt($entity);
+	    	$objatt->setRol($rol);
+	    	$objatt->setTecnico($objt);
+	    	$em->persist($objatt);
+            $ath= new atHistorico();
+            $ath->setAt($entity);            
+            $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByNombre('EN DIAGNOSTICO');
+            $ath->setEstadio($estadio);
+            $ath->setComentario('At Aceptada. Agregada a la agenda del técnico');
+            // hasta aquí guarda el historico de la at asignada
+            $em->persist($ath);
+            $em->flush();
+		    $this->get('session')->getFlashBag()->add('success','Se agregaron: Técnico Responsable y Nueva evolución'); 
+            return $this->redirect($ret);
+	    }
+	    catch(\Exception $ex){
+	    	$this->get('session')->getFlashBag()->add('error',$ex->getMessage());
+	        return $this->redirect($ret);
+        }	               
+    }	          
 }

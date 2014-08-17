@@ -9,8 +9,8 @@ class LocalRepository extends EntityRepository
 	public function findByName($nombre)
 	{
 	   $em = $this->getEntityManager();
-	   $query = $em->createQuery('select l from BackendBundle:Local l where l.codigointerno LIKE :codigointerno order by l.codigointerno')
-		->setParameter('codigointerno', '%'.$nombre.'%');
+	   $query = $em->createQuery('select l from BackendBundle:Local l where l.nombre LIKE :nombre order by l.codigointerno')
+		->setParameter('nombre', '%'.$nombre.'%');
 	   return $query->getResult(); 
 	}
 }

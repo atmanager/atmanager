@@ -4,12 +4,18 @@ namespace ATManager\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * Repuesto
  *
  * @ORM\Table()
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\RepuestoRepository")
+ * @UniqueEntity(
+ *     fields={"nombre"},
+ *     message="Ya existe el nombre en otro item"
+ * )
  */
 class Repuesto
 {

@@ -30,8 +30,9 @@ class AtTecnico
     private $id;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At") 
-     * @ORM\JoinColumn(name="at_id", referencedColumnName="id", nullable=false)
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At", inversedBy="tecnicos") 
+     *   @ORM\JoinColumn(name="at_id", referencedColumnName="id", nullable=false)
      */
     private $at;
 
