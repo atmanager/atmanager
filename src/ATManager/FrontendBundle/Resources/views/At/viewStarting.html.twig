@@ -35,9 +35,12 @@
            </a>
       </td>
       
-      <td><a href="{{ path('at_show', { 'id': entity.id }) }}" 
-             title="Cancela AT motivos válidos"> Cancelar 
-           </a>
+      <td>
+          {% if entity.miUltimoEstadio().getClasificacion().getIniciaAt() %}
+            <a href="{{ path('atecnica_cancelar', { 'id': entity.id }) }}" 
+             title="Cancela AT motivos válidos" onClick="return confirm('¿Desea cancelar la AT seleccionada?');"> Cancelar 
+            </a>
+          {% endif %}     
       </td>
 
 			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" 
@@ -46,8 +49,7 @@
       </td>
       
       <td>
-        {% if entity.miUltimoEstadio().getNombre() == "INICIAL" %}
-       
+        {% if entity.miUltimoEstadio().getClasificacion().getIniciaAt() %}
               <a href="{{ path('atecnica_generoAgendaTecnico', { 'id': entity.id }) }}"
              title="Asigna un técnico para el diagnóstico" >Aceptar
          </a>

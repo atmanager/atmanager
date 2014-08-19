@@ -117,10 +117,11 @@ class AtecnicaController extends Controller
 	    	$objatt->setTecnico($objt);
 	    	$em->persist($objatt);
             $ath= new atHistorico();
-            $ath->setAt($entity);            
-            $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByNombre('EN DIAGNOSTICO');
+            $ath->setAt($entity);   
+            $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByDiagnosAt(true);         
+            $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
             $ath->setEstadio($estadio);
-            $ath->setComentario('At Aceptada. Agregada a la agenda del técnico');
+            $ath->setComentario('At Aceptada. Agregada a la agenda de: '.$objt->getNombre());
             // hasta aquí guarda el historico de la at asignada
             $em->persist($ath);
             $em->flush();
@@ -131,5 +132,38 @@ class AtecnicaController extends Controller
 	    	$this->get('session')->getFlashBag()->add('error',$ex->getMessage());
 	        return $this->redirect($ret);
         }	               
+    }
+    public function cancelarAction($id)
+    {
+        /* recupero la variable de session definida en: buscadorAction()*/
+        $sesion = $this->get('session');
+
+       /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
+       el proceso*/ 
+        $ret = $sesion->get('retorno');
+        $fechafin=new \DateTime();
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $objtl = $this->get('security.context')->getToken()->getUser();
+            $entity = $em->getRepository('FrontendBundle:At')->find($id);
+            $entity->setFechafin($fechafin);
+            $em->persist($entity);
+            //
+            $ath= new atHistorico();
+            $ath->setAt($entity);            
+            $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByCancelaAt(true);         
+            $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
+            $ath->setEstadio($estadio);
+            $ath->setComentario('At Cancelada por:,'.' '.$objtl->getNombre() );
+            $em->persist($ath);
+            //
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Se canceló AT'); 
+            return $this->redirect($ret);
+        }
+        catch(\Exception $ex){
+            $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
+            return $this->redirect($ret);
+        }
     }	          
 }

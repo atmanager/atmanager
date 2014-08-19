@@ -21,8 +21,24 @@
                 {% endif %}
             </tr>
             <tr>
+                <th>Diagnostica AT:</th>
+                {% if entity.diagnosAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+            </tr>
+            <tr>
                 <th>Finaliza AT:</th>
                 {% if entity.finalizaAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Cancela AT:</th>
+                {% if entity.cancelaAt %}
                     <td>si</td>
                 {% else %}
                     <td>no</td>    

@@ -17,7 +17,9 @@ class EstadioClasifType extends AbstractType
         $builder
             ->add('nombre')
             ->add('iniciaAt')
+            ->add('diagnosAt')
             ->add('finalizaAt')
+            ->add('cancelaAt')            
             ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }

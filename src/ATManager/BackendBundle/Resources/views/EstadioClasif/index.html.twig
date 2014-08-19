@@ -12,7 +12,9 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Inicializa AT</th>
+                <th>Diagnostica AT</th>
                 <th>Finaliza AT</th>
+                <th>Cancela AT</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +30,17 @@
                 {% else %}
                     <td>no</td>    
                 {% endif %}
+                {% if entity.diagnosAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
                 {% if entity.finalizaAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+                {% if entity.cancelaAt %}
                     <td>si</td>
                 {% else %}
                     <td>no</td>    

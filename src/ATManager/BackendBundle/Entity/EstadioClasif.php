@@ -49,6 +49,20 @@ class EstadioClasif
      */
     private $finalizaAt;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="cancela_at", type="boolean", nullable=true)
+     */
+    private $cancelaAt;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="diagnos_at", type="boolean", nullable=true)
+     */
+    private $diagnosAt;
+
      public function __construct(){
         
     }
@@ -139,5 +153,49 @@ class EstadioClasif
     public function getFinalizaAt()
     {
         return $this->finalizaAt;
+    }
+    /**
+     * Set cancelaAt
+     *
+     * @param boolean $cancelaAt
+     * @return EstadioClasif
+     */
+    public function setCancelaAt($cancelaAt)
+    {
+        $this->cancelaAt = $cancelaAt;
+
+        return $this;
+    }
+
+    /**
+     * Get cancelaAt
+     *
+     * @return boolean 
+     */
+    public function getCancelaAt()
+    {
+        return $this->cancelaAt;
+    }
+    /**
+     * Set diagnosAt
+     *
+     * @param boolean $diagnosAt
+     * @return EstadioClasif
+     */
+    public function setDiagnosAt($diagnosAt)
+    {
+        $this->diagnosAt = $diagnosAt;
+
+        return $this;
+    }
+
+    /**
+     * Get diagnosAt
+     *
+     * @return boolean 
+     */
+    public function getDiagnosAt()
+    {
+        return $this->diagnosAt;
     }
 }

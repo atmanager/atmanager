@@ -23,4 +23,6 @@ atecnica_asignarTecnicoAT:
     pattern:  /{at}/{tec}/asignarTecnicoAT
     defaults: { _controller: "AtBundle:Atecnica:asignarTecnicoAT" }
            
-
+atecnica_cancelar:
+    pattern:  /{id}/cancelar
+    defaults: { _controller: "AtBundle:Atecnica:cancelar" }
