@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `bdatm`
 --
-
+create database `bdatm`;
+use `bdatm`;
 -- --------------------------------------------------------
 
 --
