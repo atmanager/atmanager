@@ -106,6 +106,11 @@ class At
      *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtTecnico", mappedBy="at") 
     */
     private $tecnicos;
+
+     /** 
+     *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtNota", mappedBy="at") 
+    */
+    private $notas;
   
 
      /**
@@ -115,6 +120,8 @@ class At
     {
         $this->fechasolicitud= new \DateTime();
         $this->historicos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tecnicos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -459,5 +466,38 @@ class At
     public function getTecnicos()
     {
         return $this->tecnicos;
+    }
+
+    /**
+     * Add notas
+     *
+     * @param \ATManager\AtBundle\Entity\AtNota $notas
+     * @return At
+     */
+    public function addNota(\ATManager\AtBundle\Entity\AtNota $notas)
+    {
+        $this->notas[] = $notas;
+
+        return $this;
+    }
+
+    /**
+     * Remove notas
+     *
+     * @param \ATManager\AtBundle\Entity\AtNota $notas
+     */
+    public function removeNota(\ATManager\AtBundle\Entity\AtNota $notas)
+    {
+        $this->notas->removeElement($notas);
+    }
+
+    /**
+     * Get notas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotas()
+    {
+        return $this->notas;
     }
 }

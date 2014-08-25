@@ -103,9 +103,14 @@ class At
     */
     private $historicos;
     /** 
-     *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtTecnico", mappedBy="att") 
+     *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtTecnico", mappedBy="at") 
     */
     private $tecnicos;
+
+     /** 
+     *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtNota", mappedBy="at") 
+    */
+    private $notas;
   
 
      /**
@@ -115,6 +120,8 @@ class At
     {
         $this->fechasolicitud= new \DateTime();
         $this->historicos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tecnicos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -125,12 +132,9 @@ class At
     
     # devolver el codigo del ultimo estadio
     public function miUltimoEstadio()
-    {
-        
+    {        
         $regis = $this->historicos->last();
-        return $regis->getEstadio();
-
-        
+        return $regis->getEstadio();  
     }
 
     /**
@@ -430,4 +434,37 @@ class At
     }
   
 
+
+    /**
+     * Add tecnicos
+     *
+     * @param \ATManager\AtBundle\Entity\AtTecnico $tecnicos
+     * @return At
+     */
+    public function addTecnico(\ATManager\AtBundle\Entity\AtTecnico $tecnicos)
+    {
+        $this->tecnicos[] = $tecnicos;
+
+        return $this;
+    }
+
+    /**
+     * Remove tecnicos
+     *
+     * @param \ATManager\AtBundle\Entity\AtTecnico $tecnicos
+     */
+    public function removeTecnico(\ATManager\AtBundle\Entity\AtTecnico $tecnicos)
+    {
+        $this->tecnicos->removeElement($tecnicos);
+    }
+
+    /**
+     * Get tecnicos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTecnicos()
+    {
+        return $this->tecnicos;
+    }
 }

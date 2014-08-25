@@ -4,20 +4,21 @@
 
 {% block content %}
 
-<h3 class="title" style="text-align:center">Visualizar ATs {{ estadio }}</h3>
-Técnico:{{ app.user.nombre }} <br />  
-Sector: {{ app.user.sector }}
-<a href="javascript:history.back(1)"><h4>[Volver]</h4></a> 
+<h3 class="title" style="text-align:center">Visualizando pedidos de Asistencias</h3>
+
+
 <br>
 <table class="table table-bordered table-striped table-condensed">
+
     <thead>
+      <tr class="active">
+        <th colspan="9" style="text-align:center">Estadio: {{ estadio }}  : {{ app.user.nombre }}  Sector: {{ app.user.sector }}
+        </th>
+      </tr>  
+      
       <tr class="info">
-	    {% if estadio.getClasificacion().getIniciaAt() %}	
-	    	<td colspan="4" style="text-align:center">Acciones</td>
-            {% else %}
-		<td colspan="2" style="text-align:center">Acciones</td>
-	    {% endif %}
-	    <td>AT Nro.</td>
+	    <td colspan="4" style="text-align:center">Acciones</td>
+            <td>AT Nro.</td>
             <td>Fecha Solicitud</td>
             <td>Solicitante</td>
             <td>Sector Solicitante</td>
@@ -28,29 +29,54 @@ Sector: {{ app.user.sector }}
 <tbody>
    
   {% for entity in entities %}
-	<tr>
-  	    <td>
-		<a href="{{ path('at_edit', { 'id': entity.id }) }}" title="Reasignar la AT a otro sector">Editar</a>
-      	    </td>
-      {% if entity.miUltimoEstadio().getClasificacion().getIniciaAt() %} 
-      	    <td>
-         	<a href="{{ path('atecnica_cancelar', { 'id': entity.id }) }}" title="Cancela AT motivos válidos" onClick="return confirm('¿Desea cancelar la AT seleccionada?');">Cancelar</a>
-            </td>
-      {% endif %}
-      	    <td>
-	 	<a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualiza los avance en la reperación de la AT">Evolución</a>
-            </td>
-      {% if entity.miUltimoEstadio().getClasificacion().getIniciaAt() %}        
-      	    <td>
-             	<a href="{{ path('atecnica_generoAgendaTecnico', { 'id': entity.id }) }}"title="Asigna un técnico para el diagnóstico" >Aceptar</a>
-      	    </td>                
-      {% endif %}		
-      	   <td>{{ entity.id }}</td>
-      	   <td>{{ entity.fechasolicitud|date('d/m/Y - H:i:s') }}</td>	  
-      	   <td>{{ entity.personasolicita }}</td>		
-      	   <td>{{ entity.sectorsolicita }}</td>
-      	   <td>{{ entity.descripcion }}</td>
-	</tr>
+		<tr>
+  		<td><a href="{{ path('at_edit', { 'id': entity.id }) }}"
+             title="Reasignar la AT a otro sector"> Editar 
+           </a>
+      </td>
+      
+      <td>
+          {% if entity.miUltimoEstadio().getClasificacion().getIniciaAt() %}
+            <a href="{{ path('atecnica_cancelar', { 'id': entity.id }) }}" 
+             title="Cancela AT motivos válidos" onClick="return confirm('¿Desea cancelar la AT seleccionada?');"> Cancelar 
+            </a>
+          {% endif %}     
+      </td>
+
+			<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" 
+             title="Visualiza los avance en la reperación de la AT">Evolución 
+           </a>
+      </td>
+      
+      <td>
+        {% if entity.miUltimoEstadio().getClasificacion().getIniciaAt() %}
+              <a href="{{ path('atecnica_generoAgendaTecnico', { 'id': entity.id }) }}"
+             title="Asigna un técnico para el diagnóstico" >Aceptar
+         </a>
+        {% endif %} 
+      </td>                
+			
+      <td>
+          {{ entity.id }}
+      </td>
+      
+      <td>
+        {{ entity.fechasolicitud|date('d/m/Y - H:i:s') }}
+      </td>
+		  
+      <td>
+          {{ entity.personasolicita }}
+      </td>
+			
+      <td>
+        {{ entity.sectorsolicita }}
+      </td>
+      
+      <td>  
+        {{ entity.descripcion }}
+      </td>
+
+		</tr>
 
     {% else %} 
      <tr>
@@ -63,7 +89,7 @@ Sector: {{ app.user.sector }}
 
 </table>
 
-        
+      <a href="javascript:history.back(1)">[Volver]</a>   
 
        
     {% if entities.getTotalItemCount > 10 %}

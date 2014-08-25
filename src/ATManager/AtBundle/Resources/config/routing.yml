@@ -4,4 +4,8 @@ atecnica_inicial:
 
 atecnica:
   resource: "@AtBundle/Resources/config/routing/Atecnica.yml"
-  prefix:   /atecnica      
+  prefix:   /atecnica
+
+at_nota:
+  resource: "@AtBundle/Resources/config/routing/AtNota.yml"
+  prefix:   /at_nota         

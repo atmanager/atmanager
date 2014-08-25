@@ -1,0 +1,6 @@
+# src/ATManager/AtBundle/Resources/config/validation.yml
+ATManager\AtBundle\Entity\AtNota:
+    properties:
+        file:
+            - File:
+                maxSize: 6000000
