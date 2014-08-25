@@ -26,3 +26,7 @@ atecnica_asignarTecnicoAT:
 atecnica_cancelar:
     pattern:  /{id}/cancelar
     defaults: { _controller: "AtBundle:Atecnica:cancelar" }
+
+atecnica_buscarAgendaTecnico:
+    pattern:  /buscarAgendaTecnico
+    defaults: { _controller: "AtBundle:Atecnica:buscarAgendaTecnico" }

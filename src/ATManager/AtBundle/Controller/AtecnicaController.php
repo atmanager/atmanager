@@ -165,5 +165,43 @@ class AtecnicaController extends Controller
             $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
             return $this->redirect($ret);
         }
-    }	          
+    }
+    // Fecha: 24/08/2014
+    // Busca las ats del técnico logueado
+    public function buscarAgendaTecnicoAction(Request $request)
+    {
+                 
+        $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
+        $sesion = $this->get('session'); 
+        $sesion->set('retorno',$retorno);
+        /* ------------------------------------*/
+        $objt = $this->get('security.context')->getToken()->getUser();   
+        $em = $this->getDoctrine()->getManager();
+        $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
+        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
+        $form = $this->createForm(new AtBuscadorInicialType(), null, array(
+            'method' => 'GET'
+        ));
+        // asigna al select del estadio del type, el estadio que eligio el usuario
+        $form->get('estadio')->setData($esta); 
+        $form->handleRequest($request);        
+        if ($form->isValid())
+        {
+	    $entities =array();        	  
+            $sector=$objt->getSector();
+            $rol=1;
+            $estadio=$form->get('estadio')->getData();            
+            $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnico($objt,$rol,$estadio);
+            $paginator = $this->get('knp_paginator');
+            $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
+            return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 
+                    'form'=>$form->createView(),
+		    'entities' => $entities,
+                    'tecnico' => $objt 	
+            ));
+        }
+        return $this->render('AtBundle:Atecnica:find.html.twig', array(
+                            'form'=>$form->createView()	 	
+        ));
+    }
 }

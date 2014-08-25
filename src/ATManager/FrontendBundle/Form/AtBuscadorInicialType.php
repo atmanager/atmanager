@@ -12,6 +12,9 @@ use Doctrine\ORM\EntityRepository;
 class AtBuscadorInicialType extends AbstractType
 {
 
+    function __construct() {
+        
+    }
 
     
         /**

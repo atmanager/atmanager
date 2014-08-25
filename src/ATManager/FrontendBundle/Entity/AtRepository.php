@@ -83,10 +83,24 @@ class AtRepository extends EntityRepository
      		   
 			$estadio = $query->getOneOrNullResult();
 			echo "Estadio: ".$estadio;
-			return $estadio;
-
-
-				   
-			
+			return $estadio;			   		
+	}
+        // recibe el técnico y rol cómo parámetros y devuelve un array con 
+        // las ats asignadas al técnico
+        public function findByFiltroPorTecnico($tecnico,$rol,$estadio)
+	{
+            $em = $this->getEntityManager();		  	
+            $query = $em->createQuery('SELECT a
+                FROM FrontendBundle:At a
+                INNER JOIN AtBundle:AtTecnico t with a.id = t.at
+		INNER JOIN AtBundle:AtHistorico h with a.id=h.at 
+                WHERE t.tecnico = :tecnico 
+                AND h.estadio= :estadio
+		AND t.rol = :rol')
+                ->setParameter('tecnico', $tecnico)
+                ->setParameter('rol', $rol)
+                ->setParameter('estadio', $estadio);
+            $query->setMaxResults(50);
+            return $query->getResult();
 	}
 }
