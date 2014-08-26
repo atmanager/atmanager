@@ -1,7 +1,7 @@
-{% extends 'BackendBundle::base_backend.html.twig' %} 
+{% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
 
-    <h3>Ver Ala Sector</h3>
+    <h3>Ver Nota </h3>
 
     <table class="table">
         <tbody>
@@ -10,16 +10,16 @@
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Codigo Interno:</th>
-                <td>{{ entity.codigointerno }}</td>
+                <th>Descripcion:</th>
+                <td>{{ entity.descripcion }}</td>
             </tr>
             <tr>
-                <th>Nombre:</th>
-                <td>{{ entity.nombre }}</td>
+                <th>Fecha:</th>
+                <td>{{ entity.fecha | date('d-m-Y') }}</td>
             </tr>
         </tbody>
     </table>
-    <a href="{{ path('alasector') }}">
-     	Volver al Listado
-    </a>
+
+    <h4> <a href="{{path('at_nota', {'idAt': entity.at.id }) }}">Volver</a> </h4>
+    
 {% endblock %}

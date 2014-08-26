@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * AtNota
- *
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ATManager\AtBundle\Entity\AtNotaRepository")
  */
@@ -21,14 +21,14 @@ class AtNota
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
     /**
      * 
      *   @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At", inversedBy="notas") 
      *   @ORM\JoinColumn(name="at_id", referencedColumnName="id", nullable=false)
     */
-    public $at;
+    private $at;
 
     /**
      * @var string
@@ -36,14 +36,14 @@ class AtNota
      * @ORM\Column(name="descripcion", type="string", length=50)
      * @Assert\NotBlank
      */
-    public $descripcion;
+    private $descripcion;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="date")
      */
-    public $fecha;
+    private $fecha;
 
     /**
      * @var string
@@ -104,7 +104,77 @@ class AtNota
     {
         // se deshace del __DIR__ para no meter la pata
         // al mostrar el documento/imagen cargada en la vista.
-        return 'uploads/documents';
+        return 'uploads/notas';
+    }
+
+
+
+    private $temp;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            // haz lo que quieras para generar un nombre único
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // si hay un error al mover el archivo, move() automáticamente
+        // envía una excepción. This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
     }
 
 
@@ -236,16 +306,7 @@ class AtNota
     }
 
 
-    /**
-     * Sets file.
-     *
-     * @param UploadedFile $file
-     */
-    public function setFile(UploadedFile $file = null)
-    {
-        $this->file = $file;
-    }
-
+  
     /**
      * Get file.
      *

@@ -1,10 +1,9 @@
-{% extends 'BackendBundle::base_backend.html.twig' %} 
+{% extends 'AtBundle::base_at.html.twig' %} 
 {% block content -%}
-    <h3>Editar Ala Sector</h3>
+    <h3>Editar Nota</h3>
 
     {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
+    
 
-    <a href="{{ path('alasector') }}">
-     	Volver al Listado
-    </a>
+      <h4> <a href="{{path('at_nota', {'idAt': entity.at.id }) }}">Volver</a> </h4>
 {% endblock %}

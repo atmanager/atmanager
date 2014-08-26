@@ -1,5 +1,5 @@
 at_nota:
-    path:     /{id}/index
+    path:     /{idAt}/index
     defaults: { _controller: "AtBundle:AtNota:index" }
 
 at_nota_show:
@@ -7,7 +7,7 @@ at_nota_show:
     defaults: { _controller: "AtBundle:AtNota:show" }
 
 at_nota_new:
-    path:     /new
+    path:     /{idAt}/new
     defaults: { _controller: "AtBundle:AtNota:new" }
 
 at_nota_edit:

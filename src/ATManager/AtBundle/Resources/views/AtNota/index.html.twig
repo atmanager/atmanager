@@ -1,8 +1,8 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-    <h3>Gestión de Notas en ATs </h3>
+    <h3>Gestión de Notas en ATs : {{ at }}</h3>
    <br />
-    <a href="{{ path('at_nota_new') }}">
+    <a href="{{ path('at_nota_new', { 'idAt': at.id }) }}">
     	<h4>[Crear]</h4>
     </a>	
     <table class="table table-bordered table-striped">
@@ -26,8 +26,10 @@
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.at }}</td>
                 <td>{{ entity.descripcion }}</td>
-                <td>{{ entity.Fecha }}</td>
-                <td>{{ entity.Comentario }}</td>
+                <td>{{ entity.fecha | date('d-m-Y') }}</td>
+                <td>{{ entity.comentario }}</td>
+                <td><a href="{{ asset(entity.getWebPath) }}" target="_blank">Ver</a></td>
+
         {% endfor %}
         </tbody>
     </table>

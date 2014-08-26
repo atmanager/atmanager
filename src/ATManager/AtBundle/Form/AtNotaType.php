@@ -7,13 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class AtNotaType extends AbstractType
 {
 
     protected $opciones;
 
-    public function __construct ($opciones)
+    public function __construct ($opciones = null)
     {
         $this->opciones = $opciones;
     }
@@ -24,6 +26,10 @@ class AtNotaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
+        
+        
         
         $builder->add('descripcion','text', 
                   array('label' => 'Referencia de la nota'
@@ -38,8 +44,30 @@ class AtNotaType extends AbstractType
                   ))
 
                 ->add('file')
+
+                
                         
-                ->add('submit', 'submit', array('label' => 'Aceptar'));     
+                ->add('submit', 'submit', array('label' => 'Aceptar'));
+
+        
+        // si estamos editando        
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, 
+        function (FormEvent $event)
+        {
+        $AtNota = $event->getData();
+        $form = $event->getForm();
+
+        // check if the Product object is "new"
+        // If no data is passed to the form, the data is "null".
+        // This should be considered a new "Product"
+          if ($AtNota->getId())
+          {
+              $form->add('eliminarImagen','checkbox',array(
+                    'mapped' => false,
+                    'required' => false, 
+                    ));
+          }
+        });             
     }
      
     /**
