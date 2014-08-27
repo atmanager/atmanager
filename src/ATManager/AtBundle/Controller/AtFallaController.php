@@ -6,14 +6,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Form\AtNotaType;
 use ATManager\FrontendBundle\Entity\At;
-use ATManager\AtBundle\Entity\AtNota;
+use ATManager\AtBundle\Entity\AtFalla;
 
 
 /**
  * AtNota controller.
  *
  */
-class AtNotaController extends Controller
+class AtFallaController extends Controller
 {
     
 
@@ -26,7 +26,6 @@ class AtNotaController extends Controller
        el proceso*/ 
         $ret = $sesion->get('retorno');
         
-
     	$em = $this->getDoctrine()->getManager();
         $entities =array();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);

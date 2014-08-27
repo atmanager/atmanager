@@ -174,6 +174,7 @@ class AtecnicaController extends Controller
         $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
         $sesion = $this->get('session'); 
         $sesion->set('retorno',$retorno);
+       
         /* ------------------------------------*/
         $objt = $this->get('security.context')->getToken()->getUser();   
         $em = $this->getDoctrine()->getManager();
@@ -195,7 +196,7 @@ class AtecnicaController extends Controller
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 
-                    'form'=>$form->createView(),
+                   // 'form'=>$form->createView(),
 		    'entities' => $entities,
                     'tecnico' => $objt 	
             ));

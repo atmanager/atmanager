@@ -1,0 +1,83 @@
+<?php
+
+namespace ATManager\AtBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+// DON'T forget this use statement!!!
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * AtServicioTercero
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="ATManager\AtBundle\Entity\AtServicioTerceroRepository")
+ * @UniqueEntity(
+ *     fields={"at","serviciotercero"},
+ *     message="Ya existe la relación At - Servicio Tercero"
+ * )
+ * @ORM\Table(name="AtServicioTercero",uniqueConstraints={
+ * @ORM\UniqueConstraint(name="at_serviciotercero_idx", columns={"at_id", "serviciotercero_id"})})
+ */
+class AtServicioTercero
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="date")
+     */
+    private $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="text")
+     */
+    private $comentario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="precio", type="decimal")
+     */
+    private $precio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contacto", type="string", length=50)
+     */
+    private $contacto;
+
+     /**
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\ServicioTercero") 
+     *   @ORM\JoinColumn(name="serviciotercero_id", referencedColumnName="id", nullable=false)
+    */
+    private $serviciotercero;
+
+    /**
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Proveedor") 
+     *   @ORM\JoinColumn(name="proveedor_id", referencedColumnName="id", nullable=false)
+    */
+    private $proveedor;
+
+     /**
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At", inversedBy="servicios") 
+     *   @ORM\JoinColumn(name="at_id", referencedColumnName="id", nullable=false)
+    */
+    private $at;
+
+    
+}

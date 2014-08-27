@@ -1,0 +1,98 @@
+<?php
+
+namespace ATManager\AtBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+// DON'T forget this use statement!!!
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * AtRepuesto
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="ATManager\AtBundle\Entity\AtRepuestoRepository")
+ * @UniqueEntity(
+ *     fields={"at","repuesto"},
+ *     message="Ya existe la relación At - Repuesto"
+ * )
+ * @ORM\Table(name="AtRepuesto",uniqueConstraints={
+ * @ORM\UniqueConstraint(name="at_repuesto_idx", columns={"at_id", "repuesto_id"})})
+ */
+class AtRepuesto
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="date")
+     */
+    private $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numfac", type="string", length=6)
+     */
+    private $numfac;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cant", type="decimal")
+     */
+    private $cant;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preciounit", type="decimal")
+     */
+    private $preciounit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="text")
+     */
+    private $comentario;
+
+    /**
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Proveedor") 
+     *   @ORM\JoinColumn(name="proveedor_id", referencedColumnName="id", nullable=false)
+    */
+    private $proveedor;
+
+    /**
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Repuesto") 
+     *   @ORM\JoinColumn(name="repuesto_id", referencedColumnName="id", nullable=false)
+    */
+    private $repuesto;
+
+    /**
+     * 
+     *   @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At", inversedBy="repuestos") 
+     *   @ORM\JoinColumn(name="at_id", referencedColumnName="id", nullable=false)
+    */
+    private $at;
+
+
+     public function __construct(){
+      
+    }
+
+    public function __toString(){
+        return " ".$this->getId();
+    }
+
+}

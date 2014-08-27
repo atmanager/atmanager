@@ -107,10 +107,26 @@ class At
     */
     private $tecnicos;
 
-     /** 
-     *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtNota", mappedBy="at") 
+    /** 
+    *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtNota", mappedBy="at") 
     */
     private $notas;
+
+    /** 
+    *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtFalla", mappedBy="at") 
+    */
+    private $fallas;
+
+    /** 
+    *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtRepuesto", mappedBy="at") 
+    */
+    private $repuestos;
+
+    /** 
+    *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtServicioTercero", mappedBy="at") 
+    */
+    private $servicios;
+  
   
 
      /**
@@ -122,6 +138,9 @@ class At
         $this->historicos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tecnicos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fallas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->repuestos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->servicios = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -499,5 +518,104 @@ class At
     public function getNotas()
     {
         return $this->notas;
+    }
+
+    /**
+     * Add fallas
+     *
+     * @param \ATManager\AtBundle\Entity\AtFalla $fallas
+     * @return At
+     */
+    public function addFalla(\ATManager\AtBundle\Entity\AtFalla $fallas)
+    {
+        $this->fallas[] = $fallas;
+
+        return $this;
+    }
+
+    /**
+     * Remove fallas
+     *
+     * @param \ATManager\AtBundle\Entity\AtFalla $fallas
+     */
+    public function removeFalla(\ATManager\AtBundle\Entity\AtFalla $fallas)
+    {
+        $this->fallas->removeElement($fallas);
+    }
+
+    /**
+     * Get fallas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFallas()
+    {
+        return $this->fallas;
+    }
+
+    /**
+     * Add repuestos
+     *
+     * @param \ATManager\AtBundle\Entity\AtRepuesto $repuestos
+     * @return At
+     */
+    public function addRepuesto(\ATManager\AtBundle\Entity\AtRepuesto $repuestos)
+    {
+        $this->repuestos[] = $repuestos;
+
+        return $this;
+    }
+
+    /**
+     * Remove repuestos
+     *
+     * @param \ATManager\AtBundle\Entity\AtRepuesto $repuestos
+     */
+    public function removeRepuesto(\ATManager\AtBundle\Entity\AtRepuesto $repuestos)
+    {
+        $this->repuestos->removeElement($repuestos);
+    }
+
+    /**
+     * Get repuestos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRepuestos()
+    {
+        return $this->repuestos;
+    }
+
+    /**
+     * Add servicios
+     *
+     * @param \ATManager\AtBundle\Entity\AtServicioTercero $servicios
+     * @return At
+     */
+    public function addServicio(\ATManager\AtBundle\Entity\AtServicioTercero $servicios)
+    {
+        $this->servicios[] = $servicios;
+
+        return $this;
+    }
+
+    /**
+     * Remove servicios
+     *
+     * @param \ATManager\AtBundle\Entity\AtServicioTercero $servicios
+     */
+    public function removeServicio(\ATManager\AtBundle\Entity\AtServicioTercero $servicios)
+    {
+        $this->servicios->removeElement($servicios);
+    }
+
+    /**
+     * Get servicios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServicios()
+    {
+        return $this->servicios;
     }
 }

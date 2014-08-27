@@ -4,7 +4,10 @@
    <br />
     <a href="{{ path('at_nota_new', { 'idAt': at.id }) }}">
     	<h4>[Crear]</h4>
-    </a>	
+
+    </a>
+
+  
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -28,12 +31,13 @@
                 <td>{{ entity.descripcion }}</td>
                 <td>{{ entity.fecha | date('d-m-Y') }}</td>
                 <td>{{ entity.comentario }}</td>
+                {% if (entity.getWebPath()) %}
                 <td><a href="{{ asset(entity.getWebPath) }}" target="_blank">Ver</a></td>
-
+                {% endif %}
         {% endfor %}
         </tbody>
     </table>
     <br />
-      <a href="javascript:history.back(1)">[Volver]</a>  
+      <a href="{{ ret }}">[Volver]</a>  
     	
 {% endblock %}

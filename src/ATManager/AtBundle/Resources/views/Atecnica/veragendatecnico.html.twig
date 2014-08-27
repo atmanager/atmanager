@@ -19,7 +19,9 @@
                 <td><a title="Técnicos Ayudantes" href="#">TEC</a></td>
                 <td><a title="Repuestos de AT" href="#">REP</a></td>
                 <td><a title="Servicios Terceros de AT" href="#">SEV</a></td>
+                
                 <td><a href="{{ path('at_nota', { 'idAt': entity.id }) }}" title="Notas de AT">NOT</a></td>
+
                 <td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Consultar evolución de AT">HIS</a></td>
                 <td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Consultar/reimprimir Solicitud">{{ entity.id }}</a></td>
                 <td>{{ entity.descripcion}}</td>

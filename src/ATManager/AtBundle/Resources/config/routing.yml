@@ -8,4 +8,8 @@ atecnica:
 
 at_nota:
   resource: "@AtBundle/Resources/config/routing/AtNota.yml"
-  prefix:   /at_nota         
+  prefix:   /at_nota   
+
+at_falla:
+  resource: "@AtBundle/Resources/config/routing/AtFalla.yml"
+  prefix:   /at_falla          

@@ -1,0 +1,19 @@
+at_nota:
+    path:     /{idAt}/index
+    defaults: { _controller: "AtBundle:AtNota:index" }
+
+at_nota_show:
+    path:     /{id}/show
+    defaults: { _controller: "AtBundle:AtNota:show" }
+
+at_nota_new:
+    path:     /{idAt}/new
+    defaults: { _controller: "AtBundle:AtNota:new" }
+
+at_nota_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AtBundle:AtNota:edit" }
+
+at_nota_eliminar:
+    path:     /{id}/eliminar
+    defaults: { _controller: "AtBundle:AtNota:eliminar" }
