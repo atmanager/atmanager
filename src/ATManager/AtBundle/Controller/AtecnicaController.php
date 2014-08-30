@@ -4,12 +4,6 @@ namespace ATManager\AtBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
-use ATManager\FrontendBundle\Entity\At;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\AtBundle\Entity\AtTecnico;
 use ATManager\BackendBundle\Entity\Rol;
@@ -81,10 +75,10 @@ class AtecnicaController extends Controller
     public function generoAgendaTecnicoAction($id)
     {
 	    $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontendBundle:At')->find($id);
+            $entity = $em->getRepository('FrontendBundle:At')->find($id);
 	    $objtl = $this->get('security.context')->getToken()->getUser();
  	    $opciones['sector'] = $objtl->getSector();
-	    $mapatec = $em->getRepository('AtBundle:AtHistorico')->findBySector($opciones['sector']);
+	    $mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySector($opciones['sector']);
 	    return $this->render('AtBundle:Atecnica:newAtTecnico.html.twig', array(
         	'entity'=>$entity,
             	'mapatec'=>$mapatec
@@ -94,28 +88,24 @@ class AtecnicaController extends Controller
 
     public function asignarTecnicoATAction($at,$tec)
     {
-
-
-     /* recupero la variable de session definida en: buscadorAction()*/
+        /* recupero la variable de session definida en: buscadorAction()*/
         $sesion = $this->get('session');
-
-       /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
-       el proceso*/ 
+        /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
+        el proceso*/ 
         $ret = $sesion->get('retorno');
-            
+        /*--*/
         $objatt=new AtTecnico();
        	$em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontendBundle:At')->find($at);
-	    $objtl = $this->get('security.context')->getToken()->getUser();
- 	    $opciones['sector'] = $objtl->getSector();
-	    $mapatec = $em->getRepository('AtBundle:AtHistorico')->findBySector($opciones['sector']);
-	    try{	
-	    	$objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
-	    	$rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('PRINCIPAL');			
-	    	$objatt->setAt($entity);
-	    	$objatt->setRol($rol);
-	    	$objatt->setTecnico($objt);
-	    	$em->persist($objatt);
+        $objtl = $this->get('security.context')->getToken()->getUser();
+        $opciones['sector'] = $objtl->getSector();
+        try{	
+	    $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
+	    $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('PRINCIPAL');		
+	    $objatt->setAt($entity);
+	    $objatt->setRol($rol);
+	    $objatt->setTecnico($objt);
+	    $em->persist($objatt);
             $ath= new atHistorico();
             $ath->setAt($entity);   
             $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByDiagnosAt(true);         
@@ -125,12 +115,12 @@ class AtecnicaController extends Controller
             // hasta aquí guarda el historico de la at asignada
             $em->persist($ath);
             $em->flush();
-		    $this->get('session')->getFlashBag()->add('success','Se agregaron: Técnico Responsable y Nueva evolución'); 
+            $this->get('session')->getFlashBag()->add('success','Se agregaron: Técnico Responsable y Nueva evolución'); 
+            return $this->redirect($ret);            
+        }
+	catch(\Exception $ex){
+	    $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
             return $this->redirect($ret);
-	    }
-	    catch(\Exception $ex){
-	    	$this->get('session')->getFlashBag()->add('error',$ex->getMessage());
-	        return $this->redirect($ret);
         }	               
     }
     public function cancelarAction($id)
@@ -178,7 +168,7 @@ class AtecnicaController extends Controller
         /* ------------------------------------*/
         $objt = $this->get('security.context')->getToken()->getUser();   
         $em = $this->getDoctrine()->getManager();
-        $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByIniciaAt(true);
+        $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByDiagnosAt(true);
         $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
         $form = $this->createForm(new AtBuscadorInicialType(), null, array(
             'method' => 'GET'
@@ -205,4 +195,6 @@ class AtecnicaController extends Controller
                             'form'=>$form->createView()	 	
         ));
     }
+    
+    
 }

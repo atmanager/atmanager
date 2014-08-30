@@ -13,6 +13,14 @@
                 <th>Nombre:</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
+            <tr>
+                <th>¿Es Principal?:</th>
+                {% if entity.esprincipal %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %} 
+            </tr>
         </tbody>
     </table>
 

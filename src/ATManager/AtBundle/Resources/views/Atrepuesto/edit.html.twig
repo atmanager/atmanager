@@ -1,0 +1,10 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content -%}
+    <h3>Editar Repuesto de AT: {{ entity.at.id }} </h3>
+
+    {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
+    
+    <a href="{{path('at_repuesto', {'idAt': entity.at.id }) }}">
+        <h4>[Volver]</h4>
+    </a> 
+{% endblock %}

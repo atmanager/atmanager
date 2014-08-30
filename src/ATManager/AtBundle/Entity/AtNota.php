@@ -50,12 +50,12 @@ class AtNota
      *
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comentario", type="text")
+     * @ORM\Column(name="comentario", type="text", nullable=true)
      */
     private $comentario;
 

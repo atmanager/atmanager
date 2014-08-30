@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 // DON'T forget this use statement!!!
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 /**
  * AtServicioTercero
  *
@@ -29,66 +28,61 @@ class AtServicioTercero
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="date")
      */
     private $fecha;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="comentario", type="text")
+     * @ORM\Column(name="comentario", type="text",nullable=true)
      */
     private $comentario;
-
     /**
-     * @var string
+     * @var decimal
      *
-     * @ORM\Column(name="precio", type="decimal")
+     * @ORM\Column(name="precio", type="decimal", precision=8, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0)
+     * @Assert\NotBlank()
      */
     private $precio;
-
     /**
      * @var string
      *
      * @ORM\Column(name="contacto", type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $contacto;
-
      /**
      * 
      *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\ServicioTercero") 
      *   @ORM\JoinColumn(name="serviciotercero_id", referencedColumnName="id", nullable=false)
-    */
+     */
     private $serviciotercero;
-
     /**
      * 
      *   @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Proveedor") 
      *   @ORM\JoinColumn(name="proveedor_id", referencedColumnName="id", nullable=false)
     */
     private $proveedor;
-
      /**
      * 
      *   @ORM\ManyToOne(targetEntity="ATManager\FrontendBundle\Entity\At", inversedBy="servicios") 
      *   @ORM\JoinColumn(name="at_id", referencedColumnName="id", nullable=false)
     */
     private $at;
-
-    
-     public function __construct(){
-      
+  
+    public function __construct(){ 
+        $this->fecha = new \DateTime(); 
     }
 
     public function __toString(){
         return " ".$this->getId();
     }
-
     
+
 
     /**
      * Get id

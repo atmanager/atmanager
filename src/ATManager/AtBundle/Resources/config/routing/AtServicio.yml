@@ -1,0 +1,19 @@
+at_servicio:
+    path:     /{idAt}/index
+    defaults: { _controller: "AtBundle:AtServicioTercero:index" }
+
+at_servicio_show:
+    path:     /{id}/show
+    defaults: { _controller: "AtBundle:AtServicioTercero:show" }
+
+at_servicio_new:
+    path:     /{idAt}/new
+    defaults: { _controller: "AtBundle:AtServicioTercero:new" }
+
+at_servicio_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AtBundle:AtServicioTercero:edit" }
+
+at_servicio_eliminar:
+    path:     /{id}/eliminar
+    defaults: { _controller: "AtBundle:AtServicioTercero:eliminar" }

@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class AtServicioTerceroRepository extends EntityRepository
 {
+    public function findByServiciosPorAt($at)
+    {
+        $em = $this->getEntityManager();		  	
+        $query = $em->createQuery('SELECT s FROM AtBundle:AtServicioTercero s WHERE s.at = :at')
+            ->setParameter('at', $at);
+        $query->setMaxResults(50);
+        return $query->getResult();
+    }
 }

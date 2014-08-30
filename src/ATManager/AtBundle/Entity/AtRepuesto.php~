@@ -41,21 +41,25 @@ class AtRepuesto
      * @var string
      *
      * @ORM\Column(name="numfac", type="string", length=6)
+     * @Assert\NotBlank()
      */
     private $numfac;
 
     /**
-     * @var string
+     * @var decimal
      *
-     * @ORM\Column(name="cant", type="decimal")
+     * @ORM\Column(name="cant",type="decimal", precision=8, scale=2)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="numeric")
      */
     private $cant;
 
-    /**
-     * @var string
+   /**
+     * @var decimal
      *
-     * @ORM\Column(name="preciounit", type="decimal")
-     */
+     * @ORM\Column(name="preciounit", type="decimal", precision=8, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0)
+    */
     private $preciounit;
 
     /**
@@ -86,13 +90,16 @@ class AtRepuesto
     */
     private $at;
 
-
-     public function __construct(){
-      
+    public function __construct(){
+        $this->fecha = new \DateTime();
+        $this->cant=0;
     }
-
     public function __toString(){
         return " ".$this->getId();
     }
-
+    public function obtenerTotal(){
+        return $this->preciounit * $this->cant;
+    }
+   
+    
 }

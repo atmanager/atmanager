@@ -1,0 +1,37 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+
+    <h3>Ver Servicio Tercero de AT: {{ entity.at.id }}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Fecha:</th>
+                <td>{{ entity.fecha | date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Comentario:</th>
+                <td>{{ entity.comentario }}</td>
+            </tr>
+            <tr>
+                <th>Precio:</th>
+                <td>{{ entity.precio }}</td>
+            </tr>
+            <tr>
+                <th>Contacto:</th>
+                <td>{{ entity.contacto }}</td>
+            </tr>
+            <tr>
+                <th>Servicio Tercero:</th>
+                <td>{{ entity.serviciotercero.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Proveedor:</th>
+                <td>{{ entity.proveedor.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4> <a href="{{path('at_servicio', {'idAt': entity.at.id }) }}">Volver</a></h4>
+    
+{% endblock %}

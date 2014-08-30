@@ -1,0 +1,43 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+
+    <h3>Ver Repuesto de AT: {{ entity.at.id }}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Fecha:</th>
+                <td>{{ entity.fecha | date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Comentario:</th>
+                <td>{{ entity.comentario }}</td>
+            </tr>
+            <tr>
+                <th>Número de Factura:</th>
+                <td>{{ entity.numfac }}</td>
+            </tr>
+            <tr>
+                <th>Subtotal (Precio X Cantidad):</th>
+                <td>{{ entity.preciounit ~ ' X ' ~ entity.cant ~ ' = ' ~ entity.obtenerTotal() }}</td>
+            </tr>
+            <tr>
+                <th>Comentario:</th>
+                <td>{{ entity.comentario }}</td>
+            </tr>
+            <tr>
+                <th>Repuesto:</th>
+                <td>{{ entity.repuesto.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Proveedor:</th>
+                <td>{{ entity.proveedor.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{path('at_repuesto', {'idAt': entity.at.id }) }}">
+        <h4>Volver</h4>
+    </a>
+    
+{% endblock %}

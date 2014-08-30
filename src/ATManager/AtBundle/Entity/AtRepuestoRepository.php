@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class AtRepuestoRepository extends EntityRepository
 {
+    public function findByRepuestosPorAt($at)
+    {
+        $em = $this->getEntityManager();		  	
+        $query = $em->createQuery('SELECT r FROM AtBundle:AtRepuesto r WHERE r.at = :at')
+            ->setParameter('at', $at);
+        $query->setMaxResults(50);
+        return $query->getResult();
+    }
 }

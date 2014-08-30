@@ -1,0 +1,19 @@
+at_repuesto:
+    path:     /{idAt}/index
+    defaults: { _controller: "AtBundle:AtRepuesto:index" }
+
+at_repuesto_show:
+    path:     /{id}/show
+    defaults: { _controller: "AtBundle:AtRepuesto:show" }
+
+at_repuesto_new:
+    path:     /{idAt}/new
+    defaults: { _controller: "AtBundle:AtRepuesto:new" }
+
+at_repuesto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AtBundle:AtRepuesto:edit" }
+
+at_repuesto_eliminar:
+    path:     /{id}/eliminar
+    defaults: { _controller: "AtBundle:AtRepuesto:eliminar" }

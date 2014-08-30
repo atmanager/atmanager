@@ -1,0 +1,38 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+    <h3>Técnicos en AT : {{ entity.id }}</h3>
+    <table>
+       <td>
+            <a href="{{ path('atecnico_newayudante',{ 'id':entity.id }) }}">
+                <h4>[Crear]&nbsp;</h4>
+            </a>
+       </td>
+       <td>
+            <a href="{{ ret }}">
+                <h4>[Volver]</h4>
+            </a>
+       </td>
+   </table>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <th>Acción</th>
+            <th>Técnico</th>
+            <th>Rol</th>
+        </thead>
+        <tbody>
+        {% for peon in entity.getTecnicos() %}    
+            <tr>
+                <td>
+                    {% if peon.rol.nombre!="PRINCIPAL" %}
+                        <a href="#">
+                            Eliminar
+                        </a>
+                    {% endif %}
+                </td>
+                <td>{{ peon.tecnico }}</td>
+                <td>{{ peon.rol }}</td>
+            </tr>
+        {% endfor %}    
+        </tbody>
+    </table>
+{% endblock %}

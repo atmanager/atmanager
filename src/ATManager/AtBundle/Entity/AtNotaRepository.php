@@ -12,18 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class AtNotaRepository extends EntityRepository
 {
-
-	public function findByNotasPorAt($at)
-	{
-
-			$em = $this->getEntityManager();		  	
-			$query = $em->createQuery('SELECT n
-			FROM AtBundle:AtNota n
-			WHERE n.at = :at')
-			->setParameter('at', $at);
-    		$query->setMaxResults(50);
-			return $query->getResult();
-	}
-
-
+    public function findByNotasPorAt($at)
+    {
+        $em = $this->getEntityManager();		  	
+        $query = $em->createQuery('SELECT n FROM AtBundle:AtNota n WHERE n.at = :at')
+            ->setParameter('at', $at);
+        $query->setMaxResults(50);
+        return $query->getResult();
+    }
 }
