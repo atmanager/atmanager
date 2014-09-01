@@ -101,7 +101,9 @@ class AtecnicaController extends Controller
         $opciones['sector'] = $objtl->getSector();
         try{	
 	    $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
-	    $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('PRINCIPAL');		
+	    
+        $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('PRINCIPAL');	
+
 	    $objatt->setAt($entity);
 	    $objatt->setRol($rol);
 	    $objatt->setTecnico($objt);
@@ -187,8 +189,9 @@ class AtecnicaController extends Controller
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 
                    // 'form'=>$form->createView(),
-		    'entities' => $entities,
-                    'tecnico' => $objt 	
+		            'entities' => $entities,
+                    'tecnico' => $objt,
+                    'retorno' =>$retorno 	
             ));
         }
         return $this->render('AtBundle:Atecnica:find.html.twig', array(

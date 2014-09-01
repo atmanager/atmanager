@@ -38,9 +38,9 @@ class Rol
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esprincipal", type="boolean", nullable=true)
+     * @ORM\Column(name="principal", type="boolean", nullable=true)
      */
-    private $esprincipal; 
+    private $principal; 
 
     public function __construct(){
         
@@ -88,12 +88,12 @@ class Rol
         return $this->nombre;
     }
     
-    public function getEsprincipal() {
-        return $this->esprincipal;
+    public function getPrincipal() {
+        return $this->principal;
     }
 
-    public function setEsprincipal($esprincipal) {
-        $this->esprincipal = $esprincipal;
+    public function setPrincipal($principal) {
+        $this->principal = $principal;
     }
 
 

@@ -45,6 +45,13 @@ class AtFalla
     private $falla;
 
 
+     /** 
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Rol") 
+     * @ORM\JoinColumn(name="rol_id", referencedColumnName="id", nullable=false)
+     */
+    private $rol;
+
+
     public function __construct(){
       
     }
@@ -109,5 +116,28 @@ class AtFalla
     public function getFalla()
     {
         return $this->falla;
+    }
+
+    /**
+     * Set rol
+     *
+     * @param \ATManager\BackendBundle\Entity\Rol $rol
+     * @return AtFalla
+     */
+    public function setRol(\ATManager\BackendBundle\Entity\Rol $rol)
+    {
+        $this->rol = $rol;
+
+        return $this;
+    }
+
+    /**
+     * Get rol
+     *
+     * @return \ATManager\BackendBundle\Entity\Rol 
+     */
+    public function getRol()
+    {
+        return $this->rol;
     }
 }

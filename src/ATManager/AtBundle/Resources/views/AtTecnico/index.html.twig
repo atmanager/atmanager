@@ -3,7 +3,7 @@
     <h3>Técnicos en AT : {{ entity.id }}</h3>
     <table>
        <td>
-            <a href="{{ path('atecnico_newayudante',{ 'id':entity.id }) }}">
+            <a href="{{ path('atecnico_mapa',{ 'atId':entity.id }) }}">
                 <h4>[Crear]&nbsp;</h4>
             </a>
        </td>
@@ -24,7 +24,7 @@
             <tr>
                 <td>
                     {% if peon.rol.nombre!="PRINCIPAL" %}
-                        <a href="#">
+                        <a href="{{ path('atecnico_eliminar',{ 'id':peon.id }) }}" onClick="return confirm('¿Desea Eliminar el Ayudante Seleccionado?');">
                             Eliminar
                         </a>
                     {% endif %}

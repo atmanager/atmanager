@@ -1,0 +1,22 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+
+    <h3>Ver Falla de AT: {{ entity.at.id }}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Falla</th>
+                <td>{{ entity.falla }}</td>
+            </tr>
+            <tr>
+                <th>Jerarquia</th>
+                <td>{{ entity.rol }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+     <a href="{{path('at_falla', {'idAt': entity.at.id }) }}"><h4>Volver</h4></a>
+    
+{% endblock %}

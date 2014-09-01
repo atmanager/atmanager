@@ -45,7 +45,76 @@ class AtFalla
     private $falla;
 
 
+     /** 
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Rol") 
+     * @ORM\JoinColumn(name="rol_id", referencedColumnName="id", nullable=false)
+     */
+    private $rol;
 
+
+    public function __construct(){
+      
+    }
+
+    public function __toString(){
+        return " ".$this->getId();
+    }
 
    
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set at
+     *
+     * @param \ATManager\FrontendBundle\Entity\At $at
+     * @return AtFalla
+     */
+    public function setAt(\ATManager\FrontendBundle\Entity\At $at)
+    {
+        $this->at = $at;
+
+        return $this;
+    }
+
+    /**
+     * Get at
+     *
+     * @return \ATManager\FrontendBundle\Entity\At 
+     */
+    public function getAt()
+    {
+        return $this->at;
+    }
+
+    /**
+     * Set falla
+     *
+     * @param \ATManager\BackendBundle\Entity\Falla $falla
+     * @return AtFalla
+     */
+    public function setFalla(\ATManager\BackendBundle\Entity\Falla $falla)
+    {
+        $this->falla = $falla;
+
+        return $this;
+    }
+
+    /**
+     * Get falla
+     *
+     * @return \ATManager\BackendBundle\Entity\Falla 
+     */
+    public function getFalla()
+    {
+        return $this->falla;
+    }
 }

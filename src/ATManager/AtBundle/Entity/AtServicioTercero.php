@@ -43,7 +43,7 @@ class AtServicioTercero
     /**
      * @var decimal
      *
-     * @ORM\Column(name="precio", type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(name="precio", type="decimal", precision=8, scale=2)
      * @Assert\GreaterThanOrEqual(value=0)
      * @Assert\NotBlank()
      */
@@ -51,8 +51,7 @@ class AtServicioTercero
     /**
      * @var string
      *
-     * @ORM\Column(name="contacto", type="string", length=50)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="contacto", type="string", length=50,nullable=true)
      */
     private $contacto;
      /**

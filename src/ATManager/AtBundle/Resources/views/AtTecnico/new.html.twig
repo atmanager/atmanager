@@ -23,11 +23,11 @@
                         {% for mapa in mapatec  %}
                             <tr>
                                 <td>
-                                    <a href="{{ path('atecnico_asignarayudante',{ 'at': entity.id,'tec': mapa.idtecnico }) }}"> 	
+                                    <a href="{{ path('atecnico_new',{ 'atId': entity.id,'tecId': mapa.id }) }}">     
                                         [Ayudante] 
                                     </a>   
                                 </td>
-                                <td>{{ mapa.tecnico }}</td>
+                                <td>{{ mapa.nombre }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

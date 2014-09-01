@@ -1,19 +1,19 @@
-at_nota:
+at_falla:
     path:     /{idAt}/index
-    defaults: { _controller: "AtBundle:AtNota:index" }
+    defaults: { _controller: "AtBundle:AtFalla:index" }
 
-at_nota_show:
+at_falla_show:
     path:     /{id}/show
-    defaults: { _controller: "AtBundle:AtNota:show" }
+    defaults: { _controller: "AtBundle:AtFalla:show" }
 
-at_nota_new:
+at_falla_new:
     path:     /{idAt}/new
-    defaults: { _controller: "AtBundle:AtNota:new" }
+    defaults: { _controller: "AtBundle:AtFalla:new" }
 
-at_nota_edit:
+at_falla_edit:
     path:     /{id}/edit
-    defaults: { _controller: "AtBundle:AtNota:edit" }
+    defaults: { _controller: "AtBundle:AtFalla:edit" }
 
-at_nota_eliminar:
+at_falla_eliminar:
     path:     /{id}/eliminar
-    defaults: { _controller: "AtBundle:AtNota:eliminar" }
+    defaults: { _controller: "AtBundle:AtFalla:eliminar" }

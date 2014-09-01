@@ -13,63 +13,83 @@ use ATManager\BackendBundle\Entity\Rol;
  */
 class AtTecnicoController extends Controller
 {
-    public function obtenerAyudantesAction($id)
+    public function indexAction($atId)
     {
-        $sesion = $this->get('session');
-
-       /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
-       el proceso*/ 
+         $sesion = $this->get('session');
         $ret = $sesion->get('retorno');
+
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontendBundle:At')->find($id);
-	return $this->render('AtBundle:AtTecnico:Atayudantes.html.twig', array(
-        	'entity'=>$entity,
-            	'ret'=>$ret
+        $objat = $em->getRepository('FrontendBundle:At')->find($atId);
+	return $this->render('AtBundle:AtTecnico:index.html.twig', array(
+        	'entity'=>$objat,
+            'ret'=>$ret
         ));          
     }
-    public function newAyudanteAction($id){
+    public function mapaAction($atId){
        $sesion = $this->get('session');
 
        /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
        el proceso*/ 
-        $ret = $sesion->get('retorno');
+        $ret2 = $sesion->get('retorno');
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontendBundle:At')->find($id);
-	$objtl = $this->get('security.context')->getToken()->getUser();
- 	$objs = $objtl->getSector();
-	$mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySectorAyudante($objs,$entity);
-	return $this->render('AtBundle:AtTecnico:newAyudante.html.twig', array(
-        	'entity'=>$entity,
+        $objat = $em->getRepository('FrontendBundle:At')->find($atId);
+	    $objtl = $this->get('security.context')->getToken()->getUser();
+ 	    $objsector = $objtl->getSector();
+	    $mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySectorAyudante($objsector, $objat);
+
+	    return $this->render('AtBundle:AtTecnico:new.html.twig', array(
+        	'entity'=>$objat,
             	'mapatec'=>$mapatec,
                 
         ));
+        
     }
-    public function asignarAyudanteAction($at,$tec)
+
+    public function newAction($atId,$tecId)
     {
+        $falso=false;
         /* recupero la variable de session definida en: buscadorAction()*/
         $sesion = $this->get('session');
         /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
         el proceso*/ 
-        $ret = $sesion->get('retorno');
+        $ret2 = $sesion->get('retorno');
+
         /*--*/
-        $objatt=new AtTecnico();
+        $entity=new AtTecnico();
        	$em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontendBundle:At')->find($at);
+        $objat = $em->getRepository('FrontendBundle:At')->find($atId);
         try{	
-	    $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
-	    $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('SECUNDARIO');
-            echo "rol: ".$rol;
-	    $objatt->setAt($entity);
-	    $objatt->setRol($rol);
-	    $objatt->setTecnico($objt);
-	    $em->persist($objatt);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Se agregaron: Técnico Ayudante'); 
-            return $this->redirect($ret);            
+	       $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tecId);
+	       $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('SECUNDARIO');
+           $entity->setAt($objat);
+	       $entity->setRol($rol);
+	       $entity->setTecnico($objt);
+	       $em->persist($entity);
+           $em->flush();
+           $this->get('session')->getFlashBag()->add('success','Se agregaron: Técnico Ayudante'); 
+           return $this->redirect($ret2);            
         }
 	catch(\Exception $ex){
-	    $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
-            return $this->redirect($ret);
+	       $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
+           return $this->redirect($ret2);
         } 
+    }
+    public function eliminarAction($id)
+    {                
+        try{
+
+            $em = $this->getDoctrine()->getManager();
+            
+            $entity = $em->getRepository('AtBundle:AtTecnico')->find($id);
+            $atId = $entity->getAt()->getId();
+            $em->remove($entity); 
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Ayudante Eliminado');
+            return $this->redirect($this->generateUrl('atecnico', array('atId'=>$atId)));
+        }
+        catch(\Exception $e) {
+            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
+            return $this->redirect($this->generateUrl('atecnico', array('atId'=>$atId)));
+        }    
     }
 }

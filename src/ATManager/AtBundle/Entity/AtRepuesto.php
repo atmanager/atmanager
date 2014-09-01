@@ -57,7 +57,8 @@ class AtRepuesto
    /**
      * @var decimal
      *
-     * @ORM\Column(name="preciounit", type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(name="preciounit", type="decimal", precision=8, scale=2)
+     * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(value=0)
     */
     private $preciounit;

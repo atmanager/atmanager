@@ -1,11 +1,15 @@
-atecnico_ayudantes:
-    pattern:  /{id}/obtenerAyudantes
-    defaults: { _controller: "AtBundle:AtTecnico:obtenerAyudantes" }
+atecnico:
+    pattern:  /{atId}/index
+    defaults: { _controller: "AtBundle:AtTecnico:index" }
 
-atecnico_newayudante:
-    pattern:  /{id}/newAyudante
-    defaults: { _controller: "AtBundle:AtTecnico:newAyudante" }
+atecnico_mapa:
+    pattern:  /{atId}/mapa
+    defaults: { _controller: "AtBundle:AtTecnico:mapa" }
 
-atecnico_asignarayudante:
-    pattern:  /{at}/{tec}/asignarAyudante
-    defaults: { _controller: "AtBundle:AtTecnico:asignarAyudante" } 
+atecnico_new:
+    pattern:  /{atId}/{tecId}/new
+    defaults: { _controller: "AtBundle:AtTecnico:new" }
+
+atecnico_eliminar:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "AtBundle:AtTecnico:eliminar" }     

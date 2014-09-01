@@ -25,3 +25,7 @@ at_servicio:
 at_repuesto:
   resource: "@AtBundle/Resources/config/routing/AtRepuesto.yml"
   prefix:   /at_repuesto  
+
+at_falla:
+  resource: "@AtBundle/Resources/config/routing/AtFalla.yml"
+  prefix:   /at_falla   
