@@ -101,9 +101,7 @@ class AtecnicaController extends Controller
         $opciones['sector'] = $objtl->getSector();
         try{	
 	    $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
-	    
-        $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);	
-
+            $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);	
 	    $objatt->setAt($entity);
 	    $objatt->setRol($rol);
 	    $objatt->setTecnico($objt);

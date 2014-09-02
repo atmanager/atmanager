@@ -13,6 +13,8 @@
                 <th>Nombre</th>
                 <th>Inicializa AT</th>
                 <th>Diagnostica AT</th>
+                <th>Servicio AT</th>
+                <th>Repuesto AT</th>
                 <th>Finaliza AT</th>
                 <th>Cancela AT</th>
             </tr>
@@ -31,6 +33,16 @@
                     <td>no</td>    
                 {% endif %}
                 {% if entity.diagnosAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+                {% if entity.servicioAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+                {% if entity.repuestoAt %}
                     <td>si</td>
                 {% else %}
                     <td>no</td>    

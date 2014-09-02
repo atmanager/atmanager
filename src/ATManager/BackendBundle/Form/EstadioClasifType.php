@@ -19,7 +19,9 @@ class EstadioClasifType extends AbstractType
             ->add('iniciaAt')
             ->add('diagnosAt')
             ->add('finalizaAt')
-            ->add('cancelaAt')            
+            ->add('cancelaAt')
+            ->add('servicioAt')
+            ->add('repuestoAt')    
             ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }

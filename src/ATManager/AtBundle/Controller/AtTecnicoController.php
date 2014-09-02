@@ -15,7 +15,7 @@ class AtTecnicoController extends Controller
 {
     public function indexAction($atId)
     {
-         $sesion = $this->get('session');
+        $sesion = $this->get('session');
         $ret = $sesion->get('retorno');
 
         $em = $this->getDoctrine()->getManager();
@@ -66,7 +66,7 @@ class AtTecnicoController extends Controller
 	       $entity->setTecnico($objt);
 	       $em->persist($entity);
            $em->flush();
-           $this->get('session')->getFlashBag()->add('success','Se agregaron: Técnico Ayudante'); 
+           $this->get('session')->getFlashBag()->add('success','Se agregó: Técnico Ayudante'); 
            return $this->redirect($ret2);            
         }
 	catch(\Exception $ex){

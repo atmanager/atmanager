@@ -6,9 +6,11 @@
  * and open the template in the editor.
  */
 namespace ATManager\AtBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtServicioTercero;
 use ATManager\AtBundle\Form\AtServicioType;
+
 class AtServicioTerceroController extends Controller
 {
     public function indexAction($idAt)
@@ -20,13 +22,20 @@ class AtServicioTerceroController extends Controller
     	$em = $this->getDoctrine()->getManager();
         $entities =array();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
-
-        $entities = $em->getRepository('AtBundle:AtServicioTercero')->findByServiciosPorAt($at);
-        return $this->render('AtBundle:Atservicio:index.html.twig', array(
+        if($at->miUltimoEstadio()->getClasificacion()->getServicioAt())
+        {
+            $entities = $em->getRepository('AtBundle:AtServicioTercero')->findByServiciosPorAt($at);
+            return $this->render('AtBundle:Atservicio:index.html.twig', array(
         	'entities'=> $entities,
                 'at'=>$at,
                 'ret'=>$ret
-        ));
+            ));                
+        }
+        else
+        {
+            $this->get('session')->getFlashBag()->add('error','Todavía no puede agregar servicios de terceros a la AT: '.$at->getId());
+            return $this->redirect($ret);
+        }
     }
 
     public function newAction($idAt)

@@ -1,39 +1,29 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %}
-
 {% block content %}
-    <h3>Constancia de Solicitud de Asistencia técnica</h3>
-      <a href="{{path('frontend_inicial')}}">[Volver]</a>
-
+    <h3>Ver Asistencia técnica</h3>
+    <a href="{{path('frontend_inicial')}}"><h4>[Volver]</h4></a>
     <table class="table">
-        <tbody>
-            
-            {% if entity %}
-            
+        <tbody>                
             <tr>
                 <th>Numero de Solicitud</th>
                 <td>{{ entity.id }}</td>
-            </tr>
-        
+            </tr>     
             <tr>
                 <th>Falla declarada</th>
                 <td>{{ entity.descripcion }}</td>
             </tr>
-
             <tr>
                 <th>Solicitante</th>
                 <td>{{ entity.personasolicita }}</td>
             </tr>
-
             <tr>
                 <th>Sector de Solicitante</th>
-                <td>{{ entity.sectorsolicita }}</td>
+                <td>{{ entity.sectorsolicita ~ ' Interno/Mail: [' ~ entity.sectorsolicita.internos ~ '] [' ~ entity.sectorsolicita.mail ~ ']' }}</td>
             </tr>
-
             <tr>
                 <th>Sector técnico destinatario</th>
-                <td>{{ entity.sectordestino ~ ' Interno/Mail: [' ~ entity.sectordestino. internos ~ '] [' ~ entity.sectordestino.mail ~ ']'}}</td>
+                <td>{{ entity.sectordestino ~ ' Interno/Mail: [' ~ entity.sectordestino.internos ~ '] [' ~ entity.sectordestino.mail ~ ']'}}</td>
             </tr>
-
             <tr>
                 <th>Patrimonio Involucrado</th>
                 {% if entity.patrimonio %}
@@ -42,25 +32,13 @@
                 <td>{{ 'No hay patrimonio asociado' }}</td>
                 {% endif %}
             </tr>
-
-             <tr>
+            <tr>
                 <th>Terminal de pedido</th>
                 <td>{{ entity.ipsolicita }}</td>
             </tr>
-
-
-
-
-            {% endif %}
-        
-
-
         </tbody>
     </table>
-    <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>
-
-
 {% endblock %}
-
 {% block pie %}
+    <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>
 {% endblock %}

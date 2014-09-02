@@ -22,14 +22,21 @@ class AtRepuestoController extends Controller
     	$em = $this->getDoctrine()->getManager();
         $entities =array();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
-        $entities = $em->getRepository('AtBundle:AtRepuesto')->findByRepuestosPorAt($at);
-        return $this->render('AtBundle:Atrepuesto:index.html.twig', array(
+        if($at->miUltimoEstadio()->getClasificacion()->getRepuestoAt())
+        {
+            $entities = $em->getRepository('AtBundle:AtRepuesto')->findByRepuestosPorAt($at);
+            return $this->render('AtBundle:Atrepuesto:index.html.twig', array(
         	'entities'=> $entities,
                 'at'=>$at,
                 'ret'=>$ret
-        ));
+            ));                   
+        }
+        else
+        {
+            $this->get('session')->getFlashBag()->add('error','Todavía no puede agregar repuestos a la AT: '.$at->getId());
+            return $this->redirect($ret); 
+        }      
     }
-
     public function newAction($idAt)
     {
         $em = $this->getDoctrine()->getManager();
