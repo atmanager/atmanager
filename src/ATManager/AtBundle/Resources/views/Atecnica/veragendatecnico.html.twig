@@ -14,7 +14,16 @@
         <tbody>
             {% for entity in entities %}
             <tr>
-                <td><a title="Evoluciona AT" href="{{ path('at_historico',{ 'idAt': entity.id })}}">EVO</a></td>
+                <td>
+
+                {% if not entity.miUltimoEstadio().getClasificacion().getFinalizaAt() %}
+                <a title="Evoluciona AT" 
+                href="{{ path('at_historico',{ 'idAt': entity.id })}}"
+                >EVO
+                </a>
+                
+                {% endif %}
+                </td>
 
                 <td><a title="Fallas de AT" href="{{ path('at_falla', { 'idAt': entity.id }) }}" title="Fallas diagnosticadas en AT">FAL</a></td>
 

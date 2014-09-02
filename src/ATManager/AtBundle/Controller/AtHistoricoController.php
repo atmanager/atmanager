@@ -60,15 +60,15 @@ class AtHistoricoController extends Controller
 
               if($entity->getEstadio()->getClasificacion()->getFinalizaAt())
               {
-                if($this->PuedeFinalizar())
+                if($entity->getAt()->miFallas()>0)
                 {  
                   $fechafin = new \DateTime(); 
                   $entity->getAt()->setFechafin($fechafin);
                   $entity->setComentario("AT CERRADA");
                }else
                    {
-                      $this->get('session')->getFlashBag()->add('error','No se puede cerrar falta la falla');         
-              return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId()))); 
+                      $this->get('session')->getFlashBag()->add('error','No se puede cerrar falta cargar fallas');         
+                      return $this->redirect($this->generateUrl('at_historico_new', array('idAt' => $idAt)));
                    }
               } 
 

@@ -156,6 +156,13 @@ class At
         return $regis->getEstadio();  
     }
 
+    # devolver el codigo del ultimo estadio
+    public function miFallas()
+    {        
+        $regis = $this->fallas->count();
+        return $regis;  
+    }
+
     /**
      * Get id
      *

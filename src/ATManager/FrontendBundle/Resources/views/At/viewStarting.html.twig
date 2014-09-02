@@ -6,9 +6,10 @@
 
 <h3 class="title" style="text-align:center">Visualizar AT {{ estadio }} </h3>
 
-Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
+<p> Técnico Jefé: {{ app.user.nombre }} </p> 
+<p> Sector a Cargo: {{ app.user.sector }} </p>
 <br />
-<a href="{{ path('atecnica_buscador') }}"><h4>[Volver]</h4></a> 
+
 <table class="table table-bordered table-striped table-condensed">
     <thead>
         {% if estadio.getClasificacion().getIniciaAt() %}
@@ -20,13 +21,14 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
         <th>Fecha Solicitud</th>
         <th>Solicitante</th>
         <th>Sector Solicitante</th>
-        <th>Descripción del problema</th>        		
+        <th>Descripción del problema</th>   
+        <th>Ultimo estadio</th>         		
     </thead>   
     <tbody>
     {% for entity in entities %}
 	<tr>
             <td>
-                <a href="{{ path('at_edit', { 'id': entity.id }) }}" title="Reasignar la AT a otro sector"> 
+                <a href="{{ path('at_edit', { 'id': entity.id }) }}" title="Pernite modificar algunos datos"> 
                     Editar 
                 </a>
             </td>
@@ -38,7 +40,7 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
             </td>
             {% endif %}
             <td>
-                <a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualiza los avance en la reperación de la AT">
+                <a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualiza los avance en la reparación de la AT">
                     Evolución 
                 </a>
             </td>
@@ -64,6 +66,10 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
             <td>  
                 {{ entity.descripcion }}
             </td>
+
+            <td>  
+                {{ entity.miUltimoEstadio() }}
+            </td>
 	</tr>
     {% else %} 
         <tr>
@@ -77,6 +83,8 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
 
 {% if entities.getTotalItemCount > 10 %}
     {{ knp_pagination_render(entities) }}
-{% endif %}   
+{% endif %}
+
+<a href="{{ path('atecnica_buscador') }}"><h4>[Volver]</h4></a>    
 
 {% endblock %}

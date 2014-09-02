@@ -180,7 +180,7 @@ class AtecnicaController extends Controller
         $form->handleRequest($request);        
         if ($form->isValid())
         {
-	    $entities =array();        	  
+	        $entities =array();        	  
             $sector=$objt->getSector();
             $rol=1;
             $estadio=$form->get('estadio')->getData();            
