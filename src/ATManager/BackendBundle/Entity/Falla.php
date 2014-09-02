@@ -46,7 +46,9 @@ class Falla
 
     /**
      *  @ORM\ManyToMany(targetEntity="ATManager\BackendBundle\Entity\Sector")
+     * 
      */
+     
     private $sector;
 
     /**

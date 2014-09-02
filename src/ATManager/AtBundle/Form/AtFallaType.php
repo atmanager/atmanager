@@ -30,7 +30,6 @@ class AtFallaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-//select * from falla_sector fs inner join Falla f on fs.falla_id=f.id where fs.sector_id=1
        $sector =  $this->opciones;
        echo "sector: ".$sector->getId();
 
@@ -39,39 +38,24 @@ class AtFallaType extends AbstractType
             ->add('falla','entity', array(
                 'label'=>'Falla tipificada : ',
                 'class' => 'BackendBundle:Falla',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function(EntityRepository $er) use ($sector) {
                     return $er->createQueryBuilder('f')
-                     ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
-                            ->setParameter('destino',true)
-                            ->orderBy('s.nombre','ASC')
-                            ;
-
-                        ->orderBy('f.nombre','ASC')
+                    ->innerJoin('f.sector','cs','WITH','cs.id= :sector')
+                    ->setParameter('sector',$sector)
+                    ->orderBy('f.nombre','ASC')
                     ;
                 },
             ))
 
-
-
-            /* ->add('sectordestino','entity', 
-                array(
-                        'label'=>'[*] Para sector técnico : ',
-                        'class' => 'BackendBundle:Sector',
-                        'query_builder' => function(EntityRepository $er) {
-                            return $er->createQueryBuilder('s')
-                            ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
-                            ->setParameter('destino',true)
-                            ->orderBy('s.nombre','ASC')
-                            ;
-                        },
-            ))*/
 
             ->add('rol','entity', array(
                 'label'=>'Jerarquia de la falla : ',
                 'class' => 'BackendBundle:Rol',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('r')
+                        
                         ->orderBy('r.nombre','ASC')
+
                     ;
                 },
             ))             

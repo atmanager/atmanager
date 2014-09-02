@@ -48,7 +48,7 @@ class AtHistorico
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="fecha", type="datetime", unique=true)
      */
     private $fecha;
 
@@ -56,11 +56,16 @@ class AtHistorico
      * @var string
      *
      * @ORM\Column(name="comentario", type="text", nullable=false)
+     * @Assert\NotBlank()
      */
     private $comentario;
 
     public function __construct(){
      $this->fecha = new \DateTime();   
+    }
+
+     public function __toString(){
+        return " ".$this->getId();
     }
 
     /*

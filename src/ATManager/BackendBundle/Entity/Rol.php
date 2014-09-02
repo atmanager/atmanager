@@ -38,7 +38,7 @@ class Rol
     /**
      * @var boolean
      *
-     * @ORM\Column(name="principal", type="boolean", nullable=true)
+     * @ORM\Column(name="principal", type="boolean", nullable=false)
      */
     private $principal; 
 

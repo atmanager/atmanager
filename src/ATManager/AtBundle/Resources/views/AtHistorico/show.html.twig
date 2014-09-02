@@ -1,0 +1,34 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+
+    <h3>Ver Historico </h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id:</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            
+            <tr>
+                <th>Fecha:</th>
+                <td>{{ entity.fecha | date('d-m-Y h:i:s') }}</td>
+            </tr>
+
+            <tr>
+                <th>Estadio:</th>
+                <td>{{ entity.estadio}}</td>
+            </tr>
+
+            <tr>
+                <th>Comentario:</th>
+                <td>{{ entity.comentario}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{path('at_historico', {'idAt': entity.at.id }) }}">
+        <h4>Volver</h4>
+    </a> 
+    
+{% endblock %}

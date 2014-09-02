@@ -1,0 +1,19 @@
+at_historico:
+    path:     /{idAt}/index
+    defaults: { _controller: "AtBundle:AtHistorico:index" }
+
+at_historico_show:
+    path:     /{id}/show
+    defaults: { _controller: "AtBundle:AtHistorico:show" }
+
+at_historico_new:
+    path:     /{idAt}/new
+    defaults: { _controller: "AtBundle:AtHistorico:new" }
+
+at_historico_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AtBundle:AtHistorico:edit" }
+
+at_historico_eliminar:
+    path:     /{id}/eliminar    
+    defaults: { _controller: "AtBundle:AtHistorico:eliminar" }

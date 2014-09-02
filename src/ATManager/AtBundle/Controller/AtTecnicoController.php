@@ -60,7 +60,7 @@ class AtTecnicoController extends Controller
         $objat = $em->getRepository('FrontendBundle:At')->find($atId);
         try{	
 	       $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tecId);
-	       $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('SECUNDARIO');
+	       $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(false);
            $entity->setAt($objat);
 	       $entity->setRol($rol);
 	       $entity->setTecnico($objt);

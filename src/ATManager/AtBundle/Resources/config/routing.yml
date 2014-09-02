@@ -29,3 +29,7 @@ at_repuesto:
 at_falla:
   resource: "@AtBundle/Resources/config/routing/AtFalla.yml"
   prefix:   /at_falla   
+
+at_historico:
+  resource: "@AtBundle/Resources/config/routing/AtHistorico.yml"
+  prefix:   /at_historico    

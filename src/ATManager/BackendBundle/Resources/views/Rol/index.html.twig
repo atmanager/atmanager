@@ -23,7 +23,7 @@
                 <td><a href="{{ path('rol_eliminar', { 'id': entity.id }) }}" onclick="return confirm('¿Desea eliminar el item seleccionado?');">Eliminar</a></td>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.nombre }}</td>
-                {% if entity.esprincipal %}
+                {% if entity.principal %}
                     <td>si</td>
                 {% else %}
                     <td>no</td>    

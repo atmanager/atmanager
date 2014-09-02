@@ -102,7 +102,7 @@ class AtecnicaController extends Controller
         try{	
 	    $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
 	    
-        $rol = $em->getRepository('BackendBundle:Rol')->findOneByNombre('PRINCIPAL');	
+        $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);	
 
 	    $objatt->setAt($entity);
 	    $objatt->setRol($rol);

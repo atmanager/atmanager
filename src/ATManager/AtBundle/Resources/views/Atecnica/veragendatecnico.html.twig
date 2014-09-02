@@ -14,14 +14,20 @@
         <tbody>
             {% for entity in entities %}
             <tr>
-                <td><a title="Evoluciona AT" href="#">EVO</a></td>
+                <td><a title="Evoluciona AT" href="{{ path('at_historico',{ 'idAt': entity.id })}}">EVO</a></td>
+
                 <td><a title="Fallas de AT" href="{{ path('at_falla', { 'idAt': entity.id }) }}" title="Fallas diagnosticadas en AT">FAL</a></td>
+
                 <td><a title="Técnicos Ayudantes" href="{{ path('atecnico',{ 'atId': entity.id })}}">TEC</a></td>
+
                 <td><a href="{{ path('at_repuesto', { 'idAt': entity.id }) }}" title="Repuestos de AT" href="#">REP</a></td>
-                <td><a title="Servicios Terceros de AT" href="{{ path('at_servicio', { 'idAt': entity.id }) }}">SEV</a></td>  
+
+                <td><a title="Servicios Terceros de AT" href="{{ path('at_servicio', { 'idAt': entity.id }) }}">SVT</a></td>  
+
                 <td><a href="{{ path('at_nota', { 'idAt': entity.id }) }}" title="Notas de AT">NOT</a></td>
               
                 <td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Consultar/reimprimir Solicitud">{{ entity.id }}</a></td>
+
                 <td>{{ entity.descripcion}}</td>
                 <td>{{ entity.miUltimoEstadio() }}</td>
             </tr>

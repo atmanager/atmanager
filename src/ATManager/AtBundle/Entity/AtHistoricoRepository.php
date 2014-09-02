@@ -12,5 +12,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class AtHistoricoRepository extends EntityRepository
 {
+
+	public function findByHistoricoPorAt($at)
+    {
+        $em = $this->getEntityManager();		  	
+        $query = $em->createQuery('SELECT h FROM AtBundle:AtHistorico h WHERE h.at = :at')
+            ->setParameter('at', $at);
+        $query->setMaxResults(50);
+        return $query->getResult();
+    }
+
+    public function findByHistoricoEstadiosNoPresentesEnAt($at)
+    {
+        $em = $this->getEntityManager();
+      
+        $query = $em->createQuery('SELECT e FROM BackendBundle:Estadio e
+         WHERE e.id NOT IN 
+         (SELECT IDENTITY(ath.estadio) FROM AtBundle:AtHistorico ath where ath.at= :at)')
+         ->setParameter('at', $at) ; 
+         return $query->getResult();
+    }
+
+
 	
 }

@@ -66,7 +66,7 @@ class AtRepository extends EntityRepository
 			->setParameter('sector', $sector)
     		->setParameter('estadio', $estadio);
 
-    		$query->setMaxResults(50);
+    		
 			return $query->getResult();
 	}
 
