@@ -8,14 +8,14 @@ use ATManager\AtBundle\Entity\AtTecnico;
 use ATManager\BackendBundle\Entity\Rol;
 
 /**
- * AtNota controller.
+ * AtTecnico controller.
  *
  */
 class AtTecnicoController extends Controller
 {
     public function indexAction($atId)
     {
-         $sesion = $this->get('session');
+        $sesion = $this->get('session');
         $ret = $sesion->get('retorno');
 
         $em = $this->getDoctrine()->getManager();
@@ -27,9 +27,6 @@ class AtTecnicoController extends Controller
     }
     public function mapaAction($atId){
        $sesion = $this->get('session');
-
-       /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
-       el proceso*/ 
         $ret2 = $sesion->get('retorno');
         $em = $this->getDoctrine()->getManager();
         $objat = $em->getRepository('FrontendBundle:At')->find($atId);

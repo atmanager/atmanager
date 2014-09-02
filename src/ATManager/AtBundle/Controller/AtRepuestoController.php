@@ -16,8 +16,6 @@ class AtRepuestoController extends Controller
     public function indexAction($idAt)
     {
         $sesion = $this->get('session');
-       /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
-       el proceso*/ 
         $ret = $sesion->get('retorno');
     	$em = $this->getDoctrine()->getManager();
         $entities =array();
@@ -45,7 +43,7 @@ class AtRepuestoController extends Controller
               $em = $this->getDoctrine()->getManager();
               $em->persist($entity);
               $em->flush();
-              $this->get('session')->getFlashBag()->add('success','Item Guardado');         
+              $this->get('session')->getFlashBag()->add('success','Items Guardado');         
               return $this->redirect($this->generateUrl('at_repuesto_show', array('id' => $entity->getId())));
            }
            catch(\Exception $e){

@@ -47,11 +47,11 @@ class AtHistoricoController extends Controller
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
 
         /* cargar un array con los estadios que no estan en la AT en cuestion*/
-        $estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAt($at);
+        $estadiosNoPresente = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAt($at);
 
         $entity = new AtHistorico();
         $entity->setAt($at);
-        $form = $this->createForm(new AtHistoricoType($at, $em, $estadiosNoPresentes), $entity);
+        $form = $this->createForm(new AtHistoricoType($at, $em, $estadiosNoPresente), $entity);
         $form->handleRequest($this->getRequest());
         if ($form->isValid())
         {

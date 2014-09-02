@@ -39,6 +39,6 @@ class EstadioClasifType extends AbstractType
      */
     public function getName()
     {
-        return 'atmanager_backendbundle_estadioclasif';
+        return 'atmanager_backendbundle_estadioclasifica';
     }
 }

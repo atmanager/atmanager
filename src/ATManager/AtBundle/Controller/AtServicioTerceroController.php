@@ -14,9 +14,8 @@ class AtServicioTerceroController extends Controller
     public function indexAction($idAt)
     {
         $sesion = $this->get('session');
-       /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
-       el proceso*/ 
         $ret = $sesion->get('retorno');
+    
     	$em = $this->getDoctrine()->getManager();
         $entities =array();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);

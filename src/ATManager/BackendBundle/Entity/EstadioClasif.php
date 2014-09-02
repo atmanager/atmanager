@@ -63,6 +63,21 @@ class EstadioClasif
      */
     private $diagnosAt;
 
+
+    /**
+    * @var boolean
+    *
+    * @ORM\Column(name="servicio_at", type="boolean", nullable=true)
+    */
+    private $servicioAt;
+    
+    /**
+    * @var boolean
+    *
+    * @ORM\Column(name="repuesto_at", type="boolean", nullable=true)
+    */
+    private $repuestoAt;
+
      public function __construct(){
         
     }

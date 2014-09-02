@@ -50,7 +50,7 @@ class AtecnicaController extends Controller
         $form = $this->createForm(new AtBuscadorInicialType(), null, array(
             'method' => 'GET'
         ));
-        // asigna al select del estadio del type, el estadio que eligio el usuario
+        /* asigna al select del estadio del type, el estadio que eligio el usuario*/
         $form->get('estadio')->setData($esta); 
         $form->handleRequest($request);        
         if ($form->isValid())
