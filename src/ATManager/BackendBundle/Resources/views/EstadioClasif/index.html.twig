@@ -1,7 +1,7 @@
 {% extends 'BackendBundle::base_backend.html.twig' %}
 
 {% block content %}
-    <h3>Gestión de Clasificación de Estadios</h3>
+    <h3>Gestión de Clasificación Estadios</h3>
     <a href="{{ path('estadioclasif_new') }}">
          <h4>[Crear]</h4>
     </a>
@@ -13,8 +13,6 @@
                 <th>Nombre</th>
                 <th>Inicializa AT</th>
                 <th>Diagnostica AT</th>
-                <th>Servicio AT</th>
-                <th>Repuesto AT</th>
                 <th>Finaliza AT</th>
                 <th>Cancela AT</th>
             </tr>
@@ -33,16 +31,6 @@
                     <td>no</td>    
                 {% endif %}
                 {% if entity.diagnosAt %}
-                    <td>si</td>
-                {% else %}
-                    <td>no</td>    
-                {% endif %}
-                {% if entity.servicioAt %}
-                    <td>si</td>
-                {% else %}
-                    <td>no</td>    
-                {% endif %}
-                {% if entity.repuestoAt %}
                     <td>si</td>
                 {% else %}
                     <td>no</td>    
