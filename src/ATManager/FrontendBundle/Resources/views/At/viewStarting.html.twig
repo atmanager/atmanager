@@ -20,7 +20,8 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
         <th>Fecha Solicitud</th>
         <th>Solicitante</th>
         <th>Sector Solicitante</th>
-        <th>Descripción del problema</th>        		
+        <th>Descripción del problema</th> 
+        <th>Último Estadio</th> 
     </thead>   
     <tbody>
     {% for entity in entities %}
@@ -63,6 +64,9 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
             </td>
             <td>  
                 {{ entity.descripcion }}
+            </td>
+            <td>  
+                {{ entity.miUltimoEstadio() }}
             </td>
 	</tr>
     {% else %} 

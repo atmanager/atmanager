@@ -90,17 +90,25 @@ class AtRepository extends EntityRepository
         public function findByFiltroPorTecnico($tecnico,$rol,$estadio)
 	{
             $em = $this->getEntityManager();		  	
-            $query = $em->createQuery('SELECT a
+            $query = $em->createQuery(
+                'SELECT a
                 FROM FrontendBundle:At a
                 INNER JOIN AtBundle:AtTecnico t with a.id = t.at
-		INNER JOIN AtBundle:AtHistorico h with a.id=h.at 
+                INNER JOIN AtBundle:AtHistorico h with a.id=h.at 
                 WHERE t.tecnico = :tecnico 
+                AND t.rol = :rol
                 AND h.estadio= :estadio
-		AND t.rol = :rol')
+                AND h.estadio = 
+                    (SELECT IDENTITY(h1.estadio)
+                    FROM AtBundle:AtHistorico h1 
+                    WHERE h1.fecha = (
+                    SELECT max(h2.fecha)
+                    FROM AtBundle:AtHistorico h2
+                    WHERE h2.at = a.id))')
                 ->setParameter('tecnico', $tecnico)
                 ->setParameter('rol', $rol)
                 ->setParameter('estadio', $estadio);
-            $query->setMaxResults(50);
-            return $query->getResult();
+            
+                return $query->getResult();
 	}
 }

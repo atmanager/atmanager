@@ -10,10 +10,6 @@ at_falla_new:
     path:     /{idAt}/new
     defaults: { _controller: "AtBundle:AtFalla:new" }
 
-at_falla_edit:
-    path:     /{id}/edit
-    defaults: { _controller: "AtBundle:AtFalla:edit" }
-
 at_falla_eliminar:
     path:     /{id}/eliminar
     defaults: { _controller: "AtBundle:AtFalla:eliminar" }

@@ -12,16 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class AtHistoricoRepository extends EntityRepository
 {
-
-	public function findByHistoricoPorAt($at)
+    public function findByHistoricoPorAt($at)
     {
         $em = $this->getEntityManager();		  	
-        $query = $em->createQuery('SELECT h FROM AtBundle:AtHistorico h WHERE h.at = :at')
+        $query = $em->createQuery('SELECT h FROM AtBundle:AtHistorico h WHERE h.at = :at order by h.fecha')
             ->setParameter('at', $at);
         $query->setMaxResults(50);
         return $query->getResult();
     }
-
     public function findByHistoricoEstadiosNoPresentesEnAt($at)
     {
         $em = $this->getEntityManager();
@@ -32,7 +30,15 @@ class AtHistoricoRepository extends EntityRepository
          ->setParameter('at', $at) ; 
          return $query->getResult();
     }
-
+    public function findByEstadiosPuntalesAt($at,$estadio)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT ath FROM AtBundle:AtHistorico ath
+        WHERE ath.at= :at and ath.estadio= :estadio')
+            ->setParameter('at', $at)
+            ->setParameter('estadio', $estadio);
+        return $query->getResult();
+    }
 
 	
 }

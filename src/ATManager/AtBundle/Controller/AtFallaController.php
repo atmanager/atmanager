@@ -18,9 +18,7 @@ class AtFallaController extends Controller
        el proceso*/ 
         $ret = $sesion->get('retorno');
     	$em = $this->getDoctrine()->getManager();
-        $entities =array();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
-
         $entities = $em->getRepository('AtBundle:AtFalla')->findByFallasPorAt($at);
         return $this->render('AtBundle:AtFalla:index.html.twig', array(
         	'entities'=> $entities,
@@ -50,7 +48,7 @@ class AtFallaController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error',$e->getMessage()); 
-              return $this->redirect($this->generateUrl('at_falla_new', array('idAt' => $at->getId())));
+              return $this->redirect($this->generateUrl('at_falla_new', array('idAt' => $entity->getAt()->getId())));
            }
         }
     	return $this->render('AtBundle:AtFalla:new.html.twig', array(
@@ -58,47 +56,19 @@ class AtFallaController extends Controller
            'entity' => $entity        
 	));
     }
-
-
-    public function editAction($id)
-    {    
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AtBundle:AtFalla')->find($id);
-        $form = $this->createForm(new AtFallaType(), $entity);
-        $form->handleRequest($this->getRequest());
-        if ($form->isValid())
-        {
-            try{
-                $em->persist($entity);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Item actualizado');
-                return $this->redirect($this->generateUrl('at_falla_edit', array('id' => $entity->getId())));
-            }
-            catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
-                return $this->redirect($this->generateUrl('at_falla_edit', array('id' => $entity->getId())));
-            }    
-        }
-        return $this->render('AtBundle:AtFalla:edit.html.twig', array(
-            'form'=>$form->createView(),
-            'entity' => $entity
-            ))
-             ;
-    }
     public function eliminarAction($id)
-    {                
+    {
+        $em = $this->getDoctrine()->getManager();         
+        $entity = $em->getRepository('AtBundle:AtFalla')->find($id);    
         try{
-            $em = $this->getDoctrine()->getManager();         
-            $entity = $em->getRepository('AtBundle:AtFalla')->find($id);
-            $atId = $entity->getAt()->getId();
             $em->remove($entity); 
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','Item Eliminado');
-            return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$atId)) );
+            return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$entity->getAt()->getId())) );
         }
 	catch(\Exception $e) {
             $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
-            return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$atId)) );
+            return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$entity->getAt()->getId())) );
         }    
     }
 

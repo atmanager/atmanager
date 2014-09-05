@@ -22,7 +22,12 @@ class AtServicioTerceroController extends Controller
     	$em = $this->getDoctrine()->getManager();
         $entities =array();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
-        if($at->miUltimoEstadio()->getClasificacion()->getServicioAt())
+        $clasif=$em->getRepository('BackendBundle:EstadioClasif')->findByServicioAt(true);
+        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasif);
+        $estadio=$em->getRepository('AtBundle:AtHistorico')->findByEstadiosPuntalesAt($at,$esta);
+        
+        
+        if($estadio)
         {
             $entities = $em->getRepository('AtBundle:AtServicioTercero')->findByServiciosPorAt($at);
             return $this->render('AtBundle:Atservicio:index.html.twig', array(
@@ -33,7 +38,7 @@ class AtServicioTerceroController extends Controller
         }
         else
         {
-            $this->get('session')->getFlashBag()->add('error','Todavía no puede agregar servicios de terceros a la AT: '.$at->getId());
+            $this->get('session')->getFlashBag()->add('error','En evolución debe existir estadio: '.$esta);
             return $this->redirect($ret);
         }
     }
@@ -42,7 +47,6 @@ class AtServicioTerceroController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
-
         $entity = new AtServicioTercero();
         $entity->setAt($at);
         $form = $this->createForm(new AtServicioType(), $entity);
@@ -58,7 +62,7 @@ class AtServicioTerceroController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error',$e->getMessage()); 
-              return $this->redirect($this->generateUrl('at_servicio_new', array('idAt' => $at->getId())));
+              return $this->redirect($this->generateUrl('at_servicio_new', array('idAt' => $entity->getAt()->getId())));
            }
         }
     	return $this->render('AtBundle:Atservicio:new.html.twig', array(
@@ -66,8 +70,6 @@ class AtServicioTerceroController extends Controller
            'entity' => $entity        
 	));
     }
-
-
     public function editAction($id)
     {    
         $em = $this->getDoctrine()->getManager();
@@ -90,27 +92,23 @@ class AtServicioTerceroController extends Controller
         return $this->render('AtBundle:Atservicio:edit.html.twig', array(
             'form'=>$form->createView(),
             'entity' => $entity
-            ))
-             ;
+        ));
     }
     public function eliminarAction($id)
-    {                
-        try{
-            $em = $this->getDoctrine()->getManager();         
-            $entity = $em->getRepository('AtBundle:AtServicioTercero')->find($id);
-            $atId = $entity->getAt()->getId();
+    {
+        $em = $this->getDoctrine()->getManager();         
+        $entity = $em->getRepository('AtBundle:AtServicioTercero')->find($id);
+        try{            
             $em->remove($entity); 
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','Item Eliminado');
-            return $this->redirect($this->generateUrl('at_servicio', array('idAt'=>$atId)) );
+            return $this->redirect($this->generateUrl('at_servicio', array('idAt'=>$entity->getAt()->getId())));
         }
 	catch(\Exception $e) {
             $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
-            return $this->redirect($this->generateUrl('at_servicio', array('idAt'=>$atId)) );
+            return $this->redirect($this->generateUrl('at_servicio', array('idAt'=>$entity->getAt()->getId())));
         }    
     }
-
-
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();

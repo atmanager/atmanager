@@ -21,7 +21,7 @@ class AtTecnicoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $objat = $em->getRepository('FrontendBundle:At')->find($atId);
 	return $this->render('AtBundle:AtTecnico:index.html.twig', array(
-        	'entity'=>$objat,
+            'entity'=>$objat,
             'ret'=>$ret
         ));          
     }
@@ -44,52 +44,58 @@ class AtTecnicoController extends Controller
         ));
         
     }
-
     public function newAction($atId,$tecId)
     {
-        $falso=false;
         /* recupero la variable de session definida en: buscadorAction()*/
         $sesion = $this->get('session');
         /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
         el proceso*/ 
         $ret2 = $sesion->get('retorno');
-
         /*--*/
         $entity=new AtTecnico();
        	$em = $this->getDoctrine()->getManager();
         $objat = $em->getRepository('FrontendBundle:At')->find($atId);
         try{	
-	       $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tecId);
-	       $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(false);
-           $entity->setAt($objat);
-	       $entity->setRol($rol);
-	       $entity->setTecnico($objt);
-	       $em->persist($entity);
-           $em->flush();
-           $this->get('session')->getFlashBag()->add('success','Se agregó: Técnico Ayudante'); 
-           return $this->redirect($ret2);            
+            $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tecId);
+            $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(false);
+            $entity->setAt($objat);
+            $entity->setRol($rol);
+            $entity->setTecnico($objt);
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success','Se agregó: Técnico Ayudante'); 
+            return $this->redirect($this->generateUrl('atecnico_show',array('id'=>$entity->getId())));            
         }
 	catch(\Exception $ex){
-	       $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
-           return $this->redirect($ret2);
+            $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
+            return $this->redirect($this->generateUrl('atecnico_mapa',array('atId'=>$entity->getAt()->getId())));
         } 
     }
     public function eliminarAction($id)
-    {                
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AtBundle:AtTecnico')->find($id);            
         try{
-
-            $em = $this->getDoctrine()->getManager();
-            
-            $entity = $em->getRepository('AtBundle:AtTecnico')->find($id);
-            $atId = $entity->getAt()->getId();
             $em->remove($entity); 
             $em->flush();
             $this->get('session')->getFlashBag()->add('success','Ayudante Eliminado');
-            return $this->redirect($this->generateUrl('atecnico', array('atId'=>$atId)));
+            return $this->redirect($this->generateUrl('atecnico', array('atId'=>$entity->getAt()->getId())));
         }
         catch(\Exception $e) {
             $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
-            return $this->redirect($this->generateUrl('atecnico', array('atId'=>$atId)));
+            return $this->redirect($this->generateUrl('atecnico', array('atId'=>$entity->getAt()->getId())));
         }    
+    }
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $entity = $em->getRepository('AtBundle:AtTecnico')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Marca entity.');
+        }
+         return $this->render('AtBundle:AtTecnico:show.html.twig', 
+            array('entity' => $entity)
+        );
     }
 }

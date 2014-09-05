@@ -30,9 +30,7 @@ class AtFallaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-       $sector =  $this->opciones;
-       echo "sector: ".$sector->getId();
-
+        $sector =  $this->opciones;
         $builder
                 
             ->add('falla','entity', array(

@@ -30,12 +30,15 @@
                         Ver
                     </a>
                 </td>
-		
-		<td>
-                    <a href="{{ path('at_falla_eliminar', { 'id': entity.id }) }}" onClick="return confirm('¿Desea eliminar la falla seleccionada?');">
-                        Eliminar
-                    </a>
-                </td>
+		{% if(at.miUltimoEstadio.clasificacion.finalizaAt(false)) %}
+                    <td>
+                        <a href="{{ path('at_falla_eliminar', { 'id': entity.id }) }}" onClick="return confirm('¿Desea eliminar la falla seleccionada?');">
+                            Eliminar
+                        </a>
+                    </td>
+                {% else %}
+                    <td>Eliminar</td>
+                {% endif %}    
                 <td>{{ entity.falla }}</td>
                 <td>{{ entity.rol }}</td>
                 

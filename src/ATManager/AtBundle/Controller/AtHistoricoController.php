@@ -54,37 +54,24 @@ class AtHistoricoController extends Controller
                 {
                     $fechafin = new \DateTime(); 
                     $entity->getAt()->setFechafin($fechafin);
-                    $entity->setComentario("AT CERRADA");
-                    $em->persist($entity);
-                    $em->flush();
-                    $this->get('session')->getFlashBag()->add('success','At Finalizada');         
-                    return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId())));
                 }
-
             }
-            else
-            {
-                try{
-                    //$em = $this->getDoctrine()->getManager();
-                    $em->persist($entity);
-                    $em->flush();
-                    $this->get('session')->getFlashBag()->add('success','Item Guardado');         
-                    return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId())));
-                }
-                catch(\Exception $e){
-                    $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-                    return $this->redirect($this->generateUrl('at_historico_new',array('idAt' => $at->getId())));
-                }             
-           }
-           
+            try{
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Item Guardado');         
+                return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId())));
+            }
+            catch(\Exception $e){
+                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
+                return $this->redirect($this->generateUrl('at_historico_new',array('idAt' => $at->getId())));
+            }                      
         }
     	return $this->render('AtBundle:AtHistorico:new.html.twig', array(
       	   'form' => $form->createView(),
            'entity' => $entity        
 	));
     }
-
-
     public function editAction($id)
     {    
         $em = $this->getDoctrine()->getManager();
@@ -92,7 +79,7 @@ class AtHistoricoController extends Controller
         $form = $this->createForm(new AtHistoricoEditType(), $entity);
         $form->handleRequest($this->getRequest());
         if($entity->getEstadio()->getClasificacion()->getIniciaAt() or $entity->getEstadio()->getClasificacion()->getDiagnosAt() or $entity->getEstadio()->getClasificacion()->getFinalizaAt()){
-            $this->get('session')->getFlashBag()->add('error','No puede editar ats Iniciadas, en Diagnóstico o Finalizadas');
+            $this->get('session')->getFlashBag()->add('error','No puede editar estadios Iniciado, en Diagnóstico o Finalizado');
             return $this->redirect($this->generateUrl('at_historico', array('idAt' => $entity->getAt()->getId())));
         }
         else
@@ -121,7 +108,7 @@ class AtHistoricoController extends Controller
         $em = $this->getDoctrine()->getManager();            
         $entity = $em->getRepository('AtBundle:AtHistorico')->find($id);
         if($entity->getEstadio()->getClasificacion()->getIniciaAt() or $entity->getEstadio()->getClasificacion()->getDiagnosAt() or $entity->getEstadio()->getClasificacion()->getFinalizaAt()){
-            $this->get('session')->getFlashBag()->add('error','No puede editar ats Iniciadas, en Diagnóstico o Finalizadas');
+            $this->get('session')->getFlashBag()->add('error','No puede eliminar estadios Iniciado, en Diagnóstico o Finalizado');
             return $this->redirect($this->generateUrl('at_historico', array('idAt' => $entity->getAt()->getId())));
         }
         else
@@ -139,8 +126,6 @@ class AtHistoricoController extends Controller
             }        
         }    
     }
-
-
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();

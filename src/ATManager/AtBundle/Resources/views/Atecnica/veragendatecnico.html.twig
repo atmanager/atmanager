@@ -1,6 +1,6 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-    <h3>Agenda de: {{ tecnico}}</h3>
+    <h3>Agenda de: {{ tecnico }}</h3>
     
     <a href="{{ path('atecnica_buscarAgendaTecnico') }}"><h4>[Volver]</h4></a>
    
@@ -14,8 +14,11 @@
         <tbody>
             {% for entity in entities %}
             <tr>
-                <td><a title="Evoluciona AT" href="{{ path('at_historico',{ 'idAt': entity.id })}}">EVO</a></td>
-
+                {% if(entity.miUltimoEstadio.clasificacion.finalizaAt(false)) %}
+                    <td><a title="Evoluciona AT" href="{{ path('at_historico',{ 'idAt': entity.id })}}">EVO</a></td>
+                {% else %}
+                    <td>EVO</td>
+                {% endif %}  
                 <td><a title="Fallas de AT" href="{{ path('at_falla', { 'idAt': entity.id }) }}" title="Fallas diagnosticadas en AT">FAL</a></td>
 
                 <td><a title="Técnicos Ayudantes" href="{{ path('atecnico',{ 'atId': entity.id })}}">TEC</a></td>
@@ -26,7 +29,7 @@
 
                 <td><a href="{{ path('at_nota', { 'idAt': entity.id }) }}" title="Notas de AT">NOT</a></td>
               
-                <td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Consultar/reimprimir Solicitud">{{ entity.id }}</a></td>
+                <td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Ver Asistencia Técnica">{{ entity.id }}</a></td>
 
                 <td>{{ entity.descripcion}}</td>
                 <td>{{ entity.miUltimoEstadio() }}</td>

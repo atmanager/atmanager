@@ -2,7 +2,7 @@
 {% block content %}
     <h3>Asignar Ayudante para AT: {{ entity.id}}</h3>
     
-    <a href="javascript:history.back(1)"><h4>[Volver]</h4></a>
+    <a href="{{ path('atecnico', {'atId': entity.id }) }}"><h4>[Volver]</h4></a>
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">

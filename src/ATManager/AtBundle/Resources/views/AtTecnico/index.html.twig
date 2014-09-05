@@ -15,13 +15,18 @@
    </table>
     <table class="table table-bordered table-striped">
         <thead>
-            <th>Acción</th>
+        <th colspan="2" style="text-align:center">Acciones</th>
             <th>Técnico</th>
             <th>Rol</th>
         </thead>
         <tbody>
         {% for peon in entity.getTecnicos() %}    
             <tr>
+                <td>
+                    <a href="{{ path('atecnico_show',{ 'id':peon.id }) }}">
+                        Ver
+                    </a>
+                </td>
                 <td>
                     {% if peon.rol.nombre!="PRINCIPAL" %}
                         <a href="{{ path('atecnico_eliminar',{ 'id':peon.id }) }}" onClick="return confirm('¿Desea Eliminar el Ayudante Seleccionado?');">

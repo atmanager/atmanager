@@ -27,8 +27,7 @@ class AtTecnicoRepository extends EntityRepository
     public function FindBySectorAyudante($sector,$at)
     {
         //$tec = 3;
-        $em = $this->getEntityManager();
-      
+        $em = $this->getEntityManager();   
         $query = $em->createQuery('SELECT t FROM BackendBundle:Tecnico t
          WHERE t.sector= :sector and t.id NOT IN 
          (SELECT IDENTITY(att.tecnico) FROM AtBundle:AtTecnico att where att.at= :at)')

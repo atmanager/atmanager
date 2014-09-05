@@ -12,4 +12,8 @@ atecnico_new:
 
 atecnico_eliminar:
     pattern:  /{id}/eliminar
-    defaults: { _controller: "AtBundle:AtTecnico:eliminar" }     
+    defaults: { _controller: "AtBundle:AtTecnico:eliminar" }
+
+atecnico_show:
+    path:     /{id}/show
+    defaults: { _controller: "AtBundle:AtTecnico:show" }    
