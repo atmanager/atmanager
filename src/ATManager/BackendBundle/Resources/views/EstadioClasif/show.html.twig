@@ -29,6 +29,22 @@
                 {% endif %}
             </tr>
             <tr>
+                <th>Servicio AT:</th>
+                {% if entity.servicioAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Repuesto AT:</th>
+                {% if entity.repuestoAt %}
+                    <td>si</td>
+                {% else %}
+                    <td>no</td>    
+                {% endif %}
+            </tr>
+            <tr>
                 <th>Finaliza AT:</th>
                 {% if entity.finalizaAt %}
                     <td>si</td>
@@ -43,13 +59,13 @@
                 {% else %}
                     <td>no</td>    
                 {% endif %}
-            </tr>
+            </tr>          
         </tbody>
     </table>
 
    
         <a href="{{ path('estadioclasif') }}">
-            Retornar a index
+            Retornar a listado
         </a>
  
 {% endblock %}

@@ -19,7 +19,9 @@ class EstadioClasifType extends AbstractType
             ->add('iniciaAt')
             ->add('diagnosAt')
             ->add('finalizaAt')
-            ->add('cancelaAt')            
+            ->add('cancelaAt')
+            ->add('servicioAt')
+            ->add('repuestoAt')    
             ->add('submit', 'submit', array('label' => 'Aceptar'));
         ;
     }
@@ -39,6 +41,6 @@ class EstadioClasifType extends AbstractType
      */
     public function getName()
     {
-        return 'atmanager_backendbundle_estadioclasifica';
+        return 'atmanager_backendbundle_estadioclasif';
     }
 }
