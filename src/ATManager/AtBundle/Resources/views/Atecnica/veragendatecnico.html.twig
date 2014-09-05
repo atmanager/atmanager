@@ -16,7 +16,9 @@
             <tr>
                 <td>
 
-                {% if not entity.miUltimoEstadio().getClasificacion().getFinalizaAt() %}
+                {% 
+                    if not entity.miUltimoEstadio().getClasificacion().getFinalizaAt()
+                %}
                 <a title="Evoluciona AT" 
                 href="{{ path('at_historico',{ 'idAt': entity.id })}}"
                 >EVO
