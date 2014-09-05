@@ -23,12 +23,23 @@ class AtHistoricoController extends Controller
         $ret = $sesion->get('retorno');
     	$em = $this->getDoctrine()->getManager();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
+        $clasif=$em->getRepository('BackendBundle:EstadioClasif')->findByFinalizaAt(true);
+        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasif);
+        $estadio=$em->getRepository('AtBundle:AtHistorico')->findByEstadiosPuntalesAt($at,$esta);
         $entities = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoPorAt($at);
-        return $this->render('AtBundle:AtHistorico:index.html.twig', array(
+        if($estadio)
+        {
+            $this->get('session')->getFlashBag()->add('error','La AT esta finalizada');
+            return $this->redirect($ret); 
+        }
+        else
+        {
+            return $this->render('AtBundle:AtHistorico:index.html.twig', array(
         	'entities'=> $entities,
                 'at'=>$at,
                 'ret'=>$ret
-        ));
+            ));            
+        }
     }
 
     public function newAction($idAt)

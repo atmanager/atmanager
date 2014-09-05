@@ -6,9 +6,11 @@
  * and open the template in the editor.
  */
 namespace ATManager\AtBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtFalla;
 use ATManager\AtBundle\Form\AtFallaType;
+
 class AtFallaController extends Controller
 {
     public function indexAction($idAt)
@@ -26,7 +28,6 @@ class AtFallaController extends Controller
                 'ret'=>$ret
         ));
     }
-
     public function newAction($idAt)
     {
         $em = $this->getDoctrine()->getManager();
@@ -59,20 +60,29 @@ class AtFallaController extends Controller
     public function eliminarAction($id)
     {
         $em = $this->getDoctrine()->getManager();         
-        $entity = $em->getRepository('AtBundle:AtFalla')->find($id);    
-        try{
-            $em->remove($entity); 
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Item Eliminado');
-            return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$entity->getAt()->getId())) );
+        $entity = $em->getRepository('AtBundle:AtFalla')->find($id);
+        $clasif=$em->getRepository('BackendBundle:EstadioClasif')->findByFinalizaAt(true);
+        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasif);
+        $estadio=$em->getRepository('AtBundle:AtHistorico')->findByEstadiosPuntalesAt($entity->getAt(),$esta);
+        if($estadio)
+        {
+            $this->get('session')->getFlashBag()->add('error','La AT esta finalizada, no puede eliminar');
+            return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$entity->getAt()->getId()))); 
         }
-	catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
-            return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$entity->getAt()->getId())) );
+        else
+        {
+            try{
+                $em->remove($entity); 
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Item Eliminado');
+                return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$entity->getAt()->getId())) );
+            }
+            catch(\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
+                return $this->redirect($this->generateUrl('at_falla', array('idAt'=>$entity->getAt()->getId())) );
+            }        
         }    
     }
-
-
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();

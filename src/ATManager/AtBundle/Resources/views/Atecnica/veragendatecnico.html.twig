@@ -14,11 +14,7 @@
         <tbody>
             {% for entity in entities %}
             <tr>
-                {% if(entity.miUltimoEstadio.clasificacion.finalizaAt(false)) %}
                     <td><a title="Evoluciona AT" href="{{ path('at_historico',{ 'idAt': entity.id })}}">EVO</a></td>
-                {% else %}
-                    <td>EVO</td>
-                {% endif %}  
                 <td><a title="Fallas de AT" href="{{ path('at_falla', { 'idAt': entity.id }) }}" title="Fallas diagnosticadas en AT">FAL</a></td>
 
                 <td><a title="Técnicos Ayudantes" href="{{ path('atecnico',{ 'atId': entity.id })}}">TEC</a></td>
