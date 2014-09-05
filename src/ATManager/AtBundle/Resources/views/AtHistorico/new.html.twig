@@ -1,0 +1,12 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content -%}
+
+    <h3>Crear Evolución para AT: {{ entity.at.id }}</h3>
+
+    {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
+     
+        <a href="{{path('at_historico', {'idAt': entity.at.id }) }}">
+        <h4>[Volver]</h4>
+        </a>
+    
+ {% endblock %}

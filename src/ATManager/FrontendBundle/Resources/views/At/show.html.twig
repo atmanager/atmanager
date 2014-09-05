@@ -1,0 +1,44 @@
+{% extends 'FrontendBundle::base_frontend.html.twig' %}
+{% block content %}
+    <h3>Ver Asistencia técnica</h3>
+    <a href="{{path('frontend_inicial')}}"><h4>[Volver]</h4></a>
+    <table class="table">
+        <tbody>                
+            <tr>
+                <th>Numero de Solicitud</th>
+                <td>{{ entity.id }}</td>
+            </tr>     
+            <tr>
+                <th>Falla declarada</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Solicitante</th>
+                <td>{{ entity.personasolicita }}</td>
+            </tr>
+            <tr>
+                <th>Sector de Solicitante</th>
+                <td>{{ entity.sectorsolicita ~ ' Interno/Mail: [' ~ entity.sectorsolicita.internos ~ '] [' ~ entity.sectorsolicita.mail ~ ']' }}</td>
+            </tr>
+            <tr>
+                <th>Sector técnico destinatario</th>
+                <td>{{ entity.sectordestino ~ ' Interno/Mail: [' ~ entity.sectordestino.internos ~ '] [' ~ entity.sectordestino.mail ~ ']'}}</td>
+            </tr>
+            <tr>
+                <th>Patrimonio Involucrado</th>
+                {% if entity.patrimonio %}
+                    <td>{{ entity.patrimonio }}</td>
+                {% else %}
+                    <td>{{ 'No hay patrimonio asociado' }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Terminal de pedido</th>
+                <td>{{ entity.ipsolicita }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+{% block pie %}
+    <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>
+{% endblock %}
