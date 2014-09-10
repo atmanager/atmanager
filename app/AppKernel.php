@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(), # clase user, login,
             new ATManager\FrontendBundle\FrontendBundle(),
             new ATManager\AtBundle\AtBundle(),
+            new ATManager\IndicadorBundle\IndicadorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

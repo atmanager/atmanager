@@ -31,10 +31,8 @@ class AtType extends AbstractType
             $builder->create('patrimonio', 'text', array(
             'required'=>false,
             'label'=>'Ingrese número de Patrimonio '
-             ))
-            
+             ))           
             ->addModelTransformer($transformer)
-
             );
 
 

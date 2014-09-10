@@ -1,8 +1,3 @@
-
-atecnica_new:
-    pattern:  /new
-    defaults: { _controller: "AtBundle:Atecnica:new" }
-
 atecnica_show:
     pattern:  /{id}/show
     defaults: { _controller: "AtBundle:Atecnica:show" }

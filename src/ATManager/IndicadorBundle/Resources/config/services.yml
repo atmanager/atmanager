@@ -1,0 +1,7 @@
+parameters:
+#    indicador.example.class: ATManager\IndicadorBundle\Example
+
+services:
+#    indicador.example:
+#        class: %indicador.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

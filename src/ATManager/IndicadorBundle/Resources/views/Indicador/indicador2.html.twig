@@ -1,0 +1,25 @@
+{% extends 'IndicadorBundle::baseindic.html.twig' %} 
+{% block content %}        
+        <h3>Ranking de Patrimonios por Período</h3>	
+        {{ form(form)}}
+        <br/>
+        <table class="table table-bordered table-striped ">
+            <thead>
+                <th>Nro Patrimonio</th>
+                <th>Descripción</th>
+                <th>Cantidad de Atenciones</th>
+            </thead>
+            <tbody>
+                {% for dato in entities.datos%}
+                <tr>
+                    <td>{{ dato.nropat }}</td>
+                    <td>{{ dato.descrippat }}</td>
+                    <td>{{ dato.cantAtenciones }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if entities.datos.getTotalItemCount > 10 %}
+            {{ knp_pagination_render(entities.datos) }}
+        {% endif %}
+{% endblock %}

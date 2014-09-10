@@ -1,0 +1,25 @@
+{% extends 'IndicadorBundle::baseindic.html.twig' %} 
+{% block content %}        
+        <h3>Ranking de Demandas por Sector</h3>	
+        {{ form(form)}}   
+        <br/>
+        <table class="table table-bordered table-striped ">
+            <thead>
+                <th>Nro. Sector Solicitante</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+            </thead>
+            <tbody>
+                {% for dato in entities.datos%}
+                <tr>
+                    <td>{{ dato.secSolicita }}</td>
+                    <td>{{ dato.nomSolicita }}</td>
+                    <td>{{ dato.cantidad }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if entities.datos.getTotalItemCount > 10 %}
+            {{ knp_pagination_render(entities.datos) }}
+        {% endif %}
+{% endblock %}

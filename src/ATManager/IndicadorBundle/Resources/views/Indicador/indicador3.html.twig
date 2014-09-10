@@ -1,0 +1,25 @@
+{% extends 'IndicadorBundle::baseindic.html.twig' %} 
+{% block content %}        
+        <h3>Cantidad de AT por Sector</h3>	
+        {{ form(form)}}
+        <br/>
+        <table class="table table-bordered table-striped ">
+            <thead>
+                <th>Nro. Sector Destino</th>
+                <th>Nombre</th>
+                <th>Cantidad de Atenciones</th>
+            </thead>
+            <tbody>
+                {% for dato in entities.datos%}
+                <tr>
+                    <td>{{ dato.secDestino }}</td>
+                    <td>{{ dato.nombreDestino }}</td>
+                    <td>{{ dato.cantAtenciones }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if entities.datos.getTotalItemCount > 10 %}
+            {{ knp_pagination_render(entities.datos) }}
+        {% endif %}
+{% endblock %}

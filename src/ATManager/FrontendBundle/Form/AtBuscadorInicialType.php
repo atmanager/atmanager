@@ -28,10 +28,11 @@ class AtBuscadorInicialType extends AbstractType
              ->add('estadio','entity',
                     array
                     (
+                        'label'=>'Estadio: ',
                         'class'=>'BackendBundle:Estadio',
                         'required'=>false,
-                        'empty_value'=>'Seleccione el Estadio en que desea visualizar las AT del su sector',
-                        'query_builder'=>function($er)
+                        'empty_value'=>'Selecccione Estadio [*]',
+                        'query_builder'=>function(EntityRepository $er)
                             {
                             return $er->createQueryBuilder('e')
                                 ->select('e')

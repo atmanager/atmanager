@@ -37,7 +37,7 @@ class AtController extends Controller
                     }
                 }    
                 $entity->setIpsolicita($this->container->get('request')->getClientIp());
-                
+                $entity->setHostsolicita(gethostname());
                 $em->persist($entity);
                 $atHistorico= new atHistorico();
                 $atHistorico->setAt($entity);

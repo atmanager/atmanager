@@ -1,0 +1,42 @@
+## YAML Template.
+---
+indicador_1:
+    pattern:  /indicador1
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador1" }
+    
+indicador_2:
+    pattern:  /indicador2
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador2" }
+    
+indicador_3:
+    pattern:  /indicador3
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador3" }
+    
+indicador_4:
+    pattern:  /indicador4
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador4" }
+    
+indicador_5:
+    pattern:  /indicador5
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador5" }
+    
+indicador_6:
+    pattern:  /indicador6
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador6" }
+    
+indicador_7:
+    pattern:  /indicador7
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador7" }
+    
+indicador_8:
+    pattern:  /indicador8
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador8" }
+    
+indicador_9:
+    pattern:  /indicador9
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador9" }
+    
+indicador_10:
+    pattern:  /indicador10
+    defaults: { _controller: "IndicadorBundle:Indicador:indicador10" }    
+    

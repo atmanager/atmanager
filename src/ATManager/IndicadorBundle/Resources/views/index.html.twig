@@ -1,0 +1,10 @@
+{% extends 'IndicadorBundle::baseindic.html.twig' %}
+
+{% block content %}
+
+        <h3> <p> Funcionalidad <strong>Indicadores</strong> </p> </h3>
+	{% if app.user %}
+         {{ app.user.nombre }}  {{ app.user.sector }}
+         <a href="{{ path('fos_user_security_logout')}}">logout</a> 
+      {% endif %} 
+ {% endblock %}

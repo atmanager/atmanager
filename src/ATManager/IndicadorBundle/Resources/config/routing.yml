@@ -1,0 +1,7 @@
+indicador_inicial:
+    path:   /
+    defaults: { _controller: IndicadorBundle:Default:index}
+
+indicador:
+  resource: "@IndicadorBundle/Resources/config/routing/Indicador.yml"
+  prefix:   /indicador

@@ -4,14 +4,8 @@ namespace ATManager\AtBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\AtBundle\Entity\AtTecnico;
-use ATManager\BackendBundle\Entity\Rol;
-use ATManager\FrontendBundle\Form\AtType;
-use ATManager\FrontendBundle\Form\AtBuscadorType;
-use ATManager\FrontendBundle\Form\AtBuscadorInicialType;  
-use ATManager\AtBundle\Form\AtTecnicoType;  
-
+use ATManager\FrontendBundle\Form\AtBuscadorInicialType;
 
 class AtecnicaController extends Controller
 {
@@ -163,8 +157,7 @@ class AtecnicaController extends Controller
                  
         $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
         $sesion = $this->get('session'); 
-        $sesion->set('retorno',$retorno);
-       
+        $sesion->set('retorno',$retorno);    
         /* ------------------------------------*/
         $objt = $this->get('security.context')->getToken()->getUser();   
         $em = $this->getDoctrine()->getManager();
@@ -186,16 +179,40 @@ class AtecnicaController extends Controller
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 
-                   // 'form'=>$form->createView(),
-		            'entities' => $entities,
+                    'entities' => $entities,
                     'tecnico' => $objt,
                     'retorno' =>$retorno 	
             ));
         }
-        return $this->render('AtBundle:Atecnica:find.html.twig', array(
+        return $this->render('AtBundle:Atecnica:findagenda.html.twig', array(
                             'form'=>$form->createView()	 	
         ));
     }
-    
+    public function showAction($id)
+    {
+        /* recupero la variable de session definida en: buscadorAction()*/
+        $sesion = $this->get('session');
+
+       /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
+       el proceso*/ 
+        $ret = $sesion->get('retorno');
+        
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('FrontendBundle:At')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find At entity.');
+        }
+
+
+        return $this->render('AtBundle:Atecnica:atshow.html.twig', 
+            array
+                (
+                    'entity' => $entity,
+                    'ret' => $ret
+                )
+        );
+    }
     
 }

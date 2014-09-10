@@ -1,4 +1,3 @@
-
 #definicion de una ruta, en este caso es el inicio (viejo index.php)
 # de la aplicacion
 
@@ -35,6 +34,9 @@ atecnica:
     resource: "@AtBundle/Resources/config/routing.yml"
     prefix:   /atecnica
 
+indicador:
+    resource: "@IndicadorBundle/Resources/config/routing.yml"
+    prefix:   /indicador
 
 
 
