@@ -1,6 +1,6 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-        <h3>Costos Insumidos en Pesos</h3>	
+        <h3>Costos por Servicios de terceros (en Pesos)</h3>	
         {{ form(form)}}
         <br/>
         <table class="table table-bordered table-striped ">
@@ -10,13 +10,23 @@
                 <th>Precio</th>
             </thead>
             <tbody>
+                {% set total = 0 %}
                 {% for dato in entities.datos%}
                 <tr>
                     <td>{{ dato.stNumero }}</td>
                     <td>{{ dato.stNombre }}</td>
                     <td>{{ dato.precio }}</td>
                 </tr>
+
+                {% set total = total + dato.precio %}
                 {% endfor %}
+                <tr>
+                    <td></td>
+                    <td>Total $</td>
+                    <td>{{ total }}</td>
+                    
+                </tr>
+
             </tbody>
         </table>
         {% if entities.datos.getTotalItemCount > 10 %}

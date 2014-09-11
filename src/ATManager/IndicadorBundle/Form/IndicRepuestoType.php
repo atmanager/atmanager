@@ -24,7 +24,8 @@ class IndicRepuestoType extends AbstractType
                     'years' => range(2004,$actual)
             ))
             ->add('repuesto','entity', array(
-                'label'=>'Repuesto : ',
+                'label'=>'Escolha Repuesto : ',
+                'required'=>false,
                 'class' => 'BackendBundle:Repuesto',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('r')

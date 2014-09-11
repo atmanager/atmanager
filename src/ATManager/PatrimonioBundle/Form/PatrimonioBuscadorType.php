@@ -52,7 +52,7 @@ class PatrimonioBuscadorType extends AbstractType
                 'empty_value'=>'Seleccione Marca [*]'
             ))
             ->add('filtrar','submit')
-            ->add('exportar','submit')
+            ->add('exportar','submit',array('label'=>'Filtra y exporta a CSV'))
             ;
     }
     

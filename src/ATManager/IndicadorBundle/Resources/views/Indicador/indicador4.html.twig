@@ -3,4 +3,23 @@
         <h3>Promedio de Espera por Estadio</h3>
 	
         {{ form(form)}}
+
+        <br/>
+        <table class="table table-bordered table-striped ">
+            <thead>
+                <th>Estadio escogido</th>
+                <th>Sector Escogido</th>
+                <th>Promedio de espera en Horas</th>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>{{ estadio }}</td>
+                    <td>{{ sector  }}</td>
+                    <td>{{ promedio }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+       
 {% endblock %}

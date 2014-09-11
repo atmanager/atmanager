@@ -24,13 +24,26 @@ class IndicEstadioType extends AbstractType
             ))
             ->add('estadio','entity',array(
                     'class'=>'BackendBundle:Estadio',
-                    'required'=>false,
+                    'required'=>true,
                     'query_builder'=>function($er){
                         return $er->createQueryBuilder('e')
                             ->select('e')
                             ->orderBy('e.nombre','ASC');
                     }
-            ))    
+            ))
+
+            ->add('sector','entity',array(
+                    'label'=>'Sector de Destino : ',
+                    'class' => 'BackendBundle:Sector',
+                    'query_builder' => function($er) {
+                        return $er->createQueryBuilder('s')
+                            ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
+                            ->setParameter('destino',true)
+                            ->orderBy('s.nombre','ASC')
+                        ;
+                    }           
+            ))  
+
             ->add('Aceptar','submit');
     }
     public function setDefaultOptions(OptionsResolverInterface $resolver)

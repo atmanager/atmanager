@@ -5,6 +5,7 @@ namespace ATManager\AtBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtTecnico;
+use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtBuscadorInicialType;
 
 class AtecnicaController extends Controller
@@ -69,7 +70,7 @@ class AtecnicaController extends Controller
     public function generoAgendaTecnicoAction($id)
     {
 	    $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FrontendBundle:At')->find($id);
+        $entity = $em->getRepository('FrontendBundle:At')->find($id);
 	    $objtl = $this->get('security.context')->getToken()->getUser();
  	    $opciones['sector'] = $objtl->getSector();
 	    $mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySector($opciones['sector']);
@@ -100,7 +101,7 @@ class AtecnicaController extends Controller
 	    $objatt->setRol($rol);
 	    $objatt->setTecnico($objt);
 	    $em->persist($objatt);
-            $ath= new atHistorico();
+            $ath= new AtHistorico();
             $ath->setAt($entity);   
             $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByDiagnosAt(true);         
             $estadio = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);

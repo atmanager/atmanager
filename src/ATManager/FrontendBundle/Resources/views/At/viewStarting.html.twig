@@ -4,11 +4,12 @@
 
 {% block content %}
 
-<h3 class="title" style="text-align:center">Visualizar AT {{ estadio }} </h3>
+<h3 class="title" style="text-align:center">Abordaje inicial de ATs</h3>
+<h4>Filtradas por estadio:  {{ estadio }} </h4>
 
 Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
 <br />
-<a href="{{ path('atecnica_buscador') }}"><h4>[Volver]</h4></a> 
+
 <table class="table table-bordered table-striped table-condensed">
     <thead>
         {% if estadio.getClasificacion().getIniciaAt() %}
@@ -78,6 +79,7 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
     {% endfor %}
     </tbody>
 </table>
+<a href="{{ path('atecnica_buscador') }}"><h4>[Volver]</h4></a> 
 
 {% if entities.getTotalItemCount > 10 %}
     {{ knp_pagination_render(entities) }}

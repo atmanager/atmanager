@@ -68,7 +68,7 @@ class TecnicoController extends Controller
                 $request->getSession()->getFlashBag()->add('success','Item Guardado');
                 return $this->redirect($this->generateUrl('tecnico_show', array('id' => $entity->getId())));
             } catch(\Exception $ex) {
-                $request->getSession()->getFlashBag()->add('error','Error al intentar agregar item');
+                $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
                 return $this->redirect($this->generateUrl('tecnico_new'));
             }
         }

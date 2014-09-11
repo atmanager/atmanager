@@ -6,6 +6,7 @@
         <table class="table table-bordered table-striped ">
             <thead>
                 <th>Falla</th>
+                <th>Número Patrimonio</th>
                 <th>Patrimonio</th>
                 <th>Cantidad</th>
             </thead>
@@ -13,6 +14,7 @@
                 {% for dato in entities.datos%}
                 <tr>
                     <td>{{ dato.falla }}</td>
+                    <td>{{ dato.idPat}}</td>
                     <td>{{ dato.patrimonio}}</td>
                     <td>{{ dato.cantidad }}</td>
                 </tr>

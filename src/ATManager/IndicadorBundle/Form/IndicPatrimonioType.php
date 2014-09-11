@@ -19,25 +19,31 @@ class IndicPatrimonioType extends AbstractType
         $actual=date ("Y");
         $etm = $this->em;
         $transformer = new PatrimonioToNumberTransformer($etm);
-        $builder
-            ->add('fechadesde','date',array(
-                    'input'  => 'datetime',
-                    'widget' => 'choice',
-                    'years' => range(2004,$actual)
-            ))
-            ->add('fechahasta','date',array(
-                    'input'  => 'datetime',
-                    'widget' => 'choice',
-                    'years' => range(2004,$actual)
-            ));
-        $builder        
+        
+         $builder        
             ->add(
                 $builder->create('patrimonio', 'text', array(
-                    'required'=>false,
+                    'required'=>true,
                     'label'=>'Ingrese número de Patrimonio '
                 ))
                 ->addModelTransformer($transformer)
             );
+
+
+        $builder
+            ->add('fechadesde','date',array(
+                    'input'  => 'datetime',
+                    'widget' => 'choice',
+                    'years' => range(2004,$actual),
+                    'label'=>'Desde fecha: '
+            ))
+            ->add('fechahasta','date',array(
+                    'input'  => 'datetime',
+                    'widget' => 'choice',
+                    'years' => range(2004,$actual),
+                    'label'=>'Hasta fecha: '
+            ));
+       
         $builder  
             ->add('Aceptar','submit');    
     }

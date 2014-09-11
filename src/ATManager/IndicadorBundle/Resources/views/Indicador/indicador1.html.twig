@@ -35,7 +35,7 @@
                     <td>{{ dato.patNumero }}</td>
                     <td>{{ dato.patNombre }}</td>
                     <td>{{ dato.atNumero }}</td>
-                    <td>{{ dato.atFecha }}</td>
+                    <td>{{ dato.atFecha | date('d/m/Y - H:i:s') }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -44,19 +44,20 @@
 {% block javascript %}
 	<script type="text/javascript">
             $(document).ready(function(){
-		$('#consulta').on('click',function(){ 
+		$('#consulta').on('click',
+            function(){ 
                     $.ajax({
-			url: $(this).attr('href')+"/"+$('#atmanager_frontendbundle_at_patrimonio').val(),
-			dataType: "json",
+			                 url: $(this).attr('href')+"/"+$('#atmanager_indicadorbundle_indicador_patrimonio').val(),
+			                     dataType: "json",
                             error: function(jqXHR,textstatus)
                             {
-				$('#descripcion').html('No existe patrimonio...');
-				//alert("No existe!!");
+				                $('#descripcion').html('No existe patrimonio...');
+				                //alert("No existe!!");
                             },
                             success: function(data, textstatus)
                             {
                                 console.log(data);
-				$('#descripcion').html(data.descripcion);
+				                $('#descripcion').html(data.descripcion);
                             }
                     });
 		return false;
@@ -64,3 +65,4 @@
             });
 	</script>
 {% endblock %}
+

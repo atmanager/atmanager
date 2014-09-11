@@ -26,6 +26,7 @@ class IndicServicioType extends AbstractType
             ->add('sertercero','entity', array(
                 'label'=>'Servicio Tercero : ',
                 'class' => 'BackendBundle:ServicioTercero',
+                'required'=>false,
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('st')
                         ->orderBy('st.nombre','ASC')

@@ -11,14 +11,22 @@
                 <th>Total</th>
             </thead>
             <tbody>
+                 {% set total = 0 %}
                 {% for dato in entities.datos%}
                 <tr>
                     <td>{{ dato.repNumero }}</td>
                     <td>{{ dato.repNombre }}</td>
                     <td>{{ dato.cantidad }}</td>
                     <td>{{ dato.total }}</td>
+                    {% set total = total + dato.total %}
                 </tr>
                 {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Total $</td>
+                    <td>{{ total }}</td>                   
+                </tr>
             </tbody>
         </table>
         {% if entities.datos.getTotalItemCount > 10 %}
