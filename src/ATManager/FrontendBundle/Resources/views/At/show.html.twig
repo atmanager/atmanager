@@ -7,7 +7,13 @@
             <tr>
                 <th>Numero de Solicitud</th>
                 <td>{{ entity.id }}</td>
-            </tr>     
+            </tr>
+
+             <tr>
+                <th>Fecha Solicitud</th>
+                <td>{{ entity.fechasolicitud | date('d-m-Y H:i') }}</td>
+            </tr>
+                 
             <tr>
                 <th>Falla declarada</th>
                 <td>{{ entity.descripcion }}</td>

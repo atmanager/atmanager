@@ -90,7 +90,7 @@ class IndicadorRepository extends EntityRepository
     public function findByIndicador6($fechadesde,$fechahasta,$objst){
         $em = $this->getEntityManager();		  	
 	$query = $em->createQuery('select st.id as stNumero, st.nombre as stNombre, sum(ats.precio) as precio
-                from AtBundle:AtServicioTercero ats 
+               from AtBundle:AtServicioTercero ats 
                 inner join BackendBundle:ServicioTercero st with ats.serviciotercero=st
                 where ats.fecha between :fechadesde and :fechahasta
                 and ats.serviciotercero = :sertercero

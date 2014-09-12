@@ -100,6 +100,7 @@ class At
     private $prioridad;
     /** 
      *   @ORM\OneToMany(targetEntity="ATManager\AtBundle\Entity\AtHistorico", mappedBy="at") 
+     *   @ORM\OrderBy({"id"="ASC"})
     */
     private $historicos;
     /** 

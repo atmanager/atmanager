@@ -1,68 +1,92 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-        <h3>Historial de AT por Patrimonio</h3>
-	{{ form_start(form)}} 
-            {{ form_row(form.fechadesde) }}
-            {{ form_row(form.fechahasta) }}
-            <div class="row">
-		<div class="col-xs-8">
-                {{ form_row(form.patrimonio) }}	
-		</div>
-                <div class="col-xs-4">
-                    <div class="form-group">
-			<label>&nbsp;</label>
-                        <div> 
-                            <a href="{{ path('patrimonio_existe') }}" id="consulta" class="btn btn-primary">
-                                Consultar
-                            </a>
-                        </div>
-                    </div>					
-		</div>
+<h3>Historial de AT por Patrimonio</h3>
+{{ form_start(form)}}
+<div class="row">
+    <div class="col-xs-4">{{ form_row(form.fechadesde) }}</div>
+    <div class="col-xs-4">{{ form_row(form.fechahasta) }}</div>
+    <div class="col-xs-4"></div>
+</div>
+
+<div class="row">
+    <div class="col-xs-4">
+        {{ form_row(form.patrimonio) }}
+    </div>
+    <div class="col-xs-2">
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <div> 
+                <a href="{{ path('patrimonio_existe') }}" id="consulta" class="btn btn-primary btn-block">
+                    Consultar
+                </a>
             </div>
-            <p id="descripcion"> &nbsp; </p>
-	{{ form_end(form) }}
-        <br/>
-        <table class="table table-bordered table-striped ">
-            <thead>
-                <th>Nro. Patrimonio</th>
-                <th>Nombre</th>
-                <th>Nro. AT</th>
-                <th>Fecha de Solicitud</th>
-            </thead>
-            <tbody>
-                {% for dato in entities.datos%}
-                <tr>
-                    <td>{{ dato.patNumero }}</td>
-                    <td>{{ dato.patNombre }}</td>
-                    <td>{{ dato.atNumero }}</td>
-                    <td>{{ dato.atFecha | date('d/m/Y - H:i:s') }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>    
+        </div> 
+        
+    </div>
+    <div class="col-xs-2">
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <div>
+    {{ form_row(form.Aceptar) }}
+    </div>
+</div>
+</div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <p id="descripcion"> &nbsp; </p>
+    </div>
+</div>
+
+{{ form_end(form) }}
+<br/>
+<table class="table table-bordered table-striped ">
+    <thead>
+        <th>Nro. Patrimonio</th>
+        <th>Nombre</th>
+        <th>Nro. AT</th>
+        <th>Fecha de Solicitud</th>
+    </thead>
+    <tbody>
+        {% for dato in entities.datos%}
+        <tr>
+            <td>{{ dato.patNumero }}</td>
+            <td>{{ dato.patNombre }}</td>
+            <td>{{ dato.atNumero }}</td>
+            <td>{{ dato.atFecha | date('d/m/Y - H:i:s') }}</td>
+        </tr>
+
+        {% else %}
+        <tr><td colspan="4"> <p class="text-center">No hay resultados para este patrimonio </p></td></tr>
+        {% endfor %}
+    </tbody>
+</table>    
 {% endblock %}
 {% block javascript %}
-	<script type="text/javascript">
-            $(document).ready(function(){
-		$('#consulta').on('click',
-            function(){ 
-                    $.ajax({
-			                 url: $(this).attr('href')+"/"+$('#atmanager_indicadorbundle_indicador_patrimonio').val(),
-			                     dataType: "json",
-                            error: function(jqXHR,textstatus)
-                            {
-				                $('#descripcion').html('No existe patrimonio...');
-				                //alert("No existe!!");
-                            },
-                            success: function(data, textstatus)
-                            {
-                                console.log(data);
-				                $('#descripcion').html(data.descripcion);
-                            }
-                    });
-		return false;
-		});
-            });
-	</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#consulta').on('click',
+        function(){ 
+            $.ajax({
+                url: $(this).attr('href')+"/"+$('#atmanager_indicpatrimonio_patrimonio').val(),
+                dataType: "json",
+                error: function(jqXHR,textstatus)
+                {
+                    $('#descripcion').html('No existe patrimonio...');
+//alert("No existe!!");
+},
+success: function(data, textstatus)
+{
+    console.log(data);
+    $('#descripcion').html(data.descripcion);
+}
+});
+            return false;
+        });
+});
+</script>
 {% endblock %}
 

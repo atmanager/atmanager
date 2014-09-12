@@ -29,7 +29,7 @@ class AtHistoricoController extends Controller
         $entities = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoPorAt($at);
         if($estadio)
         {
-            $this->get('session')->getFlashBag()->add('error','La AT esta finalizada');
+            $this->get('session')->getFlashBag()->add('error','AT finalizada. No se permite EVOLUCIONAR');
             return $this->redirect($ret); 
         }
         else
@@ -58,7 +58,7 @@ class AtHistoricoController extends Controller
             {
                 if($entity->getAt()->getFallas()->isEmpty())
                 {
-                    $this->get('session')->getFlashBag()->add('error','No se puede cerrar falta la falla');
+                    $this->get('session')->getFlashBag()->add('error','Acción denegada. Falta cargar al menos una falla');
                     return $this->redirect($this->generateUrl('at_historico_new', array('idAt' => $at->getId())));
                 }
                 else

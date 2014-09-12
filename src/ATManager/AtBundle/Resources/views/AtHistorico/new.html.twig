@@ -2,6 +2,7 @@
 {% block content -%}
 
     <h3>Crear Evolución para AT: {{ entity.at.id }}</h3>
+    <p> <strong>Problemas:</strong> {{ entity.at.descripcion }}</p>
 
     {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
      

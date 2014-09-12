@@ -174,9 +174,15 @@ class AtecnicaController extends Controller
         {
 	    $entities =array();        	  
             $sector=$objt->getSector();
-            $rol=1;
-            $estadio=$form->get('estadio')->getData();            
+            $rol=$em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);          
+            $estadio=$form->get('estadio')->getData();
+            
+            /* mejorar esto*/
+            if($estadio)
+            {    
             $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnico($objt,$rol,$estadio);
+            }else{$entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnicoSinEstadio($objt,$rol);}
+
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 

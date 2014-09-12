@@ -26,6 +26,7 @@ security:
         #- { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY } 
         - { path: ^/patrimonio/patrimonio/existe/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/backend/tecnico/cambiopass, role: ROLE_TECNICO }
         - { path: ^/patrimonio/, role: ROLE_OPERPAT }
 
         - { path: ^/atecnica/atecnica/buscador, role: ROLE_JDS }

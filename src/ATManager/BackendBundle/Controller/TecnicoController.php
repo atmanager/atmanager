@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ATManager\BackendBundle\Form\TecnicoNewType; 
 use ATManager\BackendBundle\Form\TecnicoEditarType; 
+use ATManager\BackendBundle\Form\TecnicoCambioPassType;
 use ATManager\BackendBundle\Form\BuscadorType; 
-use ATManager\BackendBundle\Entity\Tecnico;   
+use ATManager\BackendBundle\Entity\Tecnico;  
+use Symfony\Component\Form\FormError; // para validar documento 
 
 class TecnicoController extends Controller
 {
@@ -42,6 +44,8 @@ class TecnicoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+
             $nombre = $form->get('nombre')->getData();
             $documento = $form->get('documento')->getData();
             $movil = $form->get('movil')->getData();
@@ -63,14 +67,25 @@ class TecnicoController extends Controller
             $entity->setEnabled(true);
             $entity->setRoles(array($rol));
             $entity->setLastLogin(null);
-            try {
-                $userManager->updateUser($entity);
-                $request->getSession()->getFlashBag()->add('success','Item Guardado');
-                return $this->redirect($this->generateUrl('tecnico_show', array('id' => $entity->getId())));
-            } catch(\Exception $ex) {
-                $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
-                return $this->redirect($this->generateUrl('tecnico_new'));
-            }
+
+
+             $validator = $this->get('validator');
+             $errors = $validator->validate($entity);
+             if(count($errors)>0)
+             {
+                $primer_error = $errors[0];
+                $form->get('documento')->addError(new FormError($primer_error->getMessage()));             
+             }else{
+
+                    try {
+                        $userManager->updateUser($entity);
+                        $request->getSession()->getFlashBag()->add('success','Item Guardado');
+                        return $this->redirect($this->generateUrl('tecnico_show', array('id' => $entity->getId())));
+                    } catch(\Exception $ex) {
+                        $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
+                        return $this->redirect($this->generateUrl('tecnico_new'));
+                    }
+          }
         }
 
         return $this->render('BackendBundle:Tecnico:new.html.twig', array(
@@ -159,5 +174,38 @@ class TecnicoController extends Controller
                 $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item'); 
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             }    
+    }
+
+    #    cambio password
+    public function cambiopassAction(Request $request)
+    {
+        $userManager = $this->container->get('fos_user.user_manager');
+        $em = $this->getDoctrine()->getManager();
+        $objTecnico = $this->get('security.context')->getToken()->getUser();
+
+        
+        $form = $this->createForm(new TecnicoCambioPassType()); 
+        $form->handleRequest($this->getRequest());
+        if ($form->isValid())
+        {
+
+           
+            $contrasenia = $form->get('plainpassword')->getData();
+            $objTecnico->setPlainPassword($contrasenia);
+                       
+           
+           
+            try {
+                $userManager -> updateUser($objTecnico);
+                $this->get('session')->getFlashBag()->add('success','Item actualizado');
+                return $this->redirect($this->generateUrl('inicio'));
+            } 
+            catch(\Exception $ex) {
+               $request->getSession()->getFlashBag()->add('error','Error al intentar cambiar password técnico');
+               
+            }
+        }
+        return $this->render('BackendBundle:Tecnico:cambiopass.html.twig', array(
+                       'form'=>$form->createView()));
     }
 }

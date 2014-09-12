@@ -222,10 +222,27 @@ class PatrimonioController extends Controller
 		    $elemento[11]=$key->getMarca()->getNombre();				
 		    $elemento[12]=$key->getEstado()->getNombre();
 		    $elemento[13]=$key->getTecnico()->getNombre();
-		    $elemento[14]=$key->getFechaAlta();
-		    $elemento[15]=$key->getFechaBaja();		
-		    $elemento[16]=$key->getFechaModifica();
-		    fputcsv($handle, $elemento, ';');                   
+		    
+            if($key->getFechaAlta())
+            {
+                $elemento[14]=$key->getFechaAlta()->format('d-m-Y H:i');    
+            }else{$elemento[14]="";}
+
+            if($key->getFechaBaja())
+            {
+                $elemento[15]=$key->getFechaBaja()->format('d-m-Y H:i');    
+            }
+            else{$elemento[15]="";}
+
+            if($key->getFechaModifica())
+            {
+                $elemento[16]=$key->getFechaModifica()->format('d-m-Y H:i');    
+            }else{$elemento[16]="";}
+            
+		    
+            
+		    
+            fputcsv($handle, $elemento, ';');                   
         }
         fclose($handle);
         });

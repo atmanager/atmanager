@@ -56,6 +56,7 @@ class TecnicoNewType extends AbstractType
                 'second_name' => "contrasena_2",
                 'first_options'  => array('label' => 'Contraseña *'),
                 'second_options' => array('label' => 'Repetir Contraseña *'),
+                 'constraints'=>array(new Assert\NotBlank())
             ))
             ->add('rol', 'choice', array(
                 'required' => true,

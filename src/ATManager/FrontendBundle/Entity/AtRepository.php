@@ -111,4 +111,22 @@ class AtRepository extends EntityRepository
             
                 return $query->getResult();
 	}
+
+	public function findByFiltroPorTecnicoSinEstadio($tecnico,$rol)
+	{
+            $em = $this->getEntityManager();		  	
+            $query = $em->createQuery(
+                'SELECT a
+                FROM FrontendBundle:At a
+                INNER JOIN AtBundle:AtTecnico t with a.id = t.at
+                INNER JOIN AtBundle:AtHistorico h with a.id=h.at 
+                WHERE t.tecnico = :tecnico 
+                AND t.rol = :rol
+                ORDER BY h.at')
+                ->setParameter('tecnico', $tecnico)
+                ->setParameter('rol', $rol);
+               
+            
+                return $query->getResult();
+	}
 }

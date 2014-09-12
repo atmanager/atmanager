@@ -99,7 +99,9 @@
               <li>  
                 <a href="{{ path('inicio')}}">Inicio</a>  
               </li>
-
+               {% if app.user %}
+                <li><a href="#">{{ app.user.nombre }}</a></li>
+                {% endif %}
 
           </ul>
 

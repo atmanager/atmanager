@@ -6,6 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use ATManager\FrontendBundle\Form\DataTransformer\PatrimonioToNumberTransformer;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormError;
 
 class IndicPatrimonioType extends AbstractType
 {
@@ -45,7 +48,20 @@ class IndicPatrimonioType extends AbstractType
             ));
        
         $builder  
-            ->add('Aceptar','submit');    
+            ->add('Aceptar','submit');  
+
+
+
+         $validarRangoFechas = function(FormEvent $event){
+        $form = $event->getForm();
+        $fechadesde = $form->get('fechadesde')->getData();
+        $fechahasta = $form->get('fechahasta')->getData();
+         if ($fechahasta < $fechadesde)
+         {
+            $form['fechahasta']->addError(new FormError("fecha Hasta debe ser mayor o igual a Fecha Desde"));
+         }
+        };
+        $builder->addEventListener(FormEvents::POST_BIND, $validarRangoFechas);          
     }
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

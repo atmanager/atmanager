@@ -23,16 +23,8 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-            $numPat=$form->get('patrimonio')->getData();
-            $objpat=$em->getRepository('PatrimonioBundle:Patrimonio')->find($numPat);
-
-            if ($fechadesde<=$fechahasta)
-            {
-                if ($objpat)
-                {
-                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador1($fechadesde,$fechahasta,$objpat));
-                }else{echo "No hay instancia del patrimonio";}
-            }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}
+            $objpat=$form->get('patrimonio')->getData();                    
+            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador1($fechadesde,$fechahasta,$objpat));                            
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));

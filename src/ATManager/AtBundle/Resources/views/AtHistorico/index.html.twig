@@ -1,7 +1,18 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
    <h3>Gestión de Evolución en AT : {{ at }}</h3>
-   <table>
+       <table class="table table-bordered table-striped">
+       <tr>
+        <td>
+            Problema:
+        </td>       
+              <td>
+                {{ at.descripcion }}
+              </td>
+        </tr>
+       </table>
+       
+       <table>
        <td>
             <a href="{{ path('at_historico_new', { 'idAt': at.id }) }}">
                 <h4>[Crear]&nbsp;</h4>
