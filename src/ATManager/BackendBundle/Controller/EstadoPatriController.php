@@ -44,7 +44,7 @@ class EstadoPatriController extends Controller
             }
         catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('estadopatri_new'));
+         //       return $this->redirect($this->generateUrl('estadopatri_new'));
             }
         }
         return $this->render('BackendBundle:EstadoPatri:new.html.twig', array(
@@ -79,8 +79,8 @@ class EstadoPatriController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BackendBundle:EstadoPatri')->find($id);
         $editForm =  $this->createForm(new EstadoPatriType(), $entity);
-    $editForm->handleRequest($this->getRequest());
-    if ($editForm->isValid()) {
+        $editForm->handleRequest($this->getRequest());
+        if ($editForm->isValid()) {
             try{
                 $em->flush();          
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
@@ -88,7 +88,7 @@ class EstadoPatriController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('estadopatri_edit', array('id' => $entity->getId())));
+           //     return $this->redirect($this->generateUrl('estadopatri_edit', array('id' => $entity->getId())));
             }
         }
         return $this->render('BackendBundle:EstadoPatri:edit.html.twig', array(

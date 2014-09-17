@@ -2,7 +2,6 @@
 
 namespace ATManager\BackendBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\BackendBundle\Entity\Estadio;
 use ATManager\BackendBundle\Form\EstadioType;
@@ -45,7 +44,7 @@ class EstadioController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('estadio_new'));
+         //       return $this->redirect($this->generateUrl('estadio_new'));
             }
         }
         return $this->render('BackendBundle:Estadio:new.html.twig', array(
@@ -87,8 +86,8 @@ class EstadioController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('estadio_edit', array('id' => $id)));
-             }
+           //     return $this->redirect($this->generateUrl('estadio_edit', array('id' => $id)));
+            }
         }
         return $this->render('BackendBundle:Estadio:edit.html.twig', array(
             'entity'      => $entity,

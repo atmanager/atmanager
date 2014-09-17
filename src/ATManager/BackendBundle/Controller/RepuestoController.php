@@ -13,7 +13,6 @@ use ATManager\BackendBundle\Form\BuscadorType;
  */
 class RepuestoController extends Controller
 {
-
     /**
      * Lists all Repuesto entities.
      *
@@ -24,7 +23,6 @@ class RepuestoController extends Controller
         $form=$this->createForm(new BuscadorType(),null,array('method' => 'GET'));
         $form->handleRequest($request);
         $entities =array();
-
         if ($form->isValid()) {
             $nombre=$form->get('nombre')->getData();
             $entities = $em->getRepository('BackendBundle:Repuesto')->findByName($nombre);
@@ -52,7 +50,7 @@ class RepuestoController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('repuesto_new'));
+            //    return $this->redirect($this->generateUrl('repuesto_new'));
             }
         }
 
@@ -99,7 +97,7 @@ class RepuestoController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('repuesto_edit', array('id' => $id)));
+            //    return $this->redirect($this->generateUrl('repuesto_edit', array('id' => $id)));
             }
         }
         return $this->render('BackendBundle:Repuesto:edit.html.twig', array(

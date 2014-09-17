@@ -23,8 +23,13 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-            $objpat=$form->get('patrimonio')->getData();                    
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador1($fechadesde,$fechahasta,$objpat));                            
+            $objpat=$form->get('patrimonio')->getData();
+            if ($fechadesde<=$fechahasta) {
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador1($fechadesde,$fechahasta,$objpat));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');
+            }
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -33,20 +38,20 @@ class IndicadorController extends Controller
             'form'=>$form->createView()	
         ));
     }
-    
-
     public function indicador2Action(Request $request){
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicPeriodoType(),null,array('method' => 'GET'));
         $form->handleRequest($request);
         $entities =new Indicador();
-        if ($form->isValid()) {
+        if ($form->isValid()){
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-            if ($fechadesde<=$fechahasta)
-            {
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador2($fechadesde,$fechahasta));
-            }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}
+            if ($fechadesde<=$fechahasta) {
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador2($fechadesde,$fechahasta));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');
+            }
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -55,8 +60,6 @@ class IndicadorController extends Controller
             'form'=>$form->createView()	
         ));
     }
-    
-
     public function indicador3Action(Request $request){
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicSecDestinoType(),null,array('method' => 'GET'));
@@ -66,11 +69,12 @@ class IndicadorController extends Controller
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
             $objsd=$form->get('secdestino')->getData();
-
-            if ($fechadesde<=$fechahasta)
-            {
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador3($fechadesde,$fechahasta,$objsd));
-            }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}
+            if ($fechadesde<=$fechahasta) {
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador3($fechadesde,$fechahasta,$objsd));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');                
+            }
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -79,8 +83,6 @@ class IndicadorController extends Controller
             'form'=>$form->createView()	
         ));
     }
-    
-
     public function indicador4Action(Request $request){
        /*
         inicializo las variables
@@ -91,7 +93,6 @@ class IndicadorController extends Controller
         $objest=null;
         $objsec=null;
         $promedio=0;
-
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicEstadioType(),null,array('method' => 'GET'));
         $form->handleRequest($request);
@@ -101,14 +102,16 @@ class IndicadorController extends Controller
             $fechahasta=$form->get('fechahasta')->getData();
             $objest=$form->get('estadio')->getData();
             $objsec=$form->get('sector')->getData();
-           if ($fechadesde<=$fechahasta)
-           {
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador4($fechadesde,$fechahasta,$objest,$objsec));
-            $resul = $entities->getDatos(); 
-            $promedio = $this->obtener_promedio_por_estadio($resul);
-           }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}                   
-        }
-    	
+            if ($fechadesde<=$fechahasta)
+            {
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador4($fechadesde,$fechahasta,$objest,$objsec));
+                $resul = $entities->getDatos(); 
+                $promedio = $this->obtener_promedio_por_estadio($resul);
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');                
+            }                   
+        }  	
         return $this->render('IndicadorBundle:Indicador:indicador4.html.twig', array(
             'estadio'=> $objest,
             'sector'=> $objsec,
@@ -116,8 +119,6 @@ class IndicadorController extends Controller
             'form'=>$form->createView()	
         ));
     }
-    
-
     public function indicador5Action(Request $request){
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicSecSolicitanteType(),null,array('method' => 'GET'));
@@ -126,13 +127,13 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-
-            $objss=$form->get('secsolicitante')->getData();
-           
-           if ($fechadesde<=$fechahasta)
-           {
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador5($fechadesde,$fechahasta,$objss));
-            }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}                   
+            $objss=$form->get('secsolicitante')->getData();          
+            if ($fechadesde<=$fechahasta) {
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador5($fechadesde,$fechahasta,$objss));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');
+            }                   
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -141,7 +142,6 @@ class IndicadorController extends Controller
             'form'=>$form->createView()	
         ));
     }
-
     public function indicador6Action(Request $request){
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicServicioType(),null,array('method' => 'GET'));
@@ -150,15 +150,13 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-            if ($fechadesde<=$fechahasta)
-           {
             $objst=$form->get('sertercero')->getData();
-           
-            if($objst)
-            {    
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador6($fechadesde,$fechahasta,$objst));
-            }else{$entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador6bis($fechadesde,$fechahasta));}
-           }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}                    
+            if ($fechadesde<=$fechahasta){
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador6($fechadesde,$fechahasta,$objst));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');             
+            }                    
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -175,10 +173,12 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-            if ($fechadesde<=$fechahasta)
-           { 
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador7($fechadesde,$fechahasta));
-           }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}
+            if ($fechadesde<=$fechahasta){ 
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador7($fechadesde,$fechahasta));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');                
+            }
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -195,10 +195,12 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-            if ($fechadesde<=$fechahasta)
-            {
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador8($fechadesde,$fechahasta));
-            }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}
+            if ($fechadesde<=$fechahasta){
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador8($fechadesde,$fechahasta));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');               
+            }
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -215,17 +217,13 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-            $objrep=$form->get('repuesto')->getData();
-            
-            if ($fechadesde<=$fechahasta)
-            {
-                if($objrep)
-                {    
-                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador9($fechadesde,$fechahasta,$objrep));           
-                }else{
-                        $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador9bis($fechadesde,$fechahasta));           
-                     }
-            }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}
+            $objrep=$form->get('repuesto')->getData();       
+            if ($fechadesde<=$fechahasta) {
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador9($fechadesde,$fechahasta,$objrep));                          
+            } 
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');                
+            }
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -234,7 +232,6 @@ class IndicadorController extends Controller
             'form'=>$form->createView()	
         ));
     }
-  
     public function indicador10Action(Request $request){
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicPeriodoType(),null,array('method' => 'GET'));
@@ -243,11 +240,12 @@ class IndicadorController extends Controller
         if ($form->isValid()) {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();
-           
-            if ($fechadesde<=$fechahasta)
-            {
+            if ($fechadesde<=$fechahasta){
                 $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador10($fechadesde,$fechahasta));
-             }else{$this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');}   
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');                
+            }   
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -256,9 +254,6 @@ class IndicadorController extends Controller
             'form'=>$form->createView()	
         ));
     }
-
-    
-
     private function obtener_promedio_por_estadio($resul)
     {
         $x=0;
@@ -273,10 +268,7 @@ class IndicadorController extends Controller
            
             if($x==0){$x=1;}  // no se puede dividir por cero,      
             return ($th/$x);
-    }
-
-
-    
+    }   
     private function calcula_horas($inicio, $fin)
     { 
         $total_seconds = strtotime($fin) - strtotime($inicio); 

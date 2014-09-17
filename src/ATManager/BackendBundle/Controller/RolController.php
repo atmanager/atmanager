@@ -2,7 +2,6 @@
 
 namespace ATManager\BackendBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\BackendBundle\Entity\Rol;
 use ATManager\BackendBundle\Form\RolType;
@@ -13,7 +12,6 @@ use ATManager\BackendBundle\Form\RolType;
  */
 class RolController extends Controller
 {
-
     /**
      * Lists all Rol entities.
      *
@@ -43,8 +41,8 @@ class RolController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('rol_new'));
-             }
+            //    return $this->redirect($this->generateUrl('rol_new'));
+            }
         }
         return $this->render('BackendBundle:Rol:new.html.twig', array(
             'entity' => $entity,
@@ -89,7 +87,7 @@ class RolController extends Controller
             }
              catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('rol_edit', array('id' => $id)));
+             //   return $this->redirect($this->generateUrl('rol_edit', array('id' => $id)));
              }
         }
         return $this->render('BackendBundle:Rol:edit.html.twig', array(

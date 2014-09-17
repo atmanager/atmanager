@@ -7,7 +7,6 @@
     <div class="col-xs-4">{{ form_row(form.fechahasta) }}</div>
     <div class="col-xs-4"></div>
 </div>
-
 <div class="row">
     <div class="col-xs-4">
         {{ form_row(form.patrimonio) }}
@@ -20,27 +19,22 @@
                     Consultar
                 </a>
             </div>
-        </div> 
-        
+        </div>         
     </div>
     <div class="col-xs-2">
         <div class="form-group">
             <label>&nbsp;</label>
             <div>
-    {{ form_row(form.Aceptar) }}
+                {{ form_row(form.Aceptar) }}
+            </div>
+        </div>
     </div>
 </div>
-</div>
-
-
-</div>
-
 <div class="row">
     <div class="col-xs-6">
         <p id="descripcion"> &nbsp; </p>
     </div>
 </div>
-
 {{ form_end(form) }}
 <br/>
 <table class="table table-bordered table-striped ">
@@ -58,35 +52,40 @@
             <td>{{ dato.atNumero }}</td>
             <td>{{ dato.atFecha | date('d/m/Y - H:i:s') }}</td>
         </tr>
-
         {% else %}
-        <tr><td colspan="4"> <p class="text-center">No hay resultados para este patrimonio </p></td></tr>
+            <tr>
+                <td colspan="4"> 
+                    <p class="text-center">
+                        No hay resultados para este patrimonio 
+                    </p>
+                </td>
+            </tr>
         {% endfor %}
     </tbody>
 </table>    
 {% endblock %}
 {% block javascript %}
 <script type="text/javascript">
-$(document).ready(function(){
-    $('#consulta').on('click',
-        function(){ 
-            $.ajax({
-                url: $(this).attr('href')+"/"+$('#atmanager_indicpatrimonio_patrimonio').val(),
-                dataType: "json",
-                error: function(jqXHR,textstatus)
-                {
-                    $('#descripcion').html('No existe patrimonio...');
+    $(document).ready(function(){
+        $('#consulta').on('click',
+            function(){ 
+                $.ajax({
+                    url: $(this).attr('href')+"/"+$('#atmanager_indicpatrimonio_patrimonio').val(),
+                    dataType: "json",
+                    error: function(jqXHR,textstatus)
+                    {
+                        $('#descripcion').html('No existe patrimonio...');
 //alert("No existe!!");
-},
-success: function(data, textstatus)
-{
-    console.log(data);
-    $('#descripcion').html(data.descripcion);
-}
-});
+                    },
+                    success: function(data, textstatus)
+                    {
+                        console.log(data);
+                        $('#descripcion').html(data.descripcion);
+                    }
+                });
             return false;
         });
-});
+    });
 </script>
 {% endblock %}
 

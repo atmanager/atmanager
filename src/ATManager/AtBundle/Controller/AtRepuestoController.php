@@ -58,7 +58,7 @@ class AtRepuestoController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-              return $this->redirect($this->generateUrl('at_repuesto_new',array('idAt' => $entity->getAt()->getId())));
+            //  return $this->redirect($this->generateUrl('at_repuesto_new',array('idAt' => $entity->getAt()->getId())));
            }
         }
     	return $this->render('AtBundle:Atrepuesto:new.html.twig', array(
@@ -82,7 +82,7 @@ class AtRepuestoController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
-                return $this->redirect($this->generateUrl('at_repuesto_edit', array('id' => $entity->getId())));
+            //    return $this->redirect($this->generateUrl('at_repuesto_edit', array('id' => $entity->getId())));
             }    
         }
         return $this->render('AtBundle:Atrepuesto:edit.html.twig', array(

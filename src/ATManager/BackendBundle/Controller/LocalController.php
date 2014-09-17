@@ -44,7 +44,7 @@ class LocalController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-              return $this->redirect($this->generateUrl('local_nuevo'));
+            //  return $this->redirect($this->generateUrl('local_nuevo'));
            }
         }
     	return $this->render('BackendBundle:Local:new.html.twig', array(
@@ -67,7 +67,7 @@ class LocalController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
-                return $this->redirect($this->generateUrl('local_edit', array('id' => $objl->getId())));
+              //  return $this->redirect($this->generateUrl('local_edit', array('id' => $objl->getId())));
             }    
         }
         return $this->render('BackendBundle:Local:edit.html.twig', array('form'=>$form->createView()));

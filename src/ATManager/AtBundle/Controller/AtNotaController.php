@@ -16,7 +16,7 @@ class AtNotaController extends Controller
 {    
     public function indexAction($idAt)
     {
-         $sesion = $this->get('session');
+        $sesion = $this->get('session');
        /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
        el proceso*/ 
         $ret = $sesion->get('retorno');
@@ -49,7 +49,7 @@ class AtNotaController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-              return $this->redirect($this->generateUrl('at_nota_new',array('idAt'=>$entity->getAt()->getId())));
+           //   return $this->redirect($this->generateUrl('at_nota_new',array('idAt'=>$entity->getAt()->getId())));
            }
         }
     	return $this->render('AtBundle:AtNota:new.html.twig', array(
@@ -78,7 +78,7 @@ class AtNotaController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
-                return $this->redirect($this->generateUrl('at_nota_edit', array('id' => $entity->getId())));
+            //    return $this->redirect($this->generateUrl('at_nota_edit', array('id' => $entity->getId())));
             }    
         }
         return $this->render('AtBundle:AtNota:edit.html.twig', array(

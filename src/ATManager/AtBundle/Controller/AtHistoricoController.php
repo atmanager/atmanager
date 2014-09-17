@@ -5,7 +5,6 @@ namespace ATManager\AtBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Form\AtHistoricoType;
 use ATManager\AtBundle\Form\AtHistoricoEditType;
-use ATManager\FrontendBundle\Entity\At;
 use ATManager\AtBundle\Entity\AtHistorico;
 
 
@@ -75,7 +74,7 @@ class AtHistoricoController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-                return $this->redirect($this->generateUrl('at_historico_new',array('idAt' => $at->getId())));
+               // return $this->redirect($this->generateUrl('at_historico_new',array('idAt' => $at->getId())));
             }                      
         }
     	return $this->render('AtBundle:AtHistorico:new.html.twig', array(
@@ -105,7 +104,7 @@ class AtHistoricoController extends Controller
                 }
                 catch(\Exception $e){
                     $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
-                    return $this->redirect($this->generateUrl('at_historico_edit', array('id' => $entity->getId())));
+                 //   return $this->redirect($this->generateUrl('at_historico_edit', array('id' => $entity->getId())));
                 }                          
             }
         }

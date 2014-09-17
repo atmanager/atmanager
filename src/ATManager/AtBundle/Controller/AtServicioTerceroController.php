@@ -24,9 +24,7 @@ class AtServicioTerceroController extends Controller
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
         $clasif=$em->getRepository('BackendBundle:EstadioClasif')->findByServicioAt(true);
         $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasif);
-        $estadio=$em->getRepository('AtBundle:AtHistorico')->findByEstadiosPuntalesAt($at,$esta);
-        
-        
+        $estadio=$em->getRepository('AtBundle:AtHistorico')->findByEstadiosPuntalesAt($at,$esta);      
         if($estadio)
         {
             $entities = $em->getRepository('AtBundle:AtServicioTercero')->findByServiciosPorAt($at);
@@ -62,7 +60,7 @@ class AtServicioTerceroController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error',$e->getMessage()); 
-              return $this->redirect($this->generateUrl('at_servicio_new', array('idAt' => $entity->getAt()->getId())));
+             // return $this->redirect($this->generateUrl('at_servicio_new', array('idAt' => $entity->getAt()->getId())));
            }
         }
     	return $this->render('AtBundle:Atservicio:new.html.twig', array(
@@ -86,7 +84,7 @@ class AtServicioTerceroController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');  
-                return $this->redirect($this->generateUrl('at_servicio_edit', array('id' => $entity->getId())));
+            //    return $this->redirect($this->generateUrl('at_servicio_edit', array('id' => $entity->getId())));
             }    
         }
         return $this->render('AtBundle:Atservicio:edit.html.twig', array(

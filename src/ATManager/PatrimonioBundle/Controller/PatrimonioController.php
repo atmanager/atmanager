@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\PatrimonioBundle\Entity\Patrimonio;
-use ATManager\BackendBundle\Entity\Tecnico;
 use ATManager\PatrimonioBundle\Form\PatrimonioType;
 use ATManager\PatrimonioBundle\Form\PatrimonioBuscadorType;
 use Symfony\Component\HttpFoundation\StreamedResponse; // para exportar
@@ -53,12 +52,11 @@ class PatrimonioController extends Controller
     }    
     public function newAction()
     {
-	    $hoy=new \DateTime();
+        $hoy=new \DateTime();
         $entity = new Patrimonio();
         $form = $this->createForm(new PatrimonioType(), $entity);
         $form->handleRequest($this->getRequest());
-       
-       if ($form->isValid()){
+        if ($form->isValid()){
 	   if($entity->getFechaAlta()>$hoy){
 		$this->get('session')->getFlashBag()->add('error','Error: Fecha de alta es mayor que la actual'); 
                	return $this->redirect($this->generateUrl('patrimonio_new'));		
@@ -68,7 +66,7 @@ class PatrimonioController extends Controller
                 /** asi se obtiene el usuario logueado desde una accion en un controlador **/
                 $objt = $this->get('security.context')->getToken()->getUser();
                 $entity->setTecnico($objt);         
-        		$em = $this->getDoctrine()->getManager();
+        	$em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item Guardado');
@@ -76,7 +74,7 @@ class PatrimonioController extends Controller
            }
            catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar crear item'); 
-               	return $this->redirect($this->generateUrl('patrimonio_new'));
+               	//return $this->redirect($this->generateUrl('patrimonio_new'));
 	   }
         }
         return $this->render('PatrimonioBundle:Patrimonio:new.html.twig', array(
@@ -150,7 +148,7 @@ class PatrimonioController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar editar item'); 
-                return $this->redirect($this->generateUrl('patrimonio_edit', array('id' => $id)));
+                //return $this->redirect($this->generateUrl('patrimonio_edit', array('id' => $id)));
             }
         }
         return $this->render('PatrimonioBundle:Patrimonio:edit.html.twig', array(

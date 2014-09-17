@@ -68,15 +68,15 @@ class AtecnicaController extends Controller
         ));
     }   
     public function generoAgendaTecnicoAction($id)
-    {
-	    $em = $this->getDoctrine()->getManager();
+    {   
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontendBundle:At')->find($id);
-	    $objtl = $this->get('security.context')->getToken()->getUser();
- 	    $opciones['sector'] = $objtl->getSector();
-	    $mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySector($opciones['sector']);
-	    return $this->render('AtBundle:Atecnica:newAtTecnico.html.twig', array(
-        	'entity'=>$entity,
-            	'mapatec'=>$mapatec
+        $objtl = $this->get('security.context')->getToken()->getUser();
+        $opciones['sector'] = $objtl->getSector();
+        $mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySector($opciones['sector']);
+        return $this->render('AtBundle:Atecnica:newAtTecnico.html.twig', array(
+            'entity'=>$entity,
+            'mapatec'=>$mapatec
         ));          
     }  
   

@@ -4,9 +4,6 @@ namespace ATManager\FrontendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\FrontendBundle\Entity\At;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtType;
@@ -51,7 +48,7 @@ class AtController extends Controller
                 return $this->redirect($this->generateUrl('at_show', array('id' => $entity->getId())));
             }catch(\Exception $ex){
                 $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
-                return $this->redirect($this->generateUrl('at_new'));
+                //return $this->redirect($this->generateUrl('at_new'));
             }
         }
         return $this->render('FrontendBundle:At:new.html.twig', array(
@@ -185,7 +182,7 @@ class AtController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar editar item'); 
-                return $this->redirect($this->generateUrl('at_edit', array('id' => $id)));
+                //return $this->redirect($this->generateUrl('at_edit', array('id' => $id)));
             }
         }
         return $this->render('FrontendBundle:At:edit.html.twig', array(

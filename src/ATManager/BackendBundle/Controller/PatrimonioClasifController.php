@@ -42,13 +42,12 @@ class PatrimonioClasifController extends Controller
                 return $this->redirect($this->generateUrl('patrimonioclasif_show', array('id' => $objpc->getId())));
             }catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('patrimonioclasif_nuevo'));
-             }
+            //    return $this->redirect($this->generateUrl('patrimonioclasif_nuevo'));
+            }
         }
         return $this->render('BackendBundle:PatrimonioClasif:new.html.twig', array(
             'form' => $form->createView()
         ));
-    	return $this->render('BackendBundle:PatrimonioClasif:new.html.twig');
     }
     public function editAction($id)
     {
@@ -66,7 +65,7 @@ class PatrimonioClasifController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('patrimonioclasif_editar', array('id' => $objpc->getId())));
+            //    return $this->redirect($this->generateUrl('patrimonioclasif_editar', array('id' => $objpc->getId())));
             }    
         }
         return $this->render('BackendBundle:PatrimonioClasif:edit.html.twig', array('form'=>$form->createView()));

@@ -3,7 +3,6 @@
 namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Validator\Constraints as Assert;
 use ATManager\BackendBundle\Form\MarcaType; 
 use ATManager\BackendBundle\Entity\Marca; 
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +43,7 @@ class MarcaController extends Controller
           }
           catch(\Exception $e){
             $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-            return $this->redirect($this->generateUrl('marca_nuevo'));
+          //  return $this->redirect($this->generateUrl('marca_nuevo'));
           }
         }
     	return $this->render('BackendBundle:Marca:new.html.twig', array(
@@ -65,11 +64,11 @@ class MarcaController extends Controller
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
                 return $this->redirect($this->generateUrl('marca_editar', array('id' => $id)));
-                }
+            }
             catch(\Exception $e)
             {
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item'); 
-               return $this->redirect($this->generateUrl('marca_editar', array('id' => $id)));
+            //    return $this->redirect($this->generateUrl('marca_editar', array('id' => $id)));
             }
         }
     	return $this->render('BackendBundle:Marca:edit.html.twig',array(

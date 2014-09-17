@@ -49,7 +49,7 @@ class AtFallaController extends Controller
            }
            catch(\Exception $e){
               $this->get('session')->getFlashBag()->add('error',$e->getMessage()); 
-              return $this->redirect($this->generateUrl('at_falla_new', array('idAt' => $entity->getAt()->getId())));
+          //    return $this->redirect($this->generateUrl('at_falla_new', array('idAt' => $entity->getAt()->getId())));
            }
         }
     	return $this->render('AtBundle:AtFalla:new.html.twig', array(

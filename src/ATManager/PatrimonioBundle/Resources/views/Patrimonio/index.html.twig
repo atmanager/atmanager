@@ -32,7 +32,7 @@
             <tr>
 		<td><a href="{{ path('patrimonio_show', { 'id': entity.id }) }}"> Ver </a></td>
 		<td><a href="{{ path('patrimonio_edit', { 'id': entity.id }) }}">Editar</a></td>
-		<td><a href="{{ path('patrimonio_delete', { 'id': entity.id }) }}">Eliminar</a></td>
+		<td><a href="{{ path('patrimonio_delete', { 'id': entity.id }) }}" onClick="return confirm('¿Desea Eliminar el Patrimonio Seleccionado?');">Eliminar</a></td>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.descripcion }}</td>
 		<td>{{ entity.local.getCodigoInterno() ~ ' ' ~ entity.local.getNombre() }}</td>

@@ -47,8 +47,6 @@ class IndicadorRepository extends EntityRepository
             ->setParameter('secdestino', $objsd);
         return $query->getResult();
     }
-    
-
     public function findByIndicador4($fechadesde,$fechahasta,$objest,$objsec){
        
     $em = $this->getEntityManager();		  	
@@ -67,11 +65,7 @@ class IndicadorRepository extends EntityRepository
                 ->setParameter('sector', $objsec);
                 return $query->getResult(); 
     
-    }
-
-
-
-    
+    }    
     public function findByIndicador5($fechadesde,$fechahasta,$objss){
         $em = $this->getEntityManager();		  	
 	$query = $em->createQuery('select s.id as secSolicita, s.nombre as nomSolicita,
@@ -89,7 +83,8 @@ class IndicadorRepository extends EntityRepository
     }
     public function findByIndicador6($fechadesde,$fechahasta,$objst){
         $em = $this->getEntityManager();		  	
-	$query = $em->createQuery('select st.id as stNumero, st.nombre as stNombre, sum(ats.precio) as precio
+        if($objst){ 
+            $query = $em->createQuery('select st.id as stNumero, st.nombre as stNombre, sum(ats.precio) as precio
                from AtBundle:AtServicioTercero ats 
                 inner join BackendBundle:ServicioTercero st with ats.serviciotercero=st
                 where ats.fecha between :fechadesde and :fechahasta
@@ -99,23 +94,19 @@ class IndicadorRepository extends EntityRepository
             ->setParameter('fechadesde', $fechadesde)
             ->setParameter('fechahasta', $fechahasta)
             ->setParameter('sertercero', $objst);
-        return $query->getResult();
-    }
-
-    public function findByIndicador6bis($fechadesde,$fechahasta){
-        $em = $this->getEntityManager();            
-        $query = $em->createQuery('select st.id as stNumero, st.nombre as stNombre, sum(ats.precio) as precio
+            return $query->getResult();
+        }else {
+            $query = $em->createQuery('select st.id as stNumero, st.nombre as stNombre, sum(ats.precio) as precio
                 from AtBundle:AtServicioTercero ats 
                 inner join BackendBundle:ServicioTercero st with ats.serviciotercero=st
                 where ats.fecha between :fechadesde and :fechahasta
                 group by st.id
                 order by precio desc')
             ->setParameter('fechadesde', $fechadesde)
-            ->setParameter('fechahasta', $fechahasta);
-            
-        return $query->getResult();
+            ->setParameter('fechahasta', $fechahasta);            
+            return $query->getResult();
+        }
     }
-
     public function findByIndicador7($fechadesde,$fechahasta){
         $em = $this->getEntityManager();		  	
 	$query = $em->createQuery('select f.id as numFalla, f.nombre as nomFalla, count(f.nombre) as cantidad
@@ -145,8 +136,9 @@ class IndicadorRepository extends EntityRepository
         return $query->getResult();
     }
     public function findByIndicador9($fechadesde,$fechahasta,$objrep){
-        $em = $this->getEntityManager();		  	
-	$query = $em->createQuery('select r.id as repNumero, r.nombre as repNombre,
+        $em = $this->getEntityManager();
+        if($objrep){
+            $query = $em->createQuery('select r.id as repNumero, r.nombre as repNombre,
                 sum(ar.cant) as cantidad, sum(ar.preciounit * ar.cant) as total
                 from AtBundle:AtRepuesto ar
                 inner join BackendBundle:Repuesto r with ar.repuesto=r
@@ -157,11 +149,10 @@ class IndicadorRepository extends EntityRepository
             ->setParameter('fechadesde', $fechadesde)
             ->setParameter('fechahasta', $fechahasta)
             ->setParameter('repuesto', $objrep);
-        return $query->getResult();
-    }
-    public function findByIndicador9bis($fechadesde,$fechahasta){
-        $em = $this->getEntityManager();            
-    $query = $em->createQuery('select r.id as repNumero, r.nombre as repNombre,
+            return $query->getResult();
+        }
+        else {
+            $query = $em->createQuery('select r.id as repNumero, r.nombre as repNombre,
                 sum(ar.cant) as cantidad, sum(ar.preciounit * ar.cant) as total
                 from AtBundle:AtRepuesto ar
                 inner join BackendBundle:Repuesto r with ar.repuesto=r
@@ -170,7 +161,8 @@ class IndicadorRepository extends EntityRepository
                 order by total desc')
             ->setParameter('fechadesde', $fechadesde)
             ->setParameter('fechahasta', $fechahasta);         
-        return $query->getResult();
+            return $query->getResult();
+        }
     }
     public function findByIndicador10($fechadesde,$fechahasta){
         $em = $this->getEntityManager();		  	

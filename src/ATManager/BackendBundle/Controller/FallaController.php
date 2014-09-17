@@ -51,7 +51,7 @@ class FallaController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('falla_new'));
+             //   return $this->redirect($this->generateUrl('falla_new'));
              }       
         }
         return $this->render('BackendBundle:Falla:new.html.twig', array(
@@ -96,7 +96,7 @@ class FallaController extends Controller
             }
 	    catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('falla_edit', array('id' => $id)));
+            //    return $this->redirect($this->generateUrl('falla_edit', array('id' => $id)));
             }
 	}
         return $this->render('BackendBundle:Falla:edit.html.twig', array(

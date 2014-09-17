@@ -46,8 +46,8 @@ class RepuestoClasifController extends Controller
                 return $this->redirect($this->generateUrl('repuestoclasif_show', array('id' => $entity->getId())));
             }catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('repuestoclasif_new'));
-             }
+            //    return $this->redirect($this->generateUrl('repuestoclasif_new'));
+            }
         }
         return $this->render('BackendBundle:RepuestoClasif:new.html.twig', array(
             'form' => $form->createView()
@@ -69,7 +69,7 @@ class RepuestoClasifController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('repuestoclasif_edit', array('id' => $entity->getId())));
+            //    return $this->redirect($this->generateUrl('repuestoclasif_edit', array('id' => $entity->getId())));
             }    
         }
         return $this->render('BackendBundle:RepuestoClasif:edit.html.twig', array('edit_form'=>$form->createView()));

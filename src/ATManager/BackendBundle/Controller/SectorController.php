@@ -4,9 +4,6 @@ namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use ATManager\BackendBundle\Entity\Sector;
 use ATManager\BackendBundle\Form\SectorType;
 use ATManager\BackendBundle\Form\BuscadorType; 
@@ -45,8 +42,8 @@ class SectorController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('sector_new'));
-             }
+             //   return $this->redirect($this->generateUrl('sector_new'));
+            }
         }
         return $this->render('BackendBundle:Sector:new.html.twig',array(
             'entity' => $entity,
@@ -81,7 +78,7 @@ class SectorController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('sector_listado'));
+            //    return $this->redirect($this->generateUrl('sector_edit', array('id' => $id)));
             }
         }
         return $this->render('BackendBundle:Sector:edit.html.twig',array(

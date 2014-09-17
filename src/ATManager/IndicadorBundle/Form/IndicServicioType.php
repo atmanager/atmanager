@@ -24,7 +24,7 @@ class IndicServicioType extends AbstractType
                     'years' => range(2004,$actual)
             ))
             ->add('sertercero','entity', array(
-                'label'=>'Servicio Tercero : ',
+                'label'=>'Seleccione Servicio Tercero: ',
                 'class' => 'BackendBundle:ServicioTercero',
                 'required'=>false,
                 'query_builder' => function(EntityRepository $er) {

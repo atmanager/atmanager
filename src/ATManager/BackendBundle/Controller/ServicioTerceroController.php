@@ -44,7 +44,7 @@ class ServicioTerceroController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
-                return $this->redirect($this->generateUrl('serviciotercero_new'));
+            //    return $this->redirect($this->generateUrl('serviciotercero_new'));
             }
         }    
         return $this->render('BackendBundle:ServicioTercero:new.html.twig', array(
@@ -82,7 +82,7 @@ class ServicioTerceroController extends Controller
             }
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
-                return $this->redirect($this->generateUrl('serviciotercero_edit', array('id' => $id)));
+            //    return $this->redirect($this->generateUrl('serviciotercero_edit', array('id' => $id)));
             }
             
         }

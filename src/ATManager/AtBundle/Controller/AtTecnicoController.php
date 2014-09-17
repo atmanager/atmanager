@@ -68,7 +68,7 @@ class AtTecnicoController extends Controller
         }
 	catch(\Exception $ex){
             $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
-            return $this->redirect($this->generateUrl('atecnico_mapa',array('atId'=>$entity->getAt()->getId())));
+           // return $this->redirect($this->generateUrl('atecnico_mapa',array('atId'=>$entity->getAt()->getId())));
         } 
     }
     public function eliminarAction($id)

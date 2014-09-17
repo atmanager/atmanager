@@ -7,8 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ATManager\BackendBundle\Form\TecnicoNewType; 
 use ATManager\BackendBundle\Form\TecnicoEditarType; 
 use ATManager\BackendBundle\Form\TecnicoCambioPassType;
-use ATManager\BackendBundle\Form\BuscadorType; 
-use ATManager\BackendBundle\Entity\Tecnico;  
+use ATManager\BackendBundle\Form\BuscadorType;
 use Symfony\Component\Form\FormError; // para validar documento 
 
 class TecnicoController extends Controller
@@ -31,7 +30,7 @@ class TecnicoController extends Controller
             'form'=>$form->createView()	
         ));
     }
-    public function newAction(Request $request){
+    public function newAction(){
         $userManager = $this->container->get('fos_user.user_manager');  // 1) declarado en security.yml
         $entity = $userManager->createUser();
 
@@ -41,7 +40,7 @@ class TecnicoController extends Controller
     
         $form = $this->createForm(new TecnicoNewType());
 
-        $form->handleRequest($request);
+        $form->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
 
@@ -79,10 +78,10 @@ class TecnicoController extends Controller
 
                     try {
                         $userManager->updateUser($entity);
-                        $request->getSession()->getFlashBag()->add('success','Item Guardado');
+                        $this->get('session')->getFlashBag()->add('success','Item Guardado');
                         return $this->redirect($this->generateUrl('tecnico_show', array('id' => $entity->getId())));
                     } catch(\Exception $ex) {
-                        $request->getSession()->getFlashBag()->add('error',$ex->getMessage());
+                        $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
                         return $this->redirect($this->generateUrl('tecnico_new'));
                     }
           }
@@ -94,7 +93,7 @@ class TecnicoController extends Controller
     }
 
     #    editar
-    public function editAction($id, Request $request)
+    public function editAction($id)
     {
         $userManager = $this->container->get('fos_user.user_manager');
         $em = $this->getDoctrine()->getManager();
@@ -134,7 +133,7 @@ class TecnicoController extends Controller
                 return $this->redirect($this->generateUrl('tecnico_edit', array('id' => $id)));
             } 
             catch(\Exception $ex) {
-               $request->getSession()->getFlashBag()->add('error','Error al intentar actualizar item');
+               $this->get('session')->getFlashBag()->add('error','Error al intentar actualizar item');
                return $this->redirect($this->generateUrl('tecnico_edit', array('id' => $id)));
             }
         }
@@ -175,33 +174,25 @@ class TecnicoController extends Controller
                 return $this->redirect($this->generateUrl('tecnico_listado'));
             }    
     }
-
     #    cambio password
-    public function cambiopassAction(Request $request)
+    public function cambiopassAction()
     {
         $userManager = $this->container->get('fos_user.user_manager');
         $em = $this->getDoctrine()->getManager();
         $objTecnico = $this->get('security.context')->getToken()->getUser();
-
-        
         $form = $this->createForm(new TecnicoCambioPassType()); 
         $form->handleRequest($this->getRequest());
         if ($form->isValid())
         {
-
-           
             $contrasenia = $form->get('plainpassword')->getData();
             $objTecnico->setPlainPassword($contrasenia);
-                       
-           
-           
             try {
                 $userManager -> updateUser($objTecnico);
                 $this->get('session')->getFlashBag()->add('success','Item actualizado');
                 return $this->redirect($this->generateUrl('inicio'));
             } 
             catch(\Exception $ex) {
-               $request->getSession()->getFlashBag()->add('error','Error al intentar cambiar password técnico');
+                $this->get('session')->getFlashBag()->add('error','Error al intentar cambiar password técnico');
                
             }
         }
