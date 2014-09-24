@@ -1,6 +1,6 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-    <h3>Cantidad de Atenciones por Fallas</h3>
+    <h4>Cantidad de Atenciones agrupadas por Falla</h4>
     {{ form(form)}}
     <br/>
         <table class="table table-bordered table-striped ">
@@ -16,6 +16,14 @@
                     <td>{{ dato.nomFalla }}</td>
                     <td>{{ dato.cantidad }}</td>
                 </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4"> 
+                            <p class="text-center">
+                                No hay resultados para mostrar con los parametros ingresados 
+                            </p>
+                        </td>
+                    </tr>  
                 {% endfor %}
             </tbody>
         </table>

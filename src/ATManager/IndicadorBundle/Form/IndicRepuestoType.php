@@ -18,14 +18,13 @@ class IndicRepuestoType extends AbstractType
                     'widget' => 'choice',
                     'years' => range(2004,$actual)
             ))
-            ->add('fechahasta','date',array(
-                    'input'  => 'datetime',
-                    'widget' => 'choice',
-                    'years' => range(2004,$actual)
+          ->add('fechahasta','date', array(
+                    'data' => new \DateTime()
             ))
             ->add('repuesto','entity', array(
                 'label'=>'Seleccione Repuesto: ',
                 'required'=>false,
+                'empty_value'=>'Todos..',
                 'class' => 'BackendBundle:Repuesto',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('r')
@@ -33,7 +32,11 @@ class IndicRepuestoType extends AbstractType
                     ;
                 },
             ))   
-            ->add('Aceptar','submit');
+            ->add('Aceptar','submit')
+             ->add('exportar', 'checkbox', array(
+                  'label'     => 'Exportar resultado a CSV',
+                  'required'  => false,
+            ));
     }
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

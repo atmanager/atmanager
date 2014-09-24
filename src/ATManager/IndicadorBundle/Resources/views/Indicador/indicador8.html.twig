@@ -1,6 +1,8 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-        <h3>Productividad de Técnicos</h3>	
+        <h4>Productividad de Técnicos</h4>
+        <h6>Con rol principal o ayudante</h6>
+
         {{ form(form)}}
         <br/>
         <table class="table table-bordered table-striped ">
@@ -18,6 +20,16 @@
                     <td>{{ dato.nomSector }}</td>
                     <td>{{ dato.cantidad }}</td>
                 </tr>
+
+                 {% else %}
+                    <tr>
+                        <td colspan="4"> 
+                            <p class="text-center">
+                                No hay resultados para mostrar con los parametros ingresados 
+                            </p>
+                        </td>
+                    </tr>
+                    
                 {% endfor %}
             </tbody>
         </table>

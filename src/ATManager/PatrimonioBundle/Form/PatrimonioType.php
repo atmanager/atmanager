@@ -51,7 +51,7 @@ class PatrimonioType extends AbstractType
                     (
                         'class'=>'BackendBundle:Marca',
                         'required'=>false,
-                                    'empty_value'=>'Seleccione Marca [*]',
+                        'empty_value'=>'Seleccione Marca [*]',
             			'query_builder'=>function($er)
             				{
             				return $er->createQueryBuilder('m')

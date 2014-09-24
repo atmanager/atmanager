@@ -9,6 +9,7 @@ use ATManager\FrontendBundle\Form\DataTransformer\PatrimonioToNumberTransformer;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class IndicPatrimonioType extends AbstractType
 {
@@ -19,7 +20,8 @@ class IndicPatrimonioType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $actual=date ("Y");
+        
+        $actual=date("Y");
         $etm = $this->em;
         $transformer = new PatrimonioToNumberTransformer($etm);
         
@@ -27,7 +29,9 @@ class IndicPatrimonioType extends AbstractType
             ->add(
                 $builder->create('patrimonio', 'text', array(
                     'required'=>true,
-                    'label'=>'Ingrese número de Patrimonio '
+                    'label'=>'Ingrese número de Patrimonio ',
+                    'required' => true,
+                    'constraints'=>array(new Assert\NotBlank())
                 ))
                 ->addModelTransformer($transformer)
             );
@@ -40,12 +44,15 @@ class IndicPatrimonioType extends AbstractType
                     'years' => range(2004,$actual),
                     'label'=>'Desde fecha: '
             ))
-            ->add('fechahasta','date',array(
+
+            /*->add('fechahasta', 'date', array(
                     'input'  => 'datetime',
                     'widget' => 'choice',
-                    'years' => range(2004,$actual),
-                    'label'=>'Hasta fecha: '
+            ));*/
+            ->add('fechahasta','date', array(
+                    'data' => new \DateTime()
             ));
+            
        
         $builder  
             ->add('Aceptar','submit');  

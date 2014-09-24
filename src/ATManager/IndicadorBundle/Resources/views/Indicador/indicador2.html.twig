@@ -1,6 +1,6 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-        <h3>Ranking de Patrimonios por Período</h3>	
+        <h4>Ranking de Atenciones agrupadas por patrimonios</h4>	
         {{ form(form)}}
         <br/>
         <table class="table table-bordered table-striped ">
@@ -11,11 +11,19 @@
             </thead>
             <tbody>
                 {% for dato in entities.datos%}
-                <tr>
-                    <td>{{ dato.nropat }}</td>
-                    <td>{{ dato.descrippat }}</td>
-                    <td>{{ dato.cantAtenciones }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ dato.nropat }}</td>
+                        <td>{{ dato.descrippat }}</td>
+                        <td>{{ dato.cantAtenciones }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4"> 
+                            <p class="text-center">
+                                No hay resultados para mostrar con los parametros ingresados 
+                            </p>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

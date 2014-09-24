@@ -34,18 +34,32 @@ class IndicadorRepository extends EntityRepository
         return $query->getResult();
     }
     public function findByIndicador3($fechadesde,$fechahasta,$objsd){
-        $em = $this->getEntityManager();		  	
-	$query = $em->createQuery('select s.id as secDestino, s.nombre as nombreDestino, 
-                count(s.nombre) as cantAtenciones
-                from FrontendBundle:At a inner join BackendBundle:Sector s with a.sectordestino=s
-                where a.fechasolicitud between :fechadesde and :fechahasta
-                and a.sectordestino= :secdestino
-                group by s.id, s.nombre
-                order by cantAtenciones desc')
+        $em = $this->getEntityManager();	
+        if($objsd)
+        {        	  
+	        $query = $em->createQuery('select s.id as secDestino, s.nombre as nombreDestino, 
+            count(s.nombre) as cantAtenciones
+            from FrontendBundle:At a inner join BackendBundle:Sector s with a.sectordestino=s
+            where a.fechasolicitud between :fechadesde and :fechahasta
+            and a.sectordestino= :secdestino
+            group by s.id, s.nombre
+            order by cantAtenciones desc')
             ->setParameter('fechadesde', $fechadesde)
             ->setParameter('fechahasta', $fechahasta)
             ->setParameter('secdestino', $objsd);
-        return $query->getResult();
+            return $query->getResult();
+           }else{
+
+                $query = $em->createQuery('select s.id as secDestino, s.nombre as nombreDestino, 
+                count(s.nombre) as cantAtenciones
+                from FrontendBundle:At a inner join BackendBundle:Sector s with a.sectordestino=s
+                where a.fechasolicitud between :fechadesde and :fechahasta
+                group by s.id, s.nombre
+                order by cantAtenciones desc')
+                ->setParameter('fechadesde', $fechadesde)
+                ->setParameter('fechahasta', $fechahasta);
+                return $query->getResult();
+           } 
     }
     public function findByIndicador4($fechadesde,$fechahasta,$objest,$objsec){
        
@@ -68,7 +82,10 @@ class IndicadorRepository extends EntityRepository
     }    
     public function findByIndicador5($fechadesde,$fechahasta,$objss){
         $em = $this->getEntityManager();		  	
-	$query = $em->createQuery('select s.id as secSolicita, s.nombre as nomSolicita,
+	
+        if($objss)
+        {    
+                $query = $em->createQuery('select s.id as secSolicita, s.nombre as nomSolicita,
                 count(s.nombre) as cantidad
                 from FrontendBundle:At a
                 inner join BackendBundle:Sector s with a.sectorsolicita = s
@@ -79,7 +96,19 @@ class IndicadorRepository extends EntityRepository
             ->setParameter('fechadesde', $fechadesde)
             ->setParameter('fechahasta', $fechahasta)
             ->setParameter('secsolicitante', $objss);    
-        return $query->getResult();
+            return $query->getResult();
+        }else{
+              $query = $em->createQuery('select s.id as secSolicita, s.nombre as nomSolicita,
+                count(s.nombre) as cantidad
+                from FrontendBundle:At a
+                inner join BackendBundle:Sector s with a.sectorsolicita = s
+                where a.fechasolicitud between :fechadesde and :fechahasta 
+                group by s.id, s.nombre
+                order by cantidad desc')
+            ->setParameter('fechadesde', $fechadesde)
+            ->setParameter('fechahasta', $fechahasta);
+            return $query->getResult();
+        }
     }
     public function findByIndicador6($fechadesde,$fechahasta,$objst){
         $em = $this->getEntityManager();		  	

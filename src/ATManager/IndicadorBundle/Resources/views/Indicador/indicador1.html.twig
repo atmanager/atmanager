@@ -1,7 +1,8 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-<h3>Historial de AT por Patrimonio</h3>
-{{ form_start(form)}}
+<h4>Historial de AT por Patrimonio</h4>
+
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
 <div class="row">
     <div class="col-xs-4">{{ form_row(form.fechadesde) }}</div>
     <div class="col-xs-4">{{ form_row(form.fechahasta) }}</div>

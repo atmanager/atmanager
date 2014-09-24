@@ -17,10 +17,8 @@ class IndicEstadioType extends AbstractType
                     'widget' => 'choice',
                     'years' => range(2004,$actual)
             ))
-            ->add('fechahasta','date',array(
-                    'input'  => 'datetime',
-                    'widget' => 'choice',
-                    'years' => range(2004,$actual)
+            ->add('fechahasta','date', array(
+                    'data' => new \DateTime()
             ))
             ->add('estadio','entity',array(
                     'class'=>'BackendBundle:Estadio',

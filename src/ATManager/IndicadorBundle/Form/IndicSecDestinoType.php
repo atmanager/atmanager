@@ -17,14 +17,14 @@ class IndicSecDestinoType extends AbstractType
                     'widget' => 'choice',
                     'years' => range(2004,$actual)
             ))
-            ->add('fechahasta','date',array(
-                    'input'  => 'datetime',
-                    'widget' => 'choice',
-                    'years' => range(2004,$actual)
+            ->add('fechahasta','date', array(
+                    'data' => new \DateTime()
             ))
             ->add('secdestino','entity',array(
-                    'label'=>'Sector de Destino : ',
+                    'label'=>'Sector de Destino : (si no escoge alguno muestra ranking)',
                     'class' => 'BackendBundle:Sector',
+                    'required'=>false,
+                    'empty_value'=>'Todos...',
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('s')
                             ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')

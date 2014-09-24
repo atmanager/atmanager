@@ -1,6 +1,6 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-        <h3>Ranking de Demandas por Sector</h3>	
+        <h4>Ranking de Demandas por sectores solicitantes</h4>	
         {{ form(form)}}   
         <br/>
         <table class="table table-bordered table-striped ">
@@ -16,6 +16,14 @@
                     <td>{{ dato.nomSolicita }}</td>
                     <td>{{ dato.cantidad }}</td>
                 </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4"> 
+                            <p class="text-center">
+                                No hay resultados para mostrar con los parametros ingresados 
+                            </p>
+                        </td>
+                    </tr> 
                 {% endfor %}
             </tbody>
         </table>

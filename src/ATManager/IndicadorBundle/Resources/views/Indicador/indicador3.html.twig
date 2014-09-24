@@ -1,6 +1,6 @@
 {% extends 'IndicadorBundle::baseindic.html.twig' %} 
 {% block content %}        
-        <h3>Cantidad de AT por Sector</h3>	
+        <h4>Cantidad de AT solicitadas agrupadas por Sectores técnicos</h4>	
         {{ form(form)}}
         <br/>
         <table class="table table-bordered table-striped ">
@@ -16,6 +16,14 @@
                     <td>{{ dato.nombreDestino }}</td>
                     <td>{{ dato.cantAtenciones }}</td>
                 </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4"> 
+                            <p class="text-center">
+                                No hay resultados para mostrar con los parametros ingresados 
+                            </p>
+                        </td>
+                    </tr>               
                 {% endfor %}
             </tbody>
         </table>

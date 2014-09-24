@@ -40,22 +40,19 @@ class IndicadorController extends Controller
         ));
     }
     public function indicador2Action(Request $request){
-        $entities = array();
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicPeriodoType(),null,array('method' => 'GET'));
         $form->handleRequest($request);
         $entities =new Indicador();
-        if ($form->isValid())
-        {
+        if ($form->isValid()){
             $fechadesde=$form->get('fechadesde')->getData();
-            $fechahasta=$form->get('fechahasta')->getData();          
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador2($fechadesde,$fechahasta));
-
-            if ($form->get('exportar')->getData())
-            {              
-               return $this->export2($entities);
-            }                   
-            
+            $fechahasta=$form->get('fechahasta')->getData();
+            if ($fechadesde<=$fechahasta) {
+                $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador2($fechadesde,$fechahasta));
+            }
+            else {
+                $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');
+            }
         }
     	$paginator = $this->get('knp_paginator');
         $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
@@ -157,10 +154,6 @@ class IndicadorController extends Controller
             $objst=$form->get('sertercero')->getData();
             if ($fechadesde<=$fechahasta){
                 $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador6($fechadesde,$fechahasta,$objst));
-                    if ($form->get('exportar')->getData())
-                    {              
-                       return $this->export2($entities);
-                    } 
             }
             else {
                 $this->get('session')->getFlashBag()->add('error','Fecha desde es mayor que fecha hasta');             
@@ -289,35 +282,74 @@ class IndicadorController extends Controller
     /*
       funcion que exporta a CSV
     */
-    private function export2($entities)
+    private function export($entities)
     {
-
-        $response = new StreamedResponse(function() use($entities) 
-        {  
-            $handle = fopen('php://output', 'r+');
-            $elemento = array();
-            $encabezado = array();
-            $encabezado[]='Nro. Patrimonio';
-            $encabezado[]='Descripción del Patrimonio';
-            $encabezado[]='Cantidad';
         
-            fputcsv($handle, $encabezado, ';'); 
-
-        foreach ($entities as $key)  
+        $response = new StreamedResponse(function() use($entities) {  
+        $handle = fopen('php://output', 'r+');
+        $elemento = array();
+        $encabezado = array();
+        $encabezado[]='Patrimonio';
+        $encabezado[]='Descripción';
+        $encabezado[]='Precio';
+        $encabezado[]='Estimado';
+        $encabezado[]='Responsable';
+        $encabezado[]='Modelo';
+        $encabezado[]='Serial';
+        $encabezado[]='Observación';
+        $encabezado[]='Habilitado';
+        $encabezado[]='Clasificación';
+        $encabezado[]='Local';
+        $encabezado[]='Marca';                
+        $encabezado[]='Estado';
+        $encabezado[]='Modificador';
+        $encabezado[]='Fecha de Alta';
+        $encabezado[]='Fecha de Baja';     
+        $encabezado[]='Fecha de Edición';
+        fputcsv($handle, $encabezado, ';'); 
+        foreach ($entities as $key) 
         {
-            $elemento[0]=$key->nropat;
-            $elemento[1]=$key->descrippat;
-            $elemento[2]=$key->cantAtenciones; 
+            $elemento[0]=$key->getId();
+            $elemento[1]=$key->getDescripcion();
+            $elemento[2]=$key->getPrecio();
+            $elemento[3]=$key->getEstimado();
+            $elemento[4]=$key->getResponsable();
+            $elemento[5]=$key->getModelo();
+            $elemento[6]=$key->getSerial();
+            $elemento[7]=$key->getObservacion();
+            $elemento[8]=$key->getHabilita();
+            $elemento[9]=$key->getClasificacion()->getNombre();
+            $elemento[10]=$key->getLocal()->getNombre();
+            $elemento[11]=$key->getMarca()->getNombre();                
+            $elemento[12]=$key->getEstado()->getNombre();
+            $elemento[13]=$key->getTecnico()->getNombre();
+            
+            if($key->getFechaAlta())
+            {
+                $elemento[14]=$key->getFechaAlta()->format('d-m-Y H:i');    
+            }else{$elemento[14]="";}
 
+            if($key->getFechaBaja())
+            {
+                $elemento[15]=$key->getFechaBaja()->format('d-m-Y H:i');    
+            }
+            else{$elemento[15]="";}
+
+            if($key->getFechaModifica())
+            {
+                $elemento[16]=$key->getFechaModifica()->format('d-m-Y H:i');    
+            }else{$elemento[16]="";}
+            
+            
+            
+            
             fputcsv($handle, $elemento, ';');                   
         }
-
         fclose($handle);
         });
-
         $response->headers->set('Content-Type', 'text/csv');
         $response->setCharset('iso-8859-1');
-        $response->headers->set('Content-Disposition','attachment; filename="indicador2.csv"');
+        $response->headers->set('Content-Disposition','attachment; filename="patrimonio.csv"');
         return $response;
     }
 

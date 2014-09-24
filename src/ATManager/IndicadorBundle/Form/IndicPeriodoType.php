@@ -17,12 +17,16 @@ class IndicPeriodoType extends AbstractType
                     'widget' => 'choice',
                     'years' => range(2004,$actual)
             ))
-            ->add('fechahasta','date',array(
-                    'input'  => 'datetime',
-                    'widget' => 'choice',
-                    'years' => range(2004,$actual)
-            )) 
-            ->add('Aceptar','submit');
+            ->add('fechahasta','date', array(
+                    'data' => new \DateTime()
+            ))
+            ->add('Aceptar','submit')
+            ->add('exportar', 'checkbox', array(
+                  'label'     => 'Exportar resultado a CSV',
+                  'required'  => false,
+            ));
+
+
     }
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
