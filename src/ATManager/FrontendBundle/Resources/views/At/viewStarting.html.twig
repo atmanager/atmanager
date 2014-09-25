@@ -23,6 +23,7 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
         <th>Sector Solicitante</th>
         <th>Descripción del problema</th> 
         <th>Último Estadio</th> 
+        <th>Prioridad</th>
     </thead>   
     <tbody>
     {% for entity in entities %}
@@ -55,7 +56,7 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
                 {{ entity.id }}
             </td>
             <td>
-                {{ entity.fechasolicitud|date('d/m/Y - H:i:s') }}
+                {{ entity.fechasolicitud|date('d/m/Y') }}
             </td>	  
             <td>
                 {{ entity.personasolicita }}
@@ -68,6 +69,9 @@ Técnico: {{ app.user.nombre }} &nbsp; Sector: {{ app.user.sector }}
             </td>
             <td>  
                 {{ entity.miUltimoEstadio() }}
+            </td>
+            <td>  
+                {{ entity.prioridad }}
             </td>
 	</tr>
     {% else %} 

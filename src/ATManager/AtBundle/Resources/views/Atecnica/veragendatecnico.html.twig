@@ -10,6 +10,7 @@
 	        <th>AT</th>
             <th>Problema</th>
             <th>Último Estadio</th>
+             <th>Prioridad</th>
 
         </thead>
         <tbody>
@@ -28,6 +29,8 @@
                 <td>{{ entity.descripcion}}</td>
 
                 <td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualizar historico solo lectura">{{ entity.miUltimoEstadio() }}</a></td>
+
+                 <td>{{ entity.prioridad}}</td>
             </tr>
             {% endfor %}
         </tbody>

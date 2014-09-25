@@ -45,11 +45,7 @@ class IndicPatrimonioType extends AbstractType
                     'label'=>'Desde fecha: '
             ))
 
-            /*->add('fechahasta', 'date', array(
-                    'input'  => 'datetime',
-                    'widget' => 'choice',
-            ));*/
-            ->add('fechahasta','date', array(
+           ->add('fechahasta','date', array(
                     'data' => new \DateTime()
             ));
             
@@ -59,14 +55,15 @@ class IndicPatrimonioType extends AbstractType
 
 
 
-         $validarRangoFechas = function(FormEvent $event){
-        $form = $event->getForm();
-        $fechadesde = $form->get('fechadesde')->getData();
-        $fechahasta = $form->get('fechahasta')->getData();
-         if ($fechahasta < $fechadesde)
-         {
-            $form['fechahasta']->addError(new FormError("fecha Hasta debe ser mayor o igual a Fecha Desde"));
-         }
+        $validarRangoFechas = function(FormEvent $event)
+        {
+            $form = $event->getForm();
+            $fechadesde = $form->get('fechadesde')->getData();
+            $fechahasta = $form->get('fechahasta')->getData();
+                 if ($fechahasta < $fechadesde)
+                 {
+                    $form['fechahasta']->addError(new FormError("fecha Hasta debe ser mayor o igual a Fecha Desde"));
+                 }
         };
         $builder->addEventListener(FormEvents::POST_BIND, $validarRangoFechas);          
     }

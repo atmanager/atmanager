@@ -6,6 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormError;
 
 class IndicServicioType extends AbstractType
 {
@@ -37,6 +40,19 @@ class IndicServicioType extends AbstractType
                   'label'     => 'Exportar resultado a CSV',
                   'required'  => false,
             ));
+
+             $validarRangoFechas = function(FormEvent $event)
+            {
+            $form = $event->getForm();
+            $fechadesde = $form->get('fechadesde')->getData();
+            $fechahasta = $form->get('fechahasta')->getData();
+            if ($fechahasta < $fechadesde)
+            {
+            $form['fechahasta']->addError(new FormError("fecha Hasta debe ser mayor o igual a Fecha Desde"));
+            }
+        };
+        $builder->addEventListener(FormEvents::POST_BIND, $validarRangoFechas);  
+
     }
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

@@ -34,33 +34,11 @@ class AtHistoricoType extends AbstractType
     {
             $arrayEstadios = $this->arrayEstadios;
             
-            /*$at=$this->at;
-            $em=$this->em;
-            
-            SELECT e.nombre
-            FROM Estadio e
-            LEFT JOIN AtHistorico ath ON e.id = ath.estadio_id
-            WHERE ath.at_id =7
-            
-            $qb = $em->createQueryBuilder();
-
-            $ath = $qb->select('es')
-                      ->from('BackendBundle:Estadio', 'es')
-                      ->leftJoin('AtBundle:AtHistorico','ath','with', 'es.id = ath.estadio')
-                      ->where($qb->expr()->eq('ath.at',$at))
-                      ->getQuery()
-                      ->getResult();
-
-                    
-            $arrayEstadios = $qb->select('e')
-             ->from('BackendBundle:Estadio', 'e')
-             ->where($qb->expr()->notIn('e.id', $ath))
-             ->getQuery()
-             ->getResult();     */
-
+           
         $builder
             ->add('fecha',null, array(
-                'label'=>'Fecha de Evolución: '
+                'label'=>'Fecha de Evolución: ',
+                'disabled' =>true,
             )) 
 
              ->add('estadio', null, array(

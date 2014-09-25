@@ -129,4 +129,46 @@ class AtRepository extends EntityRepository
             
                 return $query->getResult();
 	}
+
+	public function findByCasosPorFallaDescripcion($falla,$descripcion)
+	{
+            $em = $this->getEntityManager();		  	
+            if($falla)
+            {	
+            $query = $em->createQuery(
+            'SELECT a.id as AtId, 
+            		a.fechafin as fechaFinal, 
+            		a.descripcion as Sintoma, 
+            		ah.comentario as Tareas 
+            		FROM FrontendBundle:At a
+					INNER JOIN AtBundle:AtFalla af with a.id = af.at 
+					INNER JOIN AtBundle:AtHistorico ah with a.id = ah.at
+					INNER JOIN BackendBundle:Estadio e with ah.estadio = e.id
+					INNER JOIN BackendBundle:EstadioClasif ec with e.clasificacion = ec.id
+					WHERE af.falla = :falla
+					AND a.descripcion LIKE :descripcion
+					AND a.fechafin is not null
+					AND ec.finalizaAt = 1')
+    				->setParameter('falla', $falla)           
+	            	->setParameter('descripcion', '%'.$descripcion.'%');
+                return $query->getResult();
+             }else{
+
+             		$query = $em->createQuery(
+                    'SELECT a.id as AtId, 
+            		a.fechafin as fechaFinal, 
+            		a.descripcion as Sintoma, 
+            		ah.comentario as Tareas 
+            		FROM FrontendBundle:At a
+					INNER JOIN AtBundle:AtHistorico ah with a.id = ah.at
+					INNER JOIN BackendBundle:Estadio e with ah.estadio = e.id
+					INNER JOIN BackendBundle:EstadioClasif ec with e.clasificacion = ec.id
+					WHERE a.descripcion LIKE :descripcion
+					AND a.fechafin is not null
+					AND ec.finalizaAt = 1')
+    				->setParameter('descripcion', '%'.$descripcion.'%');
+                return $query->getResult();
+
+             }   
+	}
 }

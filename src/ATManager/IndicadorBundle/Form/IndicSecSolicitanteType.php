@@ -6,6 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormError;
 class IndicSecSolicitanteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -34,6 +37,18 @@ class IndicSecSolicitanteType extends AbstractType
                 }
             ))    
             ->add('Aceptar','submit');
+
+            $validarRangoFechas = function(FormEvent $event)
+            {
+            $form = $event->getForm();
+            $fechadesde = $form->get('fechadesde')->getData();
+            $fechahasta = $form->get('fechahasta')->getData();
+                 if ($fechahasta < $fechadesde)
+                 {
+                    $form['fechahasta']->addError(new FormError("fecha Hasta debe ser mayor o igual a Fecha Desde"));
+                 }
+            };
+            $builder->addEventListener(FormEvents::POST_BIND, $validarRangoFechas);  
     }
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

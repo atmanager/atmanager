@@ -8,7 +8,7 @@ atecnica_ver_historico:
 
 atecnica_buscador:
     pattern:  /buscador
-    defaults: { _controller: "AtBundle:Atecnica:buscador" } 
+    defaults: { _controller: "AtBundle:Atecnica:buscador" }
 
 atecnica_generoAgendaTecnico:
     pattern:  /{id}/generoAgendaTecnico
@@ -17,7 +17,7 @@ atecnica_generoAgendaTecnico:
 atecnica_asignarTecnicoAT:
     pattern:  /{at}/{tec}/asignarTecnicoAT
     defaults: { _controller: "AtBundle:Atecnica:asignarTecnicoAT" }
-           
+
 atecnica_cancelar:
     pattern:  /{id}/cancelar
     defaults: { _controller: "AtBundle:Atecnica:cancelar" }
@@ -25,5 +25,7 @@ atecnica_cancelar:
 atecnica_buscarAgendaTecnico:
     pattern:  /buscarAgendaTecnico
     defaults: { _controller: "AtBundle:Atecnica:buscarAgendaTecnico" }
-    
-   
+
+atecnica_baseConocimiento:
+    pattern:  /baseConocimiento
+    defaults: { _controller: "AtBundle:Atecnica:baseConocimiento" }

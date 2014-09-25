@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtTecnico;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtBuscadorInicialType;
+use ATManager\AtBundle\Form\AtBuscadorCasosExitosType;
 
 class AtecnicaController extends Controller
 {
@@ -96,7 +97,7 @@ class AtecnicaController extends Controller
         $opciones['sector'] = $objtl->getSector();
         try{	
 	    $objt= $em->getRepository('BackendBundle:Tecnico')->findOneById($tec);
-            $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);	
+        $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);	
 	    $objatt->setAt($entity);
 	    $objatt->setRol($rol);
 	    $objatt->setTecnico($objt);
@@ -220,6 +221,43 @@ class AtecnicaController extends Controller
                     'ret' => $ret
                 )
         );
+    }
+
+
+    // Fecha: 24/09/2014
+    // Busca descripcion de tareas de AT Cerradas
+    public function baseConocimientoAction(Request $request)
+    {
+                 
+        $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
+        $sesion = $this->get('session'); 
+        $sesion->set('retorno',$retorno);    
+        /* ------------------------------------*/
+        $objt = $this->get('security.context')->getToken()->getUser();   
+        $em = $this->getDoctrine()->getManager();
+        
+        $form = $this->createForm(new AtBuscadorCasosExitosType(),null,array(
+            'method' => 'GET'
+        ));
+        
+      
+        $form->handleRequest($request);        
+        if ($form->isValid())
+        {
+            $entities =array();           
+            $falla=$form->get('falla')->getData();
+            $descripcion=$form->get('descripcion')->getData();
+            $entities = $em->getRepository('FrontendBundle:At')->findByCasosPorFallaDescripcion($falla,$descripcion);            
+            $paginator = $this->get('knp_paginator');
+            $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
+            return $this->render('AtBundle:Atecnica:basecono.html.twig', array( 
+                    'entities' => $entities,
+                    'retorno' =>$retorno    
+            ));
+        }
+        return $this->render('AtBundle:Atecnica:findcono.html.twig', array(
+                            'form'=>$form->createView()     
+        ));
     }
     
 }
