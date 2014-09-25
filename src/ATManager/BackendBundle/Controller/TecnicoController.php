@@ -188,7 +188,7 @@ class TecnicoController extends Controller
             $objTecnico->setPlainPassword($contrasenia);
             try {
                 $userManager -> updateUser($objTecnico);
-                $this->get('session')->getFlashBag()->add('success','Item actualizado');
+                $this->get('session')->getFlashBag()->add('success','Nueva contraseña aceptada');
                 return $this->redirect($this->generateUrl('inicio'));
             } 
             catch(\Exception $ex) {

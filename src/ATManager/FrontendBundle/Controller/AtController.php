@@ -29,7 +29,7 @@ class AtController extends Controller
                     $objPatri = $entity->getPatrimonio();
                     if($objPatri->getHabilita()==false)
                     {    
-                        $request->getSession()->getFlashBag()->add('error',$objPatri->getDescripcion()." : Esta de baja !!, no se acepta Solicitud de AT " ); 
+                         $this->get('session')->getFlashBag()->add('error',$objPatri->getDescripcion()." : Esta de baja !!, no se acepta Solicitud de AT " ); 
                         return $this->redirect($this->generateUrl('at_new'));
                     }
                 }    

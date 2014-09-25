@@ -25,7 +25,7 @@ class AtHistoricoRepository extends EntityRepository
         $em = $this->getEntityManager();
       
         $query = $em->createQuery('SELECT e FROM BackendBundle:Estadio e
-         WHERE e.id NOT IN 
+         WHERE e.estado=true AND e.id NOT IN 
          (SELECT IDENTITY(ath.estadio) FROM AtBundle:AtHistorico ath where ath.at= :at)')
          ->setParameter('at', $at) ; 
          return $query->getResult();

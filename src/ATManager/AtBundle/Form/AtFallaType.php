@@ -39,6 +39,7 @@ class AtFallaType extends AbstractType
                 'query_builder' => function(EntityRepository $er) use ($sector) {
                     return $er->createQueryBuilder('f')
                     ->innerJoin('f.sector','cs','WITH','cs.id= :sector')
+                    ->where('f.estado=true')
                     ->setParameter('sector',$sector)
                     ->orderBy('f.nombre','ASC')
                     ;
