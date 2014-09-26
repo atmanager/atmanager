@@ -44,4 +44,17 @@ class DefaultController extends Controller
        
 
     }
+
+    public function mailAction()
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Hello Email')
+            ->setFrom('soporte.masvernat@gmail.com')
+            ->setTo('atmanagerpro@gmail.com')
+            ->setBody("Mail prueba")
+        ;
+        $this->get('mailer')->send($message);
+
+        return $this->render('::portada.html.twig');
+    }
 }

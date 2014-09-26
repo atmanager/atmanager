@@ -10,11 +10,11 @@
                 <th>Cantidad de Atenciones</th>
             </thead>
             <tbody>
-                {% for dato in entities.datos%}
+                {% for entity in entities %}
                     <tr>
-                        <td>{{ dato.nropat }}</td>
-                        <td>{{ dato.descrippat }}</td>
-                        <td>{{ dato.cantAtenciones }}</td>
+                        <td>{{ entity.nropat }}</td>
+                        <td>{{ entity.descrippat }}</td>
+                        <td>{{ entity.cantAtenciones }}</td>
                     </tr>
                     {% else %}
                     <tr>
@@ -27,7 +27,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% if entities.datos.getTotalItemCount > 10 %}
-            {{ knp_pagination_render(entities.datos) }}
+        {% if entities.getTotalItemCount > 10 %}
+            {{ knp_pagination_render(entities) }}
         {% endif %}
 {% endblock %}

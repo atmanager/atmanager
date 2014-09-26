@@ -87,10 +87,13 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayuda
                 <b class="caret"></b></a>
               <ul class="dropdown-menu">
+
+                {% if is_granted('ROLE_TECNICO') %}
+                <li><a href="{{ asset('manuales/manual_admin.pdf') }}" target="_blank">Descargar Manual Técnico</a></li>
+                {% endif %}
                 <li><a href="#">Descargar Manual Usuario</a></li>
-                <li><a href="#">Descargar Manual Técnico</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Mesa de ayuda</a></li>
+                <li><a href="#">Contactenos</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Acerca de AT Manager</a></li>
               </ul>

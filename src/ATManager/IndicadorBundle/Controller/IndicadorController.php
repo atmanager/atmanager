@@ -59,21 +59,21 @@ class IndicadorController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form=$this->createForm(new IndicPeriodoType(),null,array('method' => 'GET'));
         $form->handleRequest($request);
-        $entities =new Indicador();
+        
         if ($form->isValid())
         {
             $fechadesde=$form->get('fechadesde')->getData();
             $fechahasta=$form->get('fechahasta')->getData();          
-            $entities->setDatos($em->getRepository('IndicadorBundle:Indicador')->findByIndicador2($fechadesde,$fechahasta));
+            $entities = $em->getRepository('IndicadorBundle:Indicador')->findByIndicador2($fechadesde,$fechahasta);
 
             if ($form->get('exportar')->getData())
-            {              
-               return $this->export2($entities);
+            {             
+                 return $this->export2($entities);
             }                   
             
         }
     	$paginator = $this->get('knp_paginator');
-        $entities->setDatos($paginator->paginate($entities->getDatos(), $this->getRequest()->query->get('pagina',1), 10));
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
         return $this->render('IndicadorBundle:Indicador:indicador2.html.twig', array(
             'entities'=> $entities,
             'form'=>$form->createView()	
@@ -348,7 +348,8 @@ class IndicadorController extends Controller
     private function export2($entities)
     {
 
-        $response = new StreamedResponse(function() use($entities) 
+        $entidades=$entities;
+        $response = new StreamedResponse(function() use($entidades) 
         {  
             $handle = fopen('php://output', 'r+');
             $elemento = array();
@@ -356,14 +357,15 @@ class IndicadorController extends Controller
             $encabezado[]='Nro. Patrimonio';
             $encabezado[]='Descripción del Patrimonio';
             $encabezado[]='Cantidad';
-        
+
+                   
             fputcsv($handle, $encabezado, ';'); 
 
-        foreach ($entities as $key)  
+        foreach ($entidades as $entity)  
         {
-            $elemento[0]=$key->nropat;
-            $elemento[1]=$key->descrippat;
-            $elemento[2]=$key->cantAtenciones; 
+            $elemento[0]=$entity['nropat'];
+            $elemento[1]=$entity['descrippat'];
+            $elemento[2]=$entity['cantAtenciones']; 
 
             fputcsv($handle, $elemento, ';');                   
         }

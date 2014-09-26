@@ -31,6 +31,7 @@ security:
 
         - { path: ^/atecnica/atecnica/buscador, role: ROLE_JDS }
         - { path: ^/atecnica/atecnica/buscarAgendaTecnico, role: ROLE_TECNICO }
+        - { path: ^/atecnica/atecnica/baseConocimiento, role: ROLE_TECNICO }
         - { path: ^/backend/marca/, role: ROLE_OPERPAT }
         - { path: ^/backend/local/, role: ROLE_OPERPAT }
         - { path: ^/backend/patrimonioclasif/, role: ROLE_OPERPAT }
