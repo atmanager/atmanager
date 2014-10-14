@@ -18,6 +18,10 @@ atecnica_asignarTecnicoAT:
     pattern:  /{at}/{tec}/asignarTecnicoAT
     defaults: { _controller: "AtBundle:Atecnica:asignarTecnicoAT" }
 
+atecnica_reasignotec:
+    pattern:  /{id}/reasignotec
+    defaults: { _controller: "AtBundle:Atecnica:reasignotec" }    
+
 atecnica_cancelar:
     pattern:  /{id}/cancelar
     defaults: { _controller: "AtBundle:Atecnica:cancelar" }

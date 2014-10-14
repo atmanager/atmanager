@@ -39,9 +39,10 @@ class AtType extends AbstractType
 
 
         $builder                 
-            ->add('personasolicita','text', array(
+            ->add('personasolicita','text',array(
             'label'=>'[*] Apellido y Nombre del Solicitante :'
             ))
+            
             ->add('descripcion','textarea', array(
             'label'=>'[*] Describa cual es el sintoma/problema observado: '
             ))
@@ -61,17 +62,15 @@ class AtType extends AbstractType
 
 
                        
-            ->add('sectordestino','entity', 
-                array(
-                        'label'=>'[*] Para sector técnico : ',
-                        'class' => 'BackendBundle:Sector',
-                        'query_builder' => function(EntityRepository $er) {
-                            return $er->createQueryBuilder('s')
-                            ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
-                            ->setParameter('destino',true)
-                            ->orderBy('s.nombre','ASC')
-                            ;
-                        },
+            ->add('sectordestino','entity', array(
+                'label'=>'[*] Para sector técnico : ',
+                'class' => 'BackendBundle:Sector',
+                'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('s')
+                ->innerJoin('s.tipo','t', 'WITH', 't.destino = :destino')
+                ->setParameter('destino',true)
+                ->orderBy('s.nombre','ASC');
+                },
             ))
             
 
@@ -82,12 +81,12 @@ class AtType extends AbstractType
                             return $er->createQueryBuilder('p')
                             ->orderBy('p.nombre','DESC')
                             ;
-                        },
+                },
                 
             ))
 
-            ->add('submit', 'submit', array('label' => 'Aceptar'))
-            ;
+            ->add('submit', 'submit', array(
+                'label' => 'Aceptar'));
             
                 
 

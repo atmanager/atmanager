@@ -10,9 +10,14 @@ atecnico_new:
     pattern:  /{atId}/{tecId}/new
     defaults: { _controller: "AtBundle:AtTecnico:new" }
 
+atecnico_reasignar:
+    pattern:  /{id}/reasignar
+    defaults: { _controller: "AtBundle:AtTecnico:reasignar" }    
+
 atecnico_eliminar:
     pattern:  /{id}/eliminar
     defaults: { _controller: "AtBundle:AtTecnico:eliminar" }
+
 
 atecnico_show:
     path:     /{id}/show

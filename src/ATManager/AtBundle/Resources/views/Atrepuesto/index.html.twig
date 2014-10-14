@@ -1,24 +1,21 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-   <h3>Gestión de Repuestos en AT: {{ at }}</h3>
+   <h4>Gestión de Repuestos en AT: {{ at }}</h4>
    <table>
        <td>
             <a href="{{ path('at_repuesto_new', { 'idAt': at.id }) }}">
-                <h4>[Crear]&nbsp;</h4>
+                <h5>[Agregar nuevo repuesto en At]&nbsp;</h5>
             </a>
        </td>
-       <td>
-            <a href="{{ ret }}">
-                <h4>[Volver]</h4>
-            </a>
-       </td>
+       
    </table>
    <table class="table table-bordered table-striped">
         <thead>
             <tr>
 		<th colspan="3" style="text-align:center">Acciones</th>
                 <th>Fecha</th>
-                <th>Subtotal</th>
+                 <th>Cantidad</th>
+                <th>Subtotal en $</th>
                 <th>Repuesto</th>
                 <th>Proveedor</th>            
             </tr>
@@ -42,10 +39,16 @@
                     </a>
                 </td>
                 <td>{{ entity.fecha | date('d-m-Y') }}</td>
+                 <td>{{ entity.cant}}</td>
                 <td>{{ entity.obtenerTotal() }}</td>
                 <td>{{ entity.repuesto.nombre }}</td>
                 <td>{{ entity.proveedor.nombre }}</td>
         {% endfor %}
         </tbody>
     </table>
+
+             <a href="{{ ret }}">
+                <h5>[Volver]</h5>
+            </a>
+      
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
 
-    <h3>Ver Servicio Tercero de AT: {{ entity.at.id }}</h3>
+    <h4>Servicio Tercero en AT: {{ entity.at.id }}</h4>
 
     <table class="table">
         <tbody>
@@ -32,6 +32,6 @@
         </tbody>
     </table>
 
-    <h4> <a href="{{path('at_servicio', {'idAt': entity.at.id }) }}">Volver</a></h4>
+    <h5> <a href="{{path('at_servicio', {'idAt': entity.at.id }) }}">Aceptar</a></h5>
     
 {% endblock %}

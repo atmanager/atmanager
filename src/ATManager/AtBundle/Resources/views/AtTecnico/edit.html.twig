@@ -1,0 +1,9 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+    <h3>Reasignar técnico</h3>
+
+    {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
+    
+
+    <a href="javascript:history.back(1)">Volver</a> 
+{% endblock %}

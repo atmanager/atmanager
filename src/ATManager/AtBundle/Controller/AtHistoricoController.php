@@ -69,12 +69,12 @@ class AtHistoricoController extends Controller
             try{
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Item Guardado');         
+                $this->get('session')->getFlashBag()->add('success','Se agrego satisfactoriamente una nueva evolución');         
                 return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId())));
             }
             catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item'); 
-               // return $this->redirect($this->generateUrl('at_historico_new',array('idAt' => $at->getId())));
+                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar nueva evolución...'); 
+               
             }                      
         }
     	return $this->render('AtBundle:AtHistorico:new.html.twig', array(

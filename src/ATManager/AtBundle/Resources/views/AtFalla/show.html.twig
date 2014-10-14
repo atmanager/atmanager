@@ -1,7 +1,7 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
 
-    <h3>Ver Falla de AT: {{ entity.at.id }}</h3>
+    <h5>Datos de falla agregada en AT: {{ entity.at.id }}</h5>
 
     <table class="table">
         <tbody>
@@ -17,6 +17,6 @@
         </tbody>
     </table>
 
-     <a href="{{path('at_falla', {'idAt': entity.at.id }) }}"><h4>Volver</h4></a>
+     <a href="{{path('at_falla', {'idAt': entity.at.id }) }}"><h4>Aceptar</h4></a>
     
 {% endblock %}

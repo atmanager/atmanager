@@ -18,10 +18,26 @@ class AtTecnicoRepository extends EntityRepository
         FROM BackendBundle:Tecnico t
         left join AtBundle:AtTecnico att  with t.id=att.tecnico
             where t.sector= :sector and t.enabled= :enabled
-            group by t.nombre')	
+            group by t.nombre
+            order by cantidad')	
             ->setParameter('sector', $sector)
             ->setParameter('enabled',true);
     	return $query->getResult();
+    }
+
+
+     public function MapaTecnico($sector){
+        $em = $this->getEntityManager();            
+          $query = $em->createQuery('SELECT t.id as idtecnico, t.nombre as tecnico, count(a.id) AS cantidad
+            FROM BackendBundle:Tecnico t
+            LEFT JOIN AtBundle:AtTecnico att  with t.id = att.tecnico
+            LEFT JOIN FrontendBundle:At a with att.at = a.id
+            WHERE t.sector= :sector and t.enabled= :enabled
+            GROUP BY t.id, t.nombre
+            ORDER BY cantidad')
+            ->setParameter('sector', $sector)
+            ->setParameter('enabled',true);
+        return $query->getResult();
     }
     
     public function FindBySectorAyudante($sector,$at)
@@ -36,5 +52,19 @@ class AtTecnicoRepository extends EntityRepository
          return $query->getResult();
 
                 
+    }
+
+
+    public function TecnicosEnAt($at)
+    {
+        
+        $em = $this->getEntityManager();   
+        $query = $em->createQuery('SELECT att FROM AtBundle:AtTecnico att
+        INNER JOIN BackendBundle:Rol r with att.rol=r.id  
+        INNER JOIN  BackendBundle:Tecnico t with t.id=att.tecnico 
+        WHERE att.at= :at')
+         ->setParameter('at', $at) ; 
+         return $query->getResult();
+              
     }
 }

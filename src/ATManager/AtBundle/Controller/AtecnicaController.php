@@ -68,13 +68,21 @@ class AtecnicaController extends Controller
                             'form'=>$form->createView()	 	
         ));
     }   
+    
+    /*
+     Devuelve las atenciones atendidas por los técnicos (mapatecnico)
+     del sector.
+     Ultima Modificación: Octubre 13, 2014
+     Autor: Dario
+    */
     public function generoAgendaTecnicoAction($id)
     {   
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontendBundle:At')->find($id);
         $objtl = $this->get('security.context')->getToken()->getUser();
         $opciones['sector'] = $objtl->getSector();
-        $mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySector($opciones['sector']);
+       /* $mapatec = $em->getRepository('AtBundle:AtTecnico')->findBySector($opciones['sector']);*/
+        $mapatec = $em->getRepository('AtBundle:AtTecnico')->MapaTecnico($opciones['sector']);
         return $this->render('AtBundle:Atecnica:newAtTecnico.html.twig', array(
             'entity'=>$entity,
             'mapatec'=>$mapatec
@@ -82,7 +90,13 @@ class AtecnicaController extends Controller
     }  
   
 
-    public function asignarTecnicoATAction($at,$tec)
+    /*
+     Agrega a la coleccion de At Tecnico, el tecnico ppal de una AT
+     Agrega a la colección de Historico la primer evolución (Diagnostico)
+     Agosto 2014
+     Dario/Juan
+    */
+     public function asignarTecnicoATAction($at,$tec)
     {
         /* recupero la variable de session definida en: buscadorAction()*/
         $sesion = $this->get('session');
@@ -111,7 +125,7 @@ class AtecnicaController extends Controller
             // hasta aquí guarda el historico de la at asignada
             $em->persist($ath);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success','Se agregaron: Técnico Responsable y Nueva evolución'); 
+            $this->get('session')->getFlashBag()->add('success','Solicitud '.$entity.' aceptada !!'); 
             return $this->redirect($ret);            
         }
 	catch(\Exception $ex){
@@ -247,7 +261,11 @@ class AtecnicaController extends Controller
             $entities =array();           
             $falla=$form->get('falla')->getData();
             $descripcion=$form->get('descripcion')->getData();
+            if($falla=="" and $descripcion=="")
+            { $entities =array(); }
+            else{    
             $entities = $em->getRepository('FrontendBundle:At')->findByCasosPorFallaDescripcion($falla,$descripcion);            
+            }
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('AtBundle:Atecnica:basecono.html.twig', array( 
@@ -259,5 +277,26 @@ class AtecnicaController extends Controller
                             'form'=>$form->createView()     
         ));
     }
+
+
+    public function reasignotecAction($id)
+    {
+        /* recupero la variable de session definida en: buscadorAction()*/
+        $sesion = $this->get('session');
+        /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
+        el proceso*/ 
+        $ret = $sesion->get('retorno');
+        /*--*/
+        $tecnicos=array();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontendBundle:At')->find($id);
+        $tecnicos = $em->getRepository('AtBundle:AtTecnico')->TecnicosEnAt($entity);
+        return $this->render('AtBundle:Atecnica:AtTecnico.html.twig', array(
+            'entity'=>$entity,
+            'tecnicos'=>$tecnicos,
+            'ret'=>$ret
+        ));              
+     }
+
     
 }

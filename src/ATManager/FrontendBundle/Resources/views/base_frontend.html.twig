@@ -3,9 +3,13 @@
 {% block menuwrap %}
     <div class="col-xs-3" id="sidebar" role="navigation">
     <div class="list-group">
-	    <a href="{{ path('at_new')}}" class="list-group-item" title="Solicitar Asistencia técnica para cualquier sector">Solicitud de AT </a>
+	    <a href="{{ path('at_new')}}" class="list-group-item 
+	    {% if app.request.get('_route') == 'at_new' %}active{% endif %}" 
+	    title="Solicitar Asistencia técnica para cualquier sector">Solicitud de AT </a>
 	        
-	    <a href="{{ path('at_buscador')}}" class="list-group-item" title="Realizar seguimiento a través de filtros varios">Consultar AT</a>
+	    <a href="{{ path('at_buscador')}}" class="list-group-item
+	     {% if app.request.get('_route') == 'at_buscador' %}active{% endif %}" 
+	    title="Realizar seguimiento a través de filtros varios">Consultar AT</a>
 
       </div>
     </div><!--/span-->

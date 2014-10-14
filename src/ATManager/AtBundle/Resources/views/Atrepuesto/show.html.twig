@@ -1,7 +1,7 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
 
-    <h3>Ver Repuesto de AT: {{ entity.at.id }}</h3>
+    <h4>Repuesto en AT: {{ entity.at.id }}</h4>
 
     <table class="table">
         <tbody>
@@ -33,7 +33,7 @@
     </table>
 
     <a href="{{path('at_repuesto', {'idAt': entity.at.id }) }}">
-        <h4>Volver</h4>
+        <h5>Aceptar</h5>
     </a>
     
 {% endblock %}

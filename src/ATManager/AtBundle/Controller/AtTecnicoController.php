@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\FrontendBundle\Entity\At;
 use ATManager\AtBundle\Entity\AtTecnico;
 use ATManager\BackendBundle\Entity\Rol;
+use Symfony\Component\HttpFoundation\Request;
+use ATManager\AtBundle\Form\AtTecnicoType;  
 
 /**
  * AtNota controller.
@@ -98,4 +100,36 @@ class AtTecnicoController extends Controller
             array('entity' => $entity)
         );
     }
+
+    public function reasignarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AtBundle:AtTecnico')->find($id);
+        $objteclog = $this->get('security.context')->getToken()->getUser();
+        $objsector = $objteclog->getSector();
+
+        $form = $this->createForm(new AtTecnicoType($objsector), $entity);
+        $form->handleRequest($this->getRequest());
+        if ($form->isValid())
+        {
+            try{
+                $em->persist($entity);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success','Se reasignó un nuevo técnico ppal.');
+                return $this->redirect($this->generateUrl('atecnica_reasignotec', array('id' => $entity->getAt())));
+            }
+            catch(\Exception $e)
+            {
+                $this->get('session')->getFlashBag()->add('error','Error al intentar reasignar un técnico ppal.'); 
+            }
+        }
+        return $this->render('AtBundle:AtTecnico:edit.html.twig',array(
+            'entity'=>'$entity',
+            'form'=>$form->createView()));
+    }
+
+
+
+
+
 }

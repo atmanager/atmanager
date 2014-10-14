@@ -1,8 +1,7 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %}
 {% block content %}
     <h3>Ver Asistencia técnica</h3>
-    <a href="{{ path('at_buscador' )}}"><h4>[Volver]</h4></a>
-    <table class="table">
+       <table class="table">
         <tbody>                
             <tr>
                 <th>Numero de Solicitud</th>
@@ -51,4 +50,5 @@
 {% endblock %}
 {% block pie %}
     <p><em>Registre el <strong> número de solicitud </strong> para posterior reclamo o seguimiento</em></p>
+     <a href="{{ path('at_buscador' )}}"><h5>[Aceptar]</h5></a>
 {% endblock %}

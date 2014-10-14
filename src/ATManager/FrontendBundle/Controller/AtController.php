@@ -30,7 +30,11 @@ class AtController extends Controller
                     if($objPatri->getHabilita()==false)
                     {    
                          $this->get('session')->getFlashBag()->add('error',$objPatri->getDescripcion()." : Esta de baja !!, no se acepta Solicitud de AT " ); 
-                        return $this->redirect($this->generateUrl('at_new'));
+                        //return $this->redirect($this->generateUrl('at_new'));
+                         return $this->render('FrontendBundle:At:new.html.twig', array(
+                            'entity' => $entity,
+                            'form'   => $form->createView(),
+                        ));
                     }
                 }    
                 $entity->setIpsolicita($this->container->get('request')->getClientIp());
@@ -48,7 +52,7 @@ class AtController extends Controller
                 return $this->redirect($this->generateUrl('at_show', array('id' => $entity->getId())));
             }catch(\Exception $ex){
                 $this->get('session')->getFlashBag()->add('error',$ex->getMessage());
-                //return $this->redirect($this->generateUrl('at_new'));
+              
             }
         }
         return $this->render('FrontendBundle:At:new.html.twig', array(

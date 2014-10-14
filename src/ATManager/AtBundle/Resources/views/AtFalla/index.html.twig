@@ -1,16 +1,14 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-   <h3>Gestión de Fallas encontradas en AT: {{ at }}</h3>
+   <h4>Gestión de Fallas encontradas en AT: {{ at }}</h4>
    <table>
        <td>
             <a href="{{ path('at_falla_new', { 'idAt': at.id }) }}">
-                <h4>[Crear]&nbsp;</h4>
+                <h5>[Agregar falla en AT]&nbsp;</h5>
             </a>
        </td>
        <td>
-            <a href="{{ ret }}">
-                <h4>[Volver]</h4>
-            </a>
+            
        </td>
    </table>
    <table class="table table-bordered table-striped">
@@ -41,4 +39,7 @@
         {% endfor %}
         </tbody>
     </table>
+    <a href="{{ ret }}">
+    <h5>[Volver]</h5>
+    </a>
 {% endblock %}

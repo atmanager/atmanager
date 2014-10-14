@@ -1,8 +1,7 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-    <h3>Agenda laboral de: {{ tecnico }}</h3>
+    <h4>Agenda laboral de: {{ tecnico }}</h4>
     
-    <a href="{{ path('atecnica_buscarAgendaTecnico') }}"><h4>[Volver]</h4></a>
    
     <table class="table table-bordered table-striped table-condensed">
         <thead>
@@ -17,20 +16,24 @@
             {% for entity in entities %}
             <tr>
                 <td><a title="Evoluciones de AT - Cantidad: {{ entity.historicos.count }}" href="{{ path('at_historico',{ 'idAt': entity.id })}}">EVO</a></td>
+
                 <td><a title="Fallas de AT - Cantidad: {{ entity.fallas.count }}" href="{{ path('at_falla', { 'idAt': entity.id }) }}" title="Fallas diagnosticadas en AT">FALLA</a></td>
+                
                 <td><a title="Técnicos Ayudantes - Cantidad: {{ entity.tecnicos.count }}" href="{{ path('atecnico',{ 'atId': entity.id })}}">TEC</a></td>
+                
                 <td><a href="{{ path('at_repuesto', { 'idAt': entity.id }) }}" title="Repuestos de AT - Cantidad: {{ entity.repuestos.count }}" href="#">REP</a></td>
+                
                 <td><a title="Servicios Terceros de AT - Cantidad: {{ entity.servicios.count }}" href="{{ path('at_servicio', { 'idAt': entity.id }) }}">SVT</a></td>  
                
                 <td><a href="{{ path('at_nota', { 'idAt': entity.id }) }}" title="Notas de AT - Cantidad: {{ entity.notas.count }}">NOTA</a></td>
                
                 <td><a href="{{ path('atecnica_show', { 'id': entity.id }) }}" title="Ver Asistencia Técnica">{{ entity.id }}</a></td>
 
-                <td>{{ entity.descripcion}}</td>
+                <td style="font-size:10px">{{ entity.descripcion}}</td>
 
-                <td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualizar historico solo lectura">{{ entity.miUltimoEstadio() }}</a></td>
+                <td style="font-size:10px"><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Visualizar historico solo lectura">{{ entity.miUltimoEstadio() }}</a></td>
 
-                 <td>{{ entity.prioridad}}</td>
+                 <td style="font-size:10px">{{ entity.prioridad}}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -38,4 +41,6 @@
     {% if entities.getTotalItemCount > 10 %}
     	{{ knp_pagination_render(entities) }}
     {% endif %}
+    <br />
+    <a href="{{ path('atecnica_buscarAgendaTecnico') }}">[Volver a filtrar]</a>    
 {% endblock %}

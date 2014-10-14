@@ -1,13 +1,8 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-    <h4>Técnicos en AT : {{ entity.id }}</h4>
+    <h4>Reasignar técnico principal en AT : {{ entity.id }}</h4>
     <table>
-       <td>
-            <a href="{{ path('atecnico_mapa',{ 'atId':entity.id }) }}">
-                <h5>[Agregar técnico ayudante]&nbsp;</h5>
-            </a>
-       </td>
-       
+              
    </table>
     <table class="table table-bordered table-striped">
         <thead>
@@ -16,7 +11,7 @@
             <th>Rol</th>
         </thead>
         <tbody>
-        {% for peon in entity.getTecnicos() %}    
+        {% for peon in tecnicos %}    
             <tr>
                 <td>
                     <a href="{{ path('atecnico_show',{ 'id':peon.id }) }}">
@@ -24,7 +19,14 @@
                     </a>
                 </td>
                 <td>
-                    {% if peon.rol.principal == false %}
+                    {% if peon.rol.principal %}
+                      <a href="{{ path('atecnico_reasignar',{ 'id':peon.id }) }}">
+                            Reasignar
+                      </a>
+
+                   
+                    {% else %}
+
                         <a href="{{ path('atecnico_eliminar',{ 'id':peon.id }) }}" onClick="return confirm('¿Desea Eliminar el Ayudante Seleccionado?');">
                             Eliminar
                         </a>

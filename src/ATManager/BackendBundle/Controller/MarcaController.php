@@ -87,7 +87,7 @@ class MarcaController extends Controller
             return $this->redirect($this->generateUrl('marca_listado'));
         }
         catch(\Exception $e) {
-            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar item');
+            $this->get('session')->getFlashBag()->add('error','Error al intentar eliminar Marca, existe relacion en otra entidad');
             return $this->redirect($this->generateUrl('marca_listado'));
         }    	
     }

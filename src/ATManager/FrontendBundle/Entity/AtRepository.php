@@ -104,7 +104,8 @@ class AtRepository extends EntityRepository
                     WHERE h1.fecha = (
                     SELECT max(h2.fecha)
                     FROM AtBundle:AtHistorico h2
-                    WHERE h2.at = a.id))')
+                    WHERE h2.at = a.id))
+             		ORDER BY a.prioridad')
                 ->setParameter('tecnico', $tecnico)
                 ->setParameter('rol', $rol)
                 ->setParameter('estadio', $estadio);
@@ -122,7 +123,7 @@ class AtRepository extends EntityRepository
                 INNER JOIN AtBundle:AtHistorico h with a.id=h.at 
                 WHERE t.tecnico = :tecnico 
                 AND t.rol = :rol
-                ORDER BY h.at')
+                ORDER BY a.prioridad')
                 ->setParameter('tecnico', $tecnico)
                 ->setParameter('rol', $rol);
                
