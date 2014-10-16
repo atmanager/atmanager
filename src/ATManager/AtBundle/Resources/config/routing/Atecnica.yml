@@ -33,3 +33,7 @@ atecnica_buscarAgendaTecnico:
 atecnica_baseConocimiento:
     pattern:  /baseConocimiento
     defaults: { _controller: "AtBundle:Atecnica:baseConocimiento" }
+    
+atecnica_sintomas:
+    pattern:  /{sintoma}/obtenerXSintomas
+    defaults: { _controller: "AtBundle:Atecnica:obtenerXSintomas" }

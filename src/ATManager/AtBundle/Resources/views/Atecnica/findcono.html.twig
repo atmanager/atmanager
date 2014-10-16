@@ -1,6 +1,10 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-       <h4>Obtener asistencias <strong>resueltas</strong>. Filtradas por falla y/o sintoma declarado..</h4>
-    
-    {{ form(form)}} 
+    <h3>Base de Conocimiento</h3>
+    <fieldset>
+        <legend>Etiquetas:</legend>
+        {% for sintoma in  sintomas %}
+            <a href="{{ path('atecnica_sintomas', { 'sintoma': sintoma }) }}">{{ sintoma }}</a>
+        {% endfor %}
+    </fieldset>
 {% endblock %}

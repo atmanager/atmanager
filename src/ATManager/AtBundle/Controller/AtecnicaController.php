@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtTecnico;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtBuscadorInicialType;
-use ATManager\AtBundle\Form\AtBuscadorCasosExitosType;
 
 class AtecnicaController extends Controller
 {
@@ -239,46 +238,47 @@ class AtecnicaController extends Controller
 
 
     // Fecha: 24/09/2014
+    // Fec. Edición: 15/10/2014
     // Busca descripcion de tareas de AT Cerradas
-    public function baseConocimientoAction(Request $request)
+    
+    public function baseConocimientoAction()
     {
-                 
-        $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
-        $sesion = $this->get('session'); 
-        $sesion->set('retorno',$retorno);    
-        /* ------------------------------------*/
-        $objt = $this->get('security.context')->getToken()->getUser();   
         $em = $this->getDoctrine()->getManager();
-        
-        $form = $this->createForm(new AtBuscadorCasosExitosType(),null,array(
-            'method' => 'GET'
-        ));
-        
-      
-        $form->handleRequest($request);        
-        if ($form->isValid())
-        {
-            $entities =array();           
-            $falla=$form->get('falla')->getData();
-            $descripcion=$form->get('descripcion')->getData();
-            if($falla=="" and $descripcion=="")
-            { $entities =array(); }
-            else{    
-            $entities = $em->getRepository('FrontendBundle:At')->findByCasosPorFallaDescripcion($falla,$descripcion);            
+        $sintomas= array();
+        $ats = $em->getRepository('FrontendBundle:At')->findAll();
+        foreach($ats as $at){
+            if($at->miUltimoEstadio()->getClasificacion()->getFinalizaAt()){
+                $partes=explode(" ",$at->getDescripcion());
+                foreach($partes as $palabras){
+                    $cambio= strtoupper($palabras);
+                    if(strlen($cambio)>3){
+                        if(!array_search($cambio, $sintomas)){
+                            array_push($sintomas, $cambio);
+                        }
+                    }
+                }
             }
-            $paginator = $this->get('knp_paginator');
-            $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
-            return $this->render('AtBundle:Atecnica:basecono.html.twig', array( 
-                    'entities' => $entities,
-                    'retorno' =>$retorno    
-            ));
         }
         return $this->render('AtBundle:Atecnica:findcono.html.twig', array(
-                            'form'=>$form->createView()     
-        ));
+                            'sintomas'=>$sintomas     
+        ));        
     }
-
-
+    public function obtenerXSintomasAction($sintoma)
+    {
+        $retorno = 'http://'.$this->getRequest()->getHost().$this->getRequest()->getRequestUri(); 
+        $sesion = $this->get('session'); 
+        $sesion->set('retorno',$retorno);
+        $em = $this->getDoctrine()->getManager();
+        $entities=$em->getRepository('FrontendBundle:At')->findByCasosXSintoma($sintoma);
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
+        return $this->render('AtBundle:Atecnica:basecono.html.twig', 
+                    array(
+                        'entities' => $entities,
+                        'retorno' =>$retorno     
+                    )
+        ); 
+    }
     public function reasignotecAction($id)
     {
         /* recupero la variable de session definida en: buscadorAction()*/
@@ -296,7 +296,5 @@ class AtecnicaController extends Controller
             'tecnicos'=>$tecnicos,
             'ret'=>$ret
         ));              
-     }
-
-    
+     }    
 }
