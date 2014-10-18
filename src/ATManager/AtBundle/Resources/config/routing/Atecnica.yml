@@ -35,5 +35,5 @@ atecnica_baseConocimiento:
     defaults: { _controller: "AtBundle:Atecnica:baseConocimiento" }
     
 atecnica_sintomas:
-    pattern:  /{sintoma}/obtenerXSintomas
+    pattern:  /{sintoma}/obtenerXsintomas
     defaults: { _controller: "AtBundle:Atecnica:obtenerXSintomas" }

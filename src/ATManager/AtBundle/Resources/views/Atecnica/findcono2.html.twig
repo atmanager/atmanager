@@ -1,0 +1,10 @@
+{% extends 'AtBundle::base_at.html.twig' %} 
+{% block content %}
+    <h3>Base de Conocimiento</h3>
+    <fieldset>
+        <legend>Etiquetas:</legend>
+        {% for sintoma in  sintomas %}
+            <a href="{{ path('atecnica_sintomas', { 'sintoma': sintoma }) }}">{{ sintoma }}</a>
+        {% endfor %}
+    </fieldset>
+{% endblock %}

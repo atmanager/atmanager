@@ -1,10 +1,7 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-    <h3>Base de Conocimiento</h3>
-    <fieldset>
-        <legend>Etiquetas:</legend>
-        {% for sintoma in  sintomas %}
-            <a href="{{ path('atecnica_sintomas', { 'sintoma': sintoma }) }}">{{ sintoma }}</a>
-        {% endfor %}
-    </fieldset>
+       <p>Obtener asistencias <strong>Resueltas</strong></p>
+       <p> Filtradas por falla y/o sintoma declarado</p>
+    
+    {{ form(form)}} 
 {% endblock %}

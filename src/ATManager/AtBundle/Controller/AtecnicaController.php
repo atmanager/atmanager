@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtTecnico;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtBuscadorInicialType;
+use ATManager\AtBundle\Form\AtBuscadorCasosExitosType;
 
 class AtecnicaController extends Controller
 {
@@ -237,11 +238,53 @@ class AtecnicaController extends Controller
     }
 
 
+
+
+     // Fecha: 24/09/2014
+    // Busca descripcion de tareas de AT Cerradas
+    public function baseConocimientoAction(Request $request)
+    {
+                 
+        $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
+        $sesion = $this->get('session'); 
+        $sesion->set('retorno',$retorno);    
+        /* ------------------------------------*/
+        $objt = $this->get('security.context')->getToken()->getUser();   
+        $em = $this->getDoctrine()->getManager();
+        
+        $form = $this->createForm(new AtBuscadorCasosExitosType(),null,array(
+            'method' => 'GET'
+        ));
+        
+      
+        $form->handleRequest($request);        
+        if ($form->isValid())
+        {
+            $entities =array();           
+            $falla=$form->get('falla')->getData();
+            $descripcion=$form->get('descripcion')->getData();
+            if($falla=="" and $descripcion=="")
+            { $entities =array(); }
+            else{    
+            $entities = $em->getRepository('FrontendBundle:At')->findByCasosPorFallaDescripcion($falla,$descripcion);            
+            }
+            $paginator = $this->get('knp_paginator');
+            $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
+            return $this->render('AtBundle:Atecnica:basecono.html.twig', array( 
+                    'entities' => $entities,
+                    'retorno' =>$retorno    
+            ));
+        }
+        return $this->render('AtBundle:Atecnica:findcono.html.twig', array(
+                            'form'=>$form->createView()     
+        ));
+    }
+
     // Fecha: 24/09/2014
     // Fec. Edición: 15/10/2014
     // Busca descripcion de tareas de AT Cerradas
     
-    public function baseConocimientoAction()
+    public function baseConocimientoAction2()
     {
         $em = $this->getDoctrine()->getManager();
         $sintomas= array();
@@ -263,7 +306,9 @@ class AtecnicaController extends Controller
                             'sintomas'=>$sintomas     
         ));        
     }
-    public function obtenerXSintomasAction($sintoma)
+
+
+    public function obtenerXsintomasAction($sintoma)
     {
         $retorno = 'http://'.$this->getRequest()->getHost().$this->getRequest()->getRequestUri(); 
         $sesion = $this->get('session'); 
