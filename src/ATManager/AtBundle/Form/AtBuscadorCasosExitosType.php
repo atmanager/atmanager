@@ -26,23 +26,44 @@ class AtBuscadorCasosExitosType extends AbstractType
 
        
         $builder
-                
-            ->add('falla','entity', array(
+
+         ->add('numero','integer',array(
                 'required'=>false,
-                'empty_value'=>'escoja una [Falla] para puntualizar su busqueda',
+                'label'=>'Número de AT'
+            ))
+                
+         ->add('falla','entity', array(
+                'required'=>false,
+                'empty_value'=>'Todas',
+                 'label'=>'Seleccione una falla',
                 'class' => 'BackendBundle:Falla',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('f')
+                    ->where('f.estado=true')
                     ->orderBy('f.nombre','ASC')
                     ;
                 },
             ))
 
+
+
             ->add('descripcion','text', array(
-              'label' => 'Ingrese sintomas para buscar casos similares',
+              'label' => 'Ingrese sintomas/motivos para buscar casos similares',
                'required'=>false  
 
-            ))       
+            ))
+
+          /*  ->add('chkfalla','checkbox', array(
+              'label' => 'Falla',
+               'required'=>false  
+
+            ))   
+
+              ->add('chksintoma','checkbox', array(
+              'label' => 'Sintoma',
+               'required'=>false  
+
+            )) */            
                        
             ->add('submit', 'submit', array(
                 'label' => 'Aceptar'

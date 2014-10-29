@@ -1,12 +1,17 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
 
-    <h4>Agregar servicio en : {{ entity.at }}</h4>
+    <h4>Agregar servicio en AT: {{ entity.at }}</h4>
+    <hr>
 
     {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
      
     <a href="{{path('at_servicio', {'idAt': entity.at.id }) }}">
         <h5>[Volver]</h5>
     </a>
+
+     <a href="{{ path('serviciotercero_new')}}" target="_Blank">
+        [Agregar nuevo Servicio externo al sistema]
+       </a>
     
  {% endblock %}

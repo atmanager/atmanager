@@ -16,7 +16,10 @@ class BuscadorType extends AbstractType
     {
         $builder
 	
-            ->add('nombre','text',array('required'=>false))
+            ->add('nombre','text',array(
+                'required'=>false,
+                'label'=>'Ingrese nombre o descripcion para filtrar...'
+            ))
             ->add('filtrar','submit')
             ;
     }

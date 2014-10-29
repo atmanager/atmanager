@@ -2,6 +2,7 @@
 {% block content -%}
 
     <h4>Agregar una falla en AT : {{ entity.at }}</h4>
+    <hr>
 
     {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
      
@@ -9,8 +10,8 @@
         [Volver]
     </a>
 
-     <a href="{{ path('falla_listado')}}" >
-        [Administrar fallas del sistema]
+     <a href="{{ path('falla_new')}}" target="_blank">
+        [Agregar nueva falla al sistema] 
     </a>
     
  {% endblock %}

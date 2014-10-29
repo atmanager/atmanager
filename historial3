@@ -388,6 +388,7 @@
   648  clear
 
 #regenrando tecnico
+       php app/console fos:user:create dallasina allasina@hdcm.gov.ar dallasina	
   649  php app/console doctrine:generate:entities BackendBundle:Tecnico
   650  php app/console doctrine:schema:update --dump-sql
   651  php app/console doctrine:schema:update --force

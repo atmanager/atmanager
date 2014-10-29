@@ -1,7 +1,8 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content -%}
 
-    <h3>Crear Nota para : {{ entity.at }}</h3>
+    <h4>Crear Nota y/o adjuntar archivos en AT: {{ entity.at }}</h4>
+    <hr>
 
     {{ form(form,{'attr': {'novalidate':'novalidate'}}) }}
      

@@ -1,9 +1,10 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-    <h3>Resultados obtenidos en Base de Conocimientos:</h3>
+    <h5>Resultados obtenidos en Base de Conocimientos:</h5>
     <table class="table table-bordered table-striped table-condensed">
         <thead>    
             <th>AT</th>
+            <th>Detalle</th>
             <th>Sintomas </th>
             <th>Fecha Reparación </th>
             <th>Tareas realizadas </th>
@@ -11,7 +12,8 @@
         <tbody>
             {% for entity in entities %}
             <tr>                              
-                <td><a href="{{ path('at_ver_historico', { 'id': entity.AtId }) }}" title="Ver historico">{{ entity.AtId }}</a></td>
+                <td><a href="{{ path('at_show', { 'id': entity.AtId }) }}" title="Ver Solicitud">{{ entity.AtId }}</a></td>
+                <td><a href="{{ path('atecnica_verDetalleAt', { 'id': entity.AtId }) }}" title="Ver Detalle">Acceder</a></td>
                 <td>{{ entity.Sintoma }}</td>
                 <td>{{ entity.fechaFinal | date('Y-m-d') }}</td>
                 <td>{{ entity.Tareas }}</td>

@@ -41,41 +41,50 @@ class AtHistoricoController extends Controller
         }
     }
 
+    
+    /*
+
+        Agrega un nuevo estadio a la AT
+        Fecha Ultima Modificación: 27/10/2014
+    */
     public function newAction($idAt)
     {
         $em = $this->getDoctrine()->getManager();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
         /* cargar un array con los estadios que no estan en la AT en cuestion*/
-        $estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAt($at);
+        //$estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAt($at);
+        $estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAtExceptoCancelado($at);
         $entity = new AtHistorico();
         $entity->setAt($at);
         $form = $this->createForm(new AtHistoricoType($at, $em, $estadiosNoPresentes), $entity);
         $form->handleRequest($this->getRequest());
         if ($form->isValid())
         {
-            if($entity->getEstadio()->getClasificacion()->getFinalizaAt())
-            {
-                if($entity->getAt()->getFallas()->isEmpty())
+            
+                if($entity->getEstadio()->getClasificacion()->getFinalizaAt())
                 {
-                    $this->get('session')->getFlashBag()->add('error','Acción denegada. Falta cargar al menos una falla');
-                    return $this->redirect($this->generateUrl('at_historico_new', array('idAt' => $at->getId())));
+                    if($entity->getAt()->getFallas()->isEmpty())
+                    {
+                        $this->get('session')->getFlashBag()->add('error','Acción denegada. Falta cargar al menos una falla');
+                        return $this->redirect($this->generateUrl('at_historico_new', array('idAt' => $at->getId())));
+                    }
+                    else
+                    {
+                        $fechafin = new \DateTime(); 
+                        $entity->getAt()->setFechafin($fechafin);
+                    }
                 }
-                else
-                {
-                    $fechafin = new \DateTime(); 
-                    $entity->getAt()->setFechafin($fechafin);
+                try{
+                    $em->persist($entity);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success','Se agrego satisfactoriamente una nueva evolución');         
+                    return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId())));
                 }
-            }
-            try{
-                $em->persist($entity);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Se agrego satisfactoriamente una nueva evolución');         
-                return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId())));
-            }
-            catch(\Exception $e){
-                $this->get('session')->getFlashBag()->add('error','Error al intentar agregar nueva evolución...'); 
-               
-            }                      
+                catch(\Exception $e){
+                    $this->get('session')->getFlashBag()->add('error','Error al intentar agregar nueva evolución...'); 
+                   
+                }                      
+        
         }
     	return $this->render('AtBundle:AtHistorico:new.html.twig', array(
       	   'form' => $form->createView(),

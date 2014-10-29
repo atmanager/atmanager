@@ -20,7 +20,7 @@ atecnica_asignarTecnicoAT:
 
 atecnica_reasignotec:
     pattern:  /{id}/reasignotec
-    defaults: { _controller: "AtBundle:Atecnica:reasignotec" }    
+    defaults: { _controller: "AtBundle:Atecnica:reasignotec" }
 
 atecnica_cancelar:
     pattern:  /{id}/cancelar
@@ -33,7 +33,10 @@ atecnica_buscarAgendaTecnico:
 atecnica_baseConocimiento:
     pattern:  /baseConocimiento
     defaults: { _controller: "AtBundle:Atecnica:baseConocimiento" }
-    
 atecnica_sintomas:
     pattern:  /{sintoma}/obtenerXsintomas
     defaults: { _controller: "AtBundle:Atecnica:obtenerXSintomas" }
+
+atecnica_verDetalleAt:
+    pattern:  /{id}/verDetalleAt
+    defaults: { _controller: "AtBundle:Atecnica:verDetalleAt" }

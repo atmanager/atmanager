@@ -3,5 +3,11 @@ background-color: #fff;
 }
 
 table{
-font-size: 13px;	
+font-size: 12px;	
 }
+
+hr{
+ background-color: gray; 
+ height: 1px; 
+ margin-left: 0%;
+  }

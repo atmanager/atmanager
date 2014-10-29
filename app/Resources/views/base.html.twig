@@ -8,7 +8,7 @@
     <meta name="author" content="">
    
 
-    <title>AT Manager - {% block title %}{% endblock %}</title>
+    <title>AT Manager - Gestor de asistencias técnicas {% block title %}{% endblock %}</title>
 
     <!-- Latest compiled and minified CSS, hoja estilo bootstrap -->
 <link rel="stylesheet" href="{{ asset('css/bootstrap.css')}}"> 
@@ -17,7 +17,6 @@
 <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> -->
 
     <!-- Custom styles for this template -->
-    <link href="offcanvas.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bundles/backend/css/local.css')}}"> 
 
        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -91,7 +90,7 @@
                 {% if is_granted('ROLE_TECNICO') %}
                 <li><a href="{{ asset('manuales/manual_admin.pdf') }}" target="_blank">Descargar Manual Técnico</a></li>
                 {% endif %}
-                <li><a href="#">Descargar Manual Usuario</a></li>
+                <li><a href="{{ asset('manuales/manual_user.pdf') }}" target="_blank">Descargar Manual Usuario</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Contactenos</a></li>
                 <li class="divider"></li>

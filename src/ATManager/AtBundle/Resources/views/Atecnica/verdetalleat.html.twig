@@ -1,0 +1,159 @@
+{% extends 'FrontendBundle::base_frontend.html.twig' %}
+
+{% block content %}
+    <p> Detalle de At: <strong> {{ entity }}</strong> </p>
+ <!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#fallas" role="tab" data-toggle="tab">Fallas</a></li>
+  <li><a href="#repuestos" role="tab" data-toggle="tab">Repuestos</a></li>
+  <li><a href="#servicios" role="tab" data-toggle="tab">Servicios Terceros</a></li>
+  <li><a href="#notas" role="tab" data-toggle="tab">Notas</a></li>
+  <li><a href="#evoluciones" role="tab" data-toggle="tab">Evolución</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="fallas">
+   <br> 
+  <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Falla</th>
+                <th>Jerarquia</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for falla in entity.fallas %}
+            <tr>
+                              
+                <td>{{ falla.falla }}</td>
+                <td>{{ falla.rol }}</td>
+                
+        {% endfor %}
+        </tbody>
+    </table>
+
+  </div>
+
+
+
+  <div class="tab-pane" id="repuestos">
+    <br>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Repuesto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for repuesto in entity.repuestos %}
+            <tr>
+                              
+                <td>{{ repuesto.repuesto }}</td>
+                <td>{{ repuesto.cant }}</td>
+                <td>{{ repuesto.preciounit }}</td>
+                <td>{{ repuesto.preciounit * repuesto.cant }}</td>
+                
+        {% endfor %}
+        </tbody>
+    </table>
+
+  </div>
+
+  <div class="tab-pane" id="servicios">
+    <br>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Servicio</th>
+                <th>Precio Unitario</th>
+                <th>Proveedor</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for servicio in entity.servicios %}
+            <tr>
+                              
+                <td>{{ servicio.serviciotercero }}</td>
+                <td>{{ servicio.precio }}</td>
+                <td>{{ servicio.proveedor }}</td>
+                
+                
+        {% endfor %}
+        </tbody>
+    </table>
+
+  </div>
+  
+
+  <div class="tab-pane" id="notas">
+    <br>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Asunto</th>
+                <th>Fecha</th>
+                <th>Adjunto</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nota in entity.notas %}
+            <tr>
+                              
+                <td>{{ nota.descripcion }}</td>
+                <td>{{ nota.fecha | date('d-m-Y') }}</td>
+                <td>
+                    {% if (nota.getWebPath()) %}
+                        <a href="{{ asset(nota.getWebPath) }}" target="_blank">
+                            Ver
+                        </a>
+                    {% endif %}
+
+                </td>
+                
+                
+        {% endfor %}
+        </tbody>
+    </table>
+
+  </div>
+
+
+  <div class="tab-pane" id="evoluciones">
+    <br>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Estadio</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evolucion in entity.historicos %}
+            <tr>
+                              
+                
+                <td>{{ evolucion.fecha | date('d-m-Y h:i:s') }}</td>
+                <td>{{ evolucion.estadio }}</td>
+                <td>{{ evolucion.comentario }}</td>
+
+                
+                
+                
+        {% endfor %}
+        </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+ <a href="{{ ret }}">
+               [Volver]
+            </a>
+       
+ {% endblock %}

@@ -1,6 +1,8 @@
 {% extends 'AtBundle::base_at.html.twig' %} 
 {% block content %}
-   <h3>Gestión de Notas en ATs : {{ at }}</h3>
+   <h4>Gestión de Notas y archivos adjuntos en AT: {{ at }}</h4>
+   <hr>
+
    <table>
        <td>
             <a href="{{ path('at_nota_new', { 'idAt': at.id }) }}">

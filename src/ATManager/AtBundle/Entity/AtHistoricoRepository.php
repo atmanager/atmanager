@@ -40,5 +40,19 @@ class AtHistoricoRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findByHistoricoEstadiosNoPresentesEnAtExceptoCancelado($at)
+    {
+        $em = $this->getEntityManager();
+      
+        $query = $em->createQuery('SELECT e FROM BackendBundle:Estadio e
+         INNER JOIN BackendBundle:EstadioClasif ec WITH e.clasificacion = ec.id   
+         WHERE ec.cancelaAt=false
+         AND e.estado=true 
+         AND e.id NOT IN 
+         (SELECT IDENTITY(ath.estadio) FROM AtBundle:AtHistorico ath where ath.at= :at)')
+         ->setParameter('at', $at) ; 
+         return $query->getResult();
+    }
+
 	
 }

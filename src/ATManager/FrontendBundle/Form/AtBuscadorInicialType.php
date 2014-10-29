@@ -28,10 +28,10 @@ class AtBuscadorInicialType extends AbstractType
              ->add('estadio','entity',
                     array
                     (
-                        'label'=>'Estadio: ',
+                        'label'=>'Escoja algún [Estadio] para filtrar AT. [Todos] no aplica filtro',
                         'class'=>'BackendBundle:Estadio',
                         'required'=>false,
-                        'empty_value'=>'Selecccione Estadio [*]',
+                        'empty_value'=>'Todos (no aplica filtro)',
                         'query_builder'=>function(EntityRepository $er)
                             {
                             return $er->createQueryBuilder('e')

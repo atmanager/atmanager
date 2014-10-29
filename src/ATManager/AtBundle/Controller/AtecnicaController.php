@@ -48,24 +48,30 @@ class AtecnicaController extends Controller
         ));
         // asigna al select del estadio del type, el estadio que eligio el usuario
         $form->get('estadio')->setData($esta); 
-        $form->handleRequest($request);        
+        $form->handleRequest($request);  
+
+
+        $objt = $this->get('security.context')->getToken()->getUser();
+        $sector=$objt->getSector();
+
         if ($form->isValid())
         {
 	    $entities =array();        	  
-            $objt = $this->get('security.context')->getToken()->getUser();
-            $sector=$objt->getSector();
+            /*$objt = $this->get('security.context')->getToken()->getUser();
+            $sector=$objt->getSector();*/
             $estadio=$form->get('estadio')->getData();            
             $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorSectorEstadio($sector, $estadio);
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('FrontendBundle:At:viewStarting.html.twig', array( 
                     'form'=>$form->createView(),
-		    'entities' => $entities,
+		            'entities' => $entities,
                     'estadio' => $estadio 	
             ));
         }
         return $this->render('AtBundle:Atecnica:find.html.twig', array(
-                            'form'=>$form->createView()	 	
+                            'form'=>$form->createView(),
+                            'sector'=>$sector	 	
         ));
     }   
     
@@ -263,11 +269,21 @@ class AtecnicaController extends Controller
             $entities =array();           
             $falla=$form->get('falla')->getData();
             $descripcion=$form->get('descripcion')->getData();
-            if($falla=="" and $descripcion=="")
-            { $entities =array(); }
-            else{    
-            $entities = $em->getRepository('FrontendBundle:At')->findByCasosPorFallaDescripcion($falla,$descripcion);            
-            }
+            $numAt=$form->get('numero')->getData();
+            
+            if($numAt=="")
+            {    
+                if($falla=="" and $descripcion=="")
+                { $entities =array(); }
+                  else{    
+                        $entities = $em->getRepository('FrontendBundle:At')->findByCasosPorFallaDescripcion($falla,$descripcion);            
+                       }
+            }else{
+                     $entities = $em->getRepository('FrontendBundle:At')->findByCasosPorNumeroAt($numAt);          
+                 }
+
+
+
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('AtBundle:Atecnica:basecono.html.twig', array( 
@@ -302,6 +318,7 @@ class AtecnicaController extends Controller
                 }
             }
         }
+        
         return $this->render('AtBundle:Atecnica:findcono.html.twig', array(
                             'sintomas'=>$sintomas     
         ));        
@@ -341,5 +358,25 @@ class AtecnicaController extends Controller
             'tecnicos'=>$tecnicos,
             'ret'=>$ret
         ));              
+     }
+
+     public function verDetalleAtAction($id)
+    {
+        /* recupero la variable de session definida en: buscadorAction()*/
+        $sesion = $this->get('session');
+        /*la asigno a una variable que utilizare como parametro para redireccionar al finaliza
+        el proceso*/ 
+        $ret = $sesion->get('retorno');
+        /*--*/
+        $tecnicos=array();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontendBundle:At')->find($id);
+        
+        return $this->render('AtBundle:Atecnica:verdetalleat.html.twig', array(
+            'entity'=>$entity,
+            'ret'=>$ret
+        ));              
      }    
+
+
 }

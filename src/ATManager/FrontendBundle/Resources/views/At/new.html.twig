@@ -1,9 +1,12 @@
 {% extends 'FrontendBundle::base_frontend.html.twig' %} 
 {% block title %} Solicitud de AT {% endblock %}       
 	{% block content %}
-	<p> <h4> Nueva Solicitud de Asistencia técnica </h4> </p>
-	
-	
+	<h4> Nueva Solicitud de Asistencia técnica </h4>
+	<p> Ingrese los datos obligatorios [*] </p>
+	<hr>
+
+
+
 {{ form_start(form,{'attr': {'novalidate':'novalidate'}} )}}  
 
 	<div class="row"> 
@@ -46,7 +49,7 @@
 	</div> 
  {{ form_end(form) }}  
 
- <p> [*] Datos obligatorios </p>
+ 
 			
 {% endblock %}
  

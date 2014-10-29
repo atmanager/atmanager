@@ -39,10 +39,10 @@ class FallaController extends Controller
     {
         $entity = new Falla();
         $form   = $this->createForm(new FallaType(), $entity);
-	$form->handleRequest($this->getRequest());
+	    $form->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
-            try{
+            try{  
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();

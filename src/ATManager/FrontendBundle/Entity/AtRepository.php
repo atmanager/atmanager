@@ -170,6 +170,29 @@ class AtRepository extends EntityRepository
              }   
     }
 
+    public function findByCasosPorNumeroAt($numAt)
+    {
+            $em = $this->getEntityManager();            
+               
+            $query = $em->createQuery(
+            'SELECT a.id as AtId, 
+                    a.fechafin as fechaFinal, 
+                    a.descripcion as Sintoma, 
+                    ah.comentario as Tareas 
+                    FROM FrontendBundle:At a
+                    INNER JOIN AtBundle:AtFalla af with a.id = af.at 
+                    INNER JOIN AtBundle:AtHistorico ah with a.id = ah.at
+                    INNER JOIN BackendBundle:Estadio e with ah.estadio = e.id
+                    INNER JOIN BackendBundle:EstadioClasif ec with e.clasificacion = ec.id
+                    WHERE a.id = :at
+                    AND a.fechafin is not null
+                    AND ec.finalizaAt = 1')
+                    ->setParameter('at', $numAt);           
+                    
+                    return $query->getResult();
+                
+    }
+
 
 
 }
