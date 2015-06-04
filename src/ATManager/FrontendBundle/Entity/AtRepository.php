@@ -46,7 +46,7 @@ class AtRepository extends EntityRepository
 		AND h.estadio = :estadio
 		AND h.estadio = (SELECT IDENTITY(h1.estadio)
                     FROM AtBundle:AtHistorico h1 
-                    WHERE h1.fecha = (
+                    WHERE h1.at=a.id and h1.fecha = (
 			SELECT max(h2.fecha)
 			FROM AtBundle:AtHistorico h2
 			WHERE h2.at = a.id))')	

@@ -60,4 +60,17 @@ class PatrimonioRepository extends EntityRepository
 		$query = $query->getQuery();
 		return $query->getResult();
 	}
+
+	
+	public function findUltimoPatrimonio()
+	{
+		$em = $this->getEntityManager();
+		$query = $em->createQueryBuilder()
+		->select('p')
+		->from('PatrimonioBundle:Patrimonio','p')
+	    ->orderBy('p.id','DESC')
+        ->setMaxResults(1);
+        $query = $query->getQuery();
+	    return $query->getOneOrNullResult();
+	}
 }

@@ -19,6 +19,7 @@ class PatrimonioController extends Controller
             'method' => 'GET',
         ));
         $form->handleRequest($request);
+        $ultimoPatrimonio= $em->getRepository('PatrimonioBundle:Patrimonio')->findUltimoPatrimonio();
         if ($form->isValid())
         {
 
@@ -32,6 +33,7 @@ class PatrimonioController extends Controller
             $marca=$form->get('marca')->getData();
             $entities = $em->getRepository('PatrimonioBundle:Patrimonio')->findByFiltroPatrimonio($numero, $descripcion, $observacion, $serial, $clasificacion, $local, $marca);
             $cant=count($entities);
+            
             if ($form->get('exportar')->isClicked())
             {
                 return $this->export($entities);
@@ -43,11 +45,12 @@ class PatrimonioController extends Controller
                     'entities' => $entities, 
                     'form'=>$form->createView(),
                     'cant'=>$cant
-                ));
+                     ));
             }
         }
         return $this->render('PatrimonioBundle:Patrimonio:find.html.twig', array(
-                            'form'=>$form->createView()
+                            'form'=>$form->createView(),
+                            'ultimo'=>$ultimoPatrimonio->getId()
         ));
     }    
     public function newAction()

@@ -17,6 +17,14 @@
         active
         {% endif %}
         "title="Acceder a agenda de trabajo de un técnico">Agenda de técnicos</a>
+
+        {% if is_granted('ROLE_JDS') %}
+        <a href="{{ path('atecnica_buscarAgendaTodosLosTecnicos') }}" class="list-group-item 
+        {% if app.request.get('_route') == 'atecnica_buscarAgendaTodosLosTecnicos'%}
+        active
+        {% endif %}
+        "title="Acceder a agenda de trabajo de todos los técnicos">Auditoria de agenda</a>
+        {% endif %}
         
 
         <a href="{{ path('atecnica_baseConocimiento') }}" class="list-group-item 

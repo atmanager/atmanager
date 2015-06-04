@@ -30,6 +30,10 @@ atecnica_buscarAgendaTecnico:
     pattern:  /buscarAgendaTecnico
     defaults: { _controller: "AtBundle:Atecnica:buscarAgendaTecnico" }
 
+atecnica_buscarAgendaTodosLosTecnicos:
+    pattern:  /buscarAgendaTodosLosTecnicos
+    defaults: { _controller: "AtBundle:Atecnica:buscarAgendaTodosLosTecnicos" }    
+
 atecnica_baseConocimiento:
     pattern:  /baseConocimiento
     defaults: { _controller: "AtBundle:Atecnica:baseConocimiento" }
