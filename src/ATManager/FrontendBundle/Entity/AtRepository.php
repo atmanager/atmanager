@@ -87,7 +87,7 @@ class AtRepository extends EntityRepository
                     SELECT max(h2.fecha)
                     FROM AtBundle:AtHistorico h2
                     WHERE h2.at = a.id))
-             		ORDER BY a.prioridad')
+             		ORDER BY a.id DESC')
                 ->setParameter('tecnico', $tecnico)
                 ->setParameter('rol', $rol)
                 ->setParameter('estadio', $estadio);
@@ -105,13 +105,81 @@ class AtRepository extends EntityRepository
                 INNER JOIN AtBundle:AtHistorico h with a.id=h.at 
                 WHERE t.tecnico = :tecnico 
                 AND t.rol = :rol
-                ORDER BY a.prioridad')
+               ORDER BY a.id DESC')
                 ->setParameter('tecnico', $tecnico)
                 ->setParameter('rol', $rol);
                
             
                 return $query->getResult();
 	}
+
+    /*
+
+    10-06-2015
+    dario
+    consulta sql
+
+    SELECT a.id, a.descripcion, h.estadio_id, tec.id
+    FROM At a
+    INNER JOIN AtTecnico t ON a.id = t.at_id
+    INNER JOIN Tecnico tec ON t.tecnico_id = tec.id
+    INNER JOIN AtHistorico h ON a.id = h.at_id
+    WHERE tec.sector_id =1
+    AND h.estadio_id =3
+    AND h.estadio_id = ( 
+    SELECT estadio_id
+    FROM AtHistorico h1
+    WHERE h1.fecha = ( 
+    SELECT MAX( h2.fecha ) 
+    FROM AtHistorico h2
+    WHERE h2.at_id = a.id ) ) 
+    ORDER BY tec.id
+
+
+    */
+    public function findByFiltroDeTodosTecnicoDelSector($tecnico,$rol,$sector,$estadio)
+    {
+            if($estadio)
+            {    
+            $em = $this->getEntityManager();            
+            $query = $em->createQuery(
+                'SELECT a
+                FROM FrontendBundle:At a
+                INNER JOIN AtBundle:AtTecnico t with a.id = t.at
+                INNER JOIN AtBundle:AtHistorico h with a.id=h.at
+                INNER JOIN BackendBundle:tecnico tec with t.tecnico=tec.id 
+                WHERE tec.sector = :sector 
+                AND t.rol = :rol
+                ORDER BY a.prioridad')
+                ->setParameter('tecnico', $tecnico)
+                ->setParameter('rol', $rol)
+                ->setParameter('sector', $sector);
+               
+            
+                return $query->getResult();
+            }else{
+
+                    $em = $this->getEntityManager();            
+            $query = $em->createQuery(
+                'SELECT a
+                FROM FrontendBundle:At a
+                INNER JOIN AtBundle:AtTecnico t with a.id = t.at
+                INNER JOIN AtBundle:AtHistorico h with a.id=h.at
+                INNER JOIN BackendBundle:tecnico tec with t.tecnico=tec.id 
+                WHERE tec.sector = :sector 
+                AND t.rol = :rol
+                ORDER BY a.prioridad')
+                ->setParameter('tecnico', $tecnico)
+                ->setParameter('rol', $rol)
+                ->setParameter('sector', $sector);
+               
+            
+                return $query->getResult();
+
+            }    
+    }
+
+
     public function findByCasosXSintoma($descripcion)
     {
         $em = $this->getEntityManager();		  	

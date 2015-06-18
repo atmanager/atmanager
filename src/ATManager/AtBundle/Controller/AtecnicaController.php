@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtTecnico;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\FrontendBundle\Form\AtBuscadorInicialType;
+use ATManager\FrontendBundle\Form\AtBuscadorInicialDeTecnicosType;
 use ATManager\AtBundle\Form\AtBuscadorCasosExitosType;
 
 class AtecnicaController extends Controller
@@ -209,7 +210,8 @@ class AtecnicaController extends Controller
             return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 
                     'entities' => $entities,
                     'tecnico' => $objt,
-                    'retorno' =>$retorno 	
+                    'retorno' =>$retorno,
+                    'volver' => 'atecnica_buscarAgendaTecnico' 	
             ));
         }
         return $this->render('AtBundle:Atecnica:findagenda.html.twig', array(
@@ -217,50 +219,7 @@ class AtecnicaController extends Controller
         ));
     }
 
-    // Fecha: 02/06/2015
-    // Busca las ats de todos los técnico del sector
-    public function buscarAgendaTodosLosTecnicosAction(Request $request)
-    {
-                 
-        $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
-        $sesion = $this->get('session'); 
-        $sesion->set('retorno',$retorno);    
-        /* ------------------------------------*/
-        $objt = $this->get('security.context')->getToken()->getUser();   
-        $em = $this->getDoctrine()->getManager();
-        $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByDiagnosAt(true);
-        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
-        $form = $this->createForm(new AtBuscadorInicialType(), null, array(
-            'method' => 'GET'
-        ));
-        // asigna al select del estadio del type, el estadio que eligio el usuario
-        $form->get('estadio')->setData($esta); 
-        $form->handleRequest($request);        
-        if ($form->isValid())
-        {
-        $entities =array();           
-            $sector=$objt->getSector();
-            $rol=$em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);          
-            $estadio=$form->get('estadio')->getData();
-            
-            /* mejorar esto*/
-            if($estadio)
-            {    
-            $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnico($objt,$rol,$estadio);
-            }else{$entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnicoSinEstadio($objt,$rol);}
-
-            $paginator = $this->get('knp_paginator');
-            $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
-            return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 
-                    'entities' => $entities,
-                    'tecnico' => $objt,
-                    'retorno' =>$retorno    
-            ));
-        }
-        return $this->render('AtBundle:Atecnica:findagenda.html.twig', array(
-                            'form'=>$form->createView()     
-        ));
-    }
+    
 
     public function showAction($id)
     {
@@ -422,7 +381,58 @@ class AtecnicaController extends Controller
             'entity'=>$entity,
             'ret'=>$ret
         ));              
-     }    
+     }  
+
+
+     /* Fecha: 10/06/2015
+     busca las at del tecnico JDS logueado
+
+    */ 
+    public function buscarAgendaTodosLosTecnicosAction(Request $request)
+    {
+                 
+        $retorno = 'http://'.$request->getHost().$request->getRequestUri(); 
+        $sesion = $this->get('session'); 
+        $sesion->set('retorno',$retorno);    
+        /* ------------------------------------*/
+        $objt = $this->get('security.context')->getToken()->getUser();   
+        $sector=$objt->getSector();
+        $em = $this->getDoctrine()->getManager();
+        $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByDiagnosAt(true);
+        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
+        $form = $this->createForm(new AtBuscadorInicialDeTecnicosType($sector), null, array(
+            'method' => 'GET'
+        ));
+        // asigna al select del estadio del type, el estadio que eligio el usuario
+        $form->get('estadio')->setData($esta); 
+        $form->handleRequest($request);        
+        if ($form->isValid())
+        {
+        $entities =array();           
+            $sector=$objt->getSector();
+            $rol=$em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);          
+            $estadio=$form->get('estadio')->getData();
+            $objt=$form->get('tecnico')->getData();
+            
+            /* mejorar esto*/
+            if($estadio)
+            {    
+            $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnico($objt,$rol,$estadio);
+            }else{$entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnicoSinEstadio($objt,$rol);}
+
+            $paginator = $this->get('knp_paginator');
+            $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
+            return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 
+                    'entities' => $entities,
+                    'tecnico' => $objt,
+                    'retorno' =>$retorno,
+                    'volver' => 'atecnica_buscarAgendaTodosLosTecnicos'  
+            ));
+        }
+        return $this->render('AtBundle:Atecnica:findagenda.html.twig', array(
+                            'form'=>$form->createView()     
+        ));
+    }  
 
 
 }
