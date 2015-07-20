@@ -7,13 +7,18 @@ use Doctrine\ORM\Mapping as ORM;
 // Assert = controles de validacion sobre los atributos de clases en vez
 // de validar en el formulario
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\TecnicoRepository")
  * @ORM\Table
+ * @UniqueEntity(
+ *     fields={"documento"},
+ *     message="Ya existe el documento en otro item"
+ * )
  * @ORM\HasLifecycleCallbacks()
+ * 
  */
 class Tecnico extends BaseUser
 {
@@ -27,7 +32,7 @@ class Tecnico extends BaseUser
       /**
      * @var String
      *
-     * @ORM\Column(name="documento", type="string", length=12, unique=true)
+     * @ORM\Column(name="documento", type="string", length=12, unique=true,nullable=false)
      * @Assert\NotBlank()
      */
     private $documento;
@@ -84,7 +89,7 @@ class Tecnico extends BaseUser
     }
 
     public function __toString(){
-        return $this->getNombre();
+        return " ".$this->getNombre();
     }
 
     /**

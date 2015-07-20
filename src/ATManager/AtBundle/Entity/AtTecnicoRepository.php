@@ -54,6 +54,31 @@ class AtTecnicoRepository extends EntityRepository
                 
     }
 
+    public function FindByRolPrincipal($at,$rol)
+    {
+        //$tec = 3;
+        $em = $this->getEntityManager();   
+        $query = $em->createQuery('SELECT att FROM AtBundle:AtTecnico att
+         WHERE att.at = :at and att.rol = :rol') 
+         ->setParameter('at', $at)
+         ->setParameter('rol', $rol); 
+         return $query->getOneOrNullResult();               
+    }
+
+    public function FindByAtTecnico($at, $tec)
+    {
+        
+        $em = $this->getEntityManager();   
+        $query = $em->createQuery('SELECT att FROM AtBundle:AtTecnico att
+        INNER JOIN BackendBundle:Rol r with att.rol=r.id  
+        INNER JOIN  BackendBundle:Tecnico t with t.id=att.tecnico 
+        WHERE att.at= :at and att.tecnico= :tec')
+         ->setParameter('at', $at)
+         ->setParameter('tec', $tec);
+
+         return $query->getOneOrNullResult();              
+    }
+
 
     public function TecnicosEnAt($at)
     {

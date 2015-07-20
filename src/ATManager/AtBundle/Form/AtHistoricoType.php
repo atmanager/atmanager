@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class AtHistoricoType extends AbstractType
 {
@@ -19,11 +20,12 @@ class AtHistoricoType extends AbstractType
     private $at;
     private $em;
 
-    public function __construct($at, $em, $arrayEstadios)
+    public function __construct($at, $em, $arrayEstadios, $sector)
     { 
       $this->arrayEstadios=$arrayEstadios; 
       $this->at=$at; 
       $this->em=$em; 
+      $this->sector=$sector;
     }
 
      /**
@@ -33,7 +35,7 @@ class AtHistoricoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
             $arrayEstadios = $this->arrayEstadios;
-            
+            $sector = $this->sector;
            
         $builder
             ->add('fecha',null, array(
@@ -47,6 +49,24 @@ class AtHistoricoType extends AbstractType
                 'multiple' => false,
                 'label' => 'estadio',                                  
             ))
+
+              ->add('tecnico','entity',
+                    array
+                    (
+                        'label'=>'Escoja un tecnico de su sector para Reasignar este estadio (asumirá con Rol principal)',
+                        'class'=>'BackendBundle:Tecnico',
+                        'required'=>false,
+                        'empty_value'=>'Seleccione un técnico de su sector (no obligatorio)',
+                        'query_builder'=>function(EntityRepository $er)use ($sector)
+                            {
+                            return $er->createQueryBuilder('t')
+                                ->select('t')
+                                ->where('t.sector = :sector')
+                                ->setParameter('sector',$sector)
+                                ->orderBy('t.nombre','ASC');
+                            }
+                        )) 
+
 
 
             ->add('comentario','textarea',array(

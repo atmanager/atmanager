@@ -132,6 +132,15 @@ class AtecnicaController extends Controller
             // hasta aquí guarda el historico de la at asignada
             $em->persist($ath);
             $em->flush();
+            if(isset($_GET['mail']))
+            {
+            $message = \Swift_Message::newInstance()
+            ->setSubject('Envio de at')
+            ->setFrom('atmanagerpro@gmail.com')
+            ->setTo($objt->getEmail())
+            ->setBody("tienes una At pendiente: ".$entity->getId()." ".$entity->getDescripcion());
+             $this->get('mailer')->send($message);
+            }
             $this->get('session')->getFlashBag()->add('success','Solicitud '.$entity.' aceptada !!'); 
             return $this->redirect($ret);            
         }
@@ -184,27 +193,29 @@ class AtecnicaController extends Controller
         /* ------------------------------------*/
         $objt = $this->get('security.context')->getToken()->getUser();   
         $em = $this->getDoctrine()->getManager();
+        
+        // proponer el estadio "En diagnostico"    
         $clas_esta = $em->getRepository('BackendBundle:EstadioClasif')->findOneByDiagnosAt(true);
         $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clas_esta);
+        
         $form = $this->createForm(new AtBuscadorInicialType(), null, array(
             'method' => 'GET'
         ));
-        // asigna al select del estadio del type, el estadio que eligio el usuario
+        
+        // asigna al select estadio del type, el estadio que eligio el usuario
         $form->get('estadio')->setData($esta); 
         $form->handleRequest($request);        
+        
         if ($form->isValid())
         {
-	    $entities =array();        	  
+	        $entities = array();        	  
             $sector=$objt->getSector();
             $rol=$em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);          
             $estadio=$form->get('estadio')->getData();
             
-            /* mejorar esto*/
-            if($estadio)
-            {    
+            
             $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnico($objt,$rol,$estadio);
-            }else{$entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnicoSinEstadio($objt,$rol);}
-
+          
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
             return $this->render('AtBundle:Atecnica:veragendatecnico.html.twig', array( 

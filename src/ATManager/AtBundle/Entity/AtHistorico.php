@@ -46,6 +46,13 @@ class AtHistorico
     private $estadio;
 
     /**
+     *  
+     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Tecnico") 
+     * @ORM\JoinColumn(name="tecnico_id", referencedColumnName="id", nullable=true)
+     */
+    private $tecnico;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
@@ -177,5 +184,29 @@ class AtHistorico
     public function getEstadio()
     {
         return $this->estadio;
+    }
+
+    /**
+     * Set tecnico
+     *
+     * @param \ATManager\BackendBundle\Entity\Tecnico $tecnico
+     *
+     * @return AtHistorico
+     */
+    public function setTecnico(\ATManager\BackendBundle\Entity\Tecnico $tecnico = null)
+    {
+        $this->tecnico = $tecnico;
+
+        return $this;
+    }
+
+    /**
+     * Get tecnico
+     *
+     * @return \ATManager\BackendBundle\Entity\Tecnico
+     */
+    public function getTecnico()
+    {
+        return $this->tecnico;
     }
 }

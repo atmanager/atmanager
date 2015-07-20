@@ -71,7 +71,9 @@ class AtRepository extends EntityRepository
     // las ats asignadas al técnico
     public function findByFiltroPorTecnico($tecnico,$rol,$estadio)
     {
-        $em = $this->getEntityManager();		  	
+        $em = $this->getEntityManager();	
+        if($estadio)
+        {	  	
         $query = $em->createQuery(
                 'SELECT a
                 FROM FrontendBundle:At a
@@ -93,24 +95,27 @@ class AtRepository extends EntityRepository
                 ->setParameter('estadio', $estadio);
             
                 return $query->getResult();
-	}
+            }else{
 
-	public function findByFiltroPorTecnicoSinEstadio($tecnico,$rol)
-	{
-            $em = $this->getEntityManager();		  	
-            $query = $em->createQuery(
+                $query = $em->createQuery(
                 'SELECT a
                 FROM FrontendBundle:At a
                 INNER JOIN AtBundle:AtTecnico t with a.id = t.at
                 INNER JOIN AtBundle:AtHistorico h with a.id=h.at 
                 WHERE t.tecnico = :tecnico 
                 AND t.rol = :rol
-               ORDER BY a.id DESC')
+                ORDER BY a.id DESC')
                 ->setParameter('tecnico', $tecnico)
-                ->setParameter('rol', $rol);
-               
-            
+                ->setParameter('rol', $rol); 
                 return $query->getResult();
+
+            }
+	}
+
+	public function findByFiltroPorTecnicoSinEstadio($tecnico,$rol)
+	{
+            $em = $this->getEntityManager();		  	
+            
 	}
 
     /*

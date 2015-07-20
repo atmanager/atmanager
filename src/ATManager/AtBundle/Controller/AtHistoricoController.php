@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Form\AtHistoricoType;
 use ATManager\AtBundle\Form\AtHistoricoEditType;
 use ATManager\AtBundle\Entity\AtHistorico;
+use ATManager\AtBundle\Entity\AtTecnico;
 
 
 /**
@@ -22,10 +23,18 @@ class AtHistoricoController extends Controller
         $ret = $sesion->get('retorno');
     	$em = $this->getDoctrine()->getManager();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
-        $clasif=$em->getRepository('BackendBundle:EstadioClasif')->findByFinalizaAt(true);
-        $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasif);
-        $estadio=$em->getRepository('AtBundle:AtHistorico')->findByEstadiosPuntalesAt($at,$esta);
-        $entities = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoPorAt($at);
+        
+        /* bloque ATFinalizada: 
+           busco si alguno de los estadios que contiene la AT
+           tiene el atributo de FInalizado en True*/
+
+            $clasif=$em->getRepository('BackendBundle:EstadioClasif')->findByFinalizaAt(true);
+            $esta = $em->getRepository('BackendBundle:Estadio')->findOneByClasificacion($clasif);
+            $estadio=$em->getRepository('AtBundle:AtHistorico')->findByEstadiosPuntalesAt($at,$esta);
+        /* fin bloque */
+
+        
+        /* compruebo que no este finalizada */
         if($estadio)
         {
             $this->get('session')->getFlashBag()->add('error','AT finalizada. No se permite EVOLUCIONAR');
@@ -33,6 +42,8 @@ class AtHistoricoController extends Controller
         }
         else
         {
+            /* si no esta finalizada, trae su colección de estadios */
+            $entities = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoPorAt($at);
             return $this->render('AtBundle:AtHistorico:index.html.twig', array(
         	'entities'=> $entities,
                 'at'=>$at,
@@ -51,12 +62,19 @@ class AtHistoricoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
+
+        /*  sector del usuario logueado*/
+
+         $objt = $this->get('security.context')->getToken()->getUser();   
+         $sector=$objt->getSector();
+
+
         /* cargar un array con los estadios que no estan en la AT en cuestion*/
         //$estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAt($at);
         $estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAtExceptoCancelado($at);
         $entity = new AtHistorico();
         $entity->setAt($at);
-        $form = $this->createForm(new AtHistoricoType($at, $em, $estadiosNoPresentes), $entity);
+        $form = $this->createForm(new AtHistoricoType($at, $em, $estadiosNoPresentes, $sector), $entity);
         $form->handleRequest($this->getRequest());
         if ($form->isValid())
         {
@@ -75,6 +93,78 @@ class AtHistoricoController extends Controller
                     }
                 }
                 try{
+                    /* si no se escoge un tecnico nuevo ppal*/
+                    if($form->get("tecnico")->getData() == null) 
+                    {
+                        $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);
+                        $att = $em->getRepository('AtBundle:AtTecnico')->FindByRolPrincipal($at,$rol);
+                        $entity->setTecnico($att->getTecnico());
+                    }else{ 
+                        
+                        /* se escogio un nuevo tecnico ppal
+                           agrega un nuevo tecnico en AtTecnico con Rol ppal, 
+                           updatea el anterior ppal como ayudante
+                       */
+                        
+                        $rol = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(true);
+                        
+                        $tecnicoEscogido = $form->get("tecnico")->getData();
+
+                        $att_tecnicoActual = $em->getRepository('AtBundle:AtTecnico')->FindByRolPrincipal($at,$rol);
+                        
+                                     
+                       if($att_tecnicoActual->getTecnico() == $tecnicoEscogido) 
+                       {
+                        /* existe el técnico escogido en esta AT y está como principal*/
+
+                       }else{
+                               
+                                $att_existe = $em->getRepository('AtBundle:AtTecnico')->FindByAtTecnico($at, $tecnicoEscogido->getId());
+                                if(isset($att_existe))
+                                {echo " TEX que existe: ";}else{echo "tex no existe ".var_dump($att_existe);} 
+                                  
+
+                                /* el ppal anterior pasa a ayudante*/
+                                $rol_falso = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(false);
+                                $att_tecnicoActual->setRol($rol_falso);
+                                $em->persist($att_tecnicoActual);
+
+        
+
+                                   
+                                
+                                if(isset($att_existe))
+                                {
+                                    /* el tecnico escogido ya existe en la relacion con rol ayudante*/
+                                  
+                                    $att_existe->setRol($rol);
+                                    $em->persist($att_existe);
+
+                                }else{    
+
+
+
+                                /* agrego un nuevo tec con rol ppal.*/
+                                $nuevoAtt = new AtTecnico();
+                                $nuevoAtt->setAt($at);
+                                $nuevoAtt->setTecnico($tecnicoEscogido);
+                                $nuevoAtt->setRol($rol);
+                                $em->persist($nuevoAtt);
+
+                                /*$comentario = $form->get("comentario")." técnico actual: ".$tecnicoEscogido;
+                                echo "nuevo tecnico ".$comentario;
+                                $entity->setComentario($comentario);*/ 
+
+                                }
+
+
+
+                            } 
+
+                    } 
+                                       
+                    
+                    /* graba un nuevo estadio*/    
                     $em->persist($entity);
                     $em->flush();
                     $this->get('session')->getFlashBag()->add('success','Se agrego satisfactoriamente una nueva evolución');         

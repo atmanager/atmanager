@@ -10,12 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Local
  *
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\LocalRepository")
- * @UniqueEntity(
- *     fields={"nombre"},
- *     message="Ya existe el nombre en otro item"
- * )
  * @UniqueEntity(
  *     fields={"codigointerno"},
  *     message="Ya existe el código interno en otro item"

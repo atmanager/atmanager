@@ -25,9 +25,26 @@
                         {% for mapa in mapatec %}
                             <tr>
                                 <td>
-                                    <a href="{{ path('atecnica_asignarTecnicoAT',{ 'at': entity.id,'tec': mapa.idtecnico }) }}"> 	
-                                        {{ '[Principal]' }}
-                                    </a> 	 
+
+                                     <div class="btn-group">
+                                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="caret"></span>
+                                          </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                     <a href="{{ path('atecnica_asignarTecnicoAT',{ 'at': entity.id,'tec': mapa.idtecnico }) }}"><i class="glyphicon glyphicon-wrench"></i> Asignar </a>
+                                                </li>
+
+                                                <li>    
+                                                    <a href="{{ path('atecnica_asignarTecnicoAT',{ 'at': entity.id,'tec': mapa.idtecnico }) }}?mail=1"><i class="glyphicon glyphicon-envelope"></i> Asignar y notificar</a>
+                                                </li>
+
+                                            </ul>
+                                    </div>
+
+
+                                   
+                                      
                                 </td>
                                 <td>{{ mapa.tecnico }}</td>
                                 <td>{{ mapa.cantidad }}</td>
