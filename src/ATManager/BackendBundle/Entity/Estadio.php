@@ -51,6 +51,13 @@ class Estadio
     /**
      * @var boolean
      *
+     * @ORM\Column(name="repite", type="boolean", nullable=true)
+     */
+    private $repite;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="estado", type="boolean",nullable=false)
      */
     private $estado;
@@ -170,5 +177,29 @@ class Estadio
     public function getClasificacion()
     {
         return $this->clasificacion;
+    }
+
+    /**
+     * Set repite
+     *
+     * @param boolean $repite
+     *
+     * @return Estadio
+     */
+    public function setRepite($repite)
+    {
+        $this->repite = $repite;
+
+        return $this;
+    }
+
+    /**
+     * Get repite
+     *
+     * @return boolean
+     */
+    public function getRepite()
+    {
+        return $this->repite;
     }
 }

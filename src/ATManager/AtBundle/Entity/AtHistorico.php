@@ -12,12 +12,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ATManager\AtBundle\Entity\AtHistoricoRepository")
- * @UniqueEntity(
- *     fields={"at","estadio"},
- *     message="Ya existe la relación At - Estadio"
- * )
- * @ORM\Table(name="AtHistorico",uniqueConstraints={
- * @ORM\UniqueConstraint(name="at_estadio_idx", columns={"at_id", "estadio_id"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class AtHistorico

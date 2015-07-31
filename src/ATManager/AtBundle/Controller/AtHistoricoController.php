@@ -119,10 +119,13 @@ class AtHistoricoController extends Controller
 
                        }else{
                                
+                                /* busco el tecnico escogido para ver sino está como ayudante*/
                                 $att_existe = $em->getRepository('AtBundle:AtTecnico')->FindByAtTecnico($at, $tecnicoEscogido->getId());
+                                
+                                /* control interno 
                                 if(isset($att_existe))
                                 {echo " TEX que existe: ";}else{echo "tex no existe ".var_dump($att_existe);} 
-                                  
+                                */  
 
                                 /* el ppal anterior pasa a ayudante*/
                                 $rol_falso = $em->getRepository('BackendBundle:Rol')->findOneByPrincipal(false);
@@ -135,7 +138,8 @@ class AtHistoricoController extends Controller
                                 
                                 if(isset($att_existe))
                                 {
-                                    /* el tecnico escogido ya existe en la relacion con rol ayudante*/
+                                    /* el tecnico escogido ya existe en la relacion con rol ayudante
+                                       entonces le cambio el rol a ppal*/
                                   
                                     $att_existe->setRol($rol);
                                     $em->persist($att_existe);

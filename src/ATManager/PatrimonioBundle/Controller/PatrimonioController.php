@@ -118,7 +118,7 @@ class PatrimonioController extends Controller
             
         }
 
-        $data = array('descripcion'=>$entity->getDescripcion());
+        $data = array('descripcion'=>$entity->getDescripcion(),'local'=>$entity->getLocal()->getNombre());
         return new Response(json_encode($data),200);
        
     }

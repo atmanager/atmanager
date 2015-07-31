@@ -23,21 +23,6 @@ class Patrimonio
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="numero", type="integer", unique=true, nullable=true)
-     */
-    private $numero;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="alasector", type="integer", nullable=true)
-     */
-    private $alasector;
-
     /**
      * @var string
      *
@@ -73,8 +58,6 @@ class Patrimonio
      * @ORM\Column(name="observacion", type="text", nullable=true)
      */
     private $observacion;
-
-
     /**
      * @var \DateTime
      *
@@ -128,7 +111,6 @@ class Patrimonio
     /** 
     * @ORM\ManyToOne(targetEntity="ATManager\BackendBundle\Entity\Local")
     * @ORM\JoinColumn(name="local_id", referencedColumnName="id", nullable=false)
-    * @ORM\OrderBy({"nombre" = "ASC" })
     */
     private $local;
 
@@ -161,6 +143,14 @@ class Patrimonio
         $this->fechaModifica = new\DateTime();                              
     }
 
+
+    public function __toString(){
+        return " ".$this->getId()." ".$this->getDescripcion();
+    }
+
+
+
+
     /*mis metodos*/   
 
     /**
@@ -171,52 +161,6 @@ class Patrimonio
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set numero
-     *
-     * @param integer $numero
-     * @return Patrimonio
-     */
-    public function setNumero($numero)
-    {
-        $this->numero = $numero;
-
-        return $this;
-    }
-
-    /**
-     * Get numero
-     *
-     * @return integer 
-     */
-    public function getNumero()
-    {
-        return $this->numero;
-    }
-
-    /**
-     * Set alasector
-     *
-     * @param integer $alasector
-     * @return Patrimonio
-     */
-    public function setAlasector($alasector)
-    {
-        $this->alasector = $alasector;
-
-        return $this;
-    }
-
-    /**
-     * Get alasector
-     *
-     * @return integer 
-     */
-    public function getAlasector()
-    {
-        return $this->alasector;
     }
 
     /**

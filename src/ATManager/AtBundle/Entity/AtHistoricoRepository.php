@@ -43,15 +43,21 @@ class AtHistoricoRepository extends EntityRepository
     public function findByHistoricoEstadiosNoPresentesEnAtExceptoCancelado($at)
     {
         $em = $this->getEntityManager();
-      
-        $query = $em->createQuery('SELECT e FROM BackendBundle:Estadio e
+         $query = $em->createQuery('SELECT e FROM BackendBundle:Estadio e
          INNER JOIN BackendBundle:EstadioClasif ec WITH e.clasificacion = ec.id   
          WHERE ec.cancelaAt=false
          AND e.estado=true 
-         AND e.id NOT IN 
-         (SELECT IDENTITY(ath.estadio) FROM AtBundle:AtHistorico ath where ath.at= :at)')
+         AND (e.id NOT IN 
+         (SELECT IDENTITY(ath.estadio) FROM AtBundle:AtHistorico ath 
+          INNER JOIN BackendBundle:Estadio es WITH ath.estadio = es.id    
+          WHERE ath.at= :at) OR e.repite=true)')
+
          ->setParameter('at', $at) ; 
          return $query->getResult();
+         /*  
+         INNER JOIN BackendBundle:Estadio es WITH es.id
+         AND es.repite=true 
+         */
     }
 
 	
