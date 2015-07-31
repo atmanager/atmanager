@@ -1,4 +1,4 @@
-<?php
+a<?php
 
 namespace ATManager\AtBundle\Controller;
 
@@ -175,7 +175,7 @@ class AtHistoricoController extends Controller
                     return $this->redirect($this->generateUrl('at_historico_show', array('id' => $entity->getId())));
                 }
                 catch(\Exception $e){
-                    $this->get('session')->getFlashBag()->add('error','Error al intentar agregar nueva evolución...'); 
+                    $this->get('session')->getFlashBag()->add('error','Error al intentar agregar nueva evolución...'.$e->getMessage()); 
                    
                 }                      
         
