@@ -1,10 +1,11 @@
-a<?php
+<?php
 
 namespace ATManager\AtBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Form\AtHistoricoType;
 use ATManager\AtBundle\Form\AtHistoricoEditType;
+use ATManager\BackendBundle\Form\FallaType;
 use ATManager\AtBundle\Entity\AtHistorico;
 use ATManager\AtBundle\Entity\AtTecnico;
 
@@ -60,6 +61,9 @@ class AtHistoricoController extends Controller
     */
     public function newAction($idAt)
     {
+
+
+
         $em = $this->getDoctrine()->getManager();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
 
@@ -83,7 +87,7 @@ class AtHistoricoController extends Controller
                 {
                     if($entity->getAt()->getFallas()->isEmpty())
                     {
-                        $this->get('session')->getFlashBag()->add('error','Acción denegada. Falta cargar al menos una falla');
+                        $this->get('session')->getFlashBag()->add('error','Acción denegada. Falta cargar al menos una falla ');
                         return $this->redirect($this->generateUrl('at_historico_new', array('idAt' => $at->getId())));
                     }
                     else
@@ -181,8 +185,8 @@ class AtHistoricoController extends Controller
         
         }
     	return $this->render('AtBundle:AtHistorico:new.html.twig', array(
-      	   'form' => $form->createView(),
-           'entity' => $entity        
+           'form' => $form->createView(),
+           'entity' => $entity
 	));
     }
     public function editAction($id)

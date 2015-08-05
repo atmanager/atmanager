@@ -10,6 +10,7 @@ namespace ATManager\AtBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ATManager\AtBundle\Entity\AtFalla;
 use ATManager\AtBundle\Form\AtFallaType;
+use ATManager\BackendBundle\Form\FallaType;
 
 class AtFallaController extends Controller
 {
@@ -30,6 +31,12 @@ class AtFallaController extends Controller
     }
     public function newAction($idAt)
     {
+                /* crear form para agregar falla*/
+        $formFalla = $this->createForm(new FallaType(), null, array(
+        'action' => $this->generateUrl('falla_new'),
+        'attr'=>array('id'=>'formFalla')
+        ));
+
         $em = $this->getDoctrine()->getManager();
         $at = $em->getRepository('FrontendBundle:At')->find($idAt);
         $entity = new AtFalla();
@@ -53,7 +60,8 @@ class AtFallaController extends Controller
            }
         }
     	return $this->render('AtBundle:AtFalla:new.html.twig', array(
-      	   'form' => $form->createView(),
+           'form' => $form->createView(),
+      	   'formFalla' => $formFalla->createView(),
            'entity' => $entity        
 	));
     }
