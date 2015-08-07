@@ -3,6 +3,8 @@
 namespace ATManager\BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,25 +37,46 @@ class FallaController extends Controller
             'form'=>$form->createView()
         ));
     }
-    public function newAction()
+    public function newAction(Request $request)
     {
         $entity = new Falla();
-        $form   = $this->createForm(new FallaType(), $entity);
-	    $form->handleRequest($this->getRequest());
+        $form   = $this->createForm(new FallaType(), $entity, array(
+        'action' => $this->generateUrl('falla_new'),
+        'attr'=>array('id'=>'formFalla')
+        ));
 
-        if ($form->isValid()) {
+	    $form->handleRequest($request);
+
+        if ($form->isValid()) 
+        {
             try{  
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
+                if($request->isXmlHttpRequest()){ 
+                    $datos=array(
+                     'id'=>$entity->getId(),
+                     'nombre'=>$entity->getNombre()
+                     );
+                    return new JsonResponse($datos);
+                }
                 $this->get('session')->getFlashBag()->add('success','Item Guardado');
                 return $this->redirect($this->generateUrl('falla_show', array('id' => $entity->getId())));                
             }
+
             catch(\Exception $e){
                 $this->get('session')->getFlashBag()->add('error','Error al intentar agregar item');
              //   return $this->redirect($this->generateUrl('falla_new'));
-             }       
+             }
+
+        }elseif($request->isXmlHttpRequest()){
+             $html = $this->renderView('BackendBundle:Falla:form.html.twig', array(
+             'formFalla'   => $form->createView(),
+            ));
+             return new Response($html,400);
+
         }
+
         return $this->render('BackendBundle:Falla:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

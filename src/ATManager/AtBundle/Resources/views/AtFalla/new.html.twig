@@ -24,15 +24,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">-AGREGAR NUEVA FALLA </h4>
       </div>
       <div class="modal-body">
         {{ form(formFalla,{'attr': {'novalidate':'novalidate'}}) }}
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>
@@ -44,20 +44,37 @@
 
 	$(document).ready(function(){
 		$('#formFalla').on('submit',
-			function(){ return false; 
+			function(){ 
+
+						
 						$.ajax({
-								url: $(this).attr('href')+"/"+$('#atmanager_frontendbundle_at_patrimonio').val(),
-								dataType: "json",
-								error: function(jqXHR,textstatus)
+								url: $(this).attr('action'),
+								data: $(this).serialize(),
+								type: $(this).attr('method'),
+								//dataType: 'json',
+								error: function(data,textstatus)
 								{
-									$('#descripcion').html('No existe patrimonio...');
-									$('#local').html('No existe local..');
+									console.log(data);
+									$('#formFalla').html(data.responseText);
+
+
 								},
 								
 								success: function(data, textstatus)
 								{
-									console.log(data);
-									$('#descripcion').html(data.descripcion+' en '+data.local);
+
+									//console.log(data);
+									//data = JSON.parse(data);
+
+									$('#atmanager_atbundle_atfalla_falla').append($('<option>', {
+										    value: data.id,
+										    text: data.nombre
+										}));
+
+									$('#atmanager_atbundle_atfalla_falla').val(data.id);
+
+									$('#myModal').modal('toggle');
+									
 								}
 							   });
 		return false;
