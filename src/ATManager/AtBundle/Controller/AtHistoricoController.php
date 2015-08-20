@@ -73,6 +73,9 @@ class AtHistoricoController extends Controller
          $sector=$objt->getSector();
 
 
+         $estadioFinaliza=$em->getRepository('BackendBundle:Estadio')->findOneEstadioFinaliza();
+         $tieneFalla=!$at->getFallas()->isEmpty(); 
+        
         /* cargar un array con los estadios que no estan en la AT en cuestion*/
         //$estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAt($at);
         $estadiosNoPresentes = $em->getRepository('AtBundle:AtHistorico')->findByHistoricoEstadiosNoPresentesEnAtExceptoCancelado($at);
@@ -80,6 +83,9 @@ class AtHistoricoController extends Controller
         $entity->setAt($at);
         $form = $this->createForm(new AtHistoricoType($at, $em, $estadiosNoPresentes, $sector), $entity);
         $form->handleRequest($this->getRequest());
+
+
+
         if ($form->isValid())
         {
             
@@ -186,7 +192,9 @@ class AtHistoricoController extends Controller
         }
     	return $this->render('AtBundle:AtHistorico:new.html.twig', array(
            'form' => $form->createView(),
-           'entity' => $entity
+           'entity' => $entity,
+           'estadioFinaliza' => $estadioFinaliza,
+           'tieneFalla'=>$tieneFalla
 	));
     }
     public function editAction($id)

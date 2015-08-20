@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Estadio
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ATManager\BackendBundle\Entity\EstadioRepository")
  * @UniqueEntity(
  *     fields={"nombre"},
  *     message="Ya existe el nombre en otro item"

@@ -15,3 +15,17 @@
        
     
  {% endblock %}
+  {% block javascript %}
+	<script type="text/javascript">
+
+	$(document).ready(function(){ 
+        {% if tieneFalla == false %}
+		  $('#atmanager_atbundle_athistorico_estadio option[value="{{ estadioFinaliza.id}}"]').attr('disabled','disabled');
+        
+        {% endif %}
+
+	});
+
+	</script>
+
+{% endblock %}

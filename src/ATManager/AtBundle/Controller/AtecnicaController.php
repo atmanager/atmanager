@@ -426,10 +426,11 @@ class AtecnicaController extends Controller
             $objt=$form->get('tecnico')->getData();
             
             /* mejorar esto*/
-            if($estadio)
-            {    
-            $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnico($objt,$rol,$estadio);
-            }else{$entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnicoSinEstadio($objt,$rol);}
+            if($estadio){    
+                $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnico($objt,$rol,$estadio);
+            }else{
+                $entities = $em->getRepository('FrontendBundle:At')->findByFiltroPorTecnicoSinEstadio($objt,$rol);
+            }
 
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate($entities, $this->getRequest()->query->get('pagina',1), 10);
