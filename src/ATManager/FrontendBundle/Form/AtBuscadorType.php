@@ -19,7 +19,8 @@ class AtBuscadorType extends AbstractType
     {
          $builder                 
             ->add('numero','integer',array(
-                'required'=>false
+                'required'=>false,
+                'label'=>'Id At'
             ))
 
             ->add('personasolicita','text', array(

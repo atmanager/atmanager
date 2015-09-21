@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
    
 
     <title>AT Manager - Gestor de asistencias técnicas {% block title %}{% endblock %}</title>
@@ -90,6 +91,8 @@
                 {% if is_granted('ROLE_TECNICO') %}
                 <li><a href="{{ asset('manuales/manual_admin.pdf') }}" target="_blank">Descargar Manual Técnico</a></li>
                 {% endif %}
+
+
                 <li><a href="{{ asset('manuales/manual_user.pdf') }}" target="_blank">Descargar Manual Usuario</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Contactenos</a></li>
@@ -103,7 +106,21 @@
               </li>
                {% if app.user %}
                 <li><a href="#">{{ app.user.nombre }}</a></li>
+                  {% else %}
+                   <li><a href="#"> ANONIMO </a></li>
+
                 {% endif %}
+                
+                 {# if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                <p> ANONIMO </p>
+
+
+                 {% endif %}
+
+                  {% if not app.user %}
+               <p> ANONIMO </p>
+                {% endif  #}
+
 
           </ul>
 
@@ -115,7 +132,7 @@
     <div class="container">
 
       <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-9">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
            {% for flashMessage in app.session.flashbag.get('success') %}
            
                <div class="alert alert-success alert-dismissible" role="alert">

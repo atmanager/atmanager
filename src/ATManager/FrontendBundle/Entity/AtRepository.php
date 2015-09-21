@@ -33,7 +33,8 @@ class AtRepository extends EntityRepository
 	    	$query->andWhere('a.sectorsolicita = :sectorsolicita');
 		$query->setParameter('sectorsolicita',$sectorsolicita);
             }    
-            $query->setMaxResults(50);
+            $query->OrderBy('a.id', 'DESC');
+            $query->setMaxResults(500);
             $query = $query->getQuery();
             return $query->getResult();		
     }

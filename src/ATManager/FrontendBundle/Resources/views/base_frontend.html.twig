@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block menuwrap %}
-    <div class="col-xs-3" id="sidebar" role="navigation">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" id="sidebar" role="navigation">
     <div class="list-group">
 	    <a href="{{ path('at_new')}}" class="list-group-item 
 	    {% if app.request.get('_route') == 'at_new' %}active{% endif %}" 
