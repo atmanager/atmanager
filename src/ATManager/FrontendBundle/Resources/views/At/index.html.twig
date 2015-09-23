@@ -2,27 +2,45 @@
 {% block content %}
     <h3>Resultados de la consulta AT</h3>
     <a href="{{ path('at_buscador')}}"><h4>[Consultar]</h4></a>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped table-condensed">
         <thead>
             <tr>
-                <th colspan="2" style="text-align:center">Acciones</th>
                 <th>Nro. AT</th>
                 <th>Solicitante</th>
                 <th>Sector Solicitante</th>
                 <th>Sector Destino</th>
-                <th>Estado Actual</th>		
+                <th>Estado Actual</th>	
+               <th style="text-align:center">Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-        	<td><a href="{{ path('at_show', { 'id': entity.id }) }}" title="Ver Solicitud AT"> Detalle </a></td>
-        	<td><a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Consultar evolución de AT">Ver evolución</a> </td>                
-        	<td>{{ entity.id }}</td>
+        	      	             
+            	<td>{{ entity.id }}</td>
                 <td>{{ entity.personasolicita }}</td>
-        	<td>{{ entity.sectorsolicita }}</td>
+            	<td>{{ entity.sectorsolicita }}</td>
                 <td>{{ entity.sectordestino }}</td>
                 <td>{{ entity.miUltimoEstadio }}</td>
+                <td>
+                      
+                    <!-- Single button -->
+                    <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-  haspopup="true" aria-expanded="false">
+                               <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+                            </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('at_ver_historico', { 'id': entity.id }) }}" title="Consultar evolución de AT">Ver evolución</a> 
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ path('at_show', { 'id': entity.id }) }}" title="Ver Solicitud AT"> Detalle </a>
+                                    </li>
+
+                              </ul>
+                    </div>
+                </td>
             </tr>
         {% endfor %}
         </tbody>  
